@@ -264,6 +264,7 @@ def page_business():
         <div>
           <h2>{name.replace('ファイナンシャルプランニング', '<span>ファイナンシャル</span><span>プランニング</span>')}</h2>
           <span class="card-en">{en}</span>
+          {'<p class="badge"><span>国家資格</span>FP技能士在籍</p>' if key == 'financialplanning' else ''}
           <div style="margin-top:28px">{texts}</div>
           {note_html}
         </div>
@@ -618,7 +619,7 @@ def write(path, content):
 
 
 def main():
-    css = (SRC / 'style.css').read_text() + (SRC / 'pages.css').read_text()
+    css = (SRC / 'style.css').read_text() + (SRC / 'pages.css').read_text() + (SRC / 'brand.css').read_text()
     css += """
   /* ★公開前に必ず外す：試作の帯 */
   .draft-bar { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
