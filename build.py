@@ -6,6 +6,7 @@
 共通部分（head・ヘッダー・メニュー・フッター）はここで一度だけ定義し、各ページの中身と組み合わせる。
 文言は今のサイト（text/ に保存した本文）にあるものだけを使う。足していない。
 """
+import hashlib
 import html
 import re
 from pathlib import Path
@@ -36,6 +37,7 @@ POLICIES = [
     ('informationsecurity', '情報セキュリティ基本方針', '/informationsecurity/'),
 ]
 
+ASSET_V = ''  # main() で CSS・JS の中身から決める
 ARROW = '<svg class="arw"><use href="#i-arrow"/></svg>'
 TOP = (SRC / 'top.html').read_text()
 ICONS = re.findall(r'(<svg class="card-icon".*?</svg>)', TOP, re.S)  # 事業4つのアイコン（トップのカードと同じもの）
@@ -69,7 +71,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/assets/style.css?v={ASSET_V}">
 </head>
 <body>
 {SPRITE}
@@ -137,7 +139,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
   <a class="t" href="{TEL_HREF}"><svg><use href="#i-tel"/></svg>電話する</a>
 </div>
 
-<script src="/assets/main.js"></script>
+<script src="/assets/main.js?v={ASSET_V}"></script>
 </body>
 </html>
 '''
@@ -738,6 +740,7 @@ def write(path, content):
 
 
 def main():
+    global ASSET_V
     css = (SRC / 'style.css').read_text() + (SRC / 'pages.css').read_text() + (SRC / 'brand.css').read_text()
     css += """
   /* ★公開前に必ず外す：試作の帯 */
@@ -745,8 +748,12 @@ def main():
   .draft-bar ~ .header:not(.is-scrolled) { top: 30px; }
   .draft-bar ~ .drawer { padding-top: calc(var(--header-h) + 54px); }
 """
+    js = (SRC / 'main.js').read_text()
+    # CSS・JS の中身が変わったら URL も変える。GitHub Pages は10分間ブラウザに覚えさせるため、
+    # 変えないと「新しいページ＋古いデザイン」が組み合わさって表示が崩れる（MISSION の写真が消えた）
+    ASSET_V = hashlib.sha1((css + js).encode()).hexdigest()[:8]
     write('assets/style.css', css)
-    write('assets/main.js', (SRC / 'main.js').read_text())
+    write('assets/main.js', js)
 
     write('index.html', layout('', TOP))
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
