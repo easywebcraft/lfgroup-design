@@ -671,6 +671,46 @@
     .ins-tiles li { padding: 12px 10px; font-size: 14px; gap: 8px; letter-spacing: 0; }
   }
 
+  /* ===== MISSION：写真は暮らしの1枚に絞り、コピーを主役にする ===== */
+  .mission {
+    --m-title: #183653; --m-body: #61717F; --m-accent: #4B7598;
+    background: #F2F6F9;
+  }
+  .mission .label { color: var(--m-accent); }
+  .mission .label::before { background: var(--m-accent); }
+  .mission-grid { grid-template-columns: 1fr 1fr; gap: 80px; align-items: stretch; }
+  .mission-copy { display: flex; flex-direction: column; justify-content: center; padding-block: 24px; }
+  .mission-msg { font-size: clamp(27px, 3.1vw, 38px); line-height: 1.6; color: var(--m-title); }
+  .mission-text { margin-top: 28px; color: var(--m-body); line-height: 1.9; }
+  .mission-text p + p { margin-top: 1.2em; }
+  .mission-quote {
+    position: relative; margin: 44px 0 0; padding: 26px 0 0 0; border-top: 1px solid #D5DFE7; border-left: 0;
+    font-family: var(--serif); font-weight: 600; font-size: clamp(19px, 1.9vw, 23px); line-height: 1.8; letter-spacing: .08em; color: var(--m-title);
+  }
+  .mission-quote p { position: relative; padding-left: 40px; }
+  .mission-quote p::before {
+    content: "“"; position: absolute; left: 0; top: -.2em;
+    font-family: var(--serif); font-size: 2.6em; line-height: 1; color: var(--m-accent);
+  }
+  .mission-quote span { display: inline-block; }
+  .mission-photo { min-height: 520px; border-radius: 2px; }
+  .mission-photo img { object-position: 60% 50%; }
+  @media (max-width: 1023px) {
+    .mission-grid { grid-template-columns: 1fr; gap: 40px; }
+    .mission-photo { min-height: 0; aspect-ratio: 4 / 3; }
+    .mission-text br.pc { display: none; }
+  }
+  @media (max-width: 767px) {
+    .mission-copy { padding-block: 0; }
+    .mission-quote { margin-top: 32px; }
+    .mission-quote p { padding-left: 32px; }
+  }
+  /* 写真を縦長にしてコピーと高さをそろえる。引用は閉じの ” も付ける */
+  .mission-grid { grid-template-columns: 1.2fr .8fr; gap: 72px; }
+  .mission-photo { min-height: 580px; }
+  .mission-quote p > span:last-child::after { content: "”"; margin-left: .15em; font-size: 1.4em; line-height: 0; vertical-align: -.35em; color: var(--m-accent); }
+  @media (max-width: 1023px) { .mission-grid { grid-template-columns: 1fr; } .mission-photo { min-height: 0; } }
+
   /* ★公開前に必ず外す：試作の帯 */
   .draft-bar { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
   .draft-bar ~ .header:not(.is-scrolled) { top: 30px; }

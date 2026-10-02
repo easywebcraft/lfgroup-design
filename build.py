@@ -196,17 +196,17 @@ def page_about():
     </div>
   </section>
 
-  <section class="section bg-blue" id="mission">
+  <section class="section mission" id="mission">
     <div class="wrap mission-grid">
-      <div>
+      <div class="mission-copy">
         <p class="label fade">Mission</p>
         <h2 class="mission-msg fade">固定費削減で、<br>家計を見直す。</h2>
-        <p class="mission-text fade">固定費は、見直し削減することで半永久的に節約することができます。<br>LFグループ株式会社では、ゆとりある生活の実現のためにお役立ちをさせていただきます。</p>
+        <div class="mission-text fade">
+          <p>固定費は、見直し削減することで<br class="pc">半永久的な節約につながります。</p>
+          <p>LFグループ株式会社では、<br class="pc">ゆとりある生活の実現のために<br class="pc">お役立ちをさせていただきます。</p>
+        </div>
       </div>
-      <div class="mission-photos fade">
-        <div class="photo p2"><span class="ph">IMAGE：明るいリビング</span><img src="/images/mission-2.jpg" alt="" onerror="this.remove()"></div>
-        <div class="photo p1"><span class="ph">IMAGE：空・海</span><img src="/images/mission-1.jpg" alt="" onerror="this.remove()"></div>
-      </div>
+      <div class="mission-photo photo fade"><span class="ph">IMAGE：明るいリビング</span><img src="/images/mission-2.jpg" alt="" onerror="this.remove()"></div>
     </div>
   </section>
 
