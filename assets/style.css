@@ -711,6 +711,48 @@
   .mission-quote p > span:last-child::after { content: "”"; margin-left: .15em; font-size: 1.4em; line-height: 0; vertical-align: -.35em; color: var(--m-accent); }
   @media (max-width: 1023px) { .mission-grid { grid-template-columns: 1fr; } .mission-photo { min-height: 0; } }
 
+  /* ===== 私たちについて：文字・余白・線・濃紺で企業の姿勢を見せる ===== */
+  .about-hero .about-message {
+    margin-top: 40px; padding-top: 32px; border-top: 1px solid #D5DFE7; max-width: 720px;
+    font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 3vw, 36px); line-height: 1.7; letter-spacing: .08em; color: var(--navy);
+  }
+  .about-hero .about-message span { display: inline-block; }
+  .about-intro-body { max-width: 680px; margin-inline: auto; }
+  .about-intro-text { margin-top: 20px; font-size: 17px; line-height: 2.2; color: #3E4C59; }
+  .about-mission { background: #F2F6F9; text-align: center; padding-block: 150px; }
+  .about-mission .label { color: #4B7598; }
+  .about-mission .label::before { background: #4B7598; }
+  .about-mission-msg { margin-top: 20px; font-family: var(--serif); font-weight: 600; font-size: clamp(30px, 4.4vw, 54px); line-height: 1.6; letter-spacing: .1em; color: #183653; }
+  .about-mission-msg span { display: inline-block; }
+  .about-mission-text { margin-top: 40px; color: #61717F; line-height: 2.1; }
+  .about-mission-text p + p { margin-top: 1.4em; }
+  .about-mission-quote {
+    display: inline-block; margin-top: 56px; padding: 28px 8px 0; border-top: 1px solid #C9D6E0;
+    font-family: var(--serif); font-weight: 600; font-size: clamp(19px, 2vw, 24px); line-height: 1.8; letter-spacing: .08em; color: #183653;
+  }
+  .about-mission-quote span { display: inline-block; }
+  .about-policy-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 72px; align-items: start; }
+  .about-policy-head { position: sticky; top: 120px; }
+  .policy-lines { border-top: 2px solid var(--navy); }
+  .policy-lines li { display: grid; grid-template-columns: 96px 1fr; gap: 24px; align-items: baseline; padding: 36px 0; border-bottom: 1px solid var(--card-line); }
+  .pl-num { font-family: var(--en); font-weight: 600; font-size: 28px; letter-spacing: .06em; color: var(--navy); display: flex; align-items: center; gap: 14px; }
+  .pl-num::after { content: ""; flex: 1; height: 1px; background: var(--navy); opacity: .35; }
+  .pl-text { font-size: 17px; line-height: 2; color: var(--navy); font-weight: 500; }
+  .pl-text span { display: inline-block; }
+  @media (max-width: 1023px) {
+    .about-policy-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-policy-head { position: static; }
+  }
+  @media (max-width: 767px) {
+    .about-mission { padding-block: 96px; }
+    .about-mission-text br { display: none; }
+    .about-intro-text { font-size: 16px; }
+    .policy-lines li { grid-template-columns: 1fr; gap: 10px; padding: 28px 0; }
+    .pl-num { font-size: 22px; }
+    .pl-text { font-size: 16px; }
+    .pl-text span { display: inline; }
+  }
+
   /* ★公開前に必ず外す：試作の帯 */
   .draft-bar { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
   .draft-bar ~ .header:not(.is-scrolled) { top: 30px; }

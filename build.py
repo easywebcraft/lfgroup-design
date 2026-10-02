@@ -183,49 +183,55 @@ def final_cta():
 # ───────────────────────── 各ページ ─────────────────────────
 
 def page_about():
+    """トップが「写真＋親しみ」なので、こちらは文字・余白・線・濃紺で企業の姿勢を見せる。
+    主役は「お客様本位の業務運営方針」。MISSION はトップと別の、文字だけの見せ方にする。"""
     fd = [
-        '保険・固定費削減のプロフェッショナルとして、お客様の立場になって、誠実・公正に業務を行います。',
-        'お客様のニーズを把握し、お客様にふさわしい商品とサービスを提供し続けます。',
-        'お客様が納得してご契約できるよう、商品とサービスの説明を丁寧かつわかりやすく行います。',
-        '事故に遭われたお客様に対して、迅速に保険金の支払いができるようアドバイスし、事故処理完了まで適切な対応を行います。',
-        'お客様の立場で行動するために、継続的に教育を行うとともに、適切な管理体制を整備します。',
+        ('保険・固定費削減のプロフェッショナルとして、', 'お客様の立場になって、誠実・公正に業務を行います。'),
+        ('お客様のニーズを把握し、', 'お客様にふさわしい商品とサービスを提供し続けます。'),
+        ('お客様が納得してご契約できるよう、', '商品とサービスの説明を丁寧かつわかりやすく行います。'),
+        ('事故に遭われたお客様に対して、', '迅速に保険金の支払いができるようアドバイスし、', '事故処理完了まで適切な対応を行います。'),
+        ('お客様の立場で行動するために、', '継続的に教育を行うとともに、適切な管理体制を整備します。'),
     ]
-    return page_hero('About', '私たちについて', [('私たちについて', '/about/')]) + f'''
-  <section class="section">
-    <div class="wrap narrow">
-      <p class="about-message fade"><span>顧客満足度を最優先に</span><br><span>人々の生活を向上させます</span></p>
-      <p class="text fade" style="margin-top:40px">弊社はお客様の固定費を削減することを目的に、電気やガスなどのライフラインの代行業務、保険の見直しに加え、FP資格取得者が多数在籍しており、NISAやふるさと納税をはじめとした投資や節税などを通して、お客様のライフプランの見直しを行っています。</p>
-    </div>
-  </section>
-
-  <section class="section mission" id="mission">
-    <div class="wrap mission-grid">
-      <div class="mission-copy">
-        <p class="label fade">Mission</p>
-        <h2 class="mission-msg fade">固定費削減で、<br>家計を見直す。</h2>
-        <div class="mission-text fade">
-          <p>固定費は、見直し削減することで<br class="pc">半永久的な節約につながります。</p>
-          <p>LFグループ株式会社では、<br class="pc">ゆとりある生活の実現のために<br class="pc">お役立ちをさせていただきます。</p>
-        </div>
-      </div>
-      <div class="mission-photo photo fade"><span class="ph">IMAGE：明るいリビング</span><img src="/images/mission-2.jpg" alt="" onerror="this.remove()"></div>
-    </div>
-  </section>
-
-  <section class="section about-statement">
+    items = ''.join(
+        f'<li class="fade"><p class="pl-num">{i + 1:02d}</p><p class="pl-text">{"".join(f"<span>{x}</span>" for x in parts)}</p></li>'
+        for i, parts in enumerate(fd))
+    hero = page_hero('About', '私たちについて', [('私たちについて', '/about/')])
+    hero = hero.replace('<section class="page-hero">', '<section class="page-hero about-hero">')
+    hero = hero.replace('      <h1 class="fade">私たちについて</h1>\n',
+                        '      <h1 class="fade">私たちについて</h1>\n'
+                        '      <p class="about-message fade"><span>顧客満足度を最優先に、</span><br><span>人々の生活を向上させます。</span></p>\n')
+    return hero + f'''
+  <section class="section about-intro">
     <div class="wrap">
-      <p class="fade"><span>金銭的な余裕は、</span><span>人生の幸福度を高めます。</span></p>
+      <div class="about-intro-body fade">
+        <p class="label">Introduction</p>
+        <p class="about-intro-text">弊社はお客様の固定費を削減することを目的に、電気やガスなどのライフラインの代行業務、保険の見直しに加え、FP資格取得者が多数在籍しており、NISAやふるさと納税をはじめとした投資や節税などを通して、お客様のライフプランの見直しを行っています。</p>
+      </div>
     </div>
   </section>
 
-  <section class="section bg-blue">
-    <div class="wrap narrow">
-      <p class="label fade">Policy</p>
-      <h2 class="heading fade">お客様本位の業務運営方針</h2>
-      <ol class="fd-list" style="margin-top:40px">
-        {''.join(f'<li class="fade">{t}</li>' for t in fd)}
-      </ol>
-      <p style="margin-top:32px" class="fade"><a class="more" href="/operation/">主な取組内容を見る{ARROW}</a></p>
+  <section class="section about-mission" id="mission">
+    <div class="wrap">
+      <p class="label fade">Mission</p>
+      <h2 class="about-mission-msg fade"><span>固定費削減で、</span><br><span>家計を見直す。</span></h2>
+      <div class="about-mission-text fade">
+        <p>固定費は、見直し削減することで<br>半永久的な節約につながります。</p>
+        <p>LFグループ株式会社では、<br>ゆとりある生活の実現のために<br>お役立ちをさせていただきます。</p>
+      </div>
+      <p class="about-mission-quote fade"><span>金銭的な余裕は、</span><br><span>人生の幸福度を高めます。</span></p>
+    </div>
+  </section>
+
+  <section class="section about-policy">
+    <div class="wrap">
+      <div class="about-policy-grid">
+        <div class="about-policy-head">
+          <p class="label fade">Policy</p>
+          <h2 class="heading fade">お客様本位の<br>業務運営方針</h2>
+          <p class="fade" style="margin-top:32px"><a class="more" href="/operation/">主な取組内容を見る{ARROW}</a></p>
+        </div>
+        <ol class="policy-lines">{items}</ol>
+      </div>
     </div>
   </section>
 
