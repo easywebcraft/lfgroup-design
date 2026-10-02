@@ -257,6 +257,8 @@ def page_business():
     for i, (key, name, en, paras, note) in enumerate(BUSINESS):
         texts = ''.join(f'<p class="text">{p}</p>' for p in paras)
         note_html = f'<p class="biz-note">{note}</p>' if note else ''
+        if key == 'insuranceagency':
+            note_html = f'<p style="margin-top:24px"><a class="more" href="/insurance/">取り扱い保険・事故対応について見る{ARROW}</a></p>'
         blocks.append(f'''      <article class="biz-block fade" id="{key}">
         <div class="biz-visual"><span class="num">{i + 1:02d}</span>{ICONS[i]}</div>
         <div>
@@ -283,12 +285,109 @@ def tags(items):
     return '<ul class="svc-items">' + ''.join(f'<li>{t}</li>' for t in items) + '</ul>'
 
 
+LIFE_INS = ['医療保険', 'がん保険', '終身保険', '変額保険', '収入保障保険', '定期保険', 'こども保険', '学資保険']
+NONLIFE_INS = ['自動車保険', '火災保険', '損害保険', '賠償責任保険', '労災保険']
+
+
+def page_insurance():
+    """保険の詳細ページ。今のサイトの「保険代理店事業」「取り扱いサービス」「お客様本位の業務運営方針」
+    「勧誘方針」「ファイナンシャルプランニング事業」の文言だけで組む。"""
+    tiles = lambda items: ''.join(f'<li>{t}</li>' for t in items) + '<li class="etc">ほか</li>'
+    sol = [
+        '金融商品の販売等に際して、各種法令等を遵守し、適正な販売等に努めます。',
+        'お客さまの金融商品に関するお客さまの知識・経験、契約目的、財産の状況等を総合的に勘案し、お客さまの意向と実情に応じた金融商品の販売等に努めます。',
+        'お客さまへの商品説明等については、販売・勧誘形態に応じて、お客さま本位の方法等の創意工夫に努めます。',
+        'お客さまのご意見等の収集に努め現状を把握し、また、お客さまの満足度を高めるよう努めます。',
+    ]
+    return page_hero('Insurance', '保険', [('取り扱いサービス', '/service/'), ('保険', '/insurance/')],
+                     '大手保険会社の代理店として、各種保険を取り扱っています。') + f'''
+  <section class="section">
+    <div class="wrap ins-intro">
+      <div>
+        <p class="label fade">Insurance Agency</p>
+        <h2 class="heading fade">保険代理店事業</h2>
+        <p class="text fade" style="margin-top:28px">LFグループ株式会社では、大手保険会社の代理店として各種保険を取り扱っています。</p>
+        <p class="text fade">自動車・バイク・病気・ケガ・旅行・趣味・こども・生命保険等、お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。</p>
+      </div>
+      <aside class="ins-partners fade" aria-label="主力会社">
+        <p class="ins-partners-head">主力会社</p>
+        <ul>
+          <li><span class="kind">生命保険</span>SOMPOひまわり生命</li>
+          <li><span class="kind">損害保険</span>日新火災海上保険</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section bg-blue">
+    <div class="wrap">
+      <p class="label fade">Lineup</p>
+      <h2 class="heading fade">取り扱い保険</h2>
+      <div class="ins-lineup">
+        <article class="ins-cat fade">
+          <h3>生命保険<span>Life Insurance</span></h3>
+          <ul class="ins-tiles">{tiles(LIFE_INS)}</ul>
+        </article>
+        <article class="ins-cat fade">
+          <h3>損害保険<span>Non-Life Insurance</span></h3>
+          <ul class="ins-tiles">{tiles(NONLIFE_INS)}</ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap ins-support">
+      <div>
+        <p class="label fade">Support</p>
+        <h2 class="heading fade">事故対応</h2>
+      </div>
+      <div class="fade">
+        <p class="ins-lead">事故に遭われたお客様に対して、迅速に保険金のお支払いができるようアドバイスし、事故処理完了まで適切な対応を行います。</p>
+        <ul class="ins-checks">
+          <li>事故に遭われたお客様への連絡頻度を高めています。</li>
+          <li>休日・夜間の事故対応。</li>
+        </ul>
+        <p style="margin-top:24px"><a class="more" href="/operation/">お客様本位の業務運営方針を見る{ARROW}</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-blue">
+    <div class="wrap narrow">
+      <p class="label fade">Policy</p>
+      <h2 class="heading fade">勧誘方針</h2>
+      <ol class="fd-list" style="margin-top:40px">
+        {''.join(f'<li class="fade">{t}</li>' for t in sol)}
+      </ol>
+      <p style="margin-top:32px" class="fade"><a class="more" href="/solicitation/">勧誘方針の全文を見る{ARROW}</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <a class="ins-related fade" href="/business/#financialplanning">
+        <div>
+          <p class="label">Related</p>
+          <p class="ins-related-title"><span>ファイナンシャル</span><span>プランニング事業</span></p>
+          <p class="badge"><span>国家資格</span>FP技能士在籍</p>
+          <p class="text" style="margin-top:16px">お金の専門家であるFPがライフプラン・家計・保険・年金・住宅資金・教育資金・税金・資産運用・介護・医療費・相続・贈与などのお悩みに対して、適切なアドバイスを行い、お客様の人生がより良くなるようサポートさせて頂きます。</p>
+        </div>
+        <span class="more">詳しく見る{ARROW}</span>
+      </a>
+    </div>
+  </section>
+
+''' + simple_cta()
+
+
 def page_service():
     rows = [
         ('保険', 'Insurance', 'service-insurance.jpg', 'IMAGE：家族の安心', f'''
           <div class="svc-group"><h3>主力会社</h3><p>SOMPOひまわり生命・日新火災海上保険</p></div>
           <div class="svc-group"><h3>生命保険</h3>{tags(['医療保険', 'がん保険', '終身保険', '変額保険', '収入保障保険', '定期保険', 'こども保険', '学資保険', 'ほか'])}</div>
-          <div class="svc-group"><h3>損害保険</h3>{tags(['自動車保険', '火災保険', '損害保険', '賠償責任保険', '労災保険', 'ほか'])}</div>'''),
+          <div class="svc-group"><h3>損害保険</h3>{tags(['自動車保険', '火災保険', '損害保険', '賠償責任保険', '労災保険', 'ほか'])}</div>
+          <p class="svc-group"><a class="more" href="/insurance/">保険について詳しく見る{ARROW}</a></p>'''),
         ('ライフライン', 'Lifeline', 'service-lifeline.jpg', 'IMAGE：暮らしのあかり',
          f'<div class="svc-group">{tags(["電気", "ガス", "水道"])}</div>'),
         ('インターネット', 'Internet', 'service-internet.jpg', 'IMAGE：住まいとネット',
@@ -653,6 +752,7 @@ def main():
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
     write('business/index.html', layout('事業内容', page_business(), 'business'))
     write('service/index.html', layout('取り扱いサービス', page_service(), 'service'))
+    write('insurance/index.html', layout('保険', page_insurance(), 'service'))
     write('company/index.html', layout('会社概要', page_company(), 'company'))
     write('news/index.html', layout('お知らせ', page_news_list(), 'news'))
     for slug, d, cat, t, paras in NEWS:
