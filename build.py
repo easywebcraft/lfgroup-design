@@ -27,6 +27,7 @@ NAV = [
     ('service', '取り扱いサービス', '/service/'),
     ('company', '会社概要', '/company/'),
     ('news', 'お知らせ', '/news/'),
+    ('recruitment', '採用情報', '/recruitment/'),
 ]
 POLICIES = [
     ('operation', 'お客様本位の業務運営方針', '/operation/'),
@@ -57,7 +58,6 @@ def nav_items(current, cls=''):
 
 def layout(page_title, body, current='', description='顧客満足度を最優先に人々の生活を向上させます。'):
     title = COMPANY if not page_title else f'{page_title}｜{COMPANY}'
-    recruit_cur = ' aria-current="page"' if current == 'recruitment' else ''
     return f'''<!doctype html>
 <html lang="ja">
 <head>
@@ -98,7 +98,6 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
     <ul>
       <li><a href="/">トップ{ARROW}</a></li>
       {nav_items(current, 'drawer')}
-      <li><a href="/recruitment/"{recruit_cur}>採用情報{ARROW}</a></li>
     </ul>
   </nav>
   <a class="btn btn-primary" href="/contact/">お問い合わせ{ARROW}</a>
@@ -120,7 +119,6 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
       <nav class="footer-nav" aria-label="フッターメニュー">
         <ul>
           {nav_items('')}
-          <li><a href="/recruitment/">採用情報</a></li>
           <li><a href="/contact/">お問い合わせ</a></li>
         </ul>
       </nav>
@@ -350,7 +348,7 @@ def page_company():
 
 
 NEWS = [
-    ('20230920', '2023-09-20', 'ホームページを公開しました！！', [
+    ('20230920', '2023-09-20', 'NEWS', 'ホームページを公開しました！！', [
         'こんにちは！',
         'ＬＦグループ株式会社です。弊社はお客様の固定費を削減することを目的に、電気やガスなどのライフラインの代行業務、保険の見直しに加え、ＦＰ資格取得者が多数在籍しており、ＮＩＳＡやふるさと納税をはじめとした投資や節税などを通して、お客様のライフプランの見直しを行っています。',
         '皆さんのお力になれるよう頑張りますので、これからよろしくお願い致します。',
@@ -358,27 +356,48 @@ NEWS = [
 ]
 
 
-def page_news_list():
-    items = ''.join(
-        f'<li><a href="/news/{slug}/"><time datetime="{d}">{d.replace("-", ".")}</time>'
-        f'<span>{t.rstrip("！")}</span>{ARROW}</a></li>' for slug, d, t, _ in NEWS)
-    return page_hero('News', 'お知らせ', [('お知らせ', '/news/')]) + f'''
-  <section class="section">
-    <div class="wrap narrow">
-      <ul class="news-list fade">{items}</ul>
+def news_row(slug, d, cat, t):
+    return (f'<li><a href="/news/{slug}/"><time datetime="{d}">{d.replace("-", ".")}</time>'
+            f'<span class="news-cat">{cat}</span><span class="news-title">{t.rstrip("！")}</span>{ARROW}</a></li>')
+
+
+def simple_cta():
+    """写真を使わない、下層ページ用のお問い合わせ欄。"""
+    return f'''  <section class="section simple-cta-wrap">
+    <div class="wrap">
+      <div class="simple-cta fade">
+        <p class="simple-cta-title"><span>サービスに関するお問い合わせ、</span><span>資料のご請求はこちら</span></p>
+        <div class="btns">
+          <a class="btn btn-primary" href="/contact/">お問い合わせ{ARROW}</a>
+          <a class="btn btn-white" href="/contact/?type=document">資料請求{ARROW}</a>
+          <a class="btn btn-white btn-tel" href="{TEL_HREF}"><svg class="ico"><use href="#i-tel"/></svg>{TEL}</a>
+        </div>
+      </div>
     </div>
   </section>
 '''
 
 
-def page_news_article(slug, date, title, paras):
+def page_news_list():
+    items = ''.join(news_row(slug, d, cat, t) for slug, d, cat, t, _ in NEWS)
+    return page_hero('News', 'お知らせ', [('お知らせ', '/news/')]).replace('<section class="page-hero">', '<section class="page-hero compact">') + f'''
+  <section class="section news-page">
+    <div class="wrap narrow">
+      <ul class="news-lines fade">{items}</ul>
+    </div>
+  </section>
+
+''' + simple_cta()
+
+
+def page_news_article(slug, date, cat, title, paras):
     body = ''.join(f'<p>{p}</p>' for p in paras)
-    return page_hero('News', 'お知らせ', [('お知らせ', '/news/'), (title.rstrip('！'), f'/news/{slug}/')]).replace('<h1 class="fade">お知らせ</h1>', '<p class="heading fade">お知らせ</p>') + f'''
+    return page_hero('News', 'お知らせ', [('お知らせ', '/news/'), (title.rstrip('！'), f'/news/{slug}/')]).replace('<h1 class="fade">お知らせ</h1>', '<p class="heading fade">お知らせ</p>').replace('<section class="page-hero">', '<section class="page-hero compact">') + f'''
   <section class="section">
     <div class="wrap narrow">
       <article>
         <header class="article-head fade">
-          <time datetime="{date}">{date.replace("-", ".")}</time>
+          <p class="article-meta"><time datetime="{date}">{date.replace("-", ".")}</time><span class="news-cat">{cat}</span></p>
           <h1>{title}</h1>
         </header>
         <div class="article-body fade">{body}</div>
@@ -386,7 +405,8 @@ def page_news_article(slug, date, title, paras):
       <p class="back"><a class="more" href="/news/">お知らせ一覧へ戻る{ARROW}</a></p>
     </div>
   </section>
-'''
+
+''' + simple_cta()
 
 
 def page_contact():
@@ -635,8 +655,8 @@ def main():
     write('service/index.html', layout('取り扱いサービス', page_service(), 'service'))
     write('company/index.html', layout('会社概要', page_company(), 'company'))
     write('news/index.html', layout('お知らせ', page_news_list(), 'news'))
-    for slug, d, t, paras in NEWS:
-        write(f'news/{slug}/index.html', layout(t.rstrip('！'), page_news_article(slug, d, t, paras), 'news'))
+    for slug, d, cat, t, paras in NEWS:
+        write(f'news/{slug}/index.html', layout(t.rstrip('！'), page_news_article(slug, d, cat, t, paras), 'news'))
     write('contact/index.html', layout('お問い合わせ', page_contact(), 'contact'))
     write('recruitment/index.html', layout('採用情報', page_recruitment(), 'recruitment'))
     renders = {'operation': policy_operation, 'solicitation': policy_solicitation,
