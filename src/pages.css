@@ -1,0 +1,146 @@
+
+  /* ===== 下層ページ共通 ===== */
+  ol { margin: 0; padding: 0; list-style: none; }
+  .gnav a[aria-current="page"]::after { transform: scaleX(1); }
+  .drawer a[aria-current="page"] { color: var(--primary); }
+
+  .page-hero {
+    padding: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 72px) 0 72px;
+    background: linear-gradient(180deg, #EAF1F8 0%, var(--bg-blue) 100%);
+  }
+  .page-hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(30px, 4vw, 44px); line-height: 1.5; letter-spacing: .08em; margin-top: 8px; }
+  .page-hero .lead { margin-top: 20px; max-width: 720px; color: var(--text-sub); }
+  .crumb { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; font-size: 12px; color: var(--text-sub); }
+  .crumb li + li::before { content: "/"; margin-right: 8px; color: #B5C0CB; }
+  .crumb a:hover { color: var(--primary); }
+  @media (max-width: 767px) {
+    .page-hero { padding: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 40px) 0 48px; }
+    .crumb { margin-bottom: 24px; }
+  }
+
+  .narrow { max-width: 820px; }
+  .h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 2.6vw, 30px); line-height: 1.6; letter-spacing: .06em; }
+  .h2 + * { margin-top: 24px; }
+  .text { color: var(--text-sub); line-height: 2.05; }
+  .text + .text { margin-top: 1em; }
+  .divider { border: 0; border-top: 1px solid var(--line); margin: 0; }
+  .bg-blue { background: var(--bg-blue); }
+
+  /* ===== 私たちについて ===== */
+  .about-message { font-family: var(--serif); font-weight: 600; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.7; letter-spacing: .08em; }
+  .about-message span { display: inline-block; }
+  .about-statement { text-align: center; }
+  .about-statement p { font-family: var(--serif); font-weight: 600; font-size: clamp(22px, 2.8vw, 32px); line-height: 1.7; letter-spacing: .08em; }
+  .about-statement p span { display: inline-block; }
+  .fd-list { counter-reset: fd; display: grid; gap: 16px; }
+  .fd-list li {
+    counter-increment: fd; display: grid; grid-template-columns: 56px 1fr; gap: 16px; align-items: start;
+    padding: 24px 28px; background: #fff; border-radius: 12px; box-shadow: var(--shadow); line-height: 1.9;
+  }
+  .fd-list li::before { content: counter(fd, decimal-leading-zero); font-family: var(--en); font-weight: 600; font-size: 20px; color: var(--accent); line-height: 1.6; }
+  @media (max-width: 767px) { .fd-list li { grid-template-columns: 40px 1fr; padding: 20px; font-size: 15px; } }
+
+  /* ===== 事業内容 ===== */
+  .biz-index { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  .biz-index a { padding: 8px 18px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-size: 13px; color: var(--primary); transition: background-color .2s, color .2s; }
+  .biz-index a:hover { background: var(--primary); color: #fff; }
+  .biz-block { display: grid; grid-template-columns: 300px 1fr; gap: 64px; align-items: start; padding-block: 72px; border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--header-h) + 16px); }
+  .biz-block:first-child { padding-top: 0; }
+  .biz-block:last-child { border-bottom: 0; padding-bottom: 0; }
+  .biz-visual { aspect-ratio: 1; border-radius: 16px; background: var(--bg-blue); display: grid; place-items: center; position: relative; }
+  .biz-visual .card-icon { width: 96px; height: 96px; }
+  .biz-visual .num { position: absolute; top: 20px; left: 24px; font-family: var(--en); font-weight: 600; font-size: 18px; color: var(--accent); letter-spacing: .1em; }
+  .biz-block h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 2.6vw, 30px); line-height: 1.5; letter-spacing: .06em; }
+  .biz-block h2 span { display: inline-block; }
+  .biz-block .card-en { margin-top: 6px; }
+  .biz-block .text { margin-top: 28px; }
+  .biz-note { display: inline-block; margin-top: 24px; padding: 8px 18px; border-radius: 999px; background: var(--bg-blue); font-size: 14px; font-weight: 500; color: var(--primary); }
+  @media (max-width: 1023px) { .biz-block { grid-template-columns: 200px 1fr; gap: 40px; } }
+  @media (max-width: 767px) {
+    .biz-block { grid-template-columns: 1fr; gap: 24px; padding-block: 56px; }
+    .biz-visual { aspect-ratio: auto; height: 140px; }
+    .biz-visual .card-icon { width: 64px; height: 64px; }
+  }
+
+  /* ===== 取り扱いサービス ===== */
+  .svc-row { display: grid; grid-template-columns: 1fr 1.25fr; gap: 56px; align-items: start; padding-block: 64px; border-bottom: 1px solid var(--line); }
+  .svc-row:first-child { padding-top: 0; }
+  .svc-row:last-child { border-bottom: 0; padding-bottom: 0; }
+  .svc-row .photo { aspect-ratio: 3 / 2; border-radius: 12px; }
+  .svc-row h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 2.6vw, 30px); letter-spacing: .06em; }
+  .svc-row .label { margin-top: 4px; }
+  .svc-group { margin-top: 28px; }
+  .svc-group h3 { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+  .svc-group p { color: var(--text-sub); }
+  .svc-row .svc-items li { font-size: 14px; padding: 5px 14px; }
+  @media (max-width: 1023px) { .svc-row { grid-template-columns: 1fr; gap: 28px; } }
+
+  /* ===== 会社概要 ===== */
+  .company-list.full > div { grid-template-columns: 220px 1fr; }
+  @media (max-width: 767px) { .company-list.full > div { grid-template-columns: 1fr; } }
+  .map-frame { margin-top: 48px; aspect-ratio: 16 / 7; border-radius: 12px; overflow: hidden; background: var(--bg-blue); }
+  .map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+  @media (max-width: 767px) { .map-frame { aspect-ratio: 4 / 3; } }
+  .link-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .link-list a { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 26px; background: #fff; border-radius: 12px; box-shadow: var(--shadow); font-weight: 500; transition: transform .3s, box-shadow .3s; }
+  .link-list a:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+  .link-list .arw { color: var(--primary); }
+  @media (max-width: 767px) { .link-list { grid-template-columns: 1fr; } }
+
+  /* ===== お知らせ ===== */
+  .article-head time { font-family: var(--en); font-size: 14px; color: var(--text-sub); letter-spacing: .06em; }
+  .article-head h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 3vw, 34px); line-height: 1.6; letter-spacing: .06em; margin-top: 8px; }
+  .article-body { margin-top: 48px; padding-top: 48px; border-top: 1px solid var(--line); line-height: 2.1; }
+  .article-body p + p { margin-top: 1.4em; }
+  .back { margin-top: 64px; }
+
+  /* ===== 方針ページ ===== */
+  .policy h2 { font-size: 19px; font-weight: 700; line-height: 1.7; margin-top: 56px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .policy h2:first-child { margin-top: 0; }
+  .policy h3 { font-size: 16px; font-weight: 700; margin-top: 32px; color: var(--primary); }
+  .policy h4 { font-size: 14px; font-weight: 700; margin-top: 16px; color: var(--text-sub); }
+  .policy p, .policy li { line-height: 2; }
+  .policy p { margin-top: 14px; }
+  .policy ul { margin-top: 12px; display: grid; gap: 4px; }
+  .policy ul li { position: relative; padding-left: 1.2em; }
+  .policy ul li::before { content: ""; position: absolute; left: .2em; top: .95em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+  .policy ol.num { margin-top: 20px; padding: 0; list-style: none; display: grid; gap: 12px; }
+  .policy ol.num li { padding: 18px 22px; background: var(--bg-blue); border-radius: 10px; }
+  .policy .companies { margin-top: 16px; display: grid; gap: 8px; }
+  .policy .companies a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
+  .policy .end { margin-top: 48px; text-align: right; }
+  .policy .todo { margin-top: 16px; padding: 16px 20px; border: 1px dashed #D9A35B; border-radius: 8px; background: #FFF8EE; color: #8A5A1B; font-size: 14px; }
+
+  /* ===== お問い合わせ ===== */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; align-items: start; }
+  @media (max-width: 1023px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .tel-box { padding: 28px; background: var(--bg-blue); border-radius: 12px; margin-top: 32px; }
+  .tel-box p { font-size: 13px; color: var(--text-sub); }
+  .tel-box a { display: inline-block; margin-top: 4px; font-family: var(--en); font-size: 26px; font-weight: 600; letter-spacing: .04em; color: var(--primary); }
+  .form { display: grid; gap: 28px; }
+  .field label, .field legend { display: block; font-size: 14px; font-weight: 700; margin-bottom: 10px; padding: 0; }
+  .req { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 4px; background: var(--primary); color: #fff; font-size: 11px; font-weight: 500; vertical-align: 2px; }
+  .field input[type="text"], .field input[type="tel"], .field input[type="email"], .field textarea {
+    width: 100%; padding: 14px 16px; border: 1px solid #CDD6DF; border-radius: 8px; background: #fff;
+    font: inherit; font-size: 16px; color: var(--text); transition: border-color .2s, box-shadow .2s;
+  }
+  .field textarea { min-height: 200px; resize: vertical; }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(44, 74, 110, .15); }
+  .field [aria-invalid="true"] { border-color: #C0392B; }
+  .field .err { margin-top: 6px; font-size: 13px; color: #C0392B; }
+  fieldset.field { border: 0; margin: 0; padding: 0; }
+  .radios { display: flex; flex-wrap: wrap; gap: 12px; }
+  .radios label { display: flex; align-items: center; gap: 10px; padding: 12px 20px; border: 1px solid #CDD6DF; border-radius: 999px; font-weight: 500; font-size: 15px; margin: 0; cursor: pointer; }
+  .radios label:has(input:checked) { border-color: var(--primary); background: var(--bg-blue); color: var(--primary); }
+  .field .agree { margin: 0; font-weight: 400; display: flex; align-items: center; gap: 10px; font-size: 15px; cursor: pointer; }
+  .agree a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+  input[type="radio"], input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); margin: 0; }
+  .form .btn { border: 0; cursor: pointer; font: inherit; font-weight: 500; justify-self: start; min-width: 260px; }
+  @media (max-width: 767px) { .form .btn { justify-self: stretch; } }
+  .form-done { padding: 32px; border-radius: 12px; background: var(--bg-blue); }
+  .form-done h2 { font-size: 20px; font-weight: 700; }
+  .form-done p { margin-top: 12px; color: var(--text-sub); }
+
+  /* ===== 採用情報 ===== */
+  .recruit-tel { display: flex; flex-wrap: wrap; gap: 12px 32px; margin-top: 16px; }
+  .recruit-tel a { font-family: var(--en); font-size: 24px; font-weight: 600; color: var(--primary); letter-spacing: .04em; }

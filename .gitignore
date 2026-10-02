@@ -1,0 +1,9 @@
+# 今のサイトから取得した生のHTML（本文は text/ に保存済み）
+/*.html
+# 画面確認用の画像・作業ファイル
+/_shots/
+/preview-*.png
+/mockup.webp
+/extract.py
+.DS_Store
+__pycache__/
