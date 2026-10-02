@@ -1,7 +1,11 @@
 # LFグループ株式会社 ホームページ リニューアル試作
 
-今のホームページ（STUDIO製）に載っている情報だけを使って、構成とデザインを作り直した試作です。
-新しい情報・実績・数値は足していません。
+今のホームページ（STUDIO製、https://gray345542.studio.site ）に載っている情報だけを使って、
+構成とデザインを作り直した試作です。新しい情報・実績・数値は足していません。
+
+- 公開URL（GitHub Pages）：https://easywebcraft.github.io/lfgroup-design/
+- 置き方はかみのて（`easywebcraft/kaminote-design`）と同じ。リポジトリ直下をそのまま配信する。
+- ★**公開前に必ず外すもの**：上部の「試作です」の帯（`build.py` の `draft-bar`）と、検索エンジンに載せない設定（`noindex`）。
 
 ## 構成
 
@@ -10,19 +14,23 @@
 | `build.py` | ページを書き出すスクリプト。共通のヘッダー・フッターと各ページの中身を組み合わせる |
 | `src/` | 共通のCSS・JS、トップページの本文 |
 | `text/` | 今のサイトから取得した各ページの本文（2026-10-02取得） |
-| `site/` | 書き出したサイト（このフォルダを公開する） |
-| `site/images/` | 写真（生成AIで作ったイメージ素材。実在のスタッフ・お客様ではない） |
+| `index.html`・`about/` など | 書き出したサイト（生成物。直接編集しない） |
+| `assets/` | 書き出したCSS・JS（生成物） |
+| `images/` | 写真（ChatGPTで作ったイメージ素材。実在のスタッフ・お客様ではない。プロンプトは ewc-crm の `docs/LFグループ_画像生成プロンプト.md`） |
 
 ## 書き出しと確認
 
 ```bash
-python3 build.py                                  # site/ に全ページを書き出す
-cd site && python3 -m http.server 8010            # http://localhost:8010 で確認
+python3 build.py                                  # 直下に全ページを書き出す
+cd .. && python3 -m http.server 8010              # http://localhost:8010/lfgroup-design/ で確認
 ```
 
-`site/` の中を直接編集しないこと（次の書き出しで上書きされる）。`build.py` か `src/` を直して書き出し直す。
+書き出したページ（`index.html`・`about/index.html` など）を直接編集しないこと（次の書き出しで上書きされる）。
+`build.py` か `src/` を直して書き出し直し、**原本と生成物を一緒にコミットする**（かみのてと同じ）。
 
-リンクは `/about/` のようにサイトのルートから書いているので、HTMLファイルを直接開くのではなく、上のようにサーバー経由で見る。
+原本では `/about/` のようにサイト直下から書き、書き出すときに相対パス（`../about/`）へ張り替える。
+GitHub Pages は `easywebcraft.github.io/lfgroup-design/` の下で配信するため、`/` 始まりのままだと外れる。
+ディレクトリのリンクなので、HTMLファイルを直接開くのではなくサーバー経由で見る。
 
 ## 公開前に残っていること
 

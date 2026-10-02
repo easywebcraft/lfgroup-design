@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """LFグループ株式会社 サイト試作のページを書き出す。
 
-  python3 build.py  →  site/ 以下に各ページの index.html と assets/ を作る
+  python3 build.py  →  リポジトリの直下に各ページの index.html と assets/ を作る（GitHub Pages でそのまま配信）
 
 共通部分（head・ヘッダー・メニュー・フッター）はここで一度だけ定義し、各ページの中身と組み合わせる。
 文言は今のサイト（text/ に保存した本文）にあるものだけを使う。足していない。
@@ -12,7 +12,7 @@ from pathlib import Path
 
 BASE = Path(__file__).parent
 SRC = BASE / 'src'
-SITE = BASE / 'site'
+SITE = BASE  # GitHub Pages はリポジトリ直下を配信する（かみのてと同じ）
 TEXT = BASE / 'text'
 
 TEL = '052-990-6159'
@@ -65,6 +65,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(title)}</title>
 <meta name="description" content="{html.escape(description)}">
+<meta name="robots" content="noindex,nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
@@ -72,6 +73,8 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 </head>
 <body>
 {SPRITE}
+<!-- ★公開前に必ず外す：試作であることを示す帯 -->
+<div class="draft-bar">LFグループ株式会社さま ホームページ リニューアルの試作です（EasyWebCraft）</div>
 
 <header class="header" id="header">
   <div class="wrap header-inner">
@@ -597,7 +600,17 @@ def page_policy(key, label, render):
 
 # ───────────────────────── 書き出し ─────────────────────────
 
+def relative(path, content):
+    """「/about/」のようなサイト直下からのリンクを、そのページから見た相対パスにする。
+    GitHub Pages は easywebcraft.github.io/リポジトリ名/ の下で配信するため、先頭が / のままだと外れる。"""
+    depth = path.count('/')
+    prefix = '../' * depth if depth else './'
+    return re.sub(r'(href|src)="/(?!/)', lambda m: f'{m.group(1)}="{prefix}', content)
+
+
 def write(path, content):
+    if path.endswith('.html'):
+        content = relative(path, content)
     p = SITE / path
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(content)
@@ -606,6 +619,12 @@ def write(path, content):
 
 def main():
     css = (SRC / 'style.css').read_text() + (SRC / 'pages.css').read_text()
+    css += """
+  /* ★公開前に必ず外す：試作の帯 */
+  .draft-bar { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
+  .draft-bar ~ .header:not(.is-scrolled) { top: 30px; }
+  .draft-bar ~ .drawer { padding-top: calc(var(--header-h) + 54px); }
+"""
     write('assets/style.css', css)
     write('assets/main.js', (SRC / 'main.js').read_text())
 

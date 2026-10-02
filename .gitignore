@@ -1,9 +1,8 @@
-# 今のサイトから取得した生のHTML（本文は text/ に保存済み）
-/*.html
-# 画面確認用の画像・作業ファイル
+# 今のサイトから取得した生のHTML・イメージ画像（本文は text/ に保存済み。
+# mockup.webp は架空の住所・電話番号が写っているので公開しない）
+/raw/
+# 画面確認用の画像
 /_shots/
 /preview-*.png
-/mockup.webp
-/extract.py
 .DS_Store
 __pycache__/
