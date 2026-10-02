@@ -284,3 +284,22 @@
     .pl-text { font-size: 16px; }
     .pl-text span { display: inline; }
   }
+
+  /* 私たちについて：冒頭の右に縦長の写真を1枚 */
+  .about-hero-grid { display: grid; grid-template-columns: 1fr 360px; gap: 72px; align-items: end; }
+  .about-hero-photo { aspect-ratio: 2 / 3; border-radius: 2px; }
+  .about-hero-photo img { object-position: 50% 60%; }
+  .about-hero .about-message { max-width: none; }
+  @media (max-width: 1023px) {
+    .about-hero-grid { grid-template-columns: 1fr 260px; gap: 40px; }
+  }
+  @media (max-width: 767px) {
+    .about-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+    .about-hero-photo { aspect-ratio: 4 / 3; }
+    .about-hero-photo img { object-position: 50% 62%; }
+  }
+  /* パンくずは写真の上端、見出しとメッセージは写真の下端にそろえる */
+  .about-hero-grid { align-items: stretch; }
+  .about-hero-grid > div:first-child { display: flex; flex-direction: column; }
+  .about-hero-grid .crumb { margin-bottom: auto; padding-bottom: 40px; }
+  @media (max-width: 767px) { .about-hero-grid .crumb { margin-bottom: 24px; padding-bottom: 0; } }

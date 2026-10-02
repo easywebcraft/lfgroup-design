@@ -197,9 +197,14 @@ def page_about():
         for i, parts in enumerate(fd))
     hero = page_hero('About', '私たちについて', [('私たちについて', '/about/')])
     hero = hero.replace('<section class="page-hero">', '<section class="page-hero about-hero">')
+    # 左に見出しとメッセージ、右に縦長の写真を1枚（相談スペース。人物なし）
+    hero = hero.replace('    <div class="wrap">\n', '    <div class="wrap about-hero-grid">\n      <div>\n', 1)
     hero = hero.replace('      <h1 class="fade">私たちについて</h1>\n',
                         '      <h1 class="fade">私たちについて</h1>\n'
-                        '      <p class="about-message fade"><span>顧客満足度を最優先に、</span><br><span>人々の生活を向上させます。</span></p>\n')
+                        '      <p class="about-message fade"><span>顧客満足度を最優先に、</span><br><span>人々の生活を向上させます。</span></p>\n'
+                        '      </div>\n'
+                        '      <div class="about-hero-photo photo fade"><span class="ph">IMAGE：相談スペース</span>'
+                        '<img src="/images/about-hero.jpg" alt="" onerror="this.remove()"></div>\n')
     return hero + f'''
   <section class="section about-intro">
     <div class="wrap">
