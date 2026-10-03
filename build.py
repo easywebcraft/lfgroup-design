@@ -201,10 +201,14 @@ def page_about():
     hero = hero.replace('    <div class="wrap">\n', '    <div class="wrap about-hero-grid">\n      <div>\n', 1)
     hero = hero.replace('      <h1 class="fade">私たちについて</h1>\n',
                         '      <h1 class="fade">私たちについて</h1>\n'
+                        # 説明文と3つの価値観は、お客様本位の業務運営方針と保険代理店事業の文言から取る（新しい言葉は足さない）
+                        '      <p class="about-lead fade">「保険・固定費削減のプロフェッショナルとして、<br class="pc">お客様の立場になって、誠実・公正に業務を行います。」</p>\n'
                         '      <p class="about-message fade"><span>顧客満足度を最優先に、</span><br><span>人々の生活を向上させます。</span></p>\n'
+                        '      <ul class="about-values fade"><li><b>01</b>誠実・公正</li><li><b>02</b>わかりやすい説明</li><li><b>03</b>長期的なサポート</li></ul>\n'
                         '      </div>\n'
-                        '      <div class="about-hero-photo photo fade"><span class="ph">IMAGE：相談スペース</span>'
-                        '<img src="/images/about-hero.jpg" alt="" onerror="this.remove()"></div>\n')
+                        '      <div class="about-hero-visual fade"><div class="about-hero-photo photo"><span class="ph">IMAGE：相談スペース</span>'
+                        '<img src="/images/about-hero.jpg" alt="" onerror="this.remove()"></div></div>\n')
+    hero = hero.replace('<section class="page-hero about-hero">', '<section class="page-hero about-hero">\n    <p class="about-bg-word" aria-hidden="true">About Us</p>')
     return hero + f'''
   <section class="section about-intro">
     <div class="wrap">
