@@ -646,9 +646,16 @@ def page_recruitment():
         ('郵送先・応募先', f'{ADDRESS}'),
     ]
     dl = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)
-    return page_hero('Recruitment', '採用情報', [('採用情報', '/recruitment/')], 'エントリー受付中！',
-                     word='Recruit', photo='cta.jpg', pos='30% 50%') + f'''
-  <section class="section">
+    # 「エントリー受付中！」はステータス表示にして、募集要項と電話（応募方法は電話）へつなぐ
+    return page_hero('Recruitment', '採用情報', [('採用情報', '/recruitment/')],
+                     word='Recruit', photo='cta.jpg', pos='30% 50%',
+                     extra=(f'        <div class="rc-hero fade">\n'
+                            f'          <p class="rc-status"><span class="dot"></span>Entry Open<b>エントリー受付中</b></p>\n'
+                            f'          <p class="rc-lead">現在、採用エントリーを受け付けています。<br>ご応募はお電話で承ります。</p>\n'
+                            f'          <p class="rc-links"><a class="btn btn-primary" href="#requirements">募集要項を見る{ARROW}</a>'
+                            f'<a class="simple-cta-tel" href="tel:0528468224"><svg class="ico"><use href="#i-tel"/></svg>052-846-8224</a></p>\n'
+                            f'        </div>')) + f'''
+  <section class="section rc-first" id="requirements">
     <div class="wrap">
       <dl class="company-list full">{dl}</dl>
     </div>

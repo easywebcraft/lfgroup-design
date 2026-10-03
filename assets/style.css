@@ -1040,6 +1040,34 @@
     .simple-cta .btn { width: 100%; justify-content: space-between; }
   }
 
+  /* ===== 採用情報：エントリー受付中をステータス表示にし、募集要項へつなぐ ===== */
+  .rc-hero { margin-top: 24px; padding-top: 24px; border-top: 1px solid #D5DFE7; }
+  .rc-status {
+    display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 12px; border-radius: 4px;
+    background: var(--navy); color: #fff; font-family: var(--en); font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  }
+  .rc-status b { font-family: var(--sans); font-size: 13px; letter-spacing: .06em; font-weight: 700; padding-left: 10px; border-left: 1px solid rgba(255,255,255,.35); }
+  .rc-status .dot { width: 7px; height: 7px; border-radius: 50%; background: #7FD3A6; box-shadow: 0 0 0 3px rgba(127, 211, 166, .25); }
+  .rc-lead { margin-top: 18px; font-size: 15px; line-height: 1.95; color: #3E4C59; }
+  .rc-links { display: flex; align-items: center; gap: 28px; margin-top: 24px; flex-wrap: wrap; }
+  .rc-links .btn { min-width: 0; padding: 14px 24px; }
+  .rc-first { padding-top: 80px; scroll-margin-top: var(--header-h); }
+  /* 写真は小さめにして、左の採用情報を主役に */
+  .sub-hero-grid:has(.rc-hero) { grid-template-columns: 1fr 340px; }
+  .sub-hero:has(.rc-hero) .sub-hero-photo { aspect-ratio: 4 / 5; }
+  .sub-hero:has(.rc-hero) .sub-bg-word { opacity: .022; font-size: clamp(48px, 7vw, 100px); bottom: -0.34em; }
+  /* 写真右上のL字線は細く薄く（全ページ） */
+  .sub-hero-visual::after { opacity: .2; }
+  @media (max-width: 1023px) { .sub-hero-grid:has(.rc-hero) { grid-template-columns: 1fr 260px; } }
+  @media (max-width: 767px) {
+    .sub-hero-grid:has(.rc-hero) { grid-template-columns: 1fr; }
+    .sub-hero:has(.rc-hero) .sub-hero-photo { aspect-ratio: 16 / 9; }
+    .rc-first { padding-top: 56px; }
+    .rc-links .btn { flex: 1; justify-content: space-between; }
+  }
+  .rc-links .btn { white-space: nowrap; }
+  @media (max-width: 767px) { .rc-links { gap: 16px 20px; } .rc-links .btn { flex: 1 1 100%; } }
+
   /* ★公開前に必ず外す：試作の帯 */
   .draft-bar { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
   .draft-bar ~ .header:not(.is-scrolled) { top: 30px; }
