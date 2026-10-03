@@ -527,3 +527,23 @@
     .svc-nav { grid-template-columns: 1fr; }
     .sub-bg-word { font-size: 52px; }
   }
+
+  /* ===== 会社概要：冒頭に会社名・所在地・事業内容、写真は名古屋の街並みとして縦長に ===== */
+  .co-hero { margin-top: 24px; padding-top: 24px; border-top: 1px solid #D5DFE7; }
+  .co-name { font-family: var(--serif); font-weight: 600; font-size: clamp(20px, 2vw, 24px); letter-spacing: .06em; color: var(--navy); }
+  .co-addr { margin-top: 10px; font-size: 15px; line-height: 1.9; color: var(--text-sub); }
+  .co-biz { margin-top: 22px; padding-left: 16px; border-left: 2px solid var(--navy); font-size: 15px; line-height: 1.9; color: #3E4C59; }
+  .co-biz br.pc { display: inline; }
+  .sub-hero-caption {
+    margin-top: 12px; text-align: right; font-family: var(--en); font-size: 11px; font-weight: 600;
+    letter-spacing: .22em; text-transform: uppercase; color: #4B7598;
+  }
+  .sub-hero-caption::before { content: ""; display: inline-block; width: 20px; height: 1px; background: #4B7598; vertical-align: middle; margin-right: 10px; }
+  /* 冒頭の直後の表を早く見せる */
+  .co-first { padding-top: 88px; }
+  /* 上の余白をさらに少し詰める（全ページ） */
+  .sub-hero { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 40px); }
+  /* 会社概要は写真が静かなので背景の英字をさらに控えめに */
+  .sub-hero:has(.co-hero) .sub-bg-word { opacity: .022; font-size: clamp(48px, 7vw, 100px); bottom: -0.32em; }
+  @media (max-width: 1023px) { .co-biz br.pc { display: none; } }
+  @media (max-width: 767px) { .co-first { padding-top: 56px; } }

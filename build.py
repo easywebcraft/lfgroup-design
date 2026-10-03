@@ -154,7 +154,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 SPRITE = (SRC / 'sprite.svg').read_text()
 
 
-def page_hero(label, title, crumbs, lead='', photo=None, word=None, chips=(), extra='', h1=True, pos='50% 50%', compact=False, zoom=1):
+def page_hero(label, title, crumbs, lead='', photo=None, word=None, chips=(), extra='', h1=True, pos='50% 50%', compact=False, zoom=1, caption=''):
     """下層ページの冒頭（全ページ共通。「私たちについて」と同じ形）。
     背景に大きな薄い英字（word、省略時は label）、左にパンくず・英字ラベル・見出し・説明・小さな項目、
     右に装飾付きの縦長写真（photo を渡したときだけ）。crumbs は (名前, URL) の並び。最後が今のページ。"""
@@ -171,7 +171,8 @@ def page_hero(label, title, crumbs, lead='', photo=None, word=None, chips=(), ex
     visual = ''
     if photo:
         visual = (f'\n      <div class="sub-hero-visual fade"><div class="sub-hero-photo photo">'
-                  f'<img src="/images/{photo}" alt="" style="object-position:{pos}{f";transform:scale({zoom});transform-origin:{pos}" if zoom != 1 else ""}" onerror="this.remove()"></div></div>')
+                  f'<img src="/images/{photo}" alt="" style="object-position:{pos}{f";transform:scale({zoom});transform-origin:{pos}" if zoom != 1 else ""}" onerror="this.remove()"></div>'
+                  + (f'<p class="sub-hero-caption">{caption}</p>' if caption else '') + '</div>')
     # 左の中身が少ないページは写真を正方形にして、パンくずと見出しの間が空きすぎないようにする
     cls = ('page-hero sub-hero' + (' has-photo' if photo else '') + (' tall' if extra else '')
            + (' compact' if compact else ''))
@@ -480,9 +481,15 @@ def page_company():
     # 「愛知県名古屋市東区葵3丁目14-5」を Google マップの埋め込み形式にしたもの
     q = 'https://www.google.com/maps/embed?origin=mfe&amp;pb=!1m3!2m1!1z5oSb55-l55yM5ZCN5Y-k5bGL5biC5p2x5Yy66JG1M-S4geebrjE0LTU!6i16'
     links = ''.join(f'<a href="{h}">{l}{ARROW}</a>' for _, l, h in POLICIES)
+    # 冒頭は会社名・所在地・事業内容（どれも今の会社概要にある情報）。写真は所在地の名古屋の街並みとして見せる
     return page_hero('Company', '会社概要', [('会社概要', '/company/')],
-                     lead=f'{COMPANY}<br>{ADDRESS}', photo='cta-final.jpg', pos='50% 60%') + f'''
-  <section class="section">
+                     photo='cta-final.jpg', pos='50% 62%', caption='Nagoya, Aichi',
+                     extra=(f'        <div class="co-hero fade">\n'
+                            f'          <p class="co-name">{COMPANY}</p>\n'
+                            f'          <p class="co-addr">愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</p>\n'
+                            f'          <p class="co-biz">ファイナンシャルプランニング・金融コンサル・<br class="pc">保険代理店業務を行っています。</p>\n'
+                            f'        </div>')) + f'''
+  <section class="section co-first">
     <div class="wrap">
       <dl class="company-list full">
         <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
