@@ -1,6 +1,7 @@
   (function () {
     var root = document.documentElement;
     root.classList.add('js');
+    window.LF_READY = true;
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // ヘッダー：スクロールで白背景に

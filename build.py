@@ -72,6 +72,12 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css?v={ASSET_V}">
+<script>
+  // 表示前に「フェード待ち」の状態にする（本文の最後で付けると、文字が一度見えてから消えてフェードする）。
+  // main.js が読み込めなかったときに文字が隠れたままにならないよう、3秒で解除する。
+  document.documentElement.classList.add('js');
+  setTimeout(function () {{ if (!window.LF_READY) document.documentElement.classList.remove('js'); }}, 3000);
+</script>
 </head>
 <body>
 {SPRITE}
