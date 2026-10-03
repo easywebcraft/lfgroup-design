@@ -342,3 +342,6 @@
     .about-bg-word { font-size: 84px; bottom: -0.15em; }
   }
   .about-hero-visual::before { width: 62%; height: 58%; background: #DCE6EF; opacity: 1; }
+  /* 相談室の写真：テーブルと棚が下半分にあるので、切り取りは下寄せ */
+  .about-hero-photo img { object-position: 50% 72%; }
+  @media (max-width: 767px) { .about-hero-photo img { object-position: 50% 74%; } }
