@@ -186,6 +186,16 @@ def page_hero(label, title, crumbs, lead='', photo=None, word=None, chips=(), ex
 '''
 
 
+def policy_lines_html(items, fade=True):
+    """「01 ── 本文」の縦ライン型。items は文字列、または改行位置で区切った文字列のタプル。"""
+    out = []
+    for i, it in enumerate(items):
+        parts = it if isinstance(it, (tuple, list)) else (it,)
+        text = ''.join(f'<span>{p}</span>' for p in parts)
+        out.append(f'<li{" class=" + chr(34) + "fade" + chr(34) if fade else ""}><p class="pl-num">{i + 1:02d}</p><p class="pl-text">{text}</p></li>')
+    return '<ol class="policy-lines">' + ''.join(out) + '</ol>'
+
+
 def final_cta():
     return f'''  <section class="cta" id="final-cta">
     <div class="photo"><img src="/images/cta-final.jpg" alt="" onerror="this.remove()"></div>
@@ -213,9 +223,7 @@ def page_about():
         ('事故に遭われたお客様に対して、', '迅速に保険金の支払いができるようアドバイスし、', '事故処理完了まで適切な対応を行います。'),
         ('お客様の立場で行動するために、', '継続的に教育を行うとともに、適切な管理体制を整備します。'),
     ]
-    items = ''.join(
-        f'<li class="fade"><p class="pl-num">{i + 1:02d}</p><p class="pl-text">{"".join(f"<span>{x}</span>" for x in parts)}</p></li>'
-        for i, parts in enumerate(fd))
+    items = policy_lines_html(fd)
     # 説明文と3つの価値観は、お客様本位の業務運営方針と保険代理店事業の文言から取る（新しい言葉は足さない）
     hero = page_hero(
         'About', '私たちについて', [('私たちについて', '/about/')], word='About Us',
@@ -254,7 +262,7 @@ def page_about():
           <h2 class="heading fade">お客様本位の<br>業務運営方針</h2>
           <p class="fade" style="margin-top:32px"><a class="more" href="/operation/">主な取組内容を見る{ARROW}</a></p>
         </div>
-        <ol class="policy-lines">{items}</ol>
+        {items}
       </div>
     </div>
   </section>
@@ -387,14 +395,16 @@ def page_insurance():
     </div>
   </section>
 
-  <section class="section bg-blue">
-    <div class="wrap narrow">
-      <p class="label fade">Policy</p>
-      <h2 class="heading fade">勧誘方針</h2>
-      <ol class="fd-list" style="margin-top:40px">
-        {''.join(f'<li class="fade">{t}</li>' for t in sol)}
-      </ol>
-      <p style="margin-top:32px" class="fade"><a class="more" href="/solicitation/">勧誘方針の全文を見る{ARROW}</a></p>
+  <section class="section about-policy">
+    <div class="wrap">
+      <div class="about-policy-grid">
+        <div class="about-policy-head">
+          <p class="label fade">Policy</p>
+          <h2 class="heading fade">勧誘方針</h2>
+          <p class="fade" style="margin-top:32px"><a class="more" href="/solicitation/">勧誘方針の全文を見る{ARROW}</a></p>
+        </div>
+        {policy_lines_html(sol)}
+      </div>
     </div>
   </section>
 
@@ -530,7 +540,7 @@ def page_news_article(slug, date, cat, title, paras):
     body = ''.join(f'<p>{p}</p>' for p in paras)
     return page_hero('News', 'お知らせ', [('お知らせ', '/news/'), (title.rstrip('！'), f'/news/{slug}/')], h1=False, compact=True) + f'''
   <section class="section">
-    <div class="wrap narrow">
+    <div class="wrap reading">
       <article>
         <header class="article-head fade">
           <p class="article-meta"><time datetime="{date}">{date.replace("-", ".")}</time><span class="news-cat">{cat}</span></p>
@@ -693,7 +703,7 @@ def policy_operation():
     out, i = [], 0
     nums = [l for l in joined if re.match(r'^[１２３４５]．', l)]
     out.append('<h2>お客様本位の業務運営方針《FD方針》</h2>')
-    out.append('<ol class="num">' + ''.join(f'<li>{esc(l)}</li>' for l in nums) + '</ol>')
+    out.append(policy_lines_html([esc(re.sub(r'^[１-９]．', '', l)) for l in nums], fade=False))
     out.append('<h2>お客様本位の業務運営方針と主な取組内容</h2>')
     rest = joined[joined.index('お客様本位の業務運営方針と主な取組内容') + 1:]
     for l in rest:
@@ -717,7 +727,7 @@ def policy_operation():
 
 def policy_solicitation():
     lines = policy_lines('solicitation', '勧誘方針')
-    return render_policy(lines, heading_rule=lambda l: not l.startswith('・'))
+    return '<div class="numbered">' + render_policy(lines, heading_rule=lambda l: not l.startswith('・')) + '</div>'
 
 
 def policy_privacy():
@@ -750,7 +760,7 @@ def policy_security():
 def page_policy(key, label, render):
     return page_hero('Policy', label, [(label, f'/{key}/')], compact=True) + f'''
   <section class="section">
-    <div class="wrap narrow policy">
+    <div class="wrap reading policy">
 {render()}
     </div>
   </section>

@@ -427,3 +427,36 @@
   .js .fv.is-loaded .fv-photo { opacity: 1; }
   .js .fv-photo img { transition: transform 1.4s ease; }
   @media (prefers-reduced-motion: reduce) { .js .fv .fv-photo { opacity: 1; } }
+
+  /* ===== 私たちについての改善を他ページへ ===== */
+  /* 読み物は文章幅を約700pxに絞り、少し大きく・行間広めに */
+  .reading { max-width: calc(720px + var(--gutter) * 2); }
+  .policy p, .policy li { font-size: 16px; line-height: 2.05; color: #3E4C59; }
+  .article-body { font-size: 16px; color: #3E4C59; }
+  .policy-lines .pl-text span { color: inherit; }
+  .policy .policy-lines { margin-top: 24px; }
+  .policy .policy-lines li { padding: 26px 0; grid-template-columns: 80px 1fr; }
+  .policy .policy-lines .pl-num { font-size: 22px; }
+  .policy .policy-lines .pl-text { font-size: 16px; line-height: 1.95; color: var(--navy); margin: 0; }
+  /* 方針の見出しはネイビーの線で区切る */
+  .policy h2 { font-family: var(--serif); font-weight: 600; font-size: 21px; color: var(--navy); border-bottom: 2px solid var(--navy); }
+  .policy h3 { color: var(--navy); display: flex; align-items: center; gap: 12px; }
+  .policy h3::after { content: ""; flex: 1; height: 1px; background: var(--card-line); }
+  /* 勧誘方針：4つの柱に 01〜04 */
+  .numbered { counter-reset: pol; }
+  .numbered h2 { counter-increment: pol; display: grid; grid-template-columns: 56px 1fr; gap: 8px; align-items: baseline; }
+  .numbered h2::before { content: counter(pol, decimal-leading-zero); font-family: var(--en); font-weight: 600; font-size: 22px; color: var(--navy); }
+  @media (max-width: 767px) {
+    .policy .policy-lines li { grid-template-columns: 1fr; gap: 6px; padding: 22px 0; }
+    .policy h2 { font-size: 18px; }
+    .numbered h2 { grid-template-columns: 40px 1fr; }
+    .numbered h2::before { font-size: 18px; }
+  }
+  /* 番号は本文の1行目にそろえる（本文が2〜3行になると番号が下にずれていた） */
+  .policy-lines li { align-items: start; }
+  .pl-num { line-height: 34px; }
+  .policy .policy-lines p { margin: 0; }
+  .policy .policy-lines .pl-num { line-height: 31px; }
+  /* 見出しの下線と一覧の上線が二重にならないように */
+  .policy h2 + .policy-lines { border-top: 0; margin-top: 4px; }
+  @media (max-width: 767px) { .pl-num, .policy .policy-lines .pl-num { line-height: 1.4; } }
