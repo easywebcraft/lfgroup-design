@@ -419,3 +419,11 @@
     .fv-photo { width: 54%; -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.6) 12%, #000 26%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.6) 12%, #000 26%); }
     .fv-photo img { object-position: 78% 40%; }
   }
+
+  /* フェードは短く・小さく（長いと「表示が遅いサイト」に見える）。表や本文・フォームはフェードさせない */
+  .js .fade { transform: translateY(10px); transition: opacity .55s ease, transform .55s ease; }
+  /* FV の写真も文字と一緒にふわっと出す（写真だけ先に見えて文字が後から来る違和感をなくす） */
+  .js .fv .fv-photo { opacity: 0; transition: opacity .7s ease; }
+  .js .fv.is-loaded .fv-photo { opacity: 1; }
+  .js .fv-photo img { transition: transform 1.4s ease; }
+  @media (prefers-reduced-motion: reduce) { .js .fv .fv-photo { opacity: 1; } }

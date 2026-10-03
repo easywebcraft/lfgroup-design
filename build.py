@@ -458,7 +458,7 @@ def page_company():
                      lead=f'{COMPANY}<br>{ADDRESS}', photo='cta-final.jpg', pos='50% 60%') + f'''
   <section class="section">
     <div class="wrap">
-      <dl class="company-list full fade">
+      <dl class="company-list full">
         <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
         <div><dt>代表者</dt><dd>遠藤 昇平</dd></div>
         <div><dt>所在地</dt><dd>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</dd></div>
@@ -536,7 +536,7 @@ def page_news_article(slug, date, cat, title, paras):
           <p class="article-meta"><time datetime="{date}">{date.replace("-", ".")}</time><span class="news-cat">{cat}</span></p>
           <h1>{title}</h1>
         </header>
-        <div class="article-body fade">{body}</div>
+        <div class="article-body">{body}</div>
       </article>
       <p class="back"><a class="more" href="/news/">お知らせ一覧へ戻る{ARROW}</a></p>
     </div>
@@ -551,7 +551,7 @@ def page_contact():
                      photo='about-hero.jpg', pos='50% 72%') + f'''
   <section class="section">
     <div class="wrap contact-grid">
-      <div class="fade">
+      <div>
         <p class="text">ご返信に3営業日ほどお時間をいただいております。3営業日を過ぎても返信がない場合は、お手数ですが再度お問い合わせをお願いいたします。</p>
         <div class="tel-box">
           <p>お電話でのお問い合わせ</p>
@@ -559,7 +559,7 @@ def page_contact():
         </div>
       </div>
 
-      <div class="fade">
+      <div>
         <!-- 試作：送信先（メール送信・フォームサービス）は公開前に設定する。今は入力チェックだけで送信しない -->
         <form class="form" id="contactForm" novalidate>
           <fieldset class="field">
@@ -617,7 +617,7 @@ def page_recruitment():
                      word='Recruit', photo='cta.jpg', pos='30% 50%') + f'''
   <section class="section">
     <div class="wrap">
-      <dl class="company-list full fade">{dl}</dl>
+      <dl class="company-list full">{dl}</dl>
     </div>
   </section>
 
@@ -750,7 +750,7 @@ def policy_security():
 def page_policy(key, label, render):
     return page_hero('Policy', label, [(label, f'/{key}/')], compact=True) + f'''
   <section class="section">
-    <div class="wrap narrow policy fade">
+    <div class="wrap narrow policy">
 {render()}
     </div>
   </section>

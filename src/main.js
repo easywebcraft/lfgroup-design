@@ -27,13 +27,21 @@
     // ページ最上部（トップはファーストビュー、下層はページ見出し）：順番にフェードイン
     var first = document.querySelector('.fv, .page-hero');
     if (first && first.classList.contains('fv')) {
-      window.addEventListener('load', function () { first.classList.add('is-loaded'); });
+      requestAnimationFrame(function () { first.classList.add('is-loaded'); });  // 写真のズームも文字と同時に始める
     }
     if (first) {
       first.querySelectorAll('.fade').forEach(function (el, i) {
-        setTimeout(function () { el.classList.add('is-in'); }, 150 + i * 150);
+        setTimeout(function () { el.classList.add('is-in'); }, 60 + i * 80);
       });
     }
+
+    document.addEventListener('transitionend', function (e) {
+      var el = e.target;
+      if (e.propertyName === 'opacity' && el.classList && el.classList.contains('fade') && el.classList.contains('is-in')) {
+        el.classList.remove('fade', 'is-in');
+        el.style.transitionDelay = '';
+      }
+    });
 
     // スクロールでフェードイン（1回だけ）。同じ親の中では少しずつずらす
     var targets = Array.prototype.filter.call(document.querySelectorAll('main .fade'), function (el) { return !first || !first.contains(el); });
@@ -45,7 +53,7 @@
           if (!entry.isIntersecting) return;
           var el = entry.target;
           var sibs = Array.prototype.filter.call(el.parentNode.children, function (c) { return c.classList.contains('fade'); });
-          el.style.transitionDelay = Math.min(sibs.indexOf(el), 4) * 0.1 + 's';
+          el.style.transitionDelay = Math.min(sibs.indexOf(el), 3) * 0.08 + 's';
           el.classList.add('is-in');
           io.unobserve(el);
         });
