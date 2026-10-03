@@ -745,9 +745,20 @@ def relative(path, content):
     return re.sub(r'(href|src)="/(?!/)', lambda m: f'{m.group(1)}="{prefix}', content)
 
 
+def image_version(content):
+    """写真も同じ名前のまま差し替えるので、中身から作った番号を URL に付ける（ブラウザが古い写真を出し続けないように）。"""
+    def add(m):
+        f = SITE / 'images' / m.group(2)
+        if not f.exists():
+            return m.group(0)
+        v = hashlib.sha1(f.read_bytes()).hexdigest()[:8]
+        return f'{m.group(1)}{m.group(2)}?v={v}"'
+    return re.sub(r'(src="/images/)([^"?]+)"', add, content)
+
+
 def write(path, content):
     if path.endswith('.html'):
-        content = relative(path, content)
+        content = relative(path, image_version(content))
     p = SITE / path
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(content)
