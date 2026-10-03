@@ -148,18 +148,33 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 SPRITE = (SRC / 'sprite.svg').read_text()
 
 
-def page_hero(label, title, crumbs, lead=''):
-    """下層ページの見出し。crumbs は (名前, URL) の並び。最後が今のページ。"""
+def page_hero(label, title, crumbs, lead='', photo=None, word=None, chips=(), extra='', h1=True, pos='50% 50%', compact=False):
+    """下層ページの冒頭（全ページ共通。「私たちについて」と同じ形）。
+    背景に大きな薄い英字（word、省略時は label）、左にパンくず・英字ラベル・見出し・説明・小さな項目、
+    右に装飾付きの縦長写真（photo を渡したときだけ）。crumbs は (名前, URL) の並び。最後が今のページ。"""
     items = ['<li><a href="/">トップ</a></li>']
     for name, href in crumbs[:-1]:
         items.append(f'<li><a href="{href}">{name}</a></li>')
     items.append(f'<li aria-current="page">{crumbs[-1][0]}</li>')
-    lead_html = f'\n      <p class="lead fade">{lead}</p>' if lead else ''
-    return f'''  <section class="page-hero">
-    <div class="wrap">
-      <ol class="crumb fade" aria-label="パンくずリスト">{''.join(items)}</ol>
-      <p class="label fade">{label}</p>
-      <h1 class="fade">{title}</h1>{lead_html}
+    # 記事ページは記事タイトルを h1 にするので、ここは見た目だけ同じ p にする
+    title_html = f'<h1 class="fade">{title}</h1>' if h1 else f'<p class="sub-hero-title fade">{title}</p>'
+    lead_html = f'\n        <p class="hero-lead fade">{lead}</p>' if lead else ''
+    chips_html = ('\n        <ul class="about-values fade">' + ''.join(
+        f'<li><b>{i + 1:02d}</b>{c}</li>' for i, c in enumerate(chips)) + '</ul>') if chips else ''
+    extra_html = f'\n{extra}' if extra else ''
+    visual = ''
+    if photo:
+        visual = (f'\n      <div class="sub-hero-visual fade"><div class="sub-hero-photo photo">'
+                  f'<img src="/images/{photo}" alt="" style="object-position:{pos}" onerror="this.remove()"></div></div>')
+    cls = 'page-hero sub-hero' + (' has-photo' if photo else '') + (' compact' if compact else '')
+    return f'''  <section class="{cls}">
+    <p class="sub-bg-word" aria-hidden="true">{word or label}</p>
+    <div class="wrap sub-hero-grid">
+      <div class="sub-hero-copy">
+        <ol class="crumb fade" aria-label="パンくずリスト">{''.join(items)}</ol>
+        <p class="label fade">{label}</p>
+        {title_html}{lead_html}{extra_html}{chips_html}
+      </div>{visual}
     </div>
   </section>
 '''
@@ -195,20 +210,14 @@ def page_about():
     items = ''.join(
         f'<li class="fade"><p class="pl-num">{i + 1:02d}</p><p class="pl-text">{"".join(f"<span>{x}</span>" for x in parts)}</p></li>'
         for i, parts in enumerate(fd))
-    hero = page_hero('About', '私たちについて', [('私たちについて', '/about/')])
-    hero = hero.replace('<section class="page-hero">', '<section class="page-hero about-hero">')
-    # 左に見出しとメッセージ、右に縦長の写真を1枚（相談スペース。人物なし）
-    hero = hero.replace('    <div class="wrap">\n', '    <div class="wrap about-hero-grid">\n      <div>\n', 1)
-    hero = hero.replace('      <h1 class="fade">私たちについて</h1>\n',
-                        '      <h1 class="fade">私たちについて</h1>\n'
-                        # 説明文と3つの価値観は、お客様本位の業務運営方針と保険代理店事業の文言から取る（新しい言葉は足さない）
-                        '      <p class="about-lead fade">「保険・固定費削減のプロフェッショナルとして、<br class="pc">お客様の立場になって、誠実・公正に業務を行います。」</p>\n'
-                        '      <p class="about-message fade"><span>顧客満足度を最優先に、</span><br><span>人々の生活を向上させます。</span></p>\n'
-                        '      <ul class="about-values fade"><li><b>01</b>誠実・公正</li><li><b>02</b>わかりやすい説明</li><li><b>03</b>長期的なサポート</li></ul>\n'
-                        '      </div>\n'
-                        '      <div class="about-hero-visual fade"><div class="about-hero-photo photo"><span class="ph">IMAGE：相談スペース</span>'
-                        '<img src="/images/about-hero.jpg" alt="" onerror="this.remove()"></div></div>\n')
-    hero = hero.replace('<section class="page-hero about-hero">', '<section class="page-hero about-hero">\n    <p class="about-bg-word" aria-hidden="true">About Us</p>')
+    # 説明文と3つの価値観は、お客様本位の業務運営方針と保険代理店事業の文言から取る（新しい言葉は足さない）
+    hero = page_hero(
+        'About', '私たちについて', [('私たちについて', '/about/')], word='About Us',
+        photo='about-hero.jpg', pos='50% 72%',
+        extra=('        <p class="about-lead fade">「保険・固定費削減のプロフェッショナルとして、<br class="pc">'
+               'お客様の立場になって、誠実・公正に業務を行います。」</p>\n'
+               '        <p class="about-message fade"><span>顧客満足度を最優先に、</span><br><span>人々の生活を向上させます。</span></p>'),
+        chips=('誠実・公正', 'わかりやすい説明', '長期的なサポート'))
     return hero + f'''
   <section class="section about-intro">
     <div class="wrap">
@@ -286,8 +295,9 @@ def page_business():
           {note_html}
         </div>
       </article>''')
-    hero = page_hero('Business', '事業内容', [('事業内容', '/business/')])
-    hero = hero.replace('    </div>\n  </section>', f'      <nav class="biz-index fade" aria-label="事業の一覧">{index}</nav>\n    </div>\n  </section>', 1)
+    hero = page_hero('Business', '事業内容', [('事業内容', '/business/')], photo='hero.jpg', pos='78% 40%',
+                     lead='保険、ファイナンシャルプランニング、固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。',
+                     extra=f'        <nav class="biz-index fade" aria-label="事業の一覧">{index}</nav>')
     return hero + f'''
   <section class="section">
     <div class="wrap">
@@ -317,7 +327,8 @@ def page_insurance():
         'お客さまのご意見等の収集に努め現状を把握し、また、お客さまの満足度を高めるよう努めます。',
     ]
     return page_hero('Insurance', '保険', [('取り扱いサービス', '/service/'), ('保険', '/insurance/')],
-                     '大手保険会社の代理店として、各種保険を取り扱っています。') + f'''
+                     '大手保険会社の代理店として、各種保険を取り扱っています。',
+                     photo='service-insurance.jpg', pos='45% 50%', chips=('生命保険', '損害保険')) + f'''
   <section class="section">
     <div class="wrap ins-intro">
       <div>
@@ -421,7 +432,9 @@ def page_service():
           <p class="label">{en}</p>{inner}
         </div>
       </article>''')
-    return page_hero('Service', '取り扱いサービス', [('取り扱いサービス', '/service/')]) + f'''
+    return page_hero('Service', '取り扱いサービス', [('取り扱いサービス', '/service/')],
+                     photo='service-lifeline.jpg', pos='55% 50%',
+                     chips=('保険', 'ライフライン', 'インターネット', 'ウォーターサーバー')) + f'''
   <section class="section">
     <div class="wrap">
 {chr(10).join(out)}
@@ -435,7 +448,8 @@ def page_company():
     # 「愛知県名古屋市東区葵3丁目14-5」を Google マップの埋め込み形式にしたもの
     q = 'https://www.google.com/maps/embed?origin=mfe&amp;pb=!1m3!2m1!1z5oSb55-l55yM5ZCN5Y-k5bGL5biC5p2x5Yy66JG1M-S4geebrjE0LTU!6i16'
     links = ''.join(f'<a href="{h}">{l}{ARROW}</a>' for _, l, h in POLICIES)
-    return page_hero('Company', '会社概要', [('会社概要', '/company/')]) + f'''
+    return page_hero('Company', '会社概要', [('会社概要', '/company/')],
+                     lead=f'{COMPANY}<br>{ADDRESS}', photo='cta-final.jpg', pos='50% 60%') + f'''
   <section class="section">
     <div class="wrap">
       <dl class="company-list full fade">
@@ -496,7 +510,7 @@ def simple_cta():
 
 def page_news_list():
     items = ''.join(news_row(slug, d, cat, t) for slug, d, cat, t, _ in NEWS)
-    return page_hero('News', 'お知らせ', [('お知らせ', '/news/')]).replace('<section class="page-hero">', '<section class="page-hero compact">') + f'''
+    return page_hero('News', 'お知らせ', [('お知らせ', '/news/')], compact=True) + f'''
   <section class="section news-page">
     <div class="wrap narrow">
       <ul class="news-lines fade">{items}</ul>
@@ -508,7 +522,7 @@ def page_news_list():
 
 def page_news_article(slug, date, cat, title, paras):
     body = ''.join(f'<p>{p}</p>' for p in paras)
-    return page_hero('News', 'お知らせ', [('お知らせ', '/news/'), (title.rstrip('！'), f'/news/{slug}/')]).replace('<h1 class="fade">お知らせ</h1>', '<p class="heading fade">お知らせ</p>').replace('<section class="page-hero">', '<section class="page-hero compact">') + f'''
+    return page_hero('News', 'お知らせ', [('お知らせ', '/news/'), (title.rstrip('！'), f'/news/{slug}/')], h1=False, compact=True) + f'''
   <section class="section">
     <div class="wrap narrow">
       <article>
@@ -526,11 +540,12 @@ def page_news_article(slug, date, cat, title, paras):
 
 
 def page_contact():
-    return page_hero('Contact', 'お問い合わせ', [('お問い合わせ', '/contact/')]) + f'''
+    return page_hero('Contact', 'お問い合わせ', [('お問い合わせ', '/contact/')],
+                     lead='弊社へのお問い合わせは、こちらのフォームより承っております。',
+                     photo='about-hero.jpg', pos='50% 72%') + f'''
   <section class="section">
     <div class="wrap contact-grid">
       <div class="fade">
-        <p class="text">弊社へのお問い合わせは、こちらのフォームより承っております。</p>
         <p class="text">ご返信に3営業日ほどお時間をいただいております。3営業日を過ぎても返信がない場合は、お手数ですが再度お問い合わせをお願いいたします。</p>
         <div class="tel-box">
           <p>お電話でのお問い合わせ</p>
@@ -592,7 +607,8 @@ def page_recruitment():
         ('郵送先・応募先', f'{ADDRESS}'),
     ]
     dl = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)
-    return page_hero('Recruitment', '採用情報', [('採用情報', '/recruitment/')], 'エントリー受付中！') + f'''
+    return page_hero('Recruitment', '採用情報', [('採用情報', '/recruitment/')], 'エントリー受付中！',
+                     word='Recruit', photo='cta.jpg', pos='30% 50%') + f'''
   <section class="section">
     <div class="wrap">
       <dl class="company-list full fade">{dl}</dl>
@@ -726,7 +742,7 @@ def policy_security():
 
 
 def page_policy(key, label, render):
-    return page_hero('Policy', label, [(label, f'/{key}/')]) + f'''
+    return page_hero('Policy', label, [(label, f'/{key}/')], compact=True) + f'''
   <section class="section">
     <div class="wrap narrow policy fade">
 {render()}
