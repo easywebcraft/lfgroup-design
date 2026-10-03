@@ -25,8 +25,8 @@ COMPANY = 'LFグループ株式会社'
 NAV = [
     ('about', '私たちについて', '/about/'),
     ('business', '事業内容', '/business/'),
-    ('service', '取り扱いサービス', '/service/'),
-    ('company', '会社概要', '/company/'),
+    ('service', 'サービス', '/service/'),        # メニューでは短く。ページの見出しは「取り扱いサービス」
+    ('company', '会社情報', '/company/'),        # 同上「会社概要」
     ('news', 'お知らせ', '/news/'),
     ('recruitment', '採用情報', '/recruitment/'),
 ]
