@@ -502,3 +502,28 @@
     .hb-top small { font-size: 8px; letter-spacing: .06em; padding: 1px 4px; }
     .sub-hero.has-photo:not(.tall) .sub-hero-photo { aspect-ratio: 4 / 3; }
   }
+
+  /* ===== 取り扱いサービス：4サービスを番号＋名称＋矢印のナビに ===== */
+  .svc-nav { display: grid; grid-template-columns: 1fr 1fr; column-gap: 28px; margin-top: 28px; max-width: 600px; border-top: 1px solid var(--card-line); }
+  .svc-nav-item { display: flex; align-items: center; gap: 14px; padding: 18px 10px; border-bottom: 1px solid var(--card-line); transition: background-color .2s; }
+  .svc-nav-item:hover { background: rgba(255, 255, 255, .6); }
+  .svc-nav-item b { font-family: var(--en); font-size: 13px; font-weight: 600; letter-spacing: .06em; color: #4B7598; }
+  .sn-name { display: flex; flex-direction: column; font-family: var(--serif); font-weight: 600; font-size: 17px; line-height: 1.4; color: var(--navy); }
+  .sn-name small { font-family: var(--en); font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--label); margin-top: 3px; }
+  .svc-nav-item em { font-style: normal; font-family: var(--en); font-size: 9px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; color: var(--navy); border: 1px solid rgba(27,51,80,.35); border-radius: 3px; padding: 1px 6px; }
+  .svc-nav-item .arw { margin-left: auto; color: var(--navy); flex: none; transition: transform .25s; }
+  .svc-nav-item:hover .arw { transform: translateX(4px); }
+  .svc-nav-item.main { background: #F2F6FA; padding-inline: 14px; }
+  .svc-nav-item.main b { color: var(--navy); }
+  .svc-nav-item.main .sn-name { font-size: 19px; }
+  .svc-row { scroll-margin-top: calc(var(--header-h) + 24px); }
+  /* 写真は少し小さく（左の見出しより目立たないように） */
+  .sub-hero.tall .sub-hero-grid:has(.svc-nav) { grid-template-columns: 1fr 380px; }
+  /* 背景の英字はさらに控えめに・下へ（全ページ） */
+  .sub-bg-word { font-size: clamp(54px, 8.2vw, 116px); opacity: .028; bottom: -0.28em; }
+  @media (max-width: 1023px) { .sub-hero.tall .sub-hero-grid:has(.svc-nav) { grid-template-columns: 1fr 280px; } }
+  @media (max-width: 767px) {
+    .sub-hero.tall .sub-hero-grid:has(.svc-nav) { grid-template-columns: 1fr; }
+    .svc-nav { grid-template-columns: 1fr; }
+    .sub-bg-word { font-size: 52px; }
+  }

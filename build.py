@@ -447,17 +447,26 @@ def page_service():
          f'<div class="svc-group">{tags(["浄水器型ウォーターサーバー"])}</div>'),
     ]
     out = []
-    for name, en, img, ph, inner in rows:
-        out.append(f'''      <article class="svc-row fade">
+    ids = ['insurance', 'lifeline', 'internet', 'water']
+    for (name, en, img, ph, inner), sid in zip(rows, ids):
+        out.append(f'''      <article class="svc-row fade" id="svc-{sid}">
         <div class="photo"><span class="ph">{ph}</span><img src="/images/{img}" alt="" onerror="this.remove()"></div>
         <div>
           <h2>{name}</h2>
           <p class="label">{en}</p>{inner}
         </div>
       </article>''')
+    # 4サービスは番号＋名称＋矢印のナビ（各サービスの説明へ移動）。主力の保険だけ軽く強調する
+    nav = ''.join(
+        f'<a class="svc-nav-item{" main" if sid == "insurance" else ""}" href="#svc-{sid}">'
+        f'<b>{i + 1:02d}</b><span class="sn-name">{name}<small>{en}</small></span>'
+        f'{"<em>Main Service</em>" if sid == "insurance" else ""}{ARROW}</a>'
+        for i, ((name, en, *_), sid) in enumerate(zip(rows, ids)))
     return page_hero('Service', '取り扱いサービス', [('取り扱いサービス', '/service/')],
+                     # 説明は今のサイトの「大手保険会社の代理店として」と取り扱い商材の名前を組み合わせたもの
+                     lead='大手保険会社の代理店としての保険をはじめ、<br class="pc">電気・ガス・水道などのライフライン、インターネット回線、<br class="pc">ウォーターサーバーを取り扱っています。',
                      photo='service-lifeline.jpg', pos='55% 50%',
-                     chips=('保険', 'ライフライン', 'インターネット', 'ウォーターサーバー')) + f'''
+                     extra=f'        <nav class="svc-nav fade" aria-label="取り扱いサービスの一覧">{nav}</nav>') + f'''
   <section class="section">
     <div class="wrap">
 {chr(10).join(out)}
