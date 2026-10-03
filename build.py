@@ -536,11 +536,11 @@ def simple_cta():
     <div class="wrap">
       <div class="simple-cta fade">
         <p class="simple-cta-title"><span>サービスに関するお問い合わせ、</span><span>資料のご請求はこちら</span></p>
-        <div class="btns">
-          <a class="btn btn-primary" href="/contact/">お問い合わせ{ARROW}</a>
-          <a class="btn btn-white" href="/contact/?type=document">資料請求{ARROW}</a>
-          <a class="btn btn-white btn-tel" href="{TEL_HREF}"><svg class="ico"><use href="#i-tel"/></svg>{TEL}</a>
-        </div>
+        <a class="btn btn-primary" href="/contact/">お問い合わせ{ARROW}</a>
+        <p class="simple-cta-sub">
+          <a class="more" href="/contact/?type=document">資料請求{ARROW}</a>
+          <a class="simple-cta-tel" href="{TEL_HREF}"><svg class="ico"><use href="#i-tel"/></svg>{TEL}</a>
+        </p>
       </div>
     </div>
   </section>
@@ -551,7 +551,7 @@ def page_news_list():
     items = ''.join(news_row(slug, d, cat, t) for slug, d, cat, t, _ in NEWS)
     return page_hero('News', 'お知らせ', [('お知らせ', '/news/')], compact=True) + f'''
   <section class="section news-page">
-    <div class="wrap narrow">
+    <div class="wrap news-wrap">
       <ul class="news-lines fade">{items}</ul>
     </div>
   </section>
