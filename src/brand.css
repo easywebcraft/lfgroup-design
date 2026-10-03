@@ -599,3 +599,6 @@
   }
   .rc-links .btn { white-space: nowrap; }
   @media (max-width: 767px) { .rc-links { gap: 16px 20px; } .rc-links .btn { flex: 1 1 100%; } }
+
+  /* FVの説明は2行の区切りをスマホでも保つ */
+  .fv-lead br.keep { display: inline !important; }
