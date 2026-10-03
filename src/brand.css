@@ -460,3 +460,45 @@
   /* 見出しの下線と一覧の上線が二重にならないように */
   .policy h2 + .policy-lines { border-top: 0; margin-top: 4px; }
   @media (max-width: 767px) { .pl-num, .policy .policy-lines .pl-num { line-height: 1.4; } }
+
+  /* ===== 下層ページ冒頭の見直し（事業内容の指摘を全ページに） ===== */
+  /* 余白を詰める：上の余白を減らし、パンくずと見出しの間は残りの高さの真ん中に */
+  .sub-hero { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 48px); padding-bottom: 64px; }
+  .sub-hero.has-photo .sub-hero-copy > :last-child { margin-bottom: auto; }
+  .sub-hero.has-photo .crumb { padding-bottom: 28px; }
+  /* 背景の大きな英字は控えめに */
+  .sub-bg-word { font-size: clamp(64px, 10.5vw, 148px); opacity: .03; }
+  /* 写真の装飾は右上の線だけ（左下の面はやめる） */
+  .sub-hero-visual::before { display: none; }
+  .sub-hero-visual { padding: 0; }
+  /* 説明文は見出しに近づけ、幅を絞る */
+  .hero-lead { margin-top: 18px; padding-top: 18px; max-width: 30em; }
+  /* 事業内容：4事業の番号付きリンクカード（2×2） */
+  .hero-bizs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; max-width: 560px; }
+  .hero-biz {
+    display: flex; flex-direction: column; gap: 10px; padding: 18px 20px 20px; background: #fff;
+    border: 1px solid var(--card-line); border-radius: var(--card-radius); transition: border-color .2s, box-shadow .2s;
+  }
+  .hero-biz:hover { border-color: #B9C9D8; box-shadow: var(--shadow-hover); }
+  .hb-top { display: flex; align-items: center; gap: 10px; }
+  .hb-top b { font-family: var(--en); font-size: 13px; font-weight: 600; letter-spacing: .06em; color: #4B7598; }
+  .hb-top small { font-family: var(--en); font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--navy); border: 1px solid rgba(27,51,80,.35); border-radius: 3px; padding: 1px 6px; }
+  .hb-top .arw { margin-left: auto; color: var(--navy); transition: transform .25s; }
+  .hero-biz:hover .arw { transform: translateX(4px); }
+  .hb-name { font-family: var(--serif); font-weight: 600; font-size: 17px; line-height: 1.55; color: var(--navy); }
+  .hero-biz.main { background: #F2F6FA; border-color: #C9D6E0; }
+  .hero-biz.main .hb-top b { color: var(--navy); }
+  @media (max-width: 767px) {
+    .sub-hero { padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 28px); padding-bottom: 48px; }
+    .hero-bizs { gap: 8px; }
+    .hero-biz { padding: 14px 14px 16px; }
+    .hb-name { font-size: 15px; }
+    .sub-bg-word { font-size: 58px; }
+  }
+  .hero-lead { max-width: 36em; }
+  .hb-top small { white-space: nowrap; }
+  .sub-hero.has-photo:not(.tall) .sub-hero-photo { aspect-ratio: 1 / 1; }
+  @media (max-width: 767px) {
+    .hb-top small { font-size: 8px; letter-spacing: .06em; padding: 1px 4px; }
+    .sub-hero.has-photo:not(.tall) .sub-hero-photo { aspect-ratio: 4 / 3; }
+  }

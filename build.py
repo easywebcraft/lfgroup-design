@@ -154,7 +154,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 SPRITE = (SRC / 'sprite.svg').read_text()
 
 
-def page_hero(label, title, crumbs, lead='', photo=None, word=None, chips=(), extra='', h1=True, pos='50% 50%', compact=False):
+def page_hero(label, title, crumbs, lead='', photo=None, word=None, chips=(), extra='', h1=True, pos='50% 50%', compact=False, zoom=1):
     """下層ページの冒頭（全ページ共通。「私たちについて」と同じ形）。
     背景に大きな薄い英字（word、省略時は label）、左にパンくず・英字ラベル・見出し・説明・小さな項目、
     右に装飾付きの縦長写真（photo を渡したときだけ）。crumbs は (名前, URL) の並び。最後が今のページ。"""
@@ -171,8 +171,10 @@ def page_hero(label, title, crumbs, lead='', photo=None, word=None, chips=(), ex
     visual = ''
     if photo:
         visual = (f'\n      <div class="sub-hero-visual fade"><div class="sub-hero-photo photo">'
-                  f'<img src="/images/{photo}" alt="" style="object-position:{pos}" onerror="this.remove()"></div></div>')
-    cls = 'page-hero sub-hero' + (' has-photo' if photo else '') + (' compact' if compact else '')
+                  f'<img src="/images/{photo}" alt="" style="object-position:{pos}{f";transform:scale({zoom});transform-origin:{pos}" if zoom != 1 else ""}" onerror="this.remove()"></div></div>')
+    # 左の中身が少ないページは写真を正方形にして、パンくずと見出しの間が空きすぎないようにする
+    cls = ('page-hero sub-hero' + (' has-photo' if photo else '') + (' tall' if extra else '')
+           + (' compact' if compact else ''))
     return f'''  <section class="{cls}">
     <p class="sub-bg-word" aria-hidden="true">{word or label}</p>
     <div class="wrap sub-hero-grid">
@@ -292,7 +294,12 @@ BUSINESS = [
 
 
 def page_business():
-    index = ''.join(f'<a href="#{k}">{n}</a>' for k, n, *_ in BUSINESS)
+    # 4事業は「この先に詳細がある」と分かる番号付きのリンクカードに。主力の保険代理店事業だけ軽く強調する
+    index = ''.join(
+        f'<a class="hero-biz{" main" if k == "insuranceagency" else ""}" href="#{k}">'
+        f'<span class="hb-top"><b>{i + 1:02d}</b>{"<small>Main Business</small>" if k == "insuranceagency" else ""}{ARROW}</span>'
+        f'<span class="hb-name">{n.replace("ファイナンシャルプランニング", "ファイナンシャル<br>プランニング")}</span></a>'
+        for i, (k, n, *_) in enumerate(BUSINESS))
     blocks = []
     for i, (key, name, en, paras, note) in enumerate(BUSINESS):
         texts = ''.join(f'<p class="text">{p}</p>' for p in paras)
@@ -309,9 +316,9 @@ def page_business():
           {note_html}
         </div>
       </article>''')
-    hero = page_hero('Business', '事業内容', [('事業内容', '/business/')], photo='hero.jpg', pos='78% 40%',
+    hero = page_hero('Business', '事業内容', [('事業内容', '/business/')], photo='hero.jpg', pos='70% 42%', zoom=1.12,
                      lead='保険、ファイナンシャルプランニング、固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。',
-                     extra=f'        <nav class="biz-index fade" aria-label="事業の一覧">{index}</nav>')
+                     extra=f'        <nav class="hero-bizs fade" aria-label="事業の一覧">{index}</nav>')
     return hero + f'''
   <section class="section">
     <div class="wrap">
