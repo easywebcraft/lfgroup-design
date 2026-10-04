@@ -310,13 +310,13 @@
   }
   .about-mission-quote { font-weight: 500; }
 
-  /* ===== ロゴ（images/logo-mark.svg：生成AIで作ったロゴを、試作用にトレースしたもの） ===== */
-  .logo { gap: 12px; }
-  .logo-mark { display: block; width: auto; height: 34px; background: none; border-radius: 0; }
-  .footer .logo-mark { height: 30px; background: none; }
-  .ll-mark { width: 66px; height: auto; background: none; border-radius: 0; animation: ll-breathe 1.6s ease-in-out infinite; }
-  .ll-logo .logo-mark { height: 40px; }
-  @media (max-width: 767px) { .logo-mark { height: 30px; } }
+  /* ===== ロゴ（images/logo.png：顧客からもらった正式ロゴ。元ファイルは images/logo/source-client.png。
+     白い背景のうち金の輪の外側だけを透明にしてある） ===== */
+  .logo { gap: 14px; }
+  .logo-mark { display: block; width: auto; height: 46px; background: none; border-radius: 0; }
+  .footer .logo-mark { height: 52px; background: none; }
+  .ll-mark { width: 84px; height: auto; background: none; border-radius: 0; animation: ll-breathe 1.6s ease-in-out infinite; }
+  @media (max-width: 767px) { .logo-mark { height: 40px; } }
 
   /* FV：コピーと写真の境目をグラデーションでつなぐ（PCは写真の左端、タブレット・スマホは写真の下端を白へ溶かす） */
   @media (min-width: 1024px) {
@@ -343,8 +343,8 @@
     font-size: clamp(30px, 3.3vw, 50px); line-height: 1.65; letter-spacing: .08em;
   }
   .ll-catch .l1, .ll-catch .l2 { display: inline-block; font-weight: 500; color: var(--navy); }
-  .ll-logo { gap: 15px; font-size: 20px; font-weight: 700; letter-spacing: .06em; }  /* ヘッダーのロゴのちょうど1.25倍 */
-  .ll-logo .logo-mark { height: 42.5px; }
+  .ll-logo { gap: 17.5px; font-size: 20px; font-weight: 700; letter-spacing: .06em; }  /* ヘッダーのロゴのちょうど1.25倍 */
+  .ll-logo .logo-mark { height: 57.5px; }
   .ll-logo, .ll-catch { transition: transform 1.4s cubic-bezier(.22, .61, .36, 1), opacity 1s ease .9s, filter 1s ease .9s; }
   .lf-loader.is-absorb .ll-logo, .lf-loader.is-absorb .ll-catch { filter: none; }
   .ll-logo.is-fly, .ll-catch.is-fly { opacity: 0; filter: blur(1.5px); }
@@ -353,6 +353,6 @@
   .js .fv .fv-photo { transition: opacity 1.6s ease; }
   @media (max-width: 767px) {
     .ll-catch { font-size: clamp(26px, 7.4vw, 34px); letter-spacing: .04em; }
-    .ll-logo .logo-mark { height: 37.5px; }
+    .ll-logo .logo-mark { height: 50px; }
   }
   html.is-loading .header .logo:not(.is-on) { opacity: 0; transition: none; }  /* 演出のあいだは最初から隠す（消えていく途中が二重に見えないように） */
