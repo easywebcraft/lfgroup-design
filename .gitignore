@@ -6,3 +6,5 @@
 /preview-*.png
 .DS_Store
 __pycache__/
+# 本番用の書き出し（python3 build.py --release）。配信先へはこの中身だけを置く
+/dist/

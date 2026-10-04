@@ -2,18 +2,25 @@
 """LFグループ株式会社 サイト試作のページを書き出す。
 
   python3 build.py  →  リポジトリの直下に各ページの index.html と assets/ を作る（GitHub Pages でそのまま配信）
+  python3 build.py --release [--site-url https://example.co.jp]
+                    →  本番用を dist/ に書き出す。試作の帯・noindex・HTMLのコメントを外し、ページと画像だけを置く。
+                       --site-url を付けると canonical・og:url・og:image・sitemap.xml も入る（公開URLが決まってから）
 
 共通部分（head・ヘッダー・メニュー・フッター）はここで一度だけ定義し、各ページの中身と組み合わせる。
 文言は今のサイト（text/ に保存した本文）にあるものだけを使う。足していない。
 """
+import argparse
 import hashlib
 import html
 import re
+import shutil
 from pathlib import Path
 
 BASE = Path(__file__).parent
 SRC = BASE / 'src'
-SITE = BASE  # GitHub Pages はリポジトリ直下を配信する（かみのてと同じ）
+SITE = BASE  # GitHub Pages はリポジトリ直下を配信する（かみのてと同じ）。--release のときは dist/
+RELEASE = False  # 本番用の書き出し（試作の帯・noindex・コメントを外す）
+SITE_URL = ''  # 本番の公開URL（末尾の / なし）。決まるまでは空で、canonical・og:url・og:image・sitemap を出さない
 TEXT = BASE / 'text'
 
 # 電話番号の使い分け（今のサイトから分かる範囲）
@@ -86,8 +93,25 @@ def nav_items(current, cls=''):
     return '\n        '.join(out)
 
 
+# 試作であることを示す帯。試作（GitHub Pages）にだけ出し、--release では出さない
+PREVIEW_NOTE = '<div class="design-preview-note">LFグループ株式会社さま ホームページ リニューアルの試作です（EasyWebCraft）</div>\n'
+
+
+def url_meta(page_path):
+    """canonical・og:url・og:image。公開URL（--site-url）が決まっているときだけ出す（どれも絶対URLが要るため）。"""
+    if not SITE_URL:
+        return ''
+    url = f'{SITE_URL}/{page_path}'
+    return (f'<link rel="canonical" href="{url}">\n'
+            f'<meta property="og:url" content="{url}">\n'
+            f'<meta property="og:image" content="{SITE_URL}/images/ogp.jpg">\n'
+            '<meta name="twitter:card" content="summary_large_image">\n')
+
+
 def layout(page_title, body, current='', description='顧客満足度を最優先に人々の生活を向上させます。', loader=False):
     title = COMPANY if not page_title else f'{page_title}｜{COMPANY}'
+    # 試作は検索に載せない。本番（--release）では外す
+    robots = '' if RELEASE else '<meta name="robots" content="noindex,nofollow">\n'
     return f'''<!doctype html>
 <html lang="ja">
 <head>
@@ -95,12 +119,11 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(title)}</title>
 <meta name="description" content="{html.escape(description)}">
-<meta name="robots" content="noindex,nofollow">
-<meta property="og:type" content="website">
+{robots}<meta property="og:type" content="website">
 <meta property="og:site_name" content="{COMPANY}">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{html.escape(description)}">
-<!-- ★公開時：og:url・og:image・canonical は公開URLが決まってから足す -->
+__URL_META__
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
@@ -116,9 +139,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 </head>
 <body>
 {SPRITE}{LOADER if loader else ''}
-<!-- ★公開前に必ず外す：試作であることを示す帯（この1行と、main() の .design-preview-note の CSS を消す） -->
-<div class="design-preview-note">LFグループ株式会社さま ホームページ リニューアルの試作です（EasyWebCraft）</div>
-
+{'' if RELEASE else PREVIEW_NOTE}
 <header class="header" id="header">
   <div class="wrap header-inner">
     <a class="logo" href="/" aria-label="{COMPANY} トップ">
@@ -919,18 +940,62 @@ def image_attrs(content):
 
 def write(path, content):
     if path.endswith('.html'):
-        content = relative(path, image_version(image_attrs(content)))
+        page = path.removesuffix('index.html')
+        content = image_version(image_attrs(content)).replace('__URL_META__\n', url_meta(page))
+        if RELEASE:
+            # 内部向けのメモ（★公開前… など）を本番のソースに残さない
+            content = re.sub(r'\n?[ \t]*<!--[\s\S]*?-->', '', content)
+        # 404 ページはどの深さの URL でも出るので、サイト直下からのリンクのままにする（本番はドメイン直下で配信する前提）
+        if path != '404.html':
+            content = relative(path, content)
     p = SITE / path
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(content)
     print('  ', path)
 
 
+def page_404():
+    return page_hero('404 Not Found', 'ページが見つかりません', [('ページが見つかりません', '/404.html')],
+                     lead='お探しのページは、移動または削除された可能性があります。<br class="pc">お手数ですが、トップページからお探しください。',
+                     extra=f'      <p class="fade" style="margin-top:32px"><a class="btn btn-primary" href="/">トップページへ{ARROW}</a></p>',
+                     compact=True)
+
+
+PAGES = ['', 'about/', 'business/', 'service/', 'insurance/', 'company/', 'contact/', 'recruitment/',
+         'operation/', 'solicitation/', 'privacyprotection/', 'informationsecurity/']
+
+
+def release_files():
+    """本番用：画像（顧客からもらったロゴの元データ images/logo/ は除く）・robots.txt・sitemap.xml。"""
+    shutil.copytree(BASE / 'images', SITE / 'images', ignore=lambda d, names: ['logo'] if Path(d) == BASE / 'images' else [])
+    robots = 'User-agent: *\nAllow: /\n'
+    if SITE_URL:
+        robots += f'\nSitemap: {SITE_URL}/sitemap.xml\n'
+        urls = ''.join(f'  <url><loc>{SITE_URL}/{p}</loc></url>\n' for p in PAGES)
+        write('sitemap.xml', f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n')
+    else:
+        print('   ※ --site-url がないため sitemap.xml・canonical・og:image は出していません')
+    write('robots.txt', robots)
+
+
 def main():
-    global ASSET_V
+    global ASSET_V, SITE, RELEASE, SITE_URL
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--release', action='store_true', help='本番用を dist/ に書き出す')
+    ap.add_argument('--site-url', default='', help='本番の公開URL（例：https://example.co.jp）')
+    args = ap.parse_args()
+    SITE_URL = args.site_url.rstrip('/')
+    if args.release:
+        RELEASE, SITE = True, BASE / 'dist'
+        shutil.rmtree(SITE, ignore_errors=True)
+        release_files()
+
     css = (SRC / 'style.css').read_text() + (SRC / 'pages.css').read_text() + (SRC / 'brand.css').read_text() + (SRC / 'refine.css').read_text()
-    css += """
-  /* ★公開前に必ず外す：試作の帯 */
+    if RELEASE:
+        css = re.sub(r'/\*[\s\S]*?\*/', '', css)
+    else:
+        css += """
+  /* 試作の帯（--release では入れない） */
   .design-preview-note { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
   .design-preview-note ~ .header:not(.is-scrolled) { top: 30px; }
   .design-preview-note ~ .drawer { padding-top: calc(var(--header-h) + 54px); }
@@ -954,6 +1019,8 @@ def main():
                'privacyprotection': policy_privacy, 'informationsecurity': policy_security}
     for key, label, _ in POLICIES:
         write(f'{key}/index.html', layout(label, page_policy(key, label, renders[key])))
+    if RELEASE:
+        write('404.html', layout('ページが見つかりません', page_404()).replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"', 1))
 
 
 if __name__ == '__main__':

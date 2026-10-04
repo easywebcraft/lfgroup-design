@@ -1227,7 +1227,7 @@
     .foryou-grid .panel:not(.panel-main) .panel-photo, .foryou-grid .panel-main .panel-photo { flex: none; aspect-ratio: auto; height: clamp(320px, 31vw, 460px); min-height: 0; }
   }
 
-  /* ★公開前に必ず外す：試作の帯 */
+  /* 試作の帯（--release では入れない） */
   .design-preview-note { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
   .design-preview-note ~ .header:not(.is-scrolled) { top: 30px; }
   .design-preview-note ~ .drawer { padding-top: calc(var(--header-h) + 54px); }

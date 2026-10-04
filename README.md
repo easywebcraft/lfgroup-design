@@ -5,7 +5,7 @@
 
 - 公開URL（GitHub Pages）：https://easywebcraft.github.io/lfgroup-design/
 - 置き方はかみのて（`easywebcraft/kaminote-design`）と同じ。リポジトリ直下をそのまま配信する。
-- ★**公開前に必ず外すもの**：上部の「試作です」の帯（`build.py` の `design-preview-note`。HTMLの1行とCSSを消す）と、検索エンジンに載せない設定（`noindex`）。
+- 試作（このURL）には「試作です」の帯と `noindex` が付いている。**本番は `python3 build.py --release` で書き出した `dist/` を使う**（帯・`noindex`・HTMLのコメントは自動で外れる）。このリポジトリは公開されていて、直下の `README.md`・`build.py`・`src/`・`text/` も誰でも見られるため、本番の配信先にはリポジトリ直下ではなく `dist/` の中身だけを置く。
 
 ## 構成
 
@@ -24,6 +24,19 @@
 python3 build.py                                  # 直下に全ページを書き出す
 cd .. && python3 -m http.server 8010              # http://localhost:8010/lfgroup-design/ で確認
 ```
+
+### 本番用の書き出し
+
+```bash
+python3 build.py --release --site-url https://（本番のドメイン）   # dist/ に本番用を書き出す
+python3 -m http.server 8011 --directory dist                     # http://localhost:8011/ で確認
+```
+
+- `dist/` に入るのは、ページ・`assets/`・`images/`（顧客のロゴ元データ `images/logo/` は除く）・`404.html`・`robots.txt`・`sitemap.xml` だけ
+- 試作の帯・`noindex`・HTMLのコメント・CSSのコメントを外す
+- `--site-url` を付けると `canonical`・`og:url`・`og:image`（`images/ogp.jpg`、1200×630）・`sitemap.xml` が入る。ドメインが決まるまでは付けずに書き出せる
+- `404.html` は、サイト直下（ドメイン直下）で配信する前提のリンクになっている
+- `dist/` はコミットしない（`.gitignore` 済み）
 
 書き出したページ（`index.html`・`about/index.html` など）を直接編集しないこと（次の書き出しで上書きされる）。
 `build.py` か `src/` を直して書き出し直し、**原本と生成物を一緒にコミットする**（かみのてと同じ）。
