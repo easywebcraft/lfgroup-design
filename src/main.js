@@ -171,6 +171,9 @@
       required.forEach(function (input) {
         input.addEventListener('blur', function () { check(input); });
         input.addEventListener('change', function () { if (input.hasAttribute('aria-invalid')) check(input); });
+        // エラーが出ている欄は、入力しているあいだに直れば消す（離れた瞬間に消えると、
+        // 下の欄が上にずれて、同意のチェックなどのクリックが外れることがあった）
+        input.addEventListener('input', function () { if (input.hasAttribute('aria-invalid')) check(input); });
       });
       form.addEventListener('submit', function (e) {
         e.preventDefault();
