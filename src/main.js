@@ -26,14 +26,75 @@
 
     // ページ最上部（トップはファーストビュー、下層はページ見出し）：順番にフェードイン
     var first = document.querySelector('.fv, .page-hero');
-    if (first && first.classList.contains('fv')) {
-      requestAnimationFrame(function () { first.classList.add('is-loaded'); });  // 写真のズームも文字と同時に始める
-    }
-    if (first) {
-      first.querySelectorAll('.fade').forEach(function (el, i) {
-        setTimeout(function () { el.classList.add('is-in'); }, 60 + i * 80);
-      });
-    }
+    var startFirst = function () {
+      if (first && first.classList.contains('fv')) {
+        requestAnimationFrame(function () { first.classList.add('is-loaded'); });  // 写真のズームも文字と同時に始める
+      }
+      if (first) {
+        first.querySelectorAll('.fade').forEach(function (el, i) {
+          setTimeout(function () { el.classList.add('is-in'); }, 60 + i * 80);
+        });
+      }
+    };
+
+    // トップの最初の演出（build.py の LOADER）。演出のあいだはファーストビューの動きを待たせ、
+    // キャッチコピーが見出しの位置へ吸い込まれる瞬間に始める（本物の見出しと入れ替わって見える）
+    var runLoader = function (done) {
+      window.LF_LOADER_RUN = true;
+      try { sessionStorage.setItem('lf_loader', '1'); } catch (e) {}
+      window.scrollTo(0, 0);
+      var L = document.getElementById('lfLoader');
+      var called = false, ended = false;
+      var go = function () { if (!called) { called = true; done(); } };
+      var end = function () {
+        if (ended) return;
+        ended = true;
+        go();
+        L.classList.add('is-out');
+        setTimeout(function () { root.classList.remove('is-loading'); L.remove(); }, 500);
+      };
+      if (!L) { root.classList.remove('is-loading'); go(); return; }
+      L.addEventListener('click', end);  // 押せばすぐ終わる
+
+      var fill = L.querySelector('.ll-ring .f'), pct = L.querySelector('.ll-pct');
+      var C = 2 * Math.PI * 54, D = 1800, t0 = null;
+      fill.style.strokeDasharray = C;
+      fill.style.strokeDashoffset = C;
+
+      // 演出の文字を、本物の要素の位置と大きさへ動かしながら消す
+      var fly = function (from, to) {
+        if (!from || !to) return;
+        var a = from.getBoundingClientRect(), b = to.getBoundingClientRect();
+        var dx = (b.left + b.width / 2) - (a.left + a.width / 2);
+        var dy = (b.top + b.height / 2) - (a.top + a.height / 2);
+        from.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + (b.height / a.height) + ')';
+        from.style.opacity = '0';
+      };
+      var absorb = function () {
+        if (ended) return;
+        fly(L.querySelector('.ll-logo'), document.querySelector('.header .logo'));
+        fly(L.querySelector('.ll-catch'), document.querySelector('.fv h1'));
+        L.classList.add('is-absorb');           // 白い幕を透かして、奥のトップページを見せる
+        setTimeout(go, 450);
+        setTimeout(end, 1100);
+      };
+      var tick = function (ts) {
+        if (ended) return;
+        if (t0 === null) t0 = ts;
+        var p = Math.min((ts - t0) / D, 1), e = 1 - Math.pow(1 - p, 3);
+        pct.textContent = Math.round(e * 100) + '%';
+        fill.style.strokeDashoffset = C * (1 - e);
+        if (p < 1) { requestAnimationFrame(tick); return; }
+        setTimeout(function () {
+          if (ended) return;
+          L.classList.add('is-p2');
+          setTimeout(absorb, 1300);
+        }, 250);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    if (root.classList.contains('is-loading')) runLoader(startFirst); else startFirst();
 
     document.addEventListener('transitionend', function (e) {
       var el = e.target;

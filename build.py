@@ -84,7 +84,7 @@ def nav_items(current, cls=''):
     return '\n        '.join(out)
 
 
-def layout(page_title, body, current='', description='顧客満足度を最優先に人々の生活を向上させます。'):
+def layout(page_title, body, current='', description='顧客満足度を最優先に人々の生活を向上させます。', loader=False):
     title = COMPANY if not page_title else f'{page_title}｜{COMPANY}'
     return f'''<!doctype html>
 <html lang="ja">
@@ -103,10 +103,10 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
   // main.js が読み込めなかったときに文字が隠れたままにならないよう、3秒で解除する。
   document.documentElement.classList.add('js');
   setTimeout(function () {{ if (!window.LF_READY) document.documentElement.classList.remove('js'); }}, 3000);
-</script>
+</script>{LOADER_HEAD if loader else ''}
 </head>
 <body>
-{SPRITE}
+{SPRITE}{LOADER if loader else ''}
 <!-- ★公開前に必ず外す：試作であることを示す帯（この1行と、main() の .design-preview-note の CSS を消す） -->
 <div class="design-preview-note">LFグループ株式会社さま ホームページ リニューアルの試作です（EasyWebCraft）</div>
 
@@ -179,6 +179,36 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 
 
 SPRITE = (SRC / 'sprite.svg').read_text()
+
+# トップだけの最初の演出（ロゴと進み具合の輪 → キャッチコピー → ヘッダーと見出しの位置へ吸い込まれる）。
+# 動かすのは main.js。同じタブの中では1回だけ（2ページ目以降・トップへ戻ったときは出さない）。
+# ★「動きを減らす」設定の人には出さない。main.js が読めなかったときに画面が塞がったままにならないよう、
+#   3秒で演出の状態を解除する。
+LOADER_HEAD = """
+<script>
+  (function () {
+    var r = document.documentElement, played = false;
+    try { played = sessionStorage.getItem('lf_loader') === '1'; } catch (e) {}
+    if (played || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    r.classList.add('is-loading');
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    setTimeout(function () { if (!window.LF_LOADER_RUN) r.classList.remove('is-loading'); }, 3000);
+  })();
+</script>"""
+
+LOADER = """
+<div class="lf-loader" id="lfLoader" aria-hidden="true">
+  <div class="ll-p1">
+    <svg class="ll-ring" viewBox="0 0 120 120"><circle class="t" cx="60" cy="60" r="54"/><circle class="f" cx="60" cy="60" r="54"/></svg>
+    <span class="ll-mark">LF</span>
+    <span class="ll-pct">0%</span>
+  </div>
+  <div class="ll-p2">
+    <p class="ll-logo"><span class="logo-mark">LF</span>LFグループ株式会社</p>
+    <p class="ll-catch">保険とお金を整えて、<br>安心できる未来へ。</p>
+  </div>
+  <span class="ll-skip">タップでスキップ</span>
+</div>"""
 
 
 def page_hero(label, title, crumbs, lead='', photo=None, word=None, chips=(), extra='', h1=True, pos='50% 50%', compact=False, zoom=1, caption=''):
@@ -978,7 +1008,7 @@ def main():
         f'<li><a class="news-item" href="/news/{slug}/"><time datetime="{d}">{d.replace("-", ".")}</time>'
         f'<span class="news-cat">{cat}</span><span class="news-title">{t.rstrip("！")}</span>{ARROW}</a></li>'
         for slug, d, cat, t, _ in latest)
-    write('index.html', layout('', TOP.replace('{{news}}', top_news).replace('{{final_cta}}', final_cta())))
+    write('index.html', layout('', TOP.replace('{{news}}', top_news).replace('{{final_cta}}', final_cta()), loader=True))
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
     write('business/index.html', layout('事業内容', page_business(), 'business'))
     write('service/index.html', layout('取り扱いサービス', page_service(), 'service'))

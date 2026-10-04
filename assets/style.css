@@ -1283,6 +1283,37 @@
   }
   @media (max-width: 767px) { .news-item .news-title { flex: 1 1 calc(100% - 40px); } }
 
+  /* ===== トップの最初の演出（build.py の LOADER・main.js の runLoader） ===== */
+  .lf-loader { display: none; }
+  html.is-loading { overflow: hidden; }
+  html.is-loading .lf-loader {
+    display: grid; place-items: center; position: fixed; inset: 0; z-index: 1000;
+    background-color: #fff; transition: background-color 1s ease, opacity .5s ease; cursor: pointer;
+  }
+  html.is-loading .lf-loader.is-absorb { background-color: rgba(255, 255, 255, 0); }
+  html.is-loading .lf-loader.is-out { opacity: 0; }
+  .ll-p1 { position: relative; width: 120px; height: 120px; display: grid; place-items: center; transition: opacity .3s ease, transform .3s ease; }
+  .lf-loader.is-p2 .ll-p1 { opacity: 0; transform: scale(.92); }
+  .ll-ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ll-ring circle { fill: none; stroke-width: 2; }
+  .ll-ring .t { stroke: var(--line); }
+  .ll-ring .f { stroke: var(--navy); stroke-linecap: round; }
+  .ll-mark {
+    display: grid; place-items: center; width: 60px; height: 60px; border-radius: 14px;
+    background: var(--navy); color: #fff; font-family: var(--en); font-weight: 600; font-size: 22px;
+    animation: ll-breathe 1.6s ease-in-out infinite;
+  }
+  @keyframes ll-breathe { 50% { transform: scale(.94); } }
+  .ll-pct { position: absolute; top: calc(100% + 16px); left: 0; right: 0; text-align: center; font-family: var(--en); font-size: 13px; font-weight: 600; letter-spacing: .14em; color: var(--navy); }
+  .ll-p2 { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 30px; padding: 0 var(--gutter); opacity: 0; pointer-events: none; }
+  .lf-loader.is-p2 .ll-p2 { opacity: 1; transition: opacity .7s ease .1s; }
+  .ll-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; letter-spacing: .06em; color: var(--text); white-space: nowrap; }
+  .ll-catch { font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 3.6vw, 42px); line-height: 1.6; letter-spacing: .08em; color: var(--navy); text-align: center; }
+  .ll-logo, .ll-catch { transition: transform 1s cubic-bezier(.65, 0, .35, 1), opacity .45s ease .55s; }
+  .ll-skip { position: absolute; bottom: 28px; left: 0; right: 0; text-align: center; font-size: 11px; letter-spacing: .1em; color: var(--text-sub); opacity: .7; transition: opacity .3s; }
+  .lf-loader.is-absorb .ll-skip { opacity: 0; }
+  @media (hover: hover) { .ll-skip { display: none; } }
+
   /* ★公開前に必ず外す：試作の帯 */
   .design-preview-note { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
   .design-preview-note ~ .header:not(.is-scrolled) { top: 30px; }
