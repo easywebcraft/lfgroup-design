@@ -5,7 +5,7 @@
 
 - 公開URL（GitHub Pages）：https://easywebcraft.github.io/lfgroup-design/
 - 置き方はかみのて（`easywebcraft/kaminote-design`）と同じ。リポジトリ直下をそのまま配信する。
-- ★**公開前に必ず外すもの**：上部の「試作です」の帯（`build.py` の `draft-bar`）と、検索エンジンに載せない設定（`noindex`）。
+- ★**公開前に必ず外すもの**：上部の「試作です」の帯（`build.py` の `design-preview-note`。HTMLの1行とCSSを消す）と、検索エンジンに載せない設定（`noindex`）。
 
 ## 構成
 

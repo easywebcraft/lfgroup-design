@@ -16,6 +16,10 @@ SRC = BASE / 'src'
 SITE = BASE  # GitHub Pages はリポジトリ直下を配信する（かみのてと同じ）
 TEXT = BASE / 'text'
 
+# 電話番号の使い分け（今のサイトから分かる範囲）
+#   052-990-6159：今のサイトの全ページ下部に載っている番号。お問い合わせ用としてヘッダー・CTA・フッターに使う
+#   052-846-2135：会社概要の「連絡先」に 052-990-6159 と並べて載っているだけ。用途は ★要確認（代表かどうか不明）
+#   052-846-8224：採用情報の応募先 TEL にだけ載っている番号。採用窓口と思われるが ★要確認
 TEL = '052-990-6159'
 TEL_HREF = 'tel:0529906159'
 ADDRESS = '愛知県名古屋市東区葵3丁目14-5 リッチコーポ2階'
@@ -103,8 +107,8 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 </head>
 <body>
 {SPRITE}
-<!-- ★公開前に必ず外す：試作であることを示す帯 -->
-<div class="draft-bar">LFグループ株式会社さま ホームページ リニューアルの試作です（EasyWebCraft）</div>
+<!-- ★公開前に必ず外す：試作であることを示す帯（この1行と、main() の .design-preview-note の CSS を消す） -->
+<div class="design-preview-note">LFグループ株式会社さま ホームページ リニューアルの試作です（EasyWebCraft）</div>
 
 <header class="header" id="header">
   <div class="wrap header-inner">
@@ -143,6 +147,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
     <div class="footer-top">
       <div class="footer-info">
         <a class="logo" href="/"><span class="logo-mark" aria-hidden="true">LF</span>{COMPANY}</a>
+        <!-- ★公開前に確認：郵便番号は今のサイトに記載がないため未確定。推測で入れず、クライアントに確認して「〒」の後に入れる -->
         <p>〒（要確認）{ADDRESS}</p>
         <p>TEL <a href="{TEL_HREF}">{TEL}</a></p>
       </div>
@@ -193,7 +198,7 @@ def page_hero(label, title, crumbs, lead='', photo=None, word=None, chips=(), ex
     visual = ''
     if photo:
         visual = (f'\n      <div class="sub-hero-visual fade"><div class="sub-hero-photo photo">'
-                  f'<img src="/images/{photo}" alt="" style="object-position:{pos}{f";transform:scale({zoom});transform-origin:{pos}" if zoom != 1 else ""}" onerror="this.remove()"></div>'
+                  f'<img src="/images/{photo}" alt="" data-eager style="object-position:{pos}{f";transform:scale({zoom});transform-origin:{pos}" if zoom != 1 else ""}" onerror="this.remove()"></div>'
                   + (f'<p class="sub-hero-caption">{caption}</p>' if caption else '') + '</div>')
     # 左の中身が少ないページは写真を正方形にして、パンくずと見出しの間が空きすぎないようにする
     cls = ('page-hero sub-hero' + (' has-photo' if photo else '') + (' tall' if extra else '')
@@ -225,12 +230,12 @@ def final_cta():
     return f'''  <section class="cta" id="final-cta">
     <div class="photo"><img src="/images/cta-final.jpg" alt="" onerror="this.remove()"></div>
     <div class="wrap">
-      <h2 class="cta-title fade"><span>お金や保険について、</span><br><span>気になることからご相談ください。</span></h2>
-      <p class="cta-text fade">保険・お金のご相談、お問い合わせ、資料のご請求はこちらから承っております。</p>
+      <h2 class="cta-title fade"><span>保険やお金について、</span><br><span>気になることからご相談ください。</span></h2>
+      <p class="cta-text fade"><span>保険の見直しや家計、これからのお金について、</span><span>まずはお気軽にお問い合わせください。</span></p>
       <div class="btns fade">
         <a class="btn btn-primary btn-consult" href="/contact/?type=consult">保険・お金について相談する{ARROW}</a>
       </div>
-      <p class="cta-subs fade"><a class="more" href="/contact/">お問い合わせ{ARROW}</a><a class="more" href="/contact/?type=document">資料請求{ARROW}</a><a class="cta-tel-link" href="{TEL_HREF}"><svg class="ico"><use href="#i-tel"/></svg>{TEL}</a></p>
+      <p class="cta-subs fade"><a class="more" href="/contact/?type=document">資料請求{ARROW}</a><a class="cta-tel-link" href="{TEL_HREF}"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><small>お電話でのお問い合わせ</small>{TEL}</a></p>
     </div>
   </section>
 '''
@@ -554,6 +559,7 @@ def page_company():
         <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
         <div><dt>代表者</dt><dd>遠藤 昇平</dd></div>
         <div><dt>所在地</dt><dd>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</dd></div>
+        <!-- ★要確認：2つの番号の用途（代表／お問い合わせ）が今のサイトに書かれていない。確認できたら「代表」などを添える -->
         <div><dt>電話番号</dt><dd><a href="tel:0528462135">052-846-2135</a> / <a href="{TEL_HREF}">{TEL}</a></dd></div>
         <div><dt>事業内容</dt><dd>ファイナンシャルプランニング・金融コンサル・保険代理店業務</dd></div>
         <div><dt>適格請求書発行<br>事業者登録番号</dt><dd>T4180001157727</dd></div>
@@ -594,10 +600,9 @@ def simple_cta():
     return f'''  <section class="section simple-cta-wrap">
     <div class="wrap">
       <div class="simple-cta fade">
-        <p class="simple-cta-title"><span>お金や保険について、</span><span>気になることからご相談ください。</span></p>
+        <p class="simple-cta-title"><span>保険やお金について、</span><span>気になることからご相談ください。</span></p>
         <a class="btn btn-primary" href="/contact/?type=consult">保険・お金について相談する{ARROW}</a>
         <p class="simple-cta-sub">
-          <a class="more" href="/contact/">お問い合わせ{ARROW}</a>
           <a class="more" href="/contact/?type=document">資料請求{ARROW}</a>
           <a class="simple-cta-tel" href="{TEL_HREF}"><svg class="ico"><use href="#i-tel"/></svg>{TEL}</a>
         </p>
@@ -761,6 +766,7 @@ def page_recruitment():
     <div class="wrap narrow">
       <p class="label fade">Entry</p>
       <h2 class="heading fade">ご応募はお電話で</h2>
+      <!-- ★要確認：今のサイトの応募先 TEL は「052-846-8224・052-990-6159」の2つ。どちらが採用窓口かは書かれていない -->
       <div class="recruit-tel fade">
         <a href="tel:0528468224">052-846-8224</a>
         <a href="{TEL_HREF}">{TEL}</a>
@@ -914,9 +920,36 @@ def image_version(content):
     return re.sub(r'(src="/images/)([^"?]+)"', add, content)
 
 
+def jpeg_size(f):
+    """JPEG の幅・高さを読む（ライブラリを足さずに済むよう、SOF マーカーだけを見る）。"""
+    b = f.read_bytes()
+    i = 2
+    while i < len(b):
+        marker, length = b[i + 1], int.from_bytes(b[i + 2:i + 4], 'big')
+        if 0xC0 <= marker <= 0xCF and marker not in (0xC4, 0xC8, 0xCC):
+            return int.from_bytes(b[i + 7:i + 9], 'big'), int.from_bytes(b[i + 5:i + 7], 'big')
+        i += 2 + length
+    return None
+
+
+def image_attrs(content):
+    """写真に幅・高さ（表示前に場所を確保して、読み込み時のガタつきを防ぐ）と読み込み方を付ける。
+    最初に見える写真（fetchpriority="high" を付けたもの・下層ページ冒頭の写真）以外は遅延読み込み。"""
+    def add(m):
+        tag, name = m.group(0), m.group(1)
+        f = SITE / 'images' / name
+        if 'width=' not in tag and f.exists() and (size := jpeg_size(f)):
+            tag = tag.replace('<img ', f'<img width="{size[0]}" height="{size[1]}" ', 1)
+        if 'loading=' not in tag:
+            eager = 'fetchpriority=' in tag or 'data-eager' in tag
+            tag = tag.replace('<img ', '<img decoding="async" ' if eager else '<img loading="lazy" decoding="async" ', 1)
+        return tag.replace(' data-eager', '')
+    return re.sub(r'<img [^>]*src="/images/([^"?]+)"[^>]*>', add, content)
+
+
 def write(path, content):
     if path.endswith('.html'):
-        content = relative(path, image_version(content))
+        content = relative(path, image_version(image_attrs(content)))
     p = SITE / path
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(content)
@@ -928,9 +961,9 @@ def main():
     css = (SRC / 'style.css').read_text() + (SRC / 'pages.css').read_text() + (SRC / 'brand.css').read_text()
     css += """
   /* ★公開前に必ず外す：試作の帯 */
-  .draft-bar { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
-  .draft-bar ~ .header:not(.is-scrolled) { top: 30px; }
-  .draft-bar ~ .drawer { padding-top: calc(var(--header-h) + 54px); }
+  .design-preview-note { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
+  .design-preview-note ~ .header:not(.is-scrolled) { top: 30px; }
+  .design-preview-note ~ .drawer { padding-top: calc(var(--header-h) + 54px); }
 """
     js = (SRC / 'main.js').read_text()
     # CSS・JS の中身が変わったら URL も変える。GitHub Pages は10分間ブラウザに覚えさせるため、
@@ -939,7 +972,13 @@ def main():
     write('assets/style.css', css)
     write('assets/main.js', js)
 
-    write('index.html', layout('', TOP))
+    # トップのお知らせは新しい順に最大3件（今は1件）。増えたら NEWS に足すだけでトップにも並ぶ
+    latest = sorted(NEWS, key=lambda n: n[1], reverse=True)[:3]
+    top_news = ''.join(
+        f'<li><a class="news-item" href="/news/{slug}/"><time datetime="{d}">{d.replace("-", ".")}</time>'
+        f'<span class="news-cat">{cat}</span><span class="news-title">{t.rstrip("！")}</span>{ARROW}</a></li>'
+        for slug, d, cat, t, _ in latest)
+    write('index.html', layout('', TOP.replace('{{news}}', top_news).replace('{{final_cta}}', final_cta())))
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
     write('business/index.html', layout('事業内容', page_business(), 'business'))
     write('service/index.html', layout('取り扱いサービス', page_service(), 'service'))

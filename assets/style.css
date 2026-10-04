@@ -1085,68 +1085,6 @@
   @media (min-width: 1024px) { .fv-lead br.pc { display: inline; } }
   @media (max-width: 767px) { .fv-tags li { font-size: 13px; padding: 5px 12px; } }
 
-  /* こんなお悩みはありませんか */
-  .worries { padding-bottom: 96px; }
-  .worry-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .worry-list a {
-    display: flex; flex-direction: column; justify-content: space-between; gap: 28px; height: 100%;
-    padding: 32px 28px 26px; background: #fff; border: 1px solid var(--card-line); border-radius: var(--card-radius);
-    position: relative; transition: border-color .2s, box-shadow .2s;
-  }
-  .worry-list a::before { content: "?"; position: absolute; top: -14px; left: 26px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--navy); color: #fff; font-family: var(--en); font-size: 14px; font-weight: 600; }
-  .worry-list a:hover { border-color: #C9D6E0; box-shadow: var(--shadow-hover); }
-  .worry-list a:hover .arw { transform: translateX(4px); }
-  .worry-q { font-family: var(--serif); font-weight: 600; font-size: 18px; line-height: 1.75; color: var(--navy); letter-spacing: .04em; }
-  .worry-a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 16px; border-top: 1px solid var(--card-line); font-size: 13px; font-weight: 500; color: #4B7598; }
-  .worry-a .arw { color: var(--navy); transition: transform .25s; }
-  .worry-foot { margin-top: 36px; text-align: center; font-size: 15px; color: var(--text-sub); }
-  @media (min-width: 768px) and (max-width: 1023px) { .worry-q br { display: none; } }
-  @media (max-width: 767px) {
-    .worries { padding-bottom: 72px; }
-    .worry-list { grid-template-columns: 1fr; gap: 24px; }
-    .worry-list a { padding: 28px 22px 20px; gap: 20px; }
-    .worry-q { font-size: 17px; }
-  }
-
-  /* LFグループが大切にしていること */
-  .reasons { background: var(--bg-blue); }
-  .reason-list { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--navy); }
-  .reason-list li { padding: 36px 32px 8px 0; }
-  .reason-list li + li { padding-left: 32px; border-left: 1px solid var(--card-line); }
-  .reason-num { font-family: var(--en); font-size: 30px; font-weight: 600; letter-spacing: .04em; color: var(--navy); line-height: 1; }
-  .reason-list h3 { margin-top: 18px; font-family: var(--serif); font-weight: 600; font-size: 21px; line-height: 1.6; letter-spacing: .06em; }
-  .reason-list p { margin-top: 14px; font-size: 14px; line-height: 1.95; color: var(--text-sub); }
-  .reason-list .badge { margin-top: 14px; }
-  .reason-list .badge + p { margin-top: 10px; }
-  @media (max-width: 1023px) { .reason-list h3 br { display: none; } .reason-list h3 { font-size: 19px; } }
-  @media (max-width: 767px) {
-    .reason-list { grid-template-columns: 1fr; }
-    .reason-list li, .reason-list li + li { padding: 28px 0; border-left: 0; }
-    .reason-list li + li { border-top: 1px solid var(--card-line); }
-    .reason-num { font-size: 24px; }
-  }
-
-  /* 事業：個人向け3本柱（保険を主役）＋法人向け */
-  .business { background: #fff; }
-  .biz-group-label { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; font-size: 15px; font-weight: 700; color: var(--navy); letter-spacing: .08em; }
-  .biz-group-label::after { content: ""; flex: 1; height: 1px; background: var(--card-line); }
-  .corp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .corp-item { display: grid; grid-template-columns: 1fr auto; gap: 8px 20px; align-items: center; padding: 24px 28px; border: 1px solid var(--card-line); border-radius: var(--card-radius); background: var(--bg-blue); transition: border-color .2s, box-shadow .2s; }
-  .corp-item:hover { border-color: #C9D6E0; box-shadow: var(--shadow-hover); }
-  .corp-item h3 { font-family: var(--serif); font-weight: 600; font-size: 18px; letter-spacing: .06em; }
-  .corp-item h3 .card-en { display: inline; margin-left: 12px; }
-  .corp-item p { grid-column: 1; font-size: 13px; line-height: 1.85; color: var(--text-sub); }
-  .corp-item .arw { grid-column: 2; grid-row: 1 / span 2; color: var(--navy); transition: transform .25s; }
-  .corp-item:hover .arw { transform: translateX(4px); }
-  @media (max-width: 767px) {
-    .corp-grid { grid-template-columns: 1fr; gap: 14px; }
-    .corp-item { padding: 20px; }
-    .corp-item h3 .card-en { display: block; margin: 2px 0 0; }
-  }
-
-  /* MISSION：短い説明だけ（引用は「私たちについて」に残す） */
-  .mission-text p:first-child { font-size: 17px; color: var(--navy); font-weight: 500; }
-  @media (min-width: 1024px) { .mission-text br.pc { display: inline; } }
 
   /* 私たちについて：冒頭のひとこと／方針5項目をカードに */
   .sub-hero .about-message { border-top: 0; padding-top: 0; margin-top: 20px; }
@@ -1198,45 +1136,154 @@
   .fv h1 { font-size: clamp(24px, 2.8vw, 38px); }
   .fv h1 .l2 > span { display: inline-block; }
 
-  /* ===== 2026-10-04 その2：保険 → FP → ライフライン の順に、「詳しく見る」と「相談する」を分ける ===== */
-  .biz-group-label b { font-family: var(--en); font-size: 13px; font-weight: 600; letter-spacing: .06em; color: #4B7598; }
-  .biz-group-label small { padding: 1px 7px; border-radius: 3px; background: var(--navy); color: #fff; font-family: var(--en); font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+  /* ===== トップ（2026-10-04 仕上げ）：保険を主軸にした相談型の構成 =====
+     FV → お悩み → 強み → 01 保険（Main）→ 02 FP → 03 ライフライン・04 法人向け → Mission → 会社概要 → News → 相談CTA */
+  .section { padding-block: 120px; }
+  @media (max-width: 767px) { .section { padding-block: 72px; } }
+  .text { max-width: 720px; }
+
+  /* 事業の番号ラベル（FVの「Main」と同じ表現で、トップ・事業内容の順番をそろえる） */
+  .biz-tag { display: flex; width: fit-content; align-items: center; gap: 10px; margin-bottom: 18px; padding: 6px 14px 6px 12px; border-radius: 999px; background: #fff; border: 1px solid var(--card-line); font-size: 13px; font-weight: 700; color: var(--navy); letter-spacing: .06em; }
+  .biz-tag b { font-family: var(--en); font-size: 12px; font-weight: 600; color: #4B7598; letter-spacing: .06em; }
+  .biz-tag small { padding: 1px 8px; border-radius: 3px; background: var(--navy); color: #fff; font-family: var(--en); font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+  .biz-group-label { display: flex; align-items: center; gap: 14px; margin: 0 0 20px; font-size: 15px; font-weight: 700; color: var(--navy); letter-spacing: .08em; }
+  .biz-group-label::after { content: ""; flex: 1; height: 1px; background: var(--card-line); }
+
+  /* 02 お悩み：白いカード・薄い線・控えめなアイコン */
+  .worry-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .worry-list a {
+    display: flex; flex-direction: column; gap: 18px; height: 100%;
+    padding: 28px 28px 24px; background: #fff; border: 1px solid var(--card-line); border-radius: 12px;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .worry-list a:hover, .worry-list a:focus-visible { border-color: #C9D6E0; box-shadow: var(--shadow-hover); }
+  .worry-list a:hover .arw { transform: translateX(4px); }
+  .worry-top { display: flex; align-items: center; justify-content: space-between; }
+  .worry-num { font-family: var(--en); font-size: 14px; font-weight: 600; color: #4B7598; letter-spacing: .08em; }
+  .worry-ico { width: 36px; height: 36px; padding: 6px; border-radius: 50%; background: var(--bg-blue); color: var(--navy); }
+  .worry-q { flex: 1; font-family: var(--serif); font-weight: 600; font-size: 18px; line-height: 1.75; color: var(--navy); letter-spacing: .04em; }
+  .worry-a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; border-top: 1px solid var(--card-line); font-size: 13px; font-weight: 500; color: #4B7598; }
+  .worry-a .arw { color: var(--navy); transition: transform .25s; }
+  .worry-foot { margin-top: 36px; text-align: center; font-size: 15px; color: var(--text-sub); }
+  @media (min-width: 768px) and (max-width: 1023px) { .worry-list a { padding: 24px 20px 20px; } .worry-q { font-size: 16px; } .worry-q br { display: none; } }
+  @media (max-width: 767px) {
+    .worry-list { grid-template-columns: 1fr; gap: 14px; }
+    .worry-list a { padding: 22px 20px 18px; gap: 14px; }
+    .worry-q { font-size: 17px; }
+  }
+
+  /* 03 強み */
+  .reasons { background: var(--bg-blue); }
+  .reason-list { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--navy); }
+  .reason-list li { padding: 36px 32px 8px 0; }
+  .reason-list li + li { padding-left: 32px; border-left: 1px solid var(--card-line); }
+  .reason-num { font-family: var(--en); font-size: 30px; font-weight: 600; letter-spacing: .04em; color: var(--navy); line-height: 1; }
+  .reason-list h3 { margin-top: 18px; font-family: var(--serif); font-weight: 600; font-size: 21px; line-height: 1.6; letter-spacing: .06em; }
+  .reason-list p { margin-top: 14px; font-size: 14px; line-height: 1.95; color: var(--text-sub); }
+  .reason-list .badge + p { margin-top: 10px; }
+  @media (max-width: 1023px) { .reason-list h3 { font-size: 18px; } .reason-list li { padding-right: 20px; } .reason-list li + li { padding-left: 20px; } }
+  @media (max-width: 767px) {
+    .reason-list { grid-template-columns: 1fr; }
+    .reason-list li, .reason-list li + li { padding: 28px 0; border-left: 0; }
+    .reason-list li + li { border-top: 1px solid var(--card-line); }
+    .reason-list h3 br { display: none; }
+    .reason-num { font-size: 24px; }
+  }
+
+  /* 04 保険（Main）：写真と取り扱い保険を大きく */
+  .ins-sec .sec-head { margin-bottom: 36px; }
+  .svc-main { border-radius: 12px; }
+  .svc-main .photo { border-radius: 0; }
   .svc-lead { margin-top: 10px; font-size: 14px; line-height: 1.9; color: var(--text-sub); }
+  h4.svc-sub { margin: 18px 0 10px; }
   .svc-actions { display: flex; align-items: center; gap: 16px 28px; flex-wrap: wrap; margin-top: 28px; }
   .svc-actions .btn { min-width: 0; padding: 14px 24px; }
-  .business { padding-bottom: 72px; }
-  .fp-sec { padding-block: 72px; }
-  .fp-grid { display: grid; grid-template-columns: 340px 1fr; gap: 64px; align-items: center; padding: 56px; border: 1px solid var(--card-line); border-radius: var(--card-radius); }
-  .fp-visual { aspect-ratio: 1; border-radius: var(--card-radius); background: var(--bg-blue); display: grid; place-items: center; align-content: center; gap: 20px; }
-  .fp-visual .card-icon { width: 96px; height: 96px; }
-  .fp-visual .badge { margin: 0; }
-  .fp-title { font-family: var(--serif); font-weight: 600; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.6; letter-spacing: .06em; }
-  .life-sec { padding-top: 72px; background: var(--bg-blue); }
-  .life-sec .sec-head { margin-bottom: 32px; align-items: center; }
-  .life-sec .sec-head .biz-group-label { flex: 1; margin: 0; }
-  .life-sec .svc-sub-grid { margin-bottom: 64px; }
-  .life-sec .corp-item { background: #fff; }
-  .fv-sub-links { display: inline-flex; gap: 24px; }
-  .cta-subs { display: flex; justify-content: center; align-items: center; gap: 16px 32px; flex-wrap: wrap; margin-top: 24px; }
-  .cta-tel-link { display: inline-flex; align-items: center; gap: 8px; font-family: var(--en); font-weight: 600; font-size: 18px; letter-spacing: .04em; color: var(--navy); }
+
+  /* 05 FP：保険の次。相談できる内容を6つのタグで */
+  .fp-sec { background: var(--bg-blue); }
+  .fp-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 72px; align-items: center; }
+  .fp-grid .badge { margin-top: 20px; }
+  .fp-grid .text { margin-top: 16px; }
+  .fp-topics { padding: 36px; background: #fff; border: 1px solid var(--card-line); border-radius: 12px; }
+  .fp-topics-head { font-size: 14px; font-weight: 700; color: var(--navy); letter-spacing: .08em; }
+  .fp-topics ul { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
+  .fp-topics li { display: grid; place-items: center; min-height: 64px; padding: 10px; border-radius: 8px; background: var(--bg-blue); font-family: var(--serif); font-weight: 600; font-size: 16px; color: var(--navy); text-align: center; }
+  .fp-topics-note { margin-top: 16px; font-size: 13px; color: var(--text-sub); }
+
+  /* 06 ライフライン：保険・FPより一段下。写真は小さめ */
+  .life-lead { margin: -24px 0 32px; }
+  .life-sec .svc .photo { aspect-ratio: 3 / 2; }
+  .corp-label { margin-top: 64px; }
+  .corp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .corp-item { display: grid; grid-template-columns: auto 1fr auto; gap: 6px 16px; align-items: center; padding: 24px 28px; border: 1px solid var(--card-line); border-radius: 12px; background: var(--bg-blue); transition: border-color .2s, box-shadow .2s; }
+  .corp-item:hover, .corp-item:focus-visible { border-color: #C9D6E0; box-shadow: var(--shadow-hover); }
+  .corp-num { grid-row: 1 / span 2; align-self: start; font-family: var(--en); font-size: 14px; font-weight: 600; color: #4B7598; line-height: 1.9; }
+  .corp-name { font-family: var(--serif); font-weight: 600; font-size: 18px; color: var(--navy); letter-spacing: .06em; }
+  .corp-name .card-en { display: inline; margin-left: 12px; }
+  .corp-text { grid-column: 2; font-size: 13px; line-height: 1.85; color: var(--text-sub); }
+  .corp-item .arw { grid-column: 3; grid-row: 1 / span 2; color: var(--navy); transition: transform .25s; }
+  .corp-item:hover .arw { transform: translateX(4px); }
+
+  /* 07 MISSION */
+  .mission-text p:first-child { font-size: 17px; color: var(--navy); font-weight: 500; }
+  @media (min-width: 1024px) { .mission-text br.pc { display: inline; } }
+  .mission-photo { border-radius: 12px; }
+
+  /* 08 会社概要：左に情報、右に相談スペースの写真 */
+  #company .company-grid { grid-template-columns: 1.35fr 1fr; gap: 64px; align-items: center; }
+  .top-company { margin-top: 32px; }
+  .top-company > div { grid-template-columns: 160px 1fr; }
+  .company-more { margin-top: 24px; }
+  .company-photo { aspect-ratio: 4 / 5; border-radius: 12px; }
+  .company-photo img { object-position: 50% 72%; }
+
+  /* 09 News：1行（最大3件）。主役にしない */
+  .news-items { min-width: 0; display: grid; gap: 6px; }
+
+  /* 10 相談CTA */
+  .cta-text span, .cta-title span { display: inline-block; }
+  .cta-subs { display: flex; justify-content: center; align-items: center; gap: 16px 36px; flex-wrap: wrap; margin-top: 24px; }
+  .cta-tel-link { display: inline-flex; align-items: center; gap: 8px; font-family: var(--en); font-weight: 600; font-size: 20px; letter-spacing: .04em; color: var(--navy); }
+  .cta-tel-link small { font-family: var(--sans); font-size: 12px; font-weight: 500; color: var(--text-sub); letter-spacing: .04em; }
   .cta-tel-link .ico { width: 16px; height: 16px; }
   .btn-consult { padding: 18px 32px; font-size: 16px; }
-  @media (max-width: 1023px) { .fp-grid { grid-template-columns: 220px 1fr; gap: 40px; padding: 40px; } }
-  @media (max-width: 767px) {
-    .business { padding-bottom: 48px; }
-    .fp-sec { padding-block: 48px; }
-    .fp-grid { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px 28px; }
-    .fp-visual { aspect-ratio: auto; height: 160px; }
-    .fp-visual .card-icon { width: 64px; height: 64px; }
-    .life-sec { padding-top: 56px; }
-    .life-sec .sec-head { flex-direction: column; align-items: flex-start; }
-    .life-sec .sec-head .biz-group-label { width: 100%; }
-    .life-sec .text br { display: none; }
-    .svc-actions .btn { width: 100%; justify-content: space-between; }
+
+  /* FV の補助リンク */
+  .fv-sub-links { display: inline-flex; gap: 24px; }
+
+  /* タブレット */
+  @media (max-width: 1023px) {
+    .fp-grid, #company .company-grid { grid-template-columns: 1fr; gap: 40px; }
+    .company-photo { aspect-ratio: 16 / 9; }
+    .corp-grid { grid-template-columns: 1fr; gap: 14px; }
   }
-  @media (max-width: 767px) { .fv-actions .btn { flex: 1 1 100%; justify-content: space-between; } }
+  /* スマホ：1列・押しやすいボタン */
+  @media (max-width: 767px) {
+    .biz-tag { font-size: 12px; }
+    .fv-actions .btn, .svc-actions .btn, .btn-consult { flex: 1 1 100%; width: 100%; justify-content: space-between; min-height: 52px; }
+    .fv-sub-links { gap: 20px; }
+    .fp-topics { padding: 24px 20px; }
+    .fp-topics ul { grid-template-columns: repeat(2, 1fr); }
+    .fp-topics li { min-height: 52px; font-size: 15px; }
+    .life-lead { margin: -16px 0 24px; }
+    .corp-label { margin-top: 48px; }
+    .corp-item { padding: 20px; gap: 4px 12px; }
+    .corp-name .card-en { display: block; margin: 2px 0 0; }
+    .top-company > div { grid-template-columns: 1fr; }
+    .cta-tel-link { flex-direction: column; gap: 2px; }
+  }
+  /* 取り扱いサービスの冒頭：タブレットではサービス一覧を1列にして、右の写真がはみ出さないように */
+  @media (min-width: 768px) and (max-width: 1023px) { .svc-nav { grid-template-columns: 1fr; } }
+  @media (max-width: 767px) {
+    .news-items { grid-column: 1 / -1; }
+    .cta-text span { display: inline; }
+    .cta-subs { flex-direction: column; gap: 18px; }
+    .cta-tel-link { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 2px 8px; }
+    .cta-tel-link small { flex-basis: 100%; text-align: center; }
+  }
+  @media (max-width: 767px) { .news-item .news-title { flex: 1 1 calc(100% - 40px); } }
 
   /* ★公開前に必ず外す：試作の帯 */
-  .draft-bar { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
-  .draft-bar ~ .header:not(.is-scrolled) { top: 30px; }
-  .draft-bar ~ .drawer { padding-top: calc(var(--header-h) + 54px); }
+  .design-preview-note { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
+  .design-preview-note ~ .header:not(.is-scrolled) { top: 30px; }
+  .design-preview-note ~ .drawer { padding-top: calc(var(--header-h) + 54px); }
