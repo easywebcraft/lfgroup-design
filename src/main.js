@@ -62,28 +62,31 @@
       fill.style.strokeDasharray = C;
       fill.style.strokeDashoffset = C;
 
-      // 演出の文字を、本物の要素の位置と大きさへ動かしながら消す
+      // 演出の文字を、本物の要素とぴったり重なる位置・大きさへ動かす。
+      // 文字組み（書体・太さ・行間・字間）は本物と同じにしてあるので、着いたところで
+      // 本物とゆっくり入れ替える（CSS の .ll-catch / .fv h1.ll-in）と、境目なく溶けて見える
       var fly = function (from, to) {
         if (!from || !to) return;
         var a = from.getBoundingClientRect(), b = to.getBoundingClientRect();
-        var dx = (b.left + b.width / 2) - (a.left + a.width / 2);
-        var dy = (b.top + b.height / 2) - (a.top + a.height / 2);
-        from.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + (b.height / a.height) + ')';
-        from.style.opacity = '0';
+        from.style.transformOrigin = '0 0';
+        from.style.transform = 'translate(' + (b.left - a.left) + 'px,' + (b.top - a.top) + 'px) scale(' + (b.height / a.height) + ')';
+        from.classList.add('is-fly');
       };
       // 本物の見出しは、ぼかした状態から浮かび上がらせる（演出のコピーがぼけながら消えるのと重ねて、
       // 入れ替わりの境目を見せない）。ふつうのフェードの「下からせり上がる」動きは位置がずれるので使わない
       var h1 = document.querySelector('.fv h1');
-      var showH1 = function () { if (h1) h1.classList.add('is-on'); };
+      var hlogo = document.querySelector('.header .logo');
+      var showH1 = function () { [h1, hlogo].forEach(function (el) { if (el) el.classList.add('is-on'); }); };
       var absorb = function () {
         if (ended) return;
         if (h1) { h1.classList.remove('fade', 'is-in'); h1.classList.add('ll-in'); }
-        fly(L.querySelector('.ll-logo'), document.querySelector('.header .logo'));
+        if (hlogo) hlogo.classList.add('ll-in');  // ヘッダーのロゴも、演出のロゴが重なるまで隠しておく
+        fly(L.querySelector('.ll-logo'), hlogo);
         fly(L.querySelector('.ll-catch'), h1);
-        L.classList.add('is-absorb');           // 白い幕を透かして、奥のトップページを見せる
-        setTimeout(showH1, 420);
-        setTimeout(go, 500);
-        setTimeout(end, 1350);
+        L.classList.add('is-absorb');           // 白い幕をゆっくり透かして、奥のトップページを見せる
+        setTimeout(showH1, 950);                // 文字が着く少し前から、本物の見出しを重ねて浮かべる
+        setTimeout(go, 700);
+        setTimeout(end, 2100);
       };
       var tick = function (ts) {
         if (ended) return;
