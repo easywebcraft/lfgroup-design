@@ -351,7 +351,7 @@ def page_about():
 
 BUSINESS = [
     ('insuranceagency', '保険代理店事業', 'Insurance Agency', [
-        'LFグループ株式会社では、大手保険会社の代理店として各種保険を取り扱っています。',
+        'LFグループ株式会社では、大手保険会社の代理店として、個人のお客様・法人のお客様の各種保険を取り扱っています。',
         '自動車・バイク・病気・ケガ・旅行・趣味・こども・生命保険等、お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。',
     ], ''),
     ('financialplanning', 'ファイナンシャルプランニング事業', 'Financial Planning', [
@@ -370,8 +370,8 @@ BUSINESS = [
 ]
 # 「これは自分向けか」をすぐ判断できるよう、4事業を2つに分けて見せる
 BIZ_GROUPS = [
-    ('personal', '個人のお客様へ', 'For Individuals', ('insuranceagency', 'financialplanning')),
-    ('corporate', '法人・パートナー企業様へ', 'For Business', ('alliance', 'partner')),
+    ('customers', '個人・法人のお客様へ', 'For Customers', ('insuranceagency', 'financialplanning')),
+    ('partners', '提携企業様へ', 'For Partners', ('alliance', 'partner')),
 ]
 
 
@@ -437,14 +437,14 @@ def page_insurance():
         'お客さまのご意見等の収集に努め現状を把握し、また、お客さまの満足度を高めるよう努めます。',
     ]
     return page_hero('Insurance', '保険', [('取り扱いサービス', '/service/'), ('保険', '/insurance/')],
-                     '大手保険会社の代理店として、各種保険を取り扱っています。',
-                     photo='service-insurance.jpg', pos='45% 50%', chips=('生命保険', '損害保険')) + f'''
+                     '大手保険会社の代理店として、個人のお客様・法人のお客様の各種保険を取り扱っています。',
+                     photo='service-insurance.jpg', pos='45% 50%', chips=('個人保険', '法人保険', '生命保険', '損害保険')) + f'''
   <section class="section">
     <div class="wrap ins-intro">
       <div>
         <p class="eyebrow fade">Insurance Agency</p>
         <h2 class="fade">保険代理店事業</h2>
-        <p class="text fade" style="margin-top:28px">LFグループ株式会社では、大手保険会社の代理店として各種保険を取り扱っています。</p>
+        <p class="text fade" style="margin-top:28px">LFグループ株式会社では、大手保険会社の代理店として、個人のお客様・法人のお客様の各種保険を取り扱っています。</p>
         <p class="text fade">自動車・バイク・病気・ケガ・旅行・趣味・こども・生命保険等、お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。</p>
       </div>
       <aside class="ins-partners fade" aria-label="主力会社">
@@ -454,6 +454,24 @@ def page_insurance():
           <li><span class="kind">損害保険</span>日新火災海上保険</li>
         </ul>
       </aside>
+    </div>
+  </section>
+
+  <!-- 個人保険・法人保険は別の事業として扱う（2026-10-04 クライアント確認）。トップの「目的から探す」からここへ来る -->
+  <section class="section ins-for">
+    <div class="wrap ins-for-grid">
+      <article class="ins-for-item fade" id="personal">
+        <p class="eyebrow">Personal</p>
+        <h2>個人保険のお客様</h2>
+        <p class="text">生命保険・損害保険を、お客様のライフプランに合わせてご提案します。家計やライフプランのご相談は、ファイナンシャルプランニング技能士（国家資格）がお受けします。</p>
+        <p><a class="link-arrow" href="/contact/?type=consult">保険について相談する{ARROW}</a></p>
+      </article>
+      <article class="ins-for-item fade" id="corporate">
+        <p class="eyebrow">Corporate</p>
+        <h2>法人保険のお客様</h2>
+        <p class="text">法人のお客様の保険も取り扱っています。保険の見直しなど、お気軽にご相談ください。</p>
+        <p><a class="link-arrow" href="/contact/?type=consult">保険について相談する{ARROW}</a></p>
+      </article>
     </div>
   </section>
 

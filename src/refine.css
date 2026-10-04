@@ -366,3 +366,38 @@
   .gnav a::after { background: var(--gold); height: 1px; }              /* メニューの現在地・ホバーの下線 */
   .fv-scroll::after { background-image: linear-gradient(var(--gold) 50%, var(--rule) 50%); }
   .footer { border-top: 2px solid var(--gold); }
+
+  /* ===== 目的から探す：個人保険・法人保険（写真つき）＋ 提携法人様・採用（罫線の入口）===== */
+  .foryou-grid { grid-template-rows: auto; align-items: stretch; }
+  .panel-main { grid-row: auto; }
+  @media (min-width: 1024px) { .foryou-grid { grid-template-columns: 1.65fr 1fr; } }
+  @media (min-width: 768px) and (max-width: 1023px) { .foryou-grid { grid-template-columns: 1fr 1fr; } .foryou-grid .panel-main { grid-column: auto; } }
+  .panel-main .panel-photo { flex: none; min-height: 0; aspect-ratio: 16 / 10; }
+  .foryou-grid .panel:not(.panel-main) .panel-photo { flex: 1; aspect-ratio: auto; min-height: 240px; }
+  .foryou-sub { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; margin-top: clamp(56px, 6vw, 88px); }
+  .sub-entry {
+    display: grid; grid-template-columns: 1fr auto; gap: 6px 24px; align-items: center;
+    padding: 28px 4px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink);
+  }
+  .sub-entry .eyebrow { grid-column: 1; margin-bottom: 4px; }
+  .sub-entry .panel-title, .sub-entry .panel-text { grid-column: 1; }
+  .sub-entry .panel-title { font-size: clamp(18px, 1.6vw, 22px); }
+  .sub-entry .arw { grid-column: 2; grid-row: 1 / span 3; color: var(--navy); transition: transform .4s ease; }
+  .sub-entry:hover .arw { transform: translateX(4px); }
+  @media (max-width: 1023px) {
+    .foryou-grid .panel:not(.panel-main) .panel-photo { flex: none; aspect-ratio: 16 / 10; min-height: 0; }
+  }
+  @media (max-width: 767px) {
+    .foryou-sub { grid-template-columns: 1fr; }
+    .sub-entry + .sub-entry { border-top: 0; }
+  }
+
+  /* 保険ページ：個人保険・法人保険の入口 */
+  .ins-for-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px clamp(48px, 7vw, 112px); }
+  .ins-for-item { padding-top: 36px; border-top: 1px solid var(--navy); scroll-margin-top: calc(var(--header-h) + 24px); }
+  .ins-for-item h2 { font-size: clamp(24px, 2.4vw, 32px); }
+  .ins-for-item .text { margin-top: 20px; }
+  @media (max-width: 767px) { .ins-for-grid { grid-template-columns: 1fr; } }
+  @media (min-width: 1024px) {
+    .foryou-grid .panel:not(.panel-main) .panel-photo, .foryou-grid .panel-main .panel-photo { flex: none; aspect-ratio: auto; height: clamp(320px, 31vw, 460px); min-height: 0; }
+  }
