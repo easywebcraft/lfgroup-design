@@ -1132,6 +1132,22 @@
   .ll-logo .logo-mark { height: 40px; }
   @media (max-width: 767px) { .logo-mark { height: 30px; } }
 
+  /* FV：コピーと写真の境目をグラデーションでつなぐ（PCは写真の左端、タブレット・スマホは写真の下端を白へ溶かす） */
+  @media (min-width: 1024px) {
+    .fv-photo {
+      width: 60vw;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .35) 12%, rgba(0, 0, 0, .8) 24%, #000 34%);
+      mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .35) 12%, rgba(0, 0, 0, .8) 24%, #000 34%);
+    }
+    .fv-photo img { object-position: 80% 40%; }
+  }
+  @media (max-width: 1023px) {
+    .fv-photo {
+      -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
+    }
+  }
+
   /* ★公開前に必ず外す：試作の帯 */
   .design-preview-note { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
   .design-preview-note ~ .header:not(.is-scrolled) { top: 30px; }
