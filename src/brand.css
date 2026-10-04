@@ -662,19 +662,7 @@
   .business { background: #fff; }
   .biz-group-label { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; font-size: 15px; font-weight: 700; color: var(--navy); letter-spacing: .08em; }
   .biz-group-label::after { content: ""; flex: 1; height: 1px; background: var(--card-line); }
-  .pillar-grid { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 20px; }
-  .card.pillar { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr auto; gap: 14px; padding: 32px 28px 26px; }
-  .card.pillar .card-icon { width: 52px; height: 52px; }
-  .card.pillar .more { grid-column: 1; }
-  .card.pillar h3 { font-size: 21px; }
-  .pillar-sub { margin-top: 8px !important; font-size: 13px !important; font-weight: 500; color: #4B7598 !important; }
-  .card.pillar.main { background: var(--navy); border-color: var(--navy); color: #fff; }
-  .card.pillar.main h3, .card.pillar.main .card-num, .card.pillar.main .card-icon, .card.pillar.main .more { color: #fff; }
-  .card.pillar.main p, .card.pillar.main .card-en { color: rgba(255, 255, 255, .78); }
-  .card.pillar.main .pillar-sub { color: #BFD3E6 !important; }
-  .card-num small { margin-left: 10px; padding: 1px 7px; border-radius: 3px; background: #fff; color: var(--navy); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; vertical-align: 2px; }
   .corp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .pillar-grid + .biz-group-label { margin-top: 56px; }
   .corp-item { display: grid; grid-template-columns: 1fr auto; gap: 8px 20px; align-items: center; padding: 24px 28px; border: 1px solid var(--card-line); border-radius: var(--card-radius); background: var(--bg-blue); transition: border-color .2s, box-shadow .2s; }
   .corp-item:hover { border-color: #C9D6E0; box-shadow: var(--shadow-hover); }
   .corp-item h3 { font-family: var(--serif); font-weight: 600; font-size: 18px; letter-spacing: .06em; }
@@ -682,15 +670,11 @@
   .corp-item p { grid-column: 1; font-size: 13px; line-height: 1.85; color: var(--text-sub); }
   .corp-item .arw { grid-column: 2; grid-row: 1 / span 2; color: var(--navy); transition: transform .25s; }
   .corp-item:hover .arw { transform: translateX(4px); }
-  @media (max-width: 1023px) { .pillar-grid { grid-template-columns: 1fr 1fr; } .card.pillar.main { grid-column: 1 / -1; } }
   @media (max-width: 767px) {
-    .pillar-grid, .corp-grid { grid-template-columns: 1fr; gap: 14px; }
-    .pillar-grid + .biz-group-label { margin-top: 40px; }
+    .corp-grid { grid-template-columns: 1fr; gap: 14px; }
     .corp-item { padding: 20px; }
     .corp-item h3 .card-en { display: block; margin: 2px 0 0; }
   }
-  /* トップのサービス欄：暮らしのサービスの小見出し */
-  #service .svc-main + .biz-group-label { margin-top: 48px; }
 
   /* MISSION：短い説明だけ（引用は「私たちについて」に残す） */
   .mission-text p:first-child { font-size: 17px; color: var(--navy); font-weight: 500; }
@@ -745,3 +729,41 @@
   @media (max-width: 767px) { .rc-points { grid-template-columns: 1fr; } }
   .fv h1 { font-size: clamp(24px, 2.8vw, 38px); }
   .fv h1 .l2 > span { display: inline-block; }
+
+  /* ===== 2026-10-04 その2：保険 → FP → ライフライン の順に、「詳しく見る」と「相談する」を分ける ===== */
+  .biz-group-label b { font-family: var(--en); font-size: 13px; font-weight: 600; letter-spacing: .06em; color: #4B7598; }
+  .biz-group-label small { padding: 1px 7px; border-radius: 3px; background: var(--navy); color: #fff; font-family: var(--en); font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+  .svc-lead { margin-top: 10px; font-size: 14px; line-height: 1.9; color: var(--text-sub); }
+  .svc-actions { display: flex; align-items: center; gap: 16px 28px; flex-wrap: wrap; margin-top: 28px; }
+  .svc-actions .btn { min-width: 0; padding: 14px 24px; }
+  .business { padding-bottom: 72px; }
+  .fp-sec { padding-block: 72px; }
+  .fp-grid { display: grid; grid-template-columns: 340px 1fr; gap: 64px; align-items: center; padding: 56px; border: 1px solid var(--card-line); border-radius: var(--card-radius); }
+  .fp-visual { aspect-ratio: 1; border-radius: var(--card-radius); background: var(--bg-blue); display: grid; place-items: center; align-content: center; gap: 20px; }
+  .fp-visual .card-icon { width: 96px; height: 96px; }
+  .fp-visual .badge { margin: 0; }
+  .fp-title { font-family: var(--serif); font-weight: 600; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.6; letter-spacing: .06em; }
+  .life-sec { padding-top: 72px; background: var(--bg-blue); }
+  .life-sec .sec-head { margin-bottom: 32px; align-items: center; }
+  .life-sec .sec-head .biz-group-label { flex: 1; margin: 0; }
+  .life-sec .svc-sub-grid { margin-bottom: 64px; }
+  .life-sec .corp-item { background: #fff; }
+  .fv-sub-links { display: inline-flex; gap: 24px; }
+  .cta-subs { display: flex; justify-content: center; align-items: center; gap: 16px 32px; flex-wrap: wrap; margin-top: 24px; }
+  .cta-tel-link { display: inline-flex; align-items: center; gap: 8px; font-family: var(--en); font-weight: 600; font-size: 18px; letter-spacing: .04em; color: var(--navy); }
+  .cta-tel-link .ico { width: 16px; height: 16px; }
+  .btn-consult { padding: 18px 32px; font-size: 16px; }
+  @media (max-width: 1023px) { .fp-grid { grid-template-columns: 220px 1fr; gap: 40px; padding: 40px; } }
+  @media (max-width: 767px) {
+    .business { padding-bottom: 48px; }
+    .fp-sec { padding-block: 48px; }
+    .fp-grid { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px 28px; }
+    .fp-visual { aspect-ratio: auto; height: 160px; }
+    .fp-visual .card-icon { width: 64px; height: 64px; }
+    .life-sec { padding-top: 56px; }
+    .life-sec .sec-head { flex-direction: column; align-items: flex-start; }
+    .life-sec .sec-head .biz-group-label { width: 100%; }
+    .life-sec .text br { display: none; }
+    .svc-actions .btn { width: 100%; justify-content: space-between; }
+  }
+  @media (max-width: 767px) { .fv-actions .btn { flex: 1 1 100%; justify-content: space-between; } }

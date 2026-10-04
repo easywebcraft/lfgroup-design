@@ -60,10 +60,6 @@ ICONS = {
     <circle cx="14" cy="26" r="5"/><path d="M4 46c0-6 4-10 10-10 2 0 3.6.4 5 1.2"/>
     <circle cx="50" cy="26" r="5"/><path d="M60 46c0-6-4-10-10-10-2 0-3.6.4-5 1.2"/>
     </svg>''',
-    'fixedcost': '''<svg class="card-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M6 30L32 9l26 21"/><path d="M13 25v29h38V25"/>
-    <path d="M35 24l-9 14h8l-3 11 10-15h-8z"/>
-    </svg>''',
 }
 # トップの本文の {{icon:キー}} をアイコンに置き換える（事業内容ページと同じ絵を使う）
 TOP = re.sub(r'\{\{icon:(\w+)\}\}', lambda m: ICONS[m.group(1)], (SRC / 'top.html').read_text())
@@ -120,7 +116,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
         {nav_items(current)}
       </ul>
     </nav>
-    <a class="btn btn-primary" href="/contact/">相談・お問い合わせ{ARROW}</a>
+    <a class="btn btn-primary" href="/contact/?type=consult">保険・お金の相談{ARROW}</a>
     <button class="menu-btn" id="menuBtn" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer">
       <span></span><span></span><span></span>
     </button>
@@ -134,7 +130,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
       {nav_items(current, 'drawer')}
     </ul>
   </nav>
-  <a class="btn btn-primary" href="/contact/">相談・お問い合わせ{ARROW}</a>
+  <a class="btn btn-primary" href="/contact/?type=consult">保険・お金の相談{ARROW}</a>
   <a class="tel" href="{TEL_HREF}"><small>お電話でのお問い合わせ</small>{TEL}</a>
 </div>
 
@@ -167,7 +163,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 </footer>
 
 <div class="sp-bar" id="spBar">
-  <a class="c" href="/contact/">相談・お問い合わせ</a>
+  <a class="c" href="/contact/?type=consult">保険・お金の相談</a>
   <a class="t" href="{TEL_HREF}"><svg><use href="#i-tel"/></svg>電話する</a>
 </div>
 
@@ -230,12 +226,11 @@ def final_cta():
     <div class="photo"><img src="/images/cta-final.jpg" alt="" onerror="this.remove()"></div>
     <div class="wrap">
       <h2 class="cta-title fade"><span>お金や保険について、</span><br><span>気になることからご相談ください。</span></h2>
-      <p class="cta-text fade">ご相談・お問い合わせ、資料のご請求はこちらから承っております。</p>
+      <p class="cta-text fade">保険・お金のご相談、お問い合わせ、資料のご請求はこちらから承っております。</p>
       <div class="btns fade">
-        <a class="btn btn-primary" href="/contact/">相談・お問い合わせ{ARROW}</a>
-        <a class="btn btn-white" href="/contact/?type=document">資料請求{ARROW}</a>
+        <a class="btn btn-primary btn-consult" href="/contact/?type=consult">保険・お金について相談する{ARROW}</a>
       </div>
-      <p class="cta-tel fade">お電話でのお問い合わせ<a href="{TEL_HREF}">{TEL}</a></p>
+      <p class="cta-subs fade"><a class="more" href="/contact/">お問い合わせ{ARROW}</a><a class="more" href="/contact/?type=document">資料請求{ARROW}</a><a class="cta-tel-link" href="{TEL_HREF}"><svg class="ico"><use href="#i-tel"/></svg>{TEL}</a></p>
     </div>
   </section>
 '''
@@ -282,7 +277,7 @@ def page_about():
         <p>毎月かかる固定費だからこそ、<br>一度の見直しが、これからの家計につながります。</p>
         <p>LFグループ株式会社は、<br>ゆとりある生活の実現をお手伝いします。</p>
       </div>
-      <p class="about-mission-quote fade"><span>金銭的な余裕は、</span><br><span>人生の幸福度を高めます。</span></p>
+      <p class="about-mission-quote fade"><span>家計にゆとりが生まれることで、</span><br><span>暮らしの選択肢も広がっていく。</span></p>
     </div>
   </section>
 
@@ -600,8 +595,9 @@ def simple_cta():
     <div class="wrap">
       <div class="simple-cta fade">
         <p class="simple-cta-title"><span>お金や保険について、</span><span>気になることからご相談ください。</span></p>
-        <a class="btn btn-primary" href="/contact/">相談・お問い合わせ{ARROW}</a>
+        <a class="btn btn-primary" href="/contact/?type=consult">保険・お金について相談する{ARROW}</a>
         <p class="simple-cta-sub">
+          <a class="more" href="/contact/">お問い合わせ{ARROW}</a>
           <a class="more" href="/contact/?type=document">資料請求{ARROW}</a>
           <a class="simple-cta-tel" href="{TEL_HREF}"><svg class="ico"><use href="#i-tel"/></svg>{TEL}</a>
         </p>
@@ -668,7 +664,8 @@ def page_contact():
           <fieldset class="field">
             <legend>お問い合わせ種別</legend>
             <div class="radios">
-              <label><input type="radio" name="type" value="ご相談・お問い合わせ" checked>ご相談・お問い合わせ</label>
+              <label><input type="radio" name="type" value="保険・お金のご相談">保険・お金のご相談</label>
+              <label><input type="radio" name="type" value="お問い合わせ" checked>お問い合わせ</label>
               <label><input type="radio" name="type" value="資料請求">資料請求</label>
             </div>
           </fieldset>
