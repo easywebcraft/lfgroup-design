@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=fd293055">
+<link rel="stylesheet" href="../assets/style.css?v=ce8c50a5">
 <script>
   // 表示前に「フェード待ち」の状態にする（本文の最後で付けると、文字が一度見えてから消えてフェードする）。
   // main.js が読み込めなかったときに文字が隠れたままにならないよう、3秒で解除する。
@@ -40,7 +40,7 @@
         <li><a href="../recruitment/">採用情報</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary" href="../contact/">お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
+    <a class="btn btn-primary" href="../contact/">相談・お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
     <button class="menu-btn" id="menuBtn" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer">
       <span></span><span></span><span></span>
     </button>
@@ -59,7 +59,7 @@
         <li><a href="../recruitment/">採用情報<svg class="arw"><use href="#i-arrow"/></svg></a></li>
     </ul>
   </nav>
-  <a class="btn btn-primary" href="../contact/">お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
+  <a class="btn btn-primary" href="../contact/">相談・お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
   <a class="tel" href="tel:0529906159"><small>お電話でのお問い合わせ</small>052-990-6159</a>
 </div>
 
@@ -71,7 +71,7 @@
         <ol class="crumb fade" aria-label="パンくずリスト"><li><a href="../">トップ</a></li><li aria-current="page">お問い合わせ</li></ol>
         <p class="label fade">Contact</p>
         <h1 class="fade">お問い合わせ</h1>
-        <p class="hero-lead fade">弊社へのお問い合わせは、こちらのフォームより承っております。</p>
+        <p class="hero-lead fade">お金や保険について、気になることからご相談ください。<br class="pc">ご相談・お問い合わせは、こちらのフォームより承っております。</p>
       </div>
       <div class="sub-hero-visual fade"><div class="sub-hero-photo photo"><img src="../images/about-hero.jpg?v=0ad758a8" alt="" style="object-position:50% 72%" onerror="this.remove()"></div></div>
     </div>
@@ -80,7 +80,13 @@
   <section class="section">
     <div class="wrap contact-grid">
       <div>
-        <p class="text">ご返信に3営業日ほどお時間をいただいております。3営業日を過ぎても返信がない場合は、お手数ですが再度お問い合わせをお願いいたします。</p>
+        <div class="reply-box">
+          <svg class="reply-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <div>
+            <p class="reply-title">ご返信は<b>3営業日</b>ほどで</p>
+            <p class="reply-text">3営業日を過ぎても返信がない場合は、お手数ですが再度お問い合わせをお願いいたします。</p>
+          </div>
+        </div>
         <div class="tel-box">
           <p>お電話でのお問い合わせ</p>
           <a href="tel:0529906159">052-990-6159</a>
@@ -93,7 +99,7 @@
           <fieldset class="field">
             <legend>お問い合わせ種別</legend>
             <div class="radios">
-              <label><input type="radio" name="type" value="お問い合わせ" checked>お問い合わせ</label>
+              <label><input type="radio" name="type" value="ご相談・お問い合わせ" checked>ご相談・お問い合わせ</label>
               <label><input type="radio" name="type" value="資料請求">資料請求</label>
             </div>
           </fieldset>
@@ -110,7 +116,7 @@
             <input type="email" id="f-email" name="email" autocomplete="email" required>
           </div>
           <div class="field">
-            <label for="f-body">お問い合わせ内容<span class="req">必須</span></label>
+            <label for="f-body">ご相談・お問い合わせ内容<span class="req">必須</span></label>
             <textarea id="f-body" name="body" required></textarea>
           </div>
           <div class="field">
@@ -158,10 +164,10 @@
 </footer>
 
 <div class="sp-bar" id="spBar">
-  <a class="c" href="../contact/">お問い合わせ</a>
+  <a class="c" href="../contact/">相談・お問い合わせ</a>
   <a class="t" href="tel:0529906159"><svg><use href="#i-tel"/></svg>電話する</a>
 </div>
 
-<script src="../assets/main.js?v=fd293055"></script>
+<script src="../assets/main.js?v=ce8c50a5"></script>
 </body>
 </html>

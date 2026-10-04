@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=fd293055">
+<link rel="stylesheet" href="../assets/style.css?v=ce8c50a5">
 <script>
   // 表示前に「フェード待ち」の状態にする（本文の最後で付けると、文字が一度見えてから消えてフェードする）。
   // main.js が読み込めなかったときに文字が隠れたままにならないよう、3秒で解除する。
@@ -40,7 +40,7 @@
         <li><a href="../recruitment/">採用情報</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary" href="../contact/">お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
+    <a class="btn btn-primary" href="../contact/">相談・お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
     <button class="menu-btn" id="menuBtn" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer">
       <span></span><span></span><span></span>
     </button>
@@ -59,7 +59,7 @@
         <li><a href="../recruitment/">採用情報<svg class="arw"><use href="#i-arrow"/></svg></a></li>
     </ul>
   </nav>
-  <a class="btn btn-primary" href="../contact/">お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
+  <a class="btn btn-primary" href="../contact/">相談・お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
   <a class="tel" href="tel:0529906159"><small>お電話でのお問い合わせ</small>052-990-6159</a>
 </div>
 
@@ -80,47 +80,60 @@
 
   <section class="section">
     <div class="wrap">
-      <article class="svc-row fade" id="svc-insurance">
+      <article class="svc-row svc-row-main fade" id="svc-insurance">
         <div class="photo"><span class="ph">IMAGE：家族の安心</span><img src="../images/service-insurance.jpg?v=64ef13b0" alt="" onerror="this.remove()"></div>
         <div>
+          <p class="svc-main-tag">Main Service</p>
           <h2>保険</h2>
           <p class="label">Insurance</p>
+          <p class="text" style="margin-top:20px">大手保険会社の代理店として、お客様のライフプランに合わせた最適な保険を提案します。</p>
           <div class="svc-group"><h3>主力会社</h3><p>SOMPOひまわり生命・日新火災海上保険</p></div>
           <div class="svc-group"><h3>生命保険</h3><ul class="svc-items"><li>医療保険</li><li>がん保険</li><li>終身保険</li><li>変額保険</li><li>収入保障保険</li><li>定期保険</li><li>こども保険</li><li>学資保険</li><li>ほか</li></ul></div>
           <div class="svc-group"><h3>損害保険</h3><ul class="svc-items"><li>自動車保険</li><li>火災保険</li><li>損害保険</li><li>賠償責任保険</li><li>労災保険</li><li>ほか</li></ul></div>
           <p class="svc-group"><a class="more" href="../insurance/">保険について詳しく見る<svg class="arw"><use href="#i-arrow"/></svg></a></p>
         </div>
       </article>
-      <article class="svc-row fade" id="svc-lifeline">
-        <div class="photo"><span class="ph">IMAGE：暮らしのあかり</span><img src="../images/service-lifeline.jpg?v=6b9e0356" alt="" onerror="this.remove()"></div>
-        <div>
-          <h2>ライフライン</h2>
-          <p class="label">Lifeline</p><div class="svc-group"><ul class="svc-items"><li>電気</li><li>ガス</li><li>水道</li></ul></div>
-        </div>
-      </article>
-      <article class="svc-row fade" id="svc-internet">
-        <div class="photo"><span class="ph">IMAGE：住まいとネット</span><img src="../images/service-internet.jpg?v=9e65415d" alt="" onerror="this.remove()"></div>
-        <div>
-          <h2>インターネット</h2>
-          <p class="label">Internet</p><div class="svc-group"><ul class="svc-items"><li>フレッツ光</li><li>光コラボレーション</li><li>ダークファイバー系光回線</li><li>電力系光回線</li></ul></div>
-        </div>
-      </article>
-      <article class="svc-row fade" id="svc-water">
-        <div class="photo"><span class="ph">IMAGE：水・キッチン</span><img src="../images/service-water.jpg?v=b1a7dc2b" alt="" onerror="this.remove()"></div>
-        <div>
-          <h2>ウォーターサーバー</h2>
-          <p class="label">Water Server</p><div class="svc-group"><ul class="svc-items"><li>浄水器型ウォーターサーバー</li></ul></div>
-        </div>
-      </article>
+    </div>
+  </section>
+
+  <section class="section bg-blue svc-life">
+    <div class="wrap">
+      <p class="label fade">Life Service</p>
+      <h2 class="heading fade">暮らしのサービス</h2>
+      <p class="text fade" style="margin-top:16px">毎月かかる固定費の見直しにつながる、暮らしのサービスのお手続きやご案内を行います。</p>
+      <div class="svc-grid svc-sub-grid">
+        <article class="svc fade" id="svc-lifeline">
+          <div class="photo"><span class="ph">IMAGE：暮らしのあかり</span><img src="../images/service-lifeline.jpg?v=6b9e0356" alt="" onerror="this.remove()"></div>
+          <div class="svc-body">
+            <h3>ライフライン<small>Lifeline</small></h3>
+            <ul class="svc-items"><li>電気</li><li>ガス</li><li>水道</li></ul>
+          </div>
+        </article>
+        <article class="svc fade" id="svc-internet">
+          <div class="photo"><span class="ph">IMAGE：住まいとネット</span><img src="../images/service-internet.jpg?v=9e65415d" alt="" onerror="this.remove()"></div>
+          <div class="svc-body">
+            <h3>インターネット<small>Internet</small></h3>
+            <ul class="svc-items"><li>フレッツ光</li><li>光コラボレーション</li><li>ダークファイバー系光回線</li><li>電力系光回線</li></ul>
+          </div>
+        </article>
+        <article class="svc fade" id="svc-water">
+          <div class="photo"><span class="ph">IMAGE：水・キッチン</span><img src="../images/service-water.jpg?v=b1a7dc2b" alt="" onerror="this.remove()"></div>
+          <div class="svc-body">
+            <h3>ウォーターサーバー<small>Water Server</small></h3>
+            <ul class="svc-items"><li>浄水器型ウォーターサーバー</li></ul>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 
   <section class="cta" id="final-cta">
     <div class="photo"><img src="../images/cta-final.jpg?v=2d4792a4" alt="" onerror="this.remove()"></div>
     <div class="wrap">
-      <h2 class="cta-title fade"><span>サービスに関するお問い合わせ、</span><br><span>資料のご請求はこちら</span></h2>
+      <h2 class="cta-title fade"><span>お金や保険について、</span><br><span>気になることからご相談ください。</span></h2>
+      <p class="cta-text fade">ご相談・お問い合わせ、資料のご請求はこちらから承っております。</p>
       <div class="btns fade">
-        <a class="btn btn-primary" href="../contact/">お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-primary" href="../contact/">相談・お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
         <a class="btn btn-white" href="../contact/?type=document">資料請求<svg class="arw"><use href="#i-arrow"/></svg></a>
       </div>
       <p class="cta-tel fade">お電話でのお問い合わせ<a href="tel:0529906159">052-990-6159</a></p>
@@ -159,10 +172,10 @@
 </footer>
 
 <div class="sp-bar" id="spBar">
-  <a class="c" href="../contact/">お問い合わせ</a>
+  <a class="c" href="../contact/">相談・お問い合わせ</a>
   <a class="t" href="tel:0529906159"><svg><use href="#i-tel"/></svg>電話する</a>
 </div>
 
-<script src="../assets/main.js?v=fd293055"></script>
+<script src="../assets/main.js?v=ce8c50a5"></script>
 </body>
 </html>
