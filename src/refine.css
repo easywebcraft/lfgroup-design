@@ -333,3 +333,26 @@
       mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
     }
   }
+
+  /* ===== 最初の演出 → FV のつなぎ（main.js の runLoader） =====
+     演出のコピーとロゴを、FVの見出し・ヘッダーのロゴと同じ文字組みにしておき、
+     重なる位置まで動かしてから、ゆっくり入れ替える。白い幕も時間をかけて透かす */
+  html.is-loading .lf-loader { transition: background-color 1.5s cubic-bezier(.4, 0, .2, 1), opacity .7s ease; }
+  .ll-catch {
+    font-family: var(--serif); font-weight: 500; color: var(--navy); text-align: left;
+    font-size: clamp(30px, 3.3vw, 50px); line-height: 1.65; letter-spacing: .08em;
+  }
+  .ll-catch .l1, .ll-catch .l2 { display: inline-block; font-weight: 500; color: var(--navy); }
+  .ll-logo { gap: 15px; font-size: 20px; font-weight: 700; letter-spacing: .06em; }  /* ヘッダーのロゴのちょうど1.25倍 */
+  .ll-logo .logo-mark { height: 42.5px; }
+  .ll-logo, .ll-catch { transition: transform 1.4s cubic-bezier(.22, .61, .36, 1), opacity 1s ease .9s, filter 1s ease .9s; }
+  .lf-loader.is-absorb .ll-logo, .lf-loader.is-absorb .ll-catch { filter: none; }
+  .ll-logo.is-fly, .ll-catch.is-fly { opacity: 0; filter: blur(1.5px); }
+  .fv h1.ll-in, .header .logo.ll-in { opacity: 0; filter: blur(1.5px); transition: opacity 1.1s ease, filter 1.1s ease; }
+  .fv h1.ll-in.is-on, .header .logo.ll-in.is-on { opacity: 1; filter: blur(0); }
+  .js .fv .fv-photo { transition: opacity 1.6s ease; }
+  @media (max-width: 767px) {
+    .ll-catch { font-size: clamp(26px, 7.4vw, 34px); letter-spacing: .04em; }
+    .ll-logo .logo-mark { height: 37.5px; }
+  }
+  html.is-loading .header .logo:not(.is-on) { opacity: 0; transition: none; }  /* 演出のあいだは最初から隠す（消えていく途中が二重に見えないように） */
