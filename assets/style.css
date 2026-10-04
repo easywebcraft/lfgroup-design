@@ -1171,6 +1171,16 @@
   }
   html.is-loading .header .logo:not(.is-on) { opacity: 0; transition: none; }  /* 演出のあいだは最初から隠す（消えていく途中が二重に見えないように） */
 
+  /* ===== 金のアクセント（ロゴの金に合わせる）=====
+     金は文字には使わず（白地で読みにくいため）、線と演出の輪にだけ少し使う */
+  :root { --gold: #B48A3E; }
+  .ll-ring .f { stroke: var(--gold); }                                   /* 演出の進み具合の輪 */
+  .eyebrow::before { background: var(--gold); opacity: 1; }               /* 英字ラベルの頭の線 */
+  .link-arrow { background-image: linear-gradient(var(--gold), var(--gold)); }  /* 矢印リンクの下線 */
+  .gnav a::after { background: var(--gold); height: 1px; }              /* メニューの現在地・ホバーの下線 */
+  .fv-scroll::after { background-image: linear-gradient(var(--gold) 50%, var(--rule) 50%); }
+  .footer { border-top: 2px solid var(--gold); }
+
   /* ★公開前に必ず外す：試作の帯 */
   .design-preview-note { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
   .design-preview-note ~ .header:not(.is-scrolled) { top: 30px; }
