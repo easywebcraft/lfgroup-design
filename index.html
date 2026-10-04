@@ -6,10 +6,15 @@
 <title>LFグループ株式会社</title>
 <meta name="description" content="顧客満足度を最優先に人々の生活を向上させます。">
 <meta name="robots" content="noindex,nofollow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LFグループ株式会社">
+<meta property="og:title" content="LFグループ株式会社">
+<meta property="og:description" content="顧客満足度を最優先に人々の生活を向上させます。">
+<!-- ★公開時：og:url・og:image・canonical は公開URLが決まってから足す -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./assets/style.css?v=ab009eb9">
+<link rel="stylesheet" href="./assets/style.css?v=3d30de63">
 <script>
   // 表示前に「フェード待ち」の状態にする（本文の最後で付けると、文字が一度見えてから消えてフェードする）。
   // main.js が読み込めなかったときに文字が隠れたままにならないよう、3秒で解除する。
@@ -61,7 +66,7 @@
         <li><a href="./recruitment/">採用情報</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary" href="./contact/?type=consult">保険・お金の相談<svg class="arw"><use href="#i-arrow"/></svg></a>
+    <a class="btn btn-primary" href="./contact/?type=consult">ご相談・お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
     <button class="menu-btn" id="menuBtn" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer">
       <span></span><span></span><span></span>
     </button>
@@ -79,248 +84,214 @@
         <li><a href="./recruitment/">採用情報<svg class="arw"><use href="#i-arrow"/></svg></a></li>
     </ul>
   </nav>
-  <a class="btn btn-primary" href="./contact/?type=consult">保険・お金の相談<svg class="arw"><use href="#i-arrow"/></svg></a>
+  <a class="btn btn-primary" href="./contact/?type=consult">ご相談・お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
   <a class="tel" href="tel:0529906159"><small>お電話でのお問い合わせ</small>052-990-6159</a>
 </div>
 
 <main>
-  <!-- 01 FIRST VIEW：保険を中心に、家計・ライフプラン・固定費まで相談できる会社だと一目で分かるように -->
+  <!-- 02 HERO：大きな写真＋大きなコピー＋短い説明。CTAは1つだけ。
+       ★最初の演出（main.js の runLoader）は .fv h1 と .header .logo の位置を使うので、この2つは残す -->
   <section class="fv" id="top">
-    <div class="fv-photo photo">
-      <span class="ph">IMAGE：家族・暮らしのイメージ</span>
+    <div class="fv-photo">
       <img decoding="async" width="1536" height="1024" src="./images/hero.jpg?v=49df1ac6" alt="" fetchpriority="high" onerror="this.remove()">
     </div>
     <div class="wrap fv-inner">
       <div class="fv-copy">
-        <p class="fv-cat fade">Insurance &amp; Financial Planning</p>
-        <h1 class="fade"><span class="l1">保険とお金を整えて、</span><br><span class="l2"><span>安心できる未来へ。</span></span></h1>
+        <p class="eyebrow fade">Insurance &amp; Financial Planning</p>
+        <h1 class="fade"><span>保険とお金を整えて、</span><br><span>安心できる未来へ。</span></h1>
         <p class="fv-lead fade">保険、ファイナンシャルプランニング、固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。</p>
-        <ul class="fv-tags fade" aria-label="ご相談いただける内容">
-          <li>保険</li><li>家計</li><li>ライフプラン</li><li>固定費</li>
-        </ul>
-        <div class="fv-actions fade">
-          <a class="btn btn-primary" href="./contact/?type=consult">保険・お金について相談する<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <span class="fv-sub-links"><a class="more" href="./service/">サービスを見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="more" href="./contact/?type=document">資料請求<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></span>
-        </div>
+        <p class="fv-cta fade"><a class="link-arrow" href="./contact/?type=consult">保険・お金について相談する<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
       </div>
+    </div>
+    <a class="fv-scroll" href="#trust"><span>Scroll</span></a>
+  </section>
+
+  <!-- 03 TRUST：信頼につながる事実だけを短く（事業内容ページの「FP技能士（国家資格）が多数在籍」） -->
+  <section class="trust" id="trust">
+    <div class="wrap trust-inner fade">
+      <p class="eyebrow">Financial Professional</p>
+      <p class="trust-main"><small>国家資格</small><span>ファイナンシャル</span><span>プランニング技能士</span> <span>在籍</span></p>
+      <p class="trust-sub">お金の専門家が、保険・家計・ライフプランのご相談をお受けしています。</p>
     </div>
   </section>
 
-  <!-- 02 WORRIES：会社の説明より先に、ユーザーの悩みを置く（どれも今の保険・FP・ライフラインの範囲） -->
-  <section class="section worries" id="worries">
+  <!-- 04 FOR YOU：会社側の分類ではなく、見る人の目的から選べる入口（採用情報は今のサイトにあるページ） -->
+  <section class="section foryou" id="foryou">
     <div class="wrap">
-      <div class="sec-center">
-        <p class="label fade">Consultation</p>
-        <h2 class="heading fade">こんなお悩み、<br class="sp">ありませんか？</h2>
+      <div class="sec-title">
+        <p class="eyebrow fade">For You</p>
+        <h2 class="fade">目的から探す</h2>
       </div>
-      <ol class="worry-list">
-        <li class="fade"><a href="./insurance/">
-          <span class="worry-top"><span class="worry-num">01</span>
-            <svg class="worry-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4l10 3.5v7c0 6.5-4.3 10.6-10 13-5.7-2.4-10-6.5-10-13v-7z"/><path d="M11.5 16l3.2 3.2 5.8-6.4"/></svg></span>
-          <span class="worry-q">今の保険が、<br>自分に合っているか分からない</span>
-          <span class="worry-a">保険について<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
-        <li class="fade"><a href="./business/#financialplanning">
-          <span class="worry-top"><span class="worry-num">02</span>
-            <svg class="worry-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="5" rx="2"/><path d="M11 11h10M11 16h10M11 21h6"/></svg></span>
-          <span class="worry-q">これからの家計や、<br>将来のお金について考えたい</span>
-          <span class="worry-a">FP・家計の相談<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
-        <li class="fade"><a href="./service/#svc-lifeline">
-          <span class="worry-top"><span class="worry-num">03</span>
-            <svg class="worry-ico" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15L16 5l12 10"/><path d="M7.5 12.5V27h17V12.5"/><path d="M17.5 13l-4.5 7h4l-1.5 5 5-7h-4z"/></svg></span>
-          <span class="worry-q">電気・ガスなど、<br>毎月の固定費を見直したい</span>
-          <span class="worry-a">固定費の見直し<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
-      </ol>
-      <p class="worry-foot fade">気になることがひとつでもあれば、<br class="sp">お気軽にご相談ください。</p>
-    </div>
-  </section>
-
-  <!-- 03 STRENGTHS：なぜLFグループに相談するのか（事業内容・取り扱いサービスにある内容だけで組む） -->
-  <section class="section reasons" id="reasons">
-    <div class="wrap">
-      <div class="sec-head">
-        <div>
-          <p class="label fade">Our Strengths</p>
-          <h2 class="heading fade">LFグループの強み</h2>
-        </div>
-        <a class="more fade" href="./about/">私たちについて<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <ol class="reason-list">
-        <li class="fade">
-          <span class="reason-num">01</span>
-          <h3>お金の専門家に<br>相談できる</h3>
-          <p class="badge"><span>国家資格</span>FP技能士在籍</p>
-          <p>ファイナンシャルプランニング技能士（国家資格）を保有するスタッフが多数在籍しています。</p>
-        </li>
-        <li class="fade">
-          <span class="reason-num">02</span>
-          <h3>保険だけでなく、<br>暮らし全体から考える</h3>
-          <p>家計・保険・年金・住宅資金・教育資金・資産運用など、暮らしにかかるお金のお悩みに幅広く対応します。</p>
-        </li>
-        <li class="fade">
-          <span class="reason-num">03</span>
-          <h3>保険からライフラインまで<br>サポート</h3>
-          <p>保険に加え、電気・ガスなどのライフライン、インターネット回線、ウォーターサーバーのお手続きやご案内も行っています。</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- 04 INSURANCE（メイン事業）：トップの主役。「詳しく見る」と「相談する」を分ける -->
-  <section class="section ins-sec" id="insurance">
-    <div class="wrap">
-      <p class="biz-tag fade"><b>01</b>保険代理店事業<small>Main Business</small></p>
-      <div class="sec-head">
-        <div>
-          <p class="label fade">Insurance</p>
-          <h2 class="heading fade">これからの暮らしに<br class="sp">合った保険を。</h2>
-        </div>
-      </div>
-      <article class="svc svc-main fade">
-        <div class="photo"><span class="ph">IMAGE：家族の安心</span><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/service-insurance.jpg?v=64ef13b0" alt="" onerror="this.remove()"></div>
-        <div class="svc-body">
-          <h3>保険<small>Insurance</small></h3>
-          <p class="svc-lead">大手保険会社の代理店として各種保険を取り扱い、お客様のライフプランに合わせた最適な保険を提案します。</p>
-          <p class="svc-note"><b>主力会社</b>SOMPOひまわり生命・日新火災海上保険</p>
-          <div class="svc-cols">
-            <div>
-              <h4 class="svc-sub">生命保険</h4>
-              <ul class="svc-items"><li>医療保険</li><li>がん保険</li><li>終身保険</li><li>変額保険</li><li>収入保障保険</li><li>定期保険</li><li>こども保険</li><li>学資保険</li><li>ほか</li></ul>
-            </div>
-            <div>
-              <h4 class="svc-sub">損害保険</h4>
-              <ul class="svc-items"><li>自動車保険</li><li>火災保険</li><li>損害保険</li><li>賠償責任保険</li><li>労災保険</li><li>ほか</li></ul>
-            </div>
-          </div>
-          <p class="svc-actions"><a class="btn btn-primary" href="./contact/?type=consult">保険について相談する<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="more" href="./insurance/">保険サービスを見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- 05 FINANCIAL PLANNING：保険の次。「保険だけでなく、暮らしのお金全体を」の流れ。相談内容は事業内容ページにあるもの -->
-  <section class="section fp-sec" id="fp">
-    <div class="wrap">
-      <div class="fp-grid">
-        <div>
-          <p class="biz-tag fade"><b>02</b>ファイナンシャルプランニング事業</p>
-          <p class="label fade">Financial Planning</p>
-          <h2 class="heading fade">保険だけでなく、<br>暮らしのお金全体を。</h2>
-          <p class="badge fade"><span>国家資格</span>FP技能士在籍</p>
-          <p class="text fade">ファイナンシャルプランニング技能士（国家資格）を保有するスタッフが多数在籍しています。お金の専門家であるFPが、ライフプランに合わせて適切なアドバイスを行います。</p>
-          <p class="svc-actions fade"><a class="btn btn-primary" href="./contact/?type=consult">お金について相談する<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="more" href="./business/#financialplanning">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
-        </div>
-        <div class="fp-topics fade">
-          <h3 class="fp-topics-head">ご相談いただける内容</h3>
-          <ul>
-            <li>家計</li><li>保険</li><li>年金</li><li>住宅資金</li><li>教育資金</li><li>資産運用</li>
-          </ul>
-          <p class="fp-topics-note">ほか、税金・介護・医療費・相続・贈与など</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 06 LIFELINE & OTHERS：保険・FPより一段下。「暮らしの固定費を見直す」でまとめ、法人・パートナー企業様向けはその下に -->
-  <section class="section life-sec" id="service">
-    <div class="wrap">
-      <p class="biz-tag fade"><b>03</b>ライフライン・アライアンス関連</p>
-      <div class="sec-head">
-        <div>
-          <p class="label fade">Lifeline &amp; Others</p>
-          <h2 class="heading fade">暮らしの固定費を<br class="sp">見直す。</h2>
-        </div>
-        <a class="more fade" href="./service/">取り扱いサービス一覧を見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <p class="text life-lead fade">毎月かかる固定費の見直しにつながる、暮らしのサービスのお手続きやご案内を行います。</p>
-      <div class="svc-grid svc-sub-grid">
-        <article class="svc fade">
-          <div class="photo"><span class="ph">IMAGE：暮らしのあかり</span><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/service-lifeline.jpg?v=6b9e0356" alt="" onerror="this.remove()"></div>
-          <div class="svc-body">
-            <h3>ライフライン<small>Lifeline</small></h3>
-            <ul class="svc-items"><li>電気</li><li>ガス</li><li>水道</li></ul>
-          </div>
-        </article>
-        <article class="svc fade">
-          <div class="photo"><span class="ph">IMAGE：住まいとネット</span><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/service-internet.jpg?v=9e65415d" alt="" onerror="this.remove()"></div>
-          <div class="svc-body">
-            <h3>インターネット<small>Internet</small></h3>
-            <ul class="svc-items"><li>フレッツ光</li><li>光コラボレーション</li><li>ダークファイバー系光回線</li><li>電力系光回線</li></ul>
-          </div>
-        </article>
-        <article class="svc fade">
-          <div class="photo"><span class="ph">IMAGE：水・キッチン</span><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/service-water.jpg?v=b1a7dc2b" alt="" onerror="this.remove()"></div>
-          <div class="svc-body">
-            <h3>ウォーターサーバー<small>Water</small></h3>
-            <ul class="svc-items"><li>浄水器型ウォーターサーバー</li></ul>
-          </div>
-        </article>
-      </div>
-
-      <h3 class="biz-group-label corp-label fade">法人・パートナー企業様へ</h3>
-      <div class="corp-grid">
-        <a class="corp-item fade" href="./business/#alliance">
-          <span class="corp-num">03</span>
-          <span class="corp-name">アライアンス事業<span class="card-en">Alliance</span></span>
-          <span class="corp-text">マンションやアパートのご入居者様へ、ライフライン、インターネット回線、ウォーターサーバーなどのお手続きやご案内を行います。</span>
-          <svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg>
+      <div class="foryou-grid">
+        <a class="panel panel-main fade" href="./service/">
+          <span class="panel-photo"><img loading="lazy" decoding="async" width="1024" height="1536" src="./images/about-hero.jpg?v=0ad758a8" alt="" onerror="this.remove()"></span>
+          <span class="panel-body">
+            <span class="eyebrow">Personal</span>
+            <span class="panel-title">個人のお客様</span>
+            <span class="panel-text">保険や家計、これからの暮らしのお金について。</span>
+            <span class="link-arrow">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </span>
         </a>
-        <a class="corp-item fade" href="./business/#partner">
-          <span class="corp-num">04</span>
-          <span class="corp-name">パートナー事業<span class="card-en">Partner</span></span>
-          <span class="corp-text">当社の商材やサービスを、提携企業様・パートナー様と協力してお客様にご提供しています。提携企業様・パートナー様募集中。</span>
-          <svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg>
+        <a class="panel fade" href="./business/#corporate">
+          <span class="panel-photo"><img loading="lazy" decoding="async" width="1254" height="1254" src="./images/mission-1.jpg?v=52e01e2b" alt="" onerror="this.remove()"></span>
+          <span class="panel-body">
+            <span class="eyebrow">Business</span>
+            <span class="panel-title">法人・提携企業様</span>
+            <span class="panel-text">アライアンス・パートナー事業について。</span>
+            <span class="link-arrow">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </span>
+        </a>
+        <a class="panel fade" href="./recruitment/">
+          <span class="panel-photo"><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/cta.jpg?v=e3022b97" alt="" onerror="this.remove()"></span>
+          <span class="panel-body">
+            <span class="eyebrow">Recruit</span>
+            <span class="panel-title">採用情報</span>
+            <span class="panel-text">エントリー受付中です。</span>
+            <span class="link-arrow">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- 07 MISSION：見出しはそのまま。説明と引用は断定を避けた表現に -->
-  <section class="section mission" id="mission">
-    <div class="wrap mission-grid">
-      <div class="mission-copy">
-        <p class="label fade">Mission</p>
-        <h2 class="mission-msg fade">固定費削減で、<br>家計を見直す。</h2>
-        <div class="mission-text fade">
-          <p>毎月かかる固定費だからこそ、<br class="pc">一度の見直しが、これからの家計につながります。</p>
-          <p>LFグループ株式会社は、<br class="pc">ゆとりある生活の実現をお手伝いします。</p>
-        </div>
-        <blockquote class="mission-quote fade"><p><span>家計にゆとりが生まれることで、</span><br><span>暮らしの選択肢も広がっていく。</span></p></blockquote>
-      </div>
-      <div class="mission-photo photo fade"><span class="ph">IMAGE：明るいリビング</span><img loading="lazy" decoding="async" width="1254" height="1254" src="./images/mission-2.jpg?v=368a9564" alt="" onerror="this.remove()"></div>
+  <!-- 05 ABOUT：左に大きな写真、右に見出しと短い文章（MISSION の言葉を使う） -->
+  <section class="section split" id="about">
+    <div class="split-photo fade"><img loading="lazy" decoding="async" width="1254" height="1254" src="./images/mission-2.jpg?v=368a9564" alt="" onerror="this.remove()"></div>
+    <div class="split-body">
+      <p class="eyebrow fade">About LF Group</p>
+      <h2 class="fade">LFグループについて</h2>
+      <p class="split-catch fade">固定費削減で、家計を見直す。</p>
+      <p class="text fade">毎月かかる固定費だからこそ、一度の見直しが、これからの家計につながります。LFグループ株式会社は、保険・固定費削減のプロフェッショナルとして、ゆとりある生活の実現をお手伝いします。</p>
+      <p class="fade"><a class="link-arrow" href="./about/">私たちについて<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
     </div>
   </section>
 
-  <!-- 08 COMPANY：左に会社情報、右に相談スペースの写真 -->
-  <section class="section" id="company">
-    <div class="wrap company-grid">
+  <!-- 強み：写真と文章を左右交互に（どれも事業内容・取り扱いサービスにある内容） -->
+  <section class="section strengths" id="strengths">
+    <div class="wrap">
+      <div class="sec-title">
+        <p class="eyebrow fade">Our Strengths</p>
+        <h2 class="fade">LFグループの強み</h2>
+      </div>
+    </div>
+    <article class="feature">
+      <div class="feature-photo fade"><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/service-internet.jpg?v=9e65415d" alt="" onerror="this.remove()"></div>
+      <div class="feature-body fade">
+        <p class="feature-num">01<span>Professional</span></p>
+        <h3>お金の専門家に<br>相談できる。</h3>
+        <p class="text">ファイナンシャルプランニング技能士（国家資格）を保有するスタッフが多数在籍しています。</p>
+      </div>
+    </article>
+    <article class="feature is-reverse">
+      <div class="feature-photo fade"><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/service-water.jpg?v=b1a7dc2b" alt="" onerror="this.remove()"></div>
+      <div class="feature-body fade">
+        <p class="feature-num">02<span>Life Support</span></p>
+        <h3>保険だけでなく、<br>暮らし全体から考える。</h3>
+        <p class="text">家計・保険・年金・住宅資金・教育資金・資産運用など、暮らしにかかるお金のお悩みに幅広く対応します。</p>
+      </div>
+    </article>
+    <article class="feature">
+      <div class="feature-photo fade"><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/service-lifeline.jpg?v=6b9e0356" alt="" onerror="this.remove()"></div>
+      <div class="feature-body fade">
+        <p class="feature-num">03<span>One Stop</span></p>
+        <h3>保険から<br>ライフラインまで。</h3>
+        <p class="text">保険に加え、電気・ガスなどのライフライン、インターネット回線、ウォーターサーバーのお手続きやご案内も行っています。</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- 06 INSURANCE（メイン事業）：商品の一覧は保険ページへ。トップは写真と短い説明だけ -->
+  <section class="section showcase" id="insurance">
+    <div class="showcase-photo fade"><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/service-insurance.jpg?v=64ef13b0" alt="" onerror="this.remove()"></div>
+    <div class="showcase-body">
+      <p class="eyebrow fade">Insurance<span class="main-mark">Main Business</span></p>
+      <h2 class="fade">これからの暮らしに、<br>合った保険を。</h2>
+      <p class="text fade">大手保険会社の代理店として、生命保険・損害保険を取り扱っています。お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。</p>
+      <p class="fade"><a class="link-arrow" href="./insurance/">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+    </div>
+  </section>
+
+  <!-- 07 FINANCIAL PLANNING：相談できる内容の一覧は事業内容ページへ -->
+  <section class="section statement" id="fp">
+    <div class="wrap statement-inner">
       <div>
-        <p class="label fade">Company</p>
-        <h2 class="heading fade">会社概要</h2>
-        <dl class="company-list top-company">
-          <div><dt>会社名</dt><dd>LFグループ株式会社</dd></div>
-          <div><dt>代表者</dt><dd>遠藤 昇平</dd></div>
-          <div><dt>所在地</dt><dd>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階<br><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E6%9D%B1%E5%8C%BA%E8%91%B53%E4%B8%81%E7%9B%AE14-5" target="_blank" rel="noopener"><span class="more">Google マップで見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></dd></div>
-          <!-- ★要確認：今のサイトの会社概要には2つの番号が並んでいるだけで、用途（代表／お問い合わせ）が書かれていない。用途をクライアントに確認して表記する -->
-          <div><dt>電話番号</dt><dd><a href="tel:0528462135">052-846-2135</a> / <a href="tel:0529906159">052-990-6159</a></dd></div>
-          <div><dt>事業内容</dt><dd>ファイナンシャルプランニング・金融コンサル・保険代理店業務</dd></div>
-          <div><dt>適格請求書発行<br>事業者登録番号</dt><dd>T4180001157727</dd></div>
-        </dl>
-        <p class="company-more fade"><a class="more" href="./company/">会社概要を見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+        <p class="eyebrow fade">Financial Planning</p>
+        <h2 class="fade">保険だけでなく、<br>暮らしのお金全体を。</h2>
       </div>
-      <div class="company-photo photo fade"><span class="ph">IMAGE：相談スペース</span><img loading="lazy" decoding="async" width="1024" height="1536" src="./images/about-hero.jpg?v=0ad758a8" alt="" onerror="this.remove()"></div>
+      <div>
+        <p class="badge-line fade"><span>国家資格</span>FP技能士在籍</p>
+        <p class="text fade">お金の専門家であるFPが、ライフプラン・家計・保険・年金・資産運用などのお悩みに対して、適切なアドバイスを行います。</p>
+        <p class="fade"><a class="link-arrow" href="./business/#financialplanning">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </div>
     </div>
   </section>
 
-
-  <section class="cta" id="final-cta">
-    <div class="photo"><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/cta-final.jpg?v=2d4792a4" alt="" onerror="this.remove()"></div>
-    <div class="wrap">
-      <h2 class="cta-title fade"><span>保険やお金について、</span><br><span>気になることからご相談ください。</span></h2>
-      <p class="cta-text fade"><span>保険の見直しや家計、これからのお金について、</span><span>まずはお気軽にお問い合わせください。</span></p>
-      <div class="btns fade">
-        <a class="btn btn-primary btn-consult" href="./contact/?type=consult">保険・お金について相談する<svg class="arw"><use href="#i-arrow"/></svg></a>
+  <!-- 08 LIFE SUPPORT：ライフライン関連はまとめて短く。詳細は取り扱いサービスページへ -->
+  <section class="section statement is-plain" id="life">
+    <div class="wrap statement-inner">
+      <div>
+        <p class="eyebrow fade">Life Support</p>
+        <h2 class="fade">毎日の暮らしも、<br>もっとシンプルに。</h2>
       </div>
-      <p class="cta-subs fade"><a class="more" href="./contact/?type=document">資料請求<svg class="arw"><use href="#i-arrow"/></svg></a><a class="cta-tel-link" href="tel:0529906159"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><small>お電話でのお問い合わせ</small>052-990-6159</a></p>
+      <div>
+        <p class="text fade">電気・ガス・水道などのライフライン、インターネット回線、ウォーターサーバーのお手続きやご案内を行い、毎月の固定費の見直しをお手伝いします。</p>
+        <p class="fade"><a class="link-arrow" href="./service/">取り扱いサービス<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 BUSINESS / ALLIANCE：法人・提携企業様向け。詳細は事業内容ページへ -->
+  <section class="section showcase is-reverse" id="business">
+    <div class="showcase-photo fade"><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/cta-final.jpg?v=2d4792a4" alt="" onerror="this.remove()"></div>
+    <div class="showcase-body">
+      <p class="eyebrow fade">Business / Alliance</p>
+      <h2 class="fade">提携企業様と、<br>ともに。</h2>
+      <p class="text fade">マンションやアパートのご入居者様へのライフラインなどのご案内（アライアンス事業）と、提携企業様・パートナー様と協力してお客様に商材やサービスをお届けするパートナー事業を行っています。提携企業様・パートナー様募集中。</p>
+      <p class="fade"><a class="link-arrow" href="./business/#corporate">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+    </div>
+  </section>
+
+  <!-- 10 INSURANCE PARTNERS：今のサイトの「主力会社」に載っている2社だけ。ロゴは正式な素材がないので文字で。
+       ★TODO：ロゴを使う場合は、各社の正式な素材と使用許諾を確認してから -->
+  <section class="partners" id="partners">
+    <div class="wrap partners-inner fade">
+      <p class="eyebrow">Insurance Partners</p>
+      <h2>主力会社</h2>
+      <ul>
+        <li><small>生命保険</small>SOMPOひまわり生命</li>
+        <li><small>損害保険</small>日新火災海上保険</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 NEWS：お知らせのページは外しているので置かない（2026-10-04 のコミット「お知らせのページを外す」） -->
+
+  <!-- 12 COMPANY：トップでは最低限だけ。詳細は会社概要ページへ -->
+  <section class="section company-brief" id="company">
+    <div class="wrap company-brief-inner">
+      <div>
+        <p class="eyebrow fade">Company</p>
+        <h2 class="fade">会社概要</h2>
+      </div>
+      <dl class="brief-list fade">
+        <div><dt>会社名</dt><dd>LFグループ株式会社</dd></div>
+        <div><dt>所在地</dt><dd>愛知県名古屋市東区葵3丁目14-5 リッチコーポ2階</dd></div>
+        <div><dt>事業内容</dt><dd>ファイナンシャルプランニング・金融コンサル・保険代理店業務</dd></div>
+      </dl>
+      <p class="fade"><a class="link-arrow" href="./company/">会社情報を見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+    </div>
+  </section>
+
+  <section class="contact-cta" id="final-cta">
+    <div class="wrap contact-cta-inner">
+      <p class="eyebrow fade">Contact</p>
+      <h2 class="fade"><span>保険やお金について、</span><br><span>気になることから</span><span>ご相談ください。</span></h2>
+      <p class="text fade">保険の見直しや家計、これからのお金について、まずはお気軽にお問い合わせください。</p>
+      <p class="contact-cta-actions fade">
+        <a class="btn btn-primary" href="./contact/?type=consult">お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
+        <a class="link-arrow" href="./contact/?type=document">資料請求<svg class="arw"><use href="#i-arrow"/></svg></a>
+      </p>
+      <p class="contact-cta-tel fade">お電話でのお問い合わせ<a href="tel:0529906159">052-990-6159</a></p>
     </div>
   </section>
 
@@ -361,6 +332,6 @@
   <a class="t" href="tel:0529906159"><svg><use href="#i-tel"/></svg>電話する</a>
 </div>
 
-<script src="./assets/main.js?v=ab009eb9"></script>
+<script src="./assets/main.js?v=3d30de63"></script>
 </body>
 </html>

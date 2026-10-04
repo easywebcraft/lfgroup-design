@@ -93,6 +93,11 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 <title>{esc(title)}</title>
 <meta name="description" content="{html.escape(description)}">
 <meta name="robots" content="noindex,nofollow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{COMPANY}">
+<meta property="og:title" content="{esc(title)}">
+<meta property="og:description" content="{html.escape(description)}">
+<!-- ★公開時：og:url・og:image・canonical は公開URLが決まってから足す -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
@@ -119,7 +124,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
         {nav_items(current)}
       </ul>
     </nav>
-    <a class="btn btn-primary" href="/contact/?type=consult">保険・お金の相談{ARROW}</a>
+    <a class="btn btn-primary" href="/contact/?type=consult">ご相談・お問い合わせ{ARROW}</a>
     <button class="menu-btn" id="menuBtn" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer">
       <span></span><span></span><span></span>
     </button>
@@ -133,7 +138,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
       {nav_items(current, 'drawer')}
     </ul>
   </nav>
-  <a class="btn btn-primary" href="/contact/?type=consult">保険・お金の相談{ARROW}</a>
+  <a class="btn btn-primary" href="/contact/?type=consult">ご相談・お問い合わせ{ARROW}</a>
   <a class="tel" href="{TEL_HREF}"><small>お電話でのお問い合わせ</small>{TEL}</a>
 </div>
 
@@ -210,37 +215,31 @@ LOADER = """
 </div>"""
 
 
-def page_hero(label, title, crumbs, lead='', photo=None, word=None, chips=(), extra='', h1=True, pos='50% 50%', compact=False, zoom=1, caption=''):
-    """下層ページの冒頭（全ページ共通。「私たちについて」と同じ形）。
-    背景に大きな薄い英字（word、省略時は label）、左にパンくず・英字ラベル・見出し・説明・小さな項目、
-    右に装飾付きの縦長写真（photo を渡したときだけ）。crumbs は (名前, URL) の並び。最後が今のページ。"""
+def page_hero(label, title, crumbs, lead='', photo=None, chips=(), extra='', h1=True, pos='50% 50%', compact=False, zoom=1, caption=''):
+    """下層ページの冒頭（全ページ共通）。パンくず → 小さな英字 → 大きな日本語タイトル → 一文 → ページの目次など（extra）。
+    photo を渡すと、その下に横長の大きな写真を置く。crumbs は (名前, URL) の並び。最後が今のページ。"""
     items = ['<li><a href="/">トップ</a></li>']
     for name, href in crumbs[:-1]:
         items.append(f'<li><a href="{href}">{name}</a></li>')
     items.append(f'<li aria-current="page">{crumbs[-1][0]}</li>')
     # 記事ページは記事タイトルを h1 にするので、ここは見た目だけ同じ p にする
     title_html = f'<h1 class="fade">{title}</h1>' if h1 else f'<p class="sub-hero-title fade">{title}</p>'
-    lead_html = f'\n        <p class="hero-lead fade">{lead}</p>' if lead else ''
-    chips_html = ('\n        <ul class="about-values fade">' + ''.join(
-        f'<li><b>{i + 1:02d}</b>{c}</li>' for i, c in enumerate(chips)) + '</ul>') if chips else ''
+    lead_html = f'\n      <p class="hero-lead fade">{lead}</p>' if lead else ''
+    chips_html = ('\n      <ul class="hero-chips fade">' + ''.join(f'<li>{c}</li>' for c in chips) + '</ul>') if chips else ''
     extra_html = f'\n{extra}' if extra else ''
-    visual = ''
+    band = ''
     if photo:
-        visual = (f'\n      <div class="sub-hero-visual fade"><div class="sub-hero-photo photo">'
-                  f'<img src="/images/{photo}" alt="" data-eager style="object-position:{pos}{f";transform:scale({zoom});transform-origin:{pos}" if zoom != 1 else ""}" onerror="this.remove()"></div>'
-                  + (f'<p class="sub-hero-caption">{caption}</p>' if caption else '') + '</div>')
-    # 左の中身が少ないページは写真を正方形にして、パンくずと見出しの間が空きすぎないようにする
-    cls = ('page-hero sub-hero' + (' has-photo' if photo else '') + (' tall' if extra else '')
-           + (' compact' if compact else ''))
+        style = f'object-position:{pos}' + (f';transform:scale({zoom});transform-origin:{pos}' if zoom != 1 else '')
+        band = (f'\n    <div class="wrap"><figure class="hero-band fade">'
+                f'<img src="/images/{photo}" alt="" data-eager style="{style}" onerror="this.remove()">'
+                + (f'<figcaption>{caption}</figcaption>' if caption else '') + '</figure></div>')
+    cls = 'page-hero sub-hero' + (' has-photo' if photo else '') + (' compact' if compact else '')
     return f'''  <section class="{cls}">
-    <p class="sub-bg-word" aria-hidden="true">{word or label}</p>
-    <div class="wrap sub-hero-grid">
-      <div class="sub-hero-copy">
-        <ol class="crumb fade" aria-label="パンくずリスト">{''.join(items)}</ol>
-        <p class="label fade">{label}</p>
-        {title_html}{lead_html}{extra_html}{chips_html}
-      </div>{visual}
-    </div>
+    <div class="wrap sub-hero-copy">
+      <ol class="crumb fade" aria-label="パンくずリスト">{''.join(items)}</ol>
+      <p class="eyebrow fade">{label}</p>
+      {title_html}{lead_html}{chips_html}{extra_html}
+    </div>{band}
   </section>
 '''
 
@@ -256,15 +255,36 @@ def policy_lines_html(items, fade=True):
 
 
 def final_cta():
-    return f'''  <section class="cta" id="final-cta">
-    <div class="photo"><img src="/images/cta-final.jpg" alt="" onerror="this.remove()"></div>
-    <div class="wrap">
-      <h2 class="cta-title fade"><span>保険やお金について、</span><br><span>気になることからご相談ください。</span></h2>
-      <p class="cta-text fade"><span>保険の見直しや家計、これからのお金について、</span><span>まずはお気軽にお問い合わせください。</span></p>
-      <div class="btns fade">
-        <a class="btn btn-primary btn-consult" href="/contact/?type=consult">保険・お金について相談する{ARROW}</a>
+    """ページ最下部のお問い合わせ欄（全ページ共通）。ボタンは1つ、資料請求と電話は小さく添える。"""
+    return f'''  <section class="contact-cta" id="final-cta">
+    <div class="wrap contact-cta-inner">
+      <p class="eyebrow fade">Contact</p>
+      <h2 class="fade"><span>保険やお金について、</span><br><span>気になることから</span><span>ご相談ください。</span></h2>
+      <p class="text fade">保険の見直しや家計、これからのお金について、まずはお気軽にお問い合わせください。</p>
+      <p class="contact-cta-actions fade">
+        <a class="btn btn-primary" href="/contact/?type=consult">お問い合わせ{ARROW}</a>
+        <a class="link-arrow" href="/contact/?type=document">資料請求{ARROW}</a>
+      </p>
+      <p class="contact-cta-tel fade">お電話でのお問い合わせ<a href="{TEL_HREF}">{TEL}</a></p>
+    </div>
+  </section>
+'''
+
+
+def company_brief():
+    """会社名・所在地・事業内容だけの短い会社案内（トップと同じ形）。"""
+    return f'''  <section class="section company-brief">
+    <div class="wrap company-brief-inner">
+      <div>
+        <p class="eyebrow fade">Company</p>
+        <h2 class="fade">会社情報</h2>
       </div>
-      <p class="cta-subs fade"><a class="more" href="/contact/?type=document">資料請求{ARROW}</a><a class="cta-tel-link" href="{TEL_HREF}"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><small>お電話でのお問い合わせ</small>{TEL}</a></p>
+      <dl class="brief-list fade">
+        <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
+        <div><dt>所在地</dt><dd>{ADDRESS}</dd></div>
+        <div><dt>事業内容</dt><dd>ファイナンシャルプランニング・金融コンサル・保険代理店業務</dd></div>
+      </dl>
+      <p class="fade"><a class="link-arrow" href="/company/">会社概要を見る{ARROW}</a></p>
     </div>
   </section>
 '''
@@ -282,13 +302,9 @@ def page_about():
         ('事故に遭われたお客様に対して、', '迅速に保険金の支払いができるようアドバイスし、', '事故処理完了まで適切な対応を行います。'),
         ('お客様の立場で行動するために、', '継続的に教育を行うとともに、適切な管理体制を整備します。'),
     ]
-    # 方針の5項目は規約のような一覧ではなく、会社の姿勢として伝わるようカードにする
-    cards = ''.join(
-        f'<li class="fade"><span class="fd-num">{i + 1:02d}</span><p>{"".join(f"<span>{t}</span>" for t in item)}</p></li>'
-        for i, item in enumerate(fd))
     # 冒頭は「何の会社か」を一言で。下の4つは本文（ライフライン・保険・FP・ライフプランの見直し）から取る
     hero = page_hero(
-        'About', '私たちについて', [('私たちについて', '/about/')], word='About Us',
+        'About', '私たちについて', [('私たちについて', '/about/')],
         photo='about-hero.jpg', pos='50% 72%',
         extra='        <p class="about-message fade"><span>暮らしにかかるお金を、</span><br><span>一緒に見直す会社です。</span></p>',
         chips=('保険', '家計', 'ライフライン', 'ライフプラン'))
@@ -296,7 +312,7 @@ def page_about():
   <section class="section about-intro">
     <div class="wrap">
       <div class="about-intro-body fade">
-        <p class="label">Introduction</p>
+        <p class="eyebrow">Introduction</p>
         <h2 class="about-intro-title"><span>顧客満足度を最優先に、</span><span>人々の生活を向上させます。</span></h2>
         <p class="about-intro-text">弊社はお客様の固定費を削減することを目的に、電気やガスなどのライフラインの代行業務、保険の見直しに加え、FP資格取得者が多数在籍しており、NISAやふるさと納税をはじめとした投資や節税などを通して、お客様のライフプランの見直しを行っています。</p>
       </div>
@@ -305,7 +321,7 @@ def page_about():
 
   <section class="section about-mission" id="mission">
     <div class="wrap">
-      <p class="label fade">Mission</p>
+      <p class="eyebrow fade">Mission</p>
       <h2 class="about-mission-msg fade"><span>固定費削減で、</span><br><span>家計を見直す。</span></h2>
       <div class="about-mission-text fade">
         <p>毎月かかる固定費だからこそ、<br>一度の見直しが、これからの家計につながります。</p>
@@ -319,17 +335,16 @@ def page_about():
     <div class="wrap">
       <div class="about-policy-grid">
         <div class="about-policy-head">
-          <p class="label fade">Policy</p>
-          <h2 class="heading fade">お客様本位の<br>業務運営方針</h2>
-          <p class="about-policy-note fade">保険・固定費削減のプロフェッショナルとして、お客様の立場になって業務を行うための5つの約束です。</p>
-          <p class="fade" style="margin-top:32px"><a class="more" href="/operation/">主な取組内容を見る{ARROW}</a></p>
+          <p class="eyebrow fade">Policy</p>
+          <h2 class="fade">お客様本位の<br>業務運営方針</h2>
+          <p class="fade" style="margin-top:32px"><a class="link-arrow" href="/operation/">主な取組内容を見る{ARROW}</a></p>
         </div>
-        <ol class="fd-cards">{cards}</ol>
+        {policy_lines_html(fd)}
       </div>
     </div>
   </section>
 
-''' + final_cta()
+''' + company_brief() + final_cta()
 
 
 BUSINESS = [
@@ -365,9 +380,8 @@ def page_business():
     index = ''
     for gid, glabel, _, keys in BIZ_GROUPS:
         links = ''.join(
-            f'<a class="hero-biz{" main" if k == "insuranceagency" else ""}" href="#{k}">'
-            f'<span class="hb-top"><b>{num[k]:02d}</b>{"<small>Main Business</small>" if k == "insuranceagency" else ""}{ARROW}</span>'
-            f'<span class="hb-name">{name[k].replace("ファイナンシャルプランニング", "ファイナンシャル<br>プランニング")}</span></a>'
+            f'<a class="hero-biz" href="#{k}"><b>{num[k]:02d}</b><span class="hb-name">{name[k]}</span>'
+            f'{"<small>Main</small>" if k == "insuranceagency" else ""}{ARROW}</a>'
             for k in keys)
         index += f'<div class="hero-biz-group"><p class="hbg-label">{glabel}</p><div class="hero-bizs">{links}</div></div>'
     groups = []
@@ -379,7 +393,7 @@ def page_business():
             texts = ''.join(f'<p class="text">{p}</p>' for p in paras)
             note_html = f'<p class="biz-note">{note}</p>' if note else ''
             if key == 'insuranceagency':
-                note_html = f'<p style="margin-top:24px"><a class="more" href="/insurance/">取り扱い保険・事故対応について見る{ARROW}</a></p>'
+                note_html = f'<p style="margin-top:24px"><a class="link-arrow" href="/insurance/">取り扱い保険・事故対応について見る{ARROW}</a></p>'
             blocks.append(f'''      <article class="biz-block fade" id="{key}">
         <div class="biz-visual"><span class="num">{num[key]:02d}</span>{ICONS[key]}</div>
         <div>
@@ -392,7 +406,7 @@ def page_business():
       </article>''')
         groups.append(f'''  <section class="section biz-section{" bg-blue" if gid == "corporate" else ""}" id="{gid}">
     <div class="wrap">
-      <div class="biz-group-head fade"><p class="label">{gen}</p><p class="biz-group-title">{glabel}</p></div>
+      <div class="biz-group-head fade"><p class="eyebrow">{gen}</p><p class="biz-group-title">{glabel}</p></div>
 {chr(10).join(blocks)}
     </div>
   </section>''')
@@ -426,8 +440,8 @@ def page_insurance():
   <section class="section">
     <div class="wrap ins-intro">
       <div>
-        <p class="label fade">Insurance Agency</p>
-        <h2 class="heading fade">保険代理店事業</h2>
+        <p class="eyebrow fade">Insurance Agency</p>
+        <h2 class="fade">保険代理店事業</h2>
         <p class="text fade" style="margin-top:28px">LFグループ株式会社では、大手保険会社の代理店として各種保険を取り扱っています。</p>
         <p class="text fade">自動車・バイク・病気・ケガ・旅行・趣味・こども・生命保険等、お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。</p>
       </div>
@@ -443,8 +457,8 @@ def page_insurance():
 
   <section class="section bg-blue">
     <div class="wrap">
-      <p class="label fade">Lineup</p>
-      <h2 class="heading fade">取り扱い保険</h2>
+      <p class="eyebrow fade">Lineup</p>
+      <h2 class="fade">取り扱い保険</h2>
       <div class="ins-lineup">
         <article class="ins-cat fade">
           <h3>生命保険<span>Life Insurance</span></h3>
@@ -461,8 +475,8 @@ def page_insurance():
   <section class="section">
     <div class="wrap ins-support">
       <div>
-        <p class="label fade">Support</p>
-        <h2 class="heading fade">事故対応</h2>
+        <p class="eyebrow fade">Support</p>
+        <h2 class="fade">事故対応</h2>
       </div>
       <div class="fade">
         <p class="ins-lead">事故に遭われたお客様に対して、迅速に保険金のお支払いができるようアドバイスし、事故処理完了まで適切な対応を行います。</p>
@@ -470,7 +484,7 @@ def page_insurance():
           <li>事故に遭われたお客様への連絡頻度を高めています。</li>
           <li>休日・夜間の事故対応。</li>
         </ul>
-        <p style="margin-top:24px"><a class="more" href="/operation/">お客様本位の業務運営方針を見る{ARROW}</a></p>
+        <p style="margin-top:24px"><a class="link-arrow" href="/operation/">お客様本位の業務運営方針を見る{ARROW}</a></p>
       </div>
     </div>
   </section>
@@ -479,9 +493,9 @@ def page_insurance():
     <div class="wrap">
       <div class="about-policy-grid">
         <div class="about-policy-head">
-          <p class="label fade">Policy</p>
-          <h2 class="heading fade">勧誘方針</h2>
-          <p class="fade" style="margin-top:32px"><a class="more" href="/solicitation/">勧誘方針の全文を見る{ARROW}</a></p>
+          <p class="eyebrow fade">Policy</p>
+          <h2 class="fade">勧誘方針</h2>
+          <p class="fade" style="margin-top:32px"><a class="link-arrow" href="/solicitation/">勧誘方針の全文を見る{ARROW}</a></p>
         </div>
         {policy_lines_html(sol)}
       </div>
@@ -492,17 +506,17 @@ def page_insurance():
     <div class="wrap">
       <a class="ins-related fade" href="/business/#financialplanning">
         <div>
-          <p class="label">Related</p>
+          <p class="eyebrow">Related</p>
           <p class="ins-related-title"><span>ファイナンシャル</span><span>プランニング事業</span></p>
           <p class="badge"><span>国家資格</span>FP技能士在籍</p>
           <p class="text" style="margin-top:16px">お金の専門家であるFPがライフプラン・家計・保険・年金・住宅資金・教育資金・税金・資産運用・介護・医療費・相続・贈与などのお悩みに対して、適切なアドバイスを行い、お客様の人生がより良くなるようサポートさせて頂きます。</p>
         </div>
-        <span class="more">詳しく見る{ARROW}</span>
+        <span class="link-arrow">詳しく見る{ARROW}</span>
       </a>
     </div>
   </section>
 
-''' + simple_cta()
+''' + final_cta()
 
 
 LIFE_SERVICES = [
@@ -518,7 +532,7 @@ def page_service():
           <div class="svc-group"><h3>主力会社</h3><p>SOMPOひまわり生命・日新火災海上保険</p></div>
           <div class="svc-group"><h3>生命保険</h3>{tags(['医療保険', 'がん保険', '終身保険', '変額保険', '収入保障保険', '定期保険', 'こども保険', '学資保険', 'ほか'])}</div>
           <div class="svc-group"><h3>損害保険</h3>{tags(['自動車保険', '火災保険', '損害保険', '賠償責任保険', '労災保険', 'ほか'])}</div>
-          <p class="svc-group"><a class="more" href="/insurance/">保険について詳しく見る{ARROW}</a></p>'''),
+          <p class="svc-group"><a class="link-arrow" href="/insurance/">保険について詳しく見る{ARROW}</a></p>'''),
     ]
     ids = ['insurance', 'lifeline', 'internet', 'water']
     # 主力の保険は写真つきの大きな1段。その下に「暮らしのサービス」として3つをカードで並べる
@@ -528,7 +542,7 @@ def page_service():
         <div>
           <p class="svc-main-tag">Main Service</p>
           <h2>{name}</h2>
-          <p class="label">{en}</p>
+          <p class="eyebrow">{en}</p>
           <p class="text" style="margin-top:20px">大手保険会社の代理店として、お客様のライフプランに合わせた最適な保険を提案します。</p>{inner}
         </div>
       </article>'''
@@ -559,8 +573,8 @@ def page_service():
 
   <section class="section bg-blue svc-life">
     <div class="wrap">
-      <p class="label fade">Life Service</p>
-      <h2 class="heading fade">暮らしのサービス</h2>
+      <p class="eyebrow fade">Life Service</p>
+      <h2 class="fade">暮らしのサービス</h2>
       <p class="text fade" style="margin-top:16px">毎月かかる固定費の見直しにつながる、暮らしのサービスのお手続きやご案内を行います。</p>
       <div class="svc-grid svc-sub-grid">{cards}
       </div>
@@ -601,30 +615,13 @@ def page_company():
 
   <section class="section bg-blue">
     <div class="wrap">
-      <p class="label fade">Policy</p>
-      <h2 class="heading fade">各種方針</h2>
+      <p class="eyebrow fade">Policy</p>
+      <h2 class="fade">各種方針</h2>
       <div class="link-list fade" style="margin-top:40px">{links}</div>
     </div>
   </section>
 
 ''' + final_cta()
-
-
-def simple_cta():
-    """写真を使わない、下層ページ用のお問い合わせ欄。"""
-    return f'''  <section class="section simple-cta-wrap">
-    <div class="wrap">
-      <div class="simple-cta fade">
-        <p class="simple-cta-title"><span>保険やお金について、</span><span>気になることからご相談ください。</span></p>
-        <a class="btn btn-primary" href="/contact/?type=consult">保険・お金について相談する{ARROW}</a>
-        <p class="simple-cta-sub">
-          <a class="more" href="/contact/?type=document">資料請求{ARROW}</a>
-          <a class="simple-cta-tel" href="{TEL_HREF}"><svg class="ico"><use href="#i-tel"/></svg>{TEL}</a>
-        </p>
-      </div>
-    </div>
-  </section>
-'''
 
 
 def page_contact():
@@ -704,7 +701,7 @@ def page_recruitment():
     dl = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)
     # 「エントリー受付中！」はステータス表示にして、募集要項と電話（応募方法は電話）へつなぐ
     return page_hero('Recruitment', '採用情報', [('採用情報', '/recruitment/')],
-                     word='Recruit', photo='cta.jpg', pos='30% 50%',
+                     photo='cta.jpg', pos='30% 50%',
                      extra=(f'        <div class="rc-hero fade">\n'
                             f'          <p class="rc-status"><span class="dot"></span>Entry Open<b>エントリー受付中</b></p>\n'
                             f'          <p class="rc-lead">現在、採用エントリーを受け付けています。<br>ご応募はお電話で承ります。</p>\n'
@@ -713,8 +710,8 @@ def page_recruitment():
                             f'        </div>')) + f'''
   <section class="section rc-first" id="points">
     <div class="wrap">
-      <p class="label fade">Points</p>
-      <h2 class="heading fade">LFグループで働くポイント</h2>
+      <p class="eyebrow fade">Points</p>
+      <h2 class="fade">LFグループで働くポイント</h2>
       <ul class="rc-points">
         <li class="fade"><span class="rc-pt-num">01</span><p class="rc-pt-title">固定給＋成果報酬</p><p>固定給20万円に、営業成績に応じた成果報酬を加えてお支払いします。</p></li>
         <li class="fade"><span class="rc-pt-num">02</span><p class="rc-pt-title">正社員登用制度あり</p><p>契約社員としてスタートし、正社員登用制度があります（成績基準あり）。</p></li>
@@ -727,29 +724,29 @@ def page_recruitment():
   <section class="section bg-blue" id="work">
     <div class="wrap rc-work">
       <div>
-        <p class="label fade">Work</p>
-        <h2 class="heading fade">仕事内容</h2>
+        <p class="eyebrow fade">Work</p>
+        <h2 class="fade">仕事内容</h2>
       </div>
       <div class="fade">
         <p class="rc-work-lead">生命保険、損害保険などの金融商品の販売とアフターサービス</p>
         <p class="text">LFグループ株式会社は、大手保険会社の代理店として各種保険を取り扱っています。お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。</p>
-        <p style="margin-top:24px"><a class="more" href="/business/#insuranceagency">保険代理店事業について見る{ARROW}</a></p>
+        <p style="margin-top:24px"><a class="link-arrow" href="/business/#insuranceagency">保険代理店事業について見る{ARROW}</a></p>
       </div>
     </div>
   </section>
 
   <section class="section" id="requirements">
     <div class="wrap">
-      <p class="label fade">Requirements</p>
-      <h2 class="heading fade" style="margin-bottom:40px">募集要項</h2>
+      <p class="eyebrow fade">Requirements</p>
+      <h2 class="fade" style="margin-bottom:40px">募集要項</h2>
       <dl class="company-list full">{dl}</dl>
     </div>
   </section>
 
   <section class="section bg-blue">
     <div class="wrap narrow">
-      <p class="label fade">Entry</p>
-      <h2 class="heading fade">ご応募はお電話で</h2>
+      <p class="eyebrow fade">Entry</p>
+      <h2 class="fade">ご応募はお電話で</h2>
       <!-- ★要確認：今のサイトの応募先 TEL は「052-846-8224・052-990-6159」の2つ。どちらが採用窓口かは書かれていない -->
       <div class="recruit-tel fade">
         <a href="tel:0528468224">052-846-8224</a>
@@ -942,7 +939,7 @@ def write(path, content):
 
 def main():
     global ASSET_V
-    css = (SRC / 'style.css').read_text() + (SRC / 'pages.css').read_text() + (SRC / 'brand.css').read_text()
+    css = (SRC / 'style.css').read_text() + (SRC / 'pages.css').read_text() + (SRC / 'brand.css').read_text() + (SRC / 'refine.css').read_text()
     css += """
   /* ★公開前に必ず外す：試作の帯 */
   .design-preview-note { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }

@@ -23,27 +23,13 @@
   .h2 + * { margin-top: 24px; }
   .text { color: var(--text-sub); line-height: 2.05; }
   .text + .text { margin-top: 1em; }
-  .divider { border: 0; border-top: 1px solid var(--line); margin: 0; }
+
   .bg-blue { background: var(--bg-blue); }
 
   /* ===== 私たちについて ===== */
   .about-message { font-family: var(--serif); font-weight: 600; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.7; letter-spacing: .08em; }
   .about-message span { display: inline-block; }
-  .about-statement { text-align: center; }
-  .about-statement p { font-family: var(--serif); font-weight: 600; font-size: clamp(22px, 2.8vw, 32px); line-height: 1.7; letter-spacing: .08em; }
-  .about-statement p span { display: inline-block; }
-  .fd-list { counter-reset: fd; display: grid; gap: 16px; }
-  .fd-list li {
-    counter-increment: fd; display: grid; grid-template-columns: 56px 1fr; gap: 16px; align-items: start;
-    padding: 24px 28px; background: #fff; border-radius: 12px; box-shadow: var(--shadow); line-height: 1.9;
-  }
-  .fd-list li::before { content: counter(fd, decimal-leading-zero); font-family: var(--en); font-weight: 600; font-size: 20px; color: var(--accent); line-height: 1.6; }
-  @media (max-width: 767px) { .fd-list li { grid-template-columns: 40px 1fr; padding: 20px; font-size: 15px; } }
 
-  /* ===== 事業内容 ===== */
-  .biz-index { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
-  .biz-index a { padding: 8px 18px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-size: 13px; color: var(--primary); transition: background-color .2s, color .2s; }
-  .biz-index a:hover { background: var(--primary); color: #fff; }
   .biz-block { display: grid; grid-template-columns: 300px 1fr; gap: 64px; align-items: start; padding-block: 72px; border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--header-h) + 16px); }
   .biz-block:first-child { padding-top: 0; }
   .biz-block:last-child { border-bottom: 0; padding-bottom: 0; }
@@ -87,13 +73,6 @@
   .link-list .arw { color: var(--primary); }
   @media (max-width: 767px) { .link-list { grid-template-columns: 1fr; } }
 
-  /* ===== お知らせ ===== */
-  .article-head time { font-family: var(--en); font-size: 14px; color: var(--text-sub); letter-spacing: .06em; }
-  .article-head h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 3vw, 34px); line-height: 1.6; letter-spacing: .06em; margin-top: 8px; }
-  .article-body { margin-top: 48px; padding-top: 48px; border-top: 1px solid var(--line); line-height: 2.1; }
-  .article-body p + p { margin-top: 1.4em; }
-  .back { margin-top: 64px; }
-
   /* ===== 方針ページ ===== */
   .policy h2 { font-size: 19px; font-weight: 700; line-height: 1.7; margin-top: 56px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
   .policy h2:first-child { margin-top: 0; }
@@ -106,8 +85,7 @@
   .policy ul li::before { content: ""; position: absolute; left: .2em; top: .95em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
   .policy ol.num { margin-top: 20px; padding: 0; list-style: none; display: grid; gap: 12px; }
   .policy ol.num li { padding: 18px 22px; background: var(--bg-blue); border-radius: 10px; }
-  .policy .companies { margin-top: 16px; display: grid; gap: 8px; }
-  .policy .companies a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
+
   .policy .end { margin-top: 48px; text-align: right; }
   .policy .todo { margin-top: 16px; padding: 16px 20px; border: 1px dashed #D9A35B; border-radius: 8px; background: #FFF8EE; color: #8A5A1B; font-size: 14px; }
 
