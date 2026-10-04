@@ -31,7 +31,6 @@ NAV = [
     ('business', '事業内容', '/business/'),
     ('service', 'サービス', '/service/'),        # メニューでは短く。ページの見出しは「取り扱いサービス」
     ('company', '会社情報', '/company/'),        # 同上「会社概要」
-    ('news', 'お知らせ', '/news/'),
     ('recruitment', '採用情報', '/recruitment/'),
 ]
 POLICIES = [
@@ -611,20 +610,6 @@ def page_company():
 ''' + final_cta()
 
 
-NEWS = [
-    ('20230920', '2023-09-20', 'NEWS', 'ホームページを公開しました！！', [
-        'こんにちは！',
-        'ＬＦグループ株式会社です。弊社はお客様の固定費を削減することを目的に、電気やガスなどのライフラインの代行業務、保険の見直しに加え、ＦＰ資格取得者が多数在籍しており、ＮＩＳＡやふるさと納税をはじめとした投資や節税などを通して、お客様のライフプランの見直しを行っています。',
-        '皆さんのお力になれるよう頑張りますので、これからよろしくお願い致します。',
-    ]),
-]
-
-
-def news_row(slug, d, cat, t):
-    return (f'<li><a href="/news/{slug}/"><time datetime="{d}">{d.replace("-", ".")}</time>'
-            f'<span class="news-cat">{cat}</span><span class="news-title">{t.rstrip("！")}</span>{ARROW}</a></li>')
-
-
 def simple_cta():
     """写真を使わない、下層ページ用のお問い合わせ欄。"""
     return f'''  <section class="section simple-cta-wrap">
@@ -640,37 +625,6 @@ def simple_cta():
     </div>
   </section>
 '''
-
-
-def page_news_list():
-    items = ''.join(news_row(slug, d, cat, t) for slug, d, cat, t, _ in NEWS)
-    return page_hero('News', 'お知らせ', [('お知らせ', '/news/')], compact=True) + f'''
-  <section class="section news-page">
-    <div class="wrap news-wrap">
-      <ul class="news-lines fade">{items}</ul>
-    </div>
-  </section>
-
-''' + simple_cta()
-
-
-def page_news_article(slug, date, cat, title, paras):
-    body = ''.join(f'<p>{p}</p>' for p in paras)
-    return page_hero('News', 'お知らせ', [('お知らせ', '/news/'), (title.rstrip('！'), f'/news/{slug}/')], h1=False, compact=True) + f'''
-  <section class="section">
-    <div class="wrap reading">
-      <article>
-        <header class="article-head fade">
-          <p class="article-meta"><time datetime="{date}">{date.replace("-", ".")}</time><span class="news-cat">{cat}</span></p>
-          <h1>{title}</h1>
-        </header>
-        <div class="article-body">{body}</div>
-      </article>
-      <p class="back"><a class="more" href="/news/">お知らせ一覧へ戻る{ARROW}</a></p>
-    </div>
-  </section>
-
-''' + simple_cta()
 
 
 def page_contact():
@@ -1002,21 +956,12 @@ def main():
     write('assets/style.css', css)
     write('assets/main.js', js)
 
-    # トップのお知らせは新しい順に最大3件（今は1件）。増えたら NEWS に足すだけでトップにも並ぶ
-    latest = sorted(NEWS, key=lambda n: n[1], reverse=True)[:3]
-    top_news = ''.join(
-        f'<li><a class="news-item" href="/news/{slug}/"><time datetime="{d}">{d.replace("-", ".")}</time>'
-        f'<span class="news-cat">{cat}</span><span class="news-title">{t.rstrip("！")}</span>{ARROW}</a></li>'
-        for slug, d, cat, t, _ in latest)
-    write('index.html', layout('', TOP.replace('{{news}}', top_news).replace('{{final_cta}}', final_cta()), loader=True))
+    write('index.html', layout('', TOP.replace('{{final_cta}}', final_cta()), loader=True))
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
     write('business/index.html', layout('事業内容', page_business(), 'business'))
     write('service/index.html', layout('取り扱いサービス', page_service(), 'service'))
     write('insurance/index.html', layout('保険', page_insurance(), 'service'))
     write('company/index.html', layout('会社概要', page_company(), 'company'))
-    write('news/index.html', layout('お知らせ', page_news_list(), 'news'))
-    for slug, d, cat, t, paras in NEWS:
-        write(f'news/{slug}/index.html', layout(t.rstrip('！'), page_news_article(slug, d, cat, t, paras), 'news'))
     write('contact/index.html', layout('お問い合わせ', page_contact(), 'contact'))
     write('recruitment/index.html', layout('採用情報', page_recruitment(), 'recruitment'))
     renders = {'operation': policy_operation, 'solicitation': policy_solicitation,
