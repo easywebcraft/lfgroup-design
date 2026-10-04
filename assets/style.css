@@ -1308,8 +1308,14 @@
   .ll-p2 { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 30px; padding: 0 var(--gutter); opacity: 0; pointer-events: none; }
   .lf-loader.is-p2 .ll-p2 { opacity: 1; transition: opacity .7s ease .1s; }
   .ll-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; letter-spacing: .06em; color: var(--text); white-space: nowrap; }
-  .ll-catch { font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 3.6vw, 42px); line-height: 1.6; letter-spacing: .08em; color: var(--navy); text-align: center; }
-  .ll-logo, .ll-catch { transition: transform 1s cubic-bezier(.65, 0, .35, 1), opacity .45s ease .55s; }
+  .ll-catch { font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 3.6vw, 42px); line-height: 1.65; letter-spacing: .08em; color: var(--navy); text-align: left; }
+  .ll-catch .l1 { font-weight: 500; color: #3C5470; }
+  .ll-catch .l2 { font-weight: 700; }
+  /* 吸い込まれるときは、動きながらぼけて消える（本物の見出しは逆に、ぼけた状態から浮かび上がる） */
+  .ll-logo, .ll-catch { transition: transform 1.1s cubic-bezier(.65, 0, .35, 1), opacity .8s ease .3s, filter .8s ease .2s; }
+  .lf-loader.is-absorb .ll-logo, .lf-loader.is-absorb .ll-catch { filter: blur(6px); }
+  .fv h1.ll-in { opacity: 0; filter: blur(8px); transition: opacity .9s ease, filter 1.1s ease; }
+  .fv h1.ll-in.is-on { opacity: 1; filter: blur(0); }
   .ll-skip { position: absolute; bottom: 28px; left: 0; right: 0; text-align: center; font-size: 11px; letter-spacing: .1em; color: var(--text-sub); opacity: .7; transition: opacity .3s; }
   .lf-loader.is-absorb .ll-skip { opacity: 0; }
   @media (hover: hover) { .ll-skip { display: none; } }

@@ -205,7 +205,7 @@ LOADER = """
   </div>
   <div class="ll-p2">
     <p class="ll-logo"><span class="logo-mark">LF</span>LFグループ株式会社</p>
-    <p class="ll-catch">保険とお金を整えて、<br>安心できる未来へ。</p>
+    <p class="ll-catch"><span class="l1">保険とお金を整えて、</span><br><span class="l2">安心できる未来へ。</span></p>
   </div>
   <span class="ll-skip">タップでスキップ</span>
 </div>"""

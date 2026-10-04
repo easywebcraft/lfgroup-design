@@ -50,6 +50,7 @@
         if (ended) return;
         ended = true;
         go();
+        showH1();
         L.classList.add('is-out');
         setTimeout(function () { root.classList.remove('is-loading'); L.remove(); }, 500);
       };
@@ -70,13 +71,19 @@
         from.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + (b.height / a.height) + ')';
         from.style.opacity = '0';
       };
+      // 本物の見出しは、ぼかした状態から浮かび上がらせる（演出のコピーがぼけながら消えるのと重ねて、
+      // 入れ替わりの境目を見せない）。ふつうのフェードの「下からせり上がる」動きは位置がずれるので使わない
+      var h1 = document.querySelector('.fv h1');
+      var showH1 = function () { if (h1) h1.classList.add('is-on'); };
       var absorb = function () {
         if (ended) return;
+        if (h1) { h1.classList.remove('fade', 'is-in'); h1.classList.add('ll-in'); }
         fly(L.querySelector('.ll-logo'), document.querySelector('.header .logo'));
-        fly(L.querySelector('.ll-catch'), document.querySelector('.fv h1'));
+        fly(L.querySelector('.ll-catch'), h1);
         L.classList.add('is-absorb');           // 白い幕を透かして、奥のトップページを見せる
-        setTimeout(go, 450);
-        setTimeout(end, 1100);
+        setTimeout(showH1, 420);
+        setTimeout(go, 500);
+        setTimeout(end, 1350);
       };
       var tick = function (ts) {
         if (ended) return;
