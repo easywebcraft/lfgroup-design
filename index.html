@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="./images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="./images/apple-touch-icon.png">
-<link rel="stylesheet" href="./assets/style.css?v=4b099aab">
+<link rel="stylesheet" href="./assets/style.css?v=7a483280">
 <script>
   // 表示前に「フェード待ち」の状態にする（本文の最後で付けると、文字が一度見えてから消えてフェードする）。
   // main.js が読み込めなかったときに文字が隠れたままにならないよう、3秒で解除する。
@@ -87,7 +87,7 @@
     </ul>
   </nav>
   <a class="btn btn-primary" href="./contact/?type=consult">ご相談・お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
-  <a class="tel" href="tel:0529906159"><small>お電話でのお問い合わせ</small>052-990-6159</a>
+  <a class="tel" href="tel:0528462135"><small>お電話でのお問い合わせ</small>052-846-2135</a>
 </div>
 
 <main>
@@ -117,7 +117,8 @@
     </div>
   </section>
 
-  <!-- 04 FOR YOU：会社側の分類ではなく、見る人の目的から選べる入口（採用情報は今のサイトにあるページ） -->
+  <!-- 04 FOR YOU：会社側の分類ではなく、見る人の目的から選べる入口。
+       個人保険・法人保険・アライアンス事業は別の事業（2026-10-04 クライアント確認）。採用情報は今のサイトにあるページ -->
   <section class="section foryou" id="foryou">
     <div class="wrap">
       <div class="sec-title">
@@ -125,32 +126,38 @@
         <h2 class="fade">目的から探す</h2>
       </div>
       <div class="foryou-grid">
-        <a class="panel panel-main fade" href="./service/">
+        <a class="panel panel-main fade" href="./insurance/#personal">
           <span class="panel-photo"><img loading="lazy" decoding="async" width="1024" height="1536" src="./images/about-hero.jpg?v=0ad758a8" alt="" onerror="this.remove()"></span>
           <span class="panel-body">
             <span class="eyebrow">Personal</span>
-            <span class="panel-title">個人のお客様</span>
+            <span class="panel-title">個人保険のお客様</span>
             <span class="panel-text">保険や家計、これからの暮らしのお金について。</span>
             <span class="link-arrow">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></span>
           </span>
         </a>
-        <a class="panel fade" href="./business/#corporate">
-          <span class="panel-photo"><img loading="lazy" decoding="async" width="1254" height="1254" src="./images/mission-1.jpg?v=52e01e2b" alt="" onerror="this.remove()"></span>
+        <a class="panel fade" href="./insurance/#corporate">
+          <span class="panel-photo"><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/cta-final.jpg?v=2d4792a4" alt="" onerror="this.remove()"></span>
           <span class="panel-body">
-            <span class="eyebrow">Business</span>
-            <span class="panel-title">法人・提携企業様</span>
-            <span class="panel-text">アライアンス・パートナー事業について。</span>
+            <span class="eyebrow">Corporate</span>
+            <span class="panel-title">法人保険のお客様</span>
+            <span class="panel-text">法人のお客様の保険について。</span>
             <span class="link-arrow">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></span>
           </span>
         </a>
-        <a class="panel fade" href="./recruitment/">
-          <span class="panel-photo"><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/cta.jpg?v=e3022b97" alt="" onerror="this.remove()"></span>
-          <span class="panel-body">
-            <span class="eyebrow">Recruit</span>
-            <span class="panel-title">採用情報</span>
-            <span class="panel-text">エントリー受付中です。</span>
-            <span class="link-arrow">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-          </span>
+      </div>
+      <!-- 提携企業様・採用は、保険のお客様より一段控えめに（写真なしの罫線の入口） -->
+      <div class="foryou-sub">
+        <a class="sub-entry fade" href="./business/#alliance">
+          <span class="eyebrow">Alliance</span>
+          <span class="panel-title">アライアンス事業の提携法人様</span>
+          <span class="panel-text">マンション・アパートのご入居者様へのご案内で、提携いただく企業様へ。</span>
+          <svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+        <a class="sub-entry fade" href="./recruitment/">
+          <span class="eyebrow">Recruit</span>
+          <span class="panel-title">採用情報</span>
+          <span class="panel-text">エントリー受付中です。</span>
+          <svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg>
         </a>
       </div>
     </div>
@@ -208,7 +215,7 @@
     <div class="showcase-body">
       <p class="eyebrow fade">Insurance<span class="main-mark">Main Business</span></p>
       <h2 class="fade">これからの暮らしに、<br>合った保険を。</h2>
-      <p class="text fade">大手保険会社の代理店として、生命保険・損害保険を取り扱っています。お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。</p>
+      <p class="text fade">大手保険会社の代理店として、個人のお客様・法人のお客様の生命保険・損害保険を取り扱っています。お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。</p>
       <p class="fade"><a class="link-arrow" href="./insurance/">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
     </div>
   </section>
@@ -242,14 +249,14 @@
     </div>
   </section>
 
-  <!-- 09 BUSINESS / ALLIANCE：法人・提携企業様向け。詳細は事業内容ページへ -->
+  <!-- 09 ALLIANCE / PARTNER：提携企業様向け。詳細は事業内容ページへ -->
   <section class="section showcase is-reverse" id="business">
-    <div class="showcase-photo fade"><img loading="lazy" decoding="async" width="1536" height="1024" src="./images/cta-final.jpg?v=2d4792a4" alt="" onerror="this.remove()"></div>
+    <div class="showcase-photo fade"><img loading="lazy" decoding="async" width="1254" height="1254" src="./images/mission-1.jpg?v=52e01e2b" alt="" onerror="this.remove()"></div>
     <div class="showcase-body">
-      <p class="eyebrow fade">Business / Alliance</p>
+      <p class="eyebrow fade">Alliance / Partner</p>
       <h2 class="fade">提携企業様と、<br>ともに。</h2>
       <p class="text fade">マンションやアパートのご入居者様へのライフラインなどのご案内（アライアンス事業）と、提携企業様・パートナー様と協力してお客様に商材やサービスをお届けするパートナー事業を行っています。提携企業様・パートナー様募集中。</p>
-      <p class="fade"><a class="link-arrow" href="./business/#corporate">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      <p class="fade"><a class="link-arrow" href="./business/#partners">詳しく見る<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
     </div>
   </section>
 
@@ -293,7 +300,7 @@
         <a class="btn btn-primary" href="./contact/?type=consult">お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
         <a class="link-arrow" href="./contact/?type=document">資料請求<svg class="arw"><use href="#i-arrow"/></svg></a>
       </p>
-      <p class="contact-cta-tel fade">お電話でのお問い合わせ<a href="tel:0529906159">052-990-6159</a></p>
+      <p class="contact-cta-tel fade">お電話でのお問い合わせ<a href="tel:0528462135">052-846-2135</a></p>
     </div>
   </section>
 
@@ -307,7 +314,7 @@
         <a class="logo" href="./"><img loading="lazy" decoding="async" class="logo-mark" src="./images/logo.png?v=e773a2be" alt="" width="360" height="360">LFグループ株式会社</a>
         <!-- ★公開前に確認：郵便番号は今のサイトに記載がないため未確定。推測で入れず、クライアントに確認して「〒」の後に入れる -->
         <p>〒（要確認）愛知県名古屋市東区葵3丁目14-5 リッチコーポ2階</p>
-        <p>TEL <a href="tel:0529906159">052-990-6159</a></p>
+        <p>TEL <a href="tel:0528462135">052-846-2135</a></p>
       </div>
       <nav class="footer-nav" aria-label="フッターメニュー">
         <ul>
@@ -331,9 +338,9 @@
 
 <div class="sp-bar" id="spBar">
   <a class="c" href="./contact/?type=consult">保険・お金の相談</a>
-  <a class="t" href="tel:0529906159"><svg><use href="#i-tel"/></svg>電話する</a>
+  <a class="t" href="tel:0528462135"><svg><use href="#i-tel"/></svg>電話する</a>
 </div>
 
-<script src="./assets/main.js?v=4b099aab"></script>
+<script src="./assets/main.js?v=7a483280"></script>
 </body>
 </html>

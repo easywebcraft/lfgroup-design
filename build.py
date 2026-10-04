@@ -17,11 +17,11 @@ SITE = BASE  # GitHub Pages はリポジトリ直下を配信する（かみの�
 TEXT = BASE / 'text'
 
 # 電話番号の使い分け（今のサイトから分かる範囲）
-#   052-990-6159：今のサイトの全ページ下部に載っている番号。お問い合わせ用としてヘッダー・CTA・フッターに使う
-#   052-846-2135：会社概要の「連絡先」に 052-990-6159 と並べて載っているだけ。用途は ★要確認（代表かどうか不明）
-#   052-846-8224：採用情報の応募先 TEL にだけ載っている番号。採用窓口と思われるが ★要確認
-TEL = '052-990-6159'
-TEL_HREF = 'tel:0529906159'
+#   052-846-2135：お問い合わせ用。ヘッダー・CTA・フッター・会社概要に使う
+#   052-846-8224：採用の応募先（採用情報ページだけ）
+#   052-990-6159：今は使っていない番号（2026-10-04 クライアント確認）。サイトには載せない
+TEL = '052-846-2135'
+TEL_HREF = 'tel:0528462135'
 ADDRESS = '愛知県名古屋市東区葵3丁目14-5 リッチコーポ2階'
 COMPANY = 'LFグループ株式会社'
 
@@ -351,7 +351,7 @@ def page_about():
 
 BUSINESS = [
     ('insuranceagency', '保険代理店事業', 'Insurance Agency', [
-        'LFグループ株式会社では、大手保険会社の代理店として各種保険を取り扱っています。',
+        'LFグループ株式会社では、大手保険会社の代理店として、個人のお客様・法人のお客様の各種保険を取り扱っています。',
         '自動車・バイク・病気・ケガ・旅行・趣味・こども・生命保険等、お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。',
     ], ''),
     ('financialplanning', 'ファイナンシャルプランニング事業', 'Financial Planning', [
@@ -370,8 +370,8 @@ BUSINESS = [
 ]
 # 「これは自分向けか」をすぐ判断できるよう、4事業を2つに分けて見せる
 BIZ_GROUPS = [
-    ('personal', '個人のお客様へ', 'For Individuals', ('insuranceagency', 'financialplanning')),
-    ('corporate', '法人・パートナー企業様へ', 'For Business', ('alliance', 'partner')),
+    ('customers', '個人・法人のお客様へ', 'For Customers', ('insuranceagency', 'financialplanning')),
+    ('partners', '提携企業様へ', 'For Partners', ('alliance', 'partner')),
 ]
 
 
@@ -437,14 +437,14 @@ def page_insurance():
         'お客さまのご意見等の収集に努め現状を把握し、また、お客さまの満足度を高めるよう努めます。',
     ]
     return page_hero('Insurance', '保険', [('取り扱いサービス', '/service/'), ('保険', '/insurance/')],
-                     '大手保険会社の代理店として、各種保険を取り扱っています。',
-                     photo='service-insurance.jpg', pos='45% 50%', chips=('生命保険', '損害保険')) + f'''
+                     '大手保険会社の代理店として、個人のお客様・法人のお客様の各種保険を取り扱っています。',
+                     photo='service-insurance.jpg', pos='45% 50%', chips=('個人保険', '法人保険', '生命保険', '損害保険')) + f'''
   <section class="section">
     <div class="wrap ins-intro">
       <div>
         <p class="eyebrow fade">Insurance Agency</p>
         <h2 class="fade">保険代理店事業</h2>
-        <p class="text fade" style="margin-top:28px">LFグループ株式会社では、大手保険会社の代理店として各種保険を取り扱っています。</p>
+        <p class="text fade" style="margin-top:28px">LFグループ株式会社では、大手保険会社の代理店として、個人のお客様・法人のお客様の各種保険を取り扱っています。</p>
         <p class="text fade">自動車・バイク・病気・ケガ・旅行・趣味・こども・生命保険等、お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。</p>
       </div>
       <aside class="ins-partners fade" aria-label="主力会社">
@@ -454,6 +454,24 @@ def page_insurance():
           <li><span class="kind">損害保険</span>日新火災海上保険</li>
         </ul>
       </aside>
+    </div>
+  </section>
+
+  <!-- 個人保険・法人保険は別の事業として扱う（2026-10-04 クライアント確認）。トップの「目的から探す」からここへ来る -->
+  <section class="section ins-for">
+    <div class="wrap ins-for-grid">
+      <article class="ins-for-item fade" id="personal">
+        <p class="eyebrow">Personal</p>
+        <h2>個人保険のお客様</h2>
+        <p class="text">生命保険・損害保険を、お客様のライフプランに合わせてご提案します。家計やライフプランのご相談は、ファイナンシャルプランニング技能士（国家資格）がお受けします。</p>
+        <p><a class="link-arrow" href="/contact/?type=consult">保険について相談する{ARROW}</a></p>
+      </article>
+      <article class="ins-for-item fade" id="corporate">
+        <p class="eyebrow">Corporate</p>
+        <h2>法人保険のお客様</h2>
+        <p class="text">法人のお客様の保険も取り扱っています。保険の見直しなど、お気軽にご相談ください。</p>
+        <p><a class="link-arrow" href="/contact/?type=consult">保険について相談する{ARROW}</a></p>
+      </article>
     </div>
   </section>
 
@@ -605,7 +623,7 @@ def page_company():
         <div><dt>代表者</dt><dd>遠藤 昇平</dd></div>
         <div><dt>所在地</dt><dd>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</dd></div>
         <!-- ★要確認：2つの番号の用途（代表／お問い合わせ）が今のサイトに書かれていない。確認できたら「代表」などを添える -->
-        <div><dt>電話番号</dt><dd><a href="tel:0528462135">052-846-2135</a> / <a href="{TEL_HREF}">{TEL}</a></dd></div>
+        <div><dt>電話番号</dt><dd><a href="{TEL_HREF}">{TEL}</a></dd></div>
         <div><dt>事業内容</dt><dd>ファイナンシャルプランニング・金融コンサル・保険代理店業務</dd></div>
         <div><dt>適格請求書発行<br>事業者登録番号</dt><dd>T4180001157727</dd></div>
       </dl>
@@ -749,10 +767,8 @@ def page_recruitment():
     <div class="wrap narrow">
       <p class="eyebrow fade">Entry</p>
       <h2 class="fade">ご応募はお電話で</h2>
-      <!-- ★要確認：今のサイトの応募先 TEL は「052-846-8224・052-990-6159」の2つ。どちらが採用窓口かは書かれていない -->
       <div class="recruit-tel fade">
         <a href="tel:0528468224">052-846-8224</a>
-        <a href="{TEL_HREF}">{TEL}</a>
       </div>
     </div>
   </section>
@@ -762,7 +778,7 @@ def page_recruitment():
 # ───────────── 方針ページ：保存した本文を見出し・箇条書きに組み直す ─────────────
 
 NAV_NOISE = {'HOME', 'COMPANY', 'SERVICE', 'NEWS', 'CONTACT', 'RECURUITMENT', 'RECRUITMENT', 'ＬＦグループ株式会社',
-             TEL, 'お問い合わせはこちらから', 'エントリー受付中！', '採用情報はこちらから'}
+             '052-990-6159', 'お問い合わせはこちらから', 'エントリー受付中！', '採用情報はこちらから'}
 
 # 今のサイトの誤字。意味は変えずに直す
 TYPO = [('提供し続きます', '提供し続けます'), ('幣社', '弊社')]
