@@ -74,9 +74,9 @@
     // お問い合わせフォーム（試作：送信はしない）
     var form = document.getElementById('contactForm');
     if (form) {
-      if (new URLSearchParams(location.search).get('type') === 'document') {
-        form.querySelector('input[name="type"][value="資料請求"]').checked = true;
-      }
+      var types = { document: '資料請求', consult: '保険・お金のご相談' };
+      var t = types[new URLSearchParams(location.search).get('type')];
+      if (t) form.querySelector('input[name="type"][value="' + t + '"]').checked = true;
       var showErr = function (input, msg) {
         var box = input.closest('.field');
         var err = box.querySelector('.err');
