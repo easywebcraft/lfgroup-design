@@ -1124,6 +1124,14 @@
   }
   .about-mission-quote { font-weight: 500; }
 
+  /* ===== ロゴ（images/logo-mark.svg：生成AIで作ったロゴを、試作用にトレースしたもの） ===== */
+  .logo { gap: 12px; }
+  .logo-mark { display: block; width: auto; height: 34px; background: none; border-radius: 0; }
+  .footer .logo-mark { height: 30px; background: none; }
+  .ll-mark { width: 66px; height: auto; background: none; border-radius: 0; animation: ll-breathe 1.6s ease-in-out infinite; }
+  .ll-logo .logo-mark { height: 40px; }
+  @media (max-width: 767px) { .logo-mark { height: 30px; } }
+
   /* ★公開前に必ず外す：試作の帯 */
   .design-preview-note { position: relative; z-index: 60; padding: 6px var(--gutter); line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #22303C; color: #fff; font-size: 12px; text-align: center; letter-spacing: .04em; }
   .design-preview-note ~ .header:not(.is-scrolled) { top: 30px; }
