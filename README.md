@@ -34,7 +34,7 @@ GitHub Pages は `easywebcraft.github.io/lfgroup-design/` の下で配信する�
 
 ## 公開前に残っていること
 
-- ロゴ（今は「LF」の仮マーク）
+- ロゴ：`images/logo-mark.svg`（白版 `logo-mark-white.svg`）は、生成AIで作ったロゴ（`images/logo/source-*.webp`）を試作用に自動でトレースしたもの。本番では正式なベクターデータに差し替える
 - 郵便番号（今のサイトに記載がないため「要確認」）
 - お問い合わせフォームの送信先（今は入力チェックだけで送信しない）
 - 個人情報保護方針の「お問い合わせ窓口」（今のサイトに記載がない）

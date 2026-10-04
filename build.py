@@ -101,6 +101,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="/images/logo-mark.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css?v={ASSET_V}">
 <script>
   // 表示前に「フェード待ち」の状態にする（本文の最後で付けると、文字が一度見えてから消えてフェードする）。
@@ -117,7 +118,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 <header class="header" id="header">
   <div class="wrap header-inner">
     <a class="logo" href="/" aria-label="{COMPANY} トップ">
-      <span class="logo-mark" aria-hidden="true">LF</span>{COMPANY}
+      <img class="logo-mark" src="/images/logo-mark.svg" alt="" width="460" height="305" data-eager>{COMPANY}
     </a>
     <nav class="gnav" aria-label="メインメニュー">
       <ul>
@@ -150,7 +151,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
   <div class="wrap">
     <div class="footer-top">
       <div class="footer-info">
-        <a class="logo" href="/"><span class="logo-mark" aria-hidden="true">LF</span>{COMPANY}</a>
+        <a class="logo" href="/"><img class="logo-mark" src="/images/logo-mark-white.svg" alt="" width="460" height="305">{COMPANY}</a>
         <!-- ★公開前に確認：郵便番号は今のサイトに記載がないため未確定。推測で入れず、クライアントに確認して「〒」の後に入れる -->
         <p>〒（要確認）{ADDRESS}</p>
         <p>TEL <a href="{TEL_HREF}">{TEL}</a></p>
@@ -204,11 +205,11 @@ LOADER = """
 <div class="lf-loader" id="lfLoader" aria-hidden="true">
   <div class="ll-p1">
     <svg class="ll-ring" viewBox="0 0 120 120"><circle class="t" cx="60" cy="60" r="54"/><circle class="f" cx="60" cy="60" r="54"/></svg>
-    <span class="ll-mark">LF</span>
+    <img class="ll-mark" src="/images/logo-mark.svg" alt="" width="460" height="305" data-eager>
     <span class="ll-pct">0%</span>
   </div>
   <div class="ll-p2">
-    <p class="ll-logo"><span class="logo-mark">LF</span>LFグループ株式会社</p>
+    <p class="ll-logo"><img class="logo-mark" src="/images/logo-mark.svg" alt="" width="460" height="305" data-eager>LFグループ株式会社</p>
     <p class="ll-catch"><span class="l1">保険とお金を整えて、</span><br><span class="l2">安心できる未来へ。</span></p>
   </div>
   <span class="ll-skip">タップでスキップ</span>
