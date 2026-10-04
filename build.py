@@ -878,8 +878,17 @@ def policy_privacy():
         return state['sec'] in ('５', '８', '９') and bool(re.match(r'^[①-⑧]', l))
 
     body = render_policy(lines, heading_rule=heading, sub_rule=sub)
-    # 本文が「下記のお問い合わせ窓口」と書いているが、今のサイトには窓口の記載がない
-    body += '<p class="todo">【要確認】本文中の「下記のお問い合わせ窓口」が今のサイトに載っていません。窓口（部署・電話番号・受付時間など）をクライアントに確認して追記してください。</p>'
+    # 本文の「下記のお問い合わせ窓口」。今のサイトに記載がないため、会社の代表連絡先を窓口にする（2026-10-05）
+    # ★公開前に確認：受付時間は勤務時間（10時～18時）に合わせた仮の値。部署名を入れるか、郵便番号もクライアントに確認する
+    body += f'''<div class="policy-contact">
+  <h2><span>個人情報に関する</span><span>お問い合わせ窓口</span></h2>
+  <dl>
+    <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
+    <div><dt>所在地</dt><dd>{ADDRESS}</dd></div>
+    <div><dt>電話番号</dt><dd><a href="{TEL_HREF}">{TEL}</a></dd></div>
+    <div><dt>受付時間</dt><dd>10:00～18:00</dd></div>
+  </dl>
+</div>'''
     return body
 
 

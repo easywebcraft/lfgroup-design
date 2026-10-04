@@ -333,6 +333,13 @@
   .policy ol.num li { padding: 18px 22px; background: var(--bg-blue); border-radius: 10px; }
 
   .policy .end { margin-top: 48px; text-align: right; }
+  .policy .policy-contact { margin-top: 56px; padding: 28px 32px; background: var(--bg-blue); border-radius: 12px; }
+  .policy .policy-contact h2 { margin-top: 0; }
+  .policy .policy-contact h2 span { display: inline-block; }
+  .policy .policy-contact dl { margin-top: 16px; display: grid; gap: 8px; }
+  .policy .policy-contact dl > div { display: grid; grid-template-columns: 6em 1fr; gap: 12px; line-height: 1.9; }
+  .policy .policy-contact dt { font-weight: 700; color: var(--text-sub); }
+  @media (max-width: 600px) { .policy .policy-contact { padding: 22px 20px; } .policy .policy-contact dl > div { grid-template-columns: 1fr; gap: 0; } }
   .policy .todo { margin-top: 16px; padding: 16px 20px; border: 1px dashed #D9A35B; border-radius: 8px; background: #FFF8EE; color: #8A5A1B; font-size: 14px; }
 
   /* ===== お問い合わせ ===== */
