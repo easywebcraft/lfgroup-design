@@ -132,61 +132,13 @@
       targets.forEach(function (el) { io.observe(el); });
     }
 
-    // スマホ下部の固定CTA：ページ最上部を過ぎたら出し、最後のCTAかフォームが見えたら隠す
+    // スマホ下部の固定CTA：ページ最上部を過ぎたら出し、最後のCTAかお問い合わせページの電話番号が見えたら隠す
     var bar = document.getElementById('spBar');
-    var end = document.querySelector('#final-cta, .form');
+    var end = document.querySelector('#final-cta, .contact-tel');
     var topGone = false, endSeen = false;
     var update = function () { bar.classList.toggle('is-shown', topGone && !endSeen); };
     if ('IntersectionObserver' in window && first) {
       new IntersectionObserver(function (e) { topGone = !e[0].isIntersecting; update(); }).observe(first);
       if (end) new IntersectionObserver(function (e) { endSeen = e[0].isIntersecting; update(); }).observe(end);
-    }
-
-    // お問い合わせフォーム（試作：送信はしない）
-    var form = document.getElementById('contactForm');
-    if (form) {
-      var types = { document: '資料請求', consult: '保険・お金のご相談' };
-      var t = types[new URLSearchParams(location.search).get('type')];
-      if (t) form.querySelector('input[name="type"][value="' + t + '"]').checked = true;
-      var showErr = function (input, msg) {
-        var box = input.closest('.field');
-        var err = box.querySelector('.err');
-        if (msg) {
-          if (!err) { err = document.createElement('p'); err.className = 'err'; err.id = input.name + '-err'; box.appendChild(err); }
-          err.textContent = msg;
-          input.setAttribute('aria-invalid', 'true');
-          input.setAttribute('aria-describedby', err.id);
-        } else {
-          if (err) err.remove();
-          input.removeAttribute('aria-invalid');
-          input.removeAttribute('aria-describedby');
-        }
-      };
-      var check = function (input) {
-        var v = input.value.trim();
-        if (input.type === 'checkbox') return showErr(input, input.checked ? '' : 'プライバシーポリシーへの同意が必要です');
-        if (!v) return showErr(input, '入力してください');
-        if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return showErr(input, 'メールアドレスの形式で入力してください');
-        if (input.type === 'tel' && !/^[0-9０-９\-－+() ]{10,}$/.test(v)) return showErr(input, '電話番号を入力してください');
-        showErr(input, '');
-      };
-      var required = form.querySelectorAll('[required]');
-      required.forEach(function (input) {
-        input.addEventListener('blur', function () { check(input); });
-        input.addEventListener('change', function () { if (input.hasAttribute('aria-invalid')) check(input); });
-        // エラーが出ている欄は、入力しているあいだに直れば消す（離れた瞬間に消えると、
-        // 下の欄が上にずれて、同意のチェックなどのクリックが外れることがあった）
-        input.addEventListener('input', function () { if (input.hasAttribute('aria-invalid')) check(input); });
-      });
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        required.forEach(check);
-        var bad = form.querySelector('[aria-invalid="true"]');
-        if (bad) { bad.focus(); return; }
-        var done = document.getElementById('formDone');
-        form.hidden = true;
-        done.hidden = false;
-        done.focus();
-      });
     }
   })();

@@ -343,8 +343,12 @@
   .policy .todo { margin-top: 16px; padding: 16px 20px; border: 1px dashed #D9A35B; border-radius: 8px; background: #FFF8EE; color: #8A5A1B; font-size: 14px; }
 
   /* ===== お問い合わせ ===== */
-  .contact-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; align-items: start; }
-  @media (max-width: 1023px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .contact-tel { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; align-items: stretch; }
+  @media (max-width: 1023px) { .contact-tel { grid-template-columns: 1fr; } }
+  .contact-tel .tel-box { margin-top: 0; }
+  .tel-box.tel-main a { font-size: 36px; }
+  .tel-box .tel-hours { margin-top: 8px; }
+  .tel-box .tel-hours a { font-family: inherit; font-size: 14px; font-weight: 500; letter-spacing: 0; }
   .tel-box { padding: 28px; background: var(--bg-blue); border-radius: 12px; margin-top: 32px; }
   .tel-box p { font-size: 13px; color: var(--text-sub); }
   .tel-box a { display: inline-block; margin-top: 4px; font-family: var(--en); font-size: 26px; font-weight: 600; letter-spacing: .04em; color: var(--primary); }

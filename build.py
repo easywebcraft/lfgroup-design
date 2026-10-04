@@ -18,10 +18,12 @@ TEXT = BASE / 'text'
 
 # 電話番号の使い分け（今のサイトから分かる範囲）
 #   052-846-2135：お問い合わせ用。ヘッダー・CTA・フッター・会社概要に使う
-#   052-846-8224：採用の応募先（採用情報ページだけ）
+#   052-846-8224：採用の応募先（採用情報ページとお問い合わせページ）
 #   052-990-6159：今は使っていない番号（2026-10-04 クライアント確認）。サイトには載せない
 TEL = '052-846-2135'
 TEL_HREF = 'tel:0528462135'
+RECRUIT_TEL = '052-846-8224'
+RECRUIT_TEL_HREF = 'tel:0528468224'
 ADDRESS = '愛知県名古屋市東区葵3丁目14-5 リッチコーポ2階'
 POSTAL = '461-0004'  # 今のサイトに記載がなく、2026-10-05 にクライアントに確認
 COMPANY = 'LFグループ株式会社'
@@ -127,7 +129,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
         {nav_items(current)}
       </ul>
     </nav>
-    <a class="btn btn-primary" href="/contact/?type=consult">ご相談・お問い合わせ{ARROW}</a>
+    <a class="btn btn-primary" href="/contact/">ご相談・お問い合わせ{ARROW}</a>
     <button class="menu-btn" id="menuBtn" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer">
       <span></span><span></span><span></span>
     </button>
@@ -141,7 +143,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
       {nav_items(current, 'drawer')}
     </ul>
   </nav>
-  <a class="btn btn-primary" href="/contact/?type=consult">ご相談・お問い合わせ{ARROW}</a>
+  <a class="btn btn-primary" href="/contact/">ご相談・お問い合わせ{ARROW}</a>
   <a class="tel" href="{TEL_HREF}"><small>お電話でのお問い合わせ</small>{TEL}</a>
 </div>
 
@@ -174,7 +176,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 </footer>
 
 <div class="sp-bar" id="spBar">
-  <a class="c" href="/contact/?type=consult">保険・お金の相談</a>
+  <a class="c" href="/contact/">保険・お金の相談</a>
   <a class="t" href="{TEL_HREF}"><svg><use href="#i-tel"/></svg>電話する</a>
 </div>
 
@@ -257,15 +259,14 @@ def policy_lines_html(items, fade=True):
 
 
 def final_cta():
-    """ページ最下部のお問い合わせ欄（全ページ共通）。ボタンは1つ、資料請求と電話は小さく添える。"""
+    """ページ最下部のお問い合わせ欄（全ページ共通）。ボタンは1つ、電話は小さく添える。"""
     return f'''  <section class="contact-cta" id="final-cta">
     <div class="wrap contact-cta-inner">
       <p class="eyebrow fade">Contact</p>
       <h2 class="fade"><span>保険やお金について、</span><br><span>気になることから</span><span>ご相談ください。</span></h2>
       <p class="text fade">保険の見直しや家計、これからのお金について、まずはお気軽にお問い合わせください。</p>
       <p class="contact-cta-actions fade">
-        <a class="btn btn-primary" href="/contact/?type=consult">お問い合わせ{ARROW}</a>
-        <a class="link-arrow" href="/contact/?type=document">資料請求{ARROW}</a>
+        <a class="btn btn-primary" href="/contact/">お問い合わせ{ARROW}</a>
       </p>
       <p class="contact-cta-tel fade">お電話でのお問い合わせ<a href="{TEL_HREF}">{TEL}</a></p>
     </div>
@@ -464,13 +465,13 @@ def page_insurance():
         <p class="eyebrow">Personal</p>
         <h2>個人保険のお客様</h2>
         <p class="text">生命保険・損害保険を、お客様のライフプランに合わせてご提案します。家計やライフプランのご相談は、ファイナンシャルプランニング技能士（国家資格）がお受けします。</p>
-        <p><a class="link-arrow" href="/contact/?type=consult">保険について相談する{ARROW}</a></p>
+        <p><a class="link-arrow" href="/contact/">保険について相談する{ARROW}</a></p>
       </article>
       <article class="ins-for-item fade" id="corporate">
         <p class="eyebrow">Corporate</p>
         <h2>法人保険のお客様</h2>
         <p class="text">法人のお客様の保険も取り扱っています。保険の見直しなど、お気軽にご相談ください。</p>
-        <p><a class="link-arrow" href="/contact/?type=consult">保険について相談する{ARROW}</a></p>
+        <p><a class="link-arrow" href="/contact/">保険について相談する{ARROW}</a></p>
       </article>
     </div>
   </section>
@@ -645,61 +646,22 @@ def page_company():
 
 
 def page_contact():
+    # お問い合わせはお電話のみ（フォームは置かない、2026-10-05 決定）
+    # ★公開前に確認：受付時間は勤務時間（10時～18時）に合わせた仮の値（個人情報の窓口と同じ）
     return page_hero('Contact', 'お問い合わせ', [('お問い合わせ', '/contact/')],
-                     lead='お金や保険について、気になることからご相談ください。<br class="pc">ご相談・お問い合わせは、こちらのフォームより承っております。',
+                     lead='お金や保険について、気になることからご相談ください。<br class="pc">ご相談・お問い合わせは、お電話で承っております。',
                      photo='about-hero.jpg', pos='50% 72%') + f'''
   <section class="section">
-    <div class="wrap contact-grid">
-      <div>
-        <div class="reply-box">
-          <svg class="reply-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-          <div>
-            <p class="reply-title">ご返信は<b>3営業日</b>ほどで</p>
-            <p class="reply-text">3営業日を過ぎても返信がない場合は、お手数ですが再度お問い合わせをお願いいたします。</p>
-          </div>
-        </div>
-        <div class="tel-box">
-          <p>お電話でのお問い合わせ</p>
-          <a href="{TEL_HREF}">{TEL}</a>
-        </div>
+    <div class="wrap contact-tel">
+      <div class="tel-box tel-main">
+        <p>保険・お金のご相談、お問い合わせ</p>
+        <a href="{TEL_HREF}">{TEL}</a>
+        <p class="tel-hours">受付時間 10:00～18:00</p>
       </div>
-
-      <div>
-        <!-- 試作：送信先（メール送信・フォームサービス）は公開前に設定する。今は入力チェックだけで送信しない -->
-        <form class="form" id="contactForm" novalidate>
-          <fieldset class="field">
-            <legend>お問い合わせ種別</legend>
-            <div class="radios">
-              <label><input type="radio" name="type" value="保険・お金のご相談">保険・お金のご相談</label>
-              <label><input type="radio" name="type" value="お問い合わせ" checked>お問い合わせ</label>
-              <label><input type="radio" name="type" value="資料請求">資料請求</label>
-            </div>
-          </fieldset>
-          <div class="field">
-            <label for="f-name">お名前<span class="req">必須</span></label>
-            <input type="text" id="f-name" name="name" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <label for="f-tel">電話番号<span class="req">必須</span></label>
-            <input type="tel" id="f-tel" name="tel" autocomplete="tel" inputmode="tel" required>
-          </div>
-          <div class="field">
-            <label for="f-email">メールアドレス<span class="req">必須</span></label>
-            <input type="email" id="f-email" name="email" autocomplete="email" required>
-          </div>
-          <div class="field">
-            <label for="f-body">ご相談・お問い合わせ内容<span class="req">必須</span></label>
-            <textarea id="f-body" name="body" required></textarea>
-          </div>
-          <div class="field">
-            <label class="agree"><input type="checkbox" name="agree" required><span><a href="/privacyprotection/" target="_blank" rel="noopener">プライバシーポリシー</a>に同意して送信する</span></label>
-          </div>
-          <button class="btn btn-primary" type="submit">この内容で送信する{ARROW}</button>
-        </form>
-        <div class="form-done" id="formDone" tabindex="-1" hidden>
-          <h2>（試作）入力内容を確認しました</h2>
-          <p>この試作ページでは送信されません。公開前に送信の仕組みを設定します。</p>
-        </div>
+      <div class="tel-box">
+        <p>採用に関するお問い合わせ</p>
+        <a href="{RECRUIT_TEL_HREF}">{RECRUIT_TEL}</a>
+        <p class="tel-hours"><a class="link-arrow" href="/recruitment/">採用情報を見る{ARROW}</a></p>
       </div>
     </div>
   </section>
