@@ -23,6 +23,7 @@ TEXT = BASE / 'text'
 TEL = '052-846-2135'
 TEL_HREF = 'tel:0528462135'
 ADDRESS = '愛知県名古屋市東区葵3丁目14-5 リッチコーポ2階'
+POSTAL = '461-0004'  # 今のサイトに記載がなく、2026-10-05 にクライアントに確認
 COMPANY = 'LFグループ株式会社'
 
 # メインメニュー（ヘッダー・ドロワー・フッターで共通）
@@ -153,8 +154,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
     <div class="footer-top">
       <div class="footer-info">
         <a class="logo" href="/"><img class="logo-mark" src="/images/logo.png" alt="" width="360" height="360">{COMPANY}</a>
-        <!-- ★公開前に確認：郵便番号は今のサイトに記載がないため未確定。推測で入れず、クライアントに確認して「〒」の後に入れる -->
-        <p>〒（要確認）{ADDRESS}</p>
+        <p>〒{POSTAL} {ADDRESS}</p>
         <p>TEL <a href="{TEL_HREF}">{TEL}</a></p>
       </div>
       <nav class="footer-nav" aria-label="フッターメニュー">
@@ -283,7 +283,7 @@ def company_brief():
       </div>
       <dl class="brief-list fade">
         <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
-        <div><dt>所在地</dt><dd>{ADDRESS}</dd></div>
+        <div><dt>所在地</dt><dd>〒{POSTAL} {ADDRESS}</dd></div>
         <div><dt>事業内容</dt><dd>ファイナンシャルプランニング・金融コンサル・保険代理店業務</dd></div>
       </dl>
       <p class="fade"><a class="link-arrow" href="/company/">会社概要を見る{ARROW}</a></p>
@@ -613,7 +613,7 @@ def page_company():
                      photo='cta-final.jpg', pos='50% 62%', caption='Nagoya, Aichi',
                      extra=(f'        <div class="co-hero fade">\n'
                             f'          <p class="co-name">{COMPANY}</p>\n'
-                            f'          <p class="co-addr">愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</p>\n'
+                            f'          <p class="co-addr">〒{POSTAL}<br>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</p>\n'
                             f'          <p class="co-biz">ファイナンシャルプランニング・金融コンサル・<br class="pc">保険代理店業務を行っています。</p>\n'
                             f'        </div>')) + f'''
   <section class="section co-first">
@@ -621,7 +621,7 @@ def page_company():
       <dl class="company-list full">
         <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
         <div><dt>代表者</dt><dd>遠藤 昇平</dd></div>
-        <div><dt>所在地</dt><dd>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</dd></div>
+        <div><dt>所在地</dt><dd>〒{POSTAL}<br>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</dd></div>
         <!-- ★要確認：2つの番号の用途（代表／お問い合わせ）が今のサイトに書かれていない。確認できたら「代表」などを添える -->
         <div><dt>電話番号</dt><dd><a href="{TEL_HREF}">{TEL}</a></dd></div>
         <div><dt>事業内容</dt><dd>ファイナンシャルプランニング・金融コンサル・保険代理店業務</dd></div>
@@ -716,7 +716,7 @@ def page_recruitment():
         ('給与', '成果連動型報酬（営業成績に応じて支給）<br>給与：固定給20万円＋成果報酬<br>年収1,000万円も可能'),
         ('選考方法', '書類面接・面接試験（1～2回）'),
         ('応募方法', 'お電話下さい'),
-        ('郵送先・応募先', f'{ADDRESS}'),
+        ('郵送先・応募先', f'〒{POSTAL} {ADDRESS}'),
     ]
     dl = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)
     # 「エントリー受付中！」はステータス表示にして、募集要項と電話（応募方法は電話）へつなぐ
@@ -879,12 +879,12 @@ def policy_privacy():
 
     body = render_policy(lines, heading_rule=heading, sub_rule=sub)
     # 本文の「下記のお問い合わせ窓口」。今のサイトに記載がないため、会社の代表連絡先を窓口にする（2026-10-05）
-    # ★公開前に確認：受付時間は勤務時間（10時～18時）に合わせた仮の値。部署名を入れるか、郵便番号もクライアントに確認する
+    # ★公開前に確認：受付時間は勤務時間（10時～18時）に合わせた仮の値。部署名を入れるかもクライアントに確認する
     body += f'''<div class="policy-contact">
   <h2><span>個人情報に関する</span><span>お問い合わせ窓口</span></h2>
   <dl>
     <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
-    <div><dt>所在地</dt><dd>{ADDRESS}</dd></div>
+    <div><dt>所在地</dt><dd>〒{POSTAL} {ADDRESS}</dd></div>
     <div><dt>電話番号</dt><dd><a href="{TEL_HREF}">{TEL}</a></dd></div>
     <div><dt>受付時間</dt><dd>10:00～18:00</dd></div>
   </dl>
