@@ -30,3 +30,11 @@
   .fv-season button { height: 28px; padding: 0 9px; letter-spacing: .1em; }
   .fv-season .fs-pause { width: 28px; }
 }
+
+/* 季節ごとに人物の位置が違うので、見せる位置を写真ごとに合わせる（今の hero.jpg の位置は変えない）。
+   スマホは写真の横幅の半分ほどしか見えないため、3人の顔が入るように寄せる */
+.fv-photo img[src*="hero-summer"] { object-position: 100% 40%; }
+@media (max-width: 767px) {
+  .fv-photo img[src*="hero-autumn"] { object-position: 94% 40%; }
+  .fv-photo img[src*="hero-winter"] { object-position: 82% 40%; }
+}

@@ -29,7 +29,7 @@
 
 - URL：https://easywebcraft.github.io/lfgroup-design/season/ （トップページだけ）
 - 2026-10-05、お客さまから「トップの写真を春→夏→秋→冬とループさせたい」と要望があり作ったもの
-- 春は今の `images/hero.jpg`。夏・秋・冬は `images/hero-summer.jpg`・`hero-autumn.jpg`・`hero-winter.jpg`（ChatGPTで、今の写真を添付して同じ家族・構図で季節だけ変えて生成）
+- 春は今の `images/hero.jpg`。夏・秋・冬は `images/hero-summer.jpg`・`hero-autumn.jpg`・`hero-winter.jpg`（ChatGPTで、今の写真を添付して同じ家族のまま、季節ごとに場面とポーズを変えて生成：夏＝公園で肩車、秋＝紅葉の道を手をつないで歩く、冬＝雪だるま作り。季節ごとに人物の位置が違うので、見せる位置は season.css で写真ごとに合わせている）
 - 6秒ごとに斜めのワイプで切り替え。写真の右下（スマホは写真の下端）に季節のボタンと一時停止。「動きを減らす」設定の端末では自動で切り替えない
 - 動きは `src/season.css`・`src/season.js`、書き出しは `build.py` の `write_season()`。本番（`--release`）には出さない
 
