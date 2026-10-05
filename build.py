@@ -993,11 +993,12 @@ def write_motion(top):
     write('motion/index.html', html_)
 
 
-# トップの季節の写真「人生の四季」（2026-10-05 採用。春→夏→秋→冬の順）：
-# 春＝新婚の二人、夏＝子育て（公園で肩車）、秋＝40歳前後の夫婦と男の子、冬＝60代前半の二人。
+# トップの季節の写真「人生の四季」（2026-10-05 採用。春→夏→秋→冬→三世代の春の順）：
+# 春＝新婚の二人、夏＝子育て（公園で肩車）、秋＝40歳前後の夫婦と男の子、冬＝60代前半の二人、
+# そして三世代の春＝祖父母になった二人と孫の女の子（冬のあとにもう一度春が来て、最初の新婚の春へ戻る）。
 # 「同じ家族の1年」（春＝hero.jpg・夏＝hero-summer.jpg・秋冬＝hero-autumn/winter.jpg）と見比べて、こちらに決めた。
 # 夏に hero.jpg を使うと、それまでのトップの写真と同じに見えるので、夏は hero-summer.jpg を使う
-SEASON_PHOTOS = ('life-spring.jpg', 'hero-summer.jpg', 'life-autumn.jpg', 'life-winter.jpg')
+SEASON_PHOTOS = ('life-spring.jpg', 'hero-summer.jpg', 'life-autumn.jpg', 'life-winter.jpg', 'life-spring2.jpg')
 
 
 def season_photos(top, photos=SEASON_PHOTOS):

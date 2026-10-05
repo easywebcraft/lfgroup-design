@@ -1259,7 +1259,7 @@
    スマホは写真の横幅の半分ほどしか見えないため、顔が入るように寄せる */
 .fv-photo img[src*="hero-summer"] { object-position: 100% 40%; }
 /* 「人生の四季」の春・秋・冬の写真。スマホは右寄りに見せて、二人（三人）の顔が入るようにする */
-.fv-photo img[src*="life-winter"] { object-position: 100% 40%; }
+.fv-photo img[src*="life-winter"], .fv-photo img[src*="life-spring2"] { object-position: 100% 40%; }
 @media (max-width: 767px) {
   .fv-photo img[src*="life-"] { object-position: 92% 40%; }
   .fv-photo img[src*="life-autumn"] { object-position: 86% 40%; }  /* 三人が横に広がっているので、母親と父親の顔が両方入る位置に */
