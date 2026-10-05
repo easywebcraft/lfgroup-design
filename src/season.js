@@ -7,8 +7,8 @@
     var STAY = 6000;  // 1枚を見せる時間
     var FIRST = 3500; // 最初の演出が終わってから、最初に切り替えるまで（春は演出の間も見えているので、ほかより短くする）
     // 最後の写真から最初の写真へ戻るときは、白をはさんでゆっくり切り替える（一区切りが分かるように。見た目は season.css の .is-wrap）。
-    // その分（白へ消える2.2秒＋白0.6秒）だけ、最初の写真を見せる時間をのばす
-    var WRAP = 2800, WRAP_END = 5200;
+    // その分（白へ消える1.6秒＋白0.3秒）だけ、最初の写真を見せる時間をのばす
+    var WRAP = 1900, WRAP_END = 3800;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var cur = 0, timer = null, started = false;
 

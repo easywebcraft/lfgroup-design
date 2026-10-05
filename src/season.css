@@ -14,10 +14,10 @@
 .fv-photo img.is-ready.is-prev { opacity: 1; scale: 1; transition: scale 8s linear; }
 .fv-photo img.is-ready.is-show { opacity: 1; scale: 1; transition: opacity 2.4s ease, scale 8s linear; }
 /* 最後の写真（三世代の春）から最初の写真（新婚の春）へ戻るときだけ、一区切りが分かるよう白をはさむ（season.js が .is-wrap を付ける）：
-   前の写真がゆっくり白へ消え（2.2秒）、白を少し見せてから（0.6秒）、最初の写真がゆっくり現れる（2.2秒） */
+   前の写真が白へ消え（1.6秒）、白を少し見せてから（0.3秒）、最初の写真が現れる（1.6秒） */
 .fv-photo.is-wrap { background: #fff; }
-.fv-photo.is-wrap img.is-ready.is-prev { opacity: 0; transition: opacity 2.2s ease-in-out, scale 8s linear; }
-.fv-photo.is-wrap img.is-ready.is-show { transition: opacity 2.2s ease-in-out 2.8s, scale 8s linear 2.8s; }
+.fv-photo.is-wrap img.is-ready.is-prev { opacity: 0; transition: opacity 1.6s ease-in-out, scale 8s linear; }
+.fv-photo.is-wrap img.is-ready.is-show { transition: opacity 1.6s ease-in-out 1.9s, scale 8s linear 1.9s; }
 @media (prefers-reduced-motion: reduce) {
   .fv-photo img.is-ready, .fv-photo img.is-ready.is-show, .fv-photo img.is-ready.is-prev { scale: 1; }
 }
