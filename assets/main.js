@@ -163,7 +163,7 @@
       var next = imgs[i];
       // まだ読み込めていない写真は飛ばさず、読み込めてから切り替える
       if (!next.complete || !next.naturalWidth) { next.addEventListener('load', function () { show(i); }, { once: true }); return; }
-      var wrap = i === 0;
+      var wrap = i === 0 && box.dataset.wrap !== 'none';
       box.classList.toggle('is-wrap', wrap);
       imgs.forEach(function (img) { img.classList.remove('is-prev'); });
       imgs[cur].classList.add('is-prev');
@@ -184,7 +184,7 @@
         timer = setTimeout(function () {
           var i = (cur + 1) % imgs.length;
           show(i);
-          tick(STAY + (i === 0 ? WRAP : 0));
+          tick(STAY + (i === 0 && box.dataset.wrap !== 'none' ? WRAP : 0));
         }, ms);
       };
       tick(typeof first === 'number' ? first : STAY);

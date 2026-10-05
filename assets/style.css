@@ -1263,6 +1263,11 @@
 /* 季節ごとに人物の位置が違うので、見せる位置を写真ごとに合わせる。
    スマホは写真の横幅の半分ほどしか見えないため、顔が入るように寄せる */
 .fv-photo img[src*="hero-summer"] { object-position: 100% 40%; }
+/* 人物なしの案（/scene/）。主役は右寄りにあるので、スマホは右寄りに見せる */
+@media (max-width: 767px) {
+  .fv-photo img[src*="scene-"] { object-position: 82% 50%; }
+  .fv-photo img[src*="scene-kitchen"] { object-position: 100% 50%; }  /* 右端のケトルの湯気とガスの火が入るように */
+}
 /* 「人生の四季」の春・秋・冬の写真。スマホは右寄りに見せて、二人（三人）の顔が入るようにする */
 .fv-photo img[src*="life-winter"], .fv-photo img[src*="life-spring2"] { object-position: 100% 40%; }
 @media (max-width: 767px) {

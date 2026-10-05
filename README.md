@@ -38,6 +38,14 @@
 - 動きは `src/season.css`・`src/season.js`（`build.py` が style.css・main.js に足す）
 - /season/・/life/ は試作のときのURLで、今はトップへ移るだけのページ
 
+## 人物なしの写真の試作（/scene/）
+
+- URL：https://easywebcraft.github.io/lfgroup-design/scene/ （トップページだけ。今のトップ「人生の四季」と見比べ用。本番には出さない）
+- 2026-10-06、「人物を出さない案」として作った。事業ごとに、人の気配が感じられる暮らしの風景：
+  保険＝家族の靴が並ぶ玄関先（`images/scene-home.jpg`）、ライフライン＝朝のキッチン（`scene-kitchen.jpg`）、
+  FP＝コーヒーカップ2つのダイニング（`scene-dining.jpg`）、法人＝開店前の小さなお店（`scene-shop.jpg`）
+- 最後から最初へ戻るときの白フェード（人生の四季の一区切り）は使わない（`season_photos(..., white_wrap=False)` で `data-wrap="none"` を付ける）
+
 ## 写真の端のぼかし（試して、やめた）
 
 - 2026-10-05〜06、お客さまの指摘「写真と背景の境目が気になる」で、各ページの写真の端をグラデーションで透かして背景に溶かした（mask-image）。
