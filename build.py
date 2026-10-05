@@ -1005,9 +1005,10 @@ def season_photos(top, photos=('hero.jpg', 'hero-summer.jpg', 'hero-autumn.jpg',
     return top.replace(hero, first + rest, 1)
 
 
-# 「人生の四季」の試作（/life/）：春＝新婚の二人、夏＝今の hero.jpg（子育て）、秋＝40代の家族、冬＝70代の二人。
+# 「人生の四季」の試作（/life/）：春＝新婚の二人、夏＝hero-summer.jpg（子育て・肩車。トップの夏と同じ）、秋＝40代の家族、冬＝70代の二人。
+# 夏に hero.jpg を使うと、トップの「春」と同じ写真に見えてしまうので使わない
 # 2026-10-05、季節の写真の別案として作った。お客さまに今のトップ（同じ家族の1年）と見比べてもらう用で、本番には出さない
-LIFE_PHOTOS = ('life-spring.jpg', 'hero.jpg', 'life-autumn.jpg', 'life-winter.jpg')
+LIFE_PHOTOS = ('life-spring.jpg', 'hero-summer.jpg', 'life-autumn.jpg', 'life-winter.jpg')
 
 
 # /season/ は試作のときのURL。お客さまに伝えている場合があるので、トップへ移す

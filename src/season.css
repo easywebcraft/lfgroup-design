@@ -25,7 +25,7 @@
 .fv-photo img[src*="life-winter"] { object-position: 100% 40%; }
 @media (max-width: 767px) {
   .fv-photo img[src*="life-"] { object-position: 92% 40%; }
-  .fv-photo img[src*="life-autumn"] { object-position: 80% 40%; }  /* 三人が横に広がっているので、母親の顔が切れないよう少し左へ */
+  .fv-photo img[src*="life-autumn"] { object-position: 86% 40%; }  /* 三人が横に広がっているので、母親と父親の顔が両方入る位置に */
 }
 @media (max-width: 767px) {
   .fv-photo img[src*="hero-autumn"] { object-position: 94% 40%; }
