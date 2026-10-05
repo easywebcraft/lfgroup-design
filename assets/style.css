@@ -1236,8 +1236,7 @@
   @media (max-width: 767px) {
     .fv-photo { height: calc(56svh + var(--header-h)); min-height: calc(320px + var(--header-h)); }
   }
-/* ファーストビューの写真を、春→夏→秋→冬→春…と切り替える試作（/season/ だけで読み込む）
-   春は今の hero.jpg。夏・秋・冬は hero-summer / hero-autumn / hero-winter.jpg（2026-10-05 生成）
+/* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 
 /* 全部の写真を重ね、見せている1枚（.is-show）だけを見せる。
@@ -1256,18 +1255,14 @@
   .fv-photo img.is-ready, .fv-photo img.is-ready.is-show, .fv-photo img.is-ready.is-prev { scale: 1; }
 }
 
-/* 季節ごとに人物の位置が違うので、見せる位置を写真ごとに合わせる（今の hero.jpg の位置は変えない）。
-   スマホは写真の横幅の半分ほどしか見えないため、3人の顔が入るように寄せる */
+/* 季節ごとに人物の位置が違うので、見せる位置を写真ごとに合わせる。
+   スマホは写真の横幅の半分ほどしか見えないため、顔が入るように寄せる */
 .fv-photo img[src*="hero-summer"] { object-position: 100% 40%; }
-/* 「人生の四季」の試作（/life/）の写真。スマホは3枚とも右寄りに見せて、二人（三人）の顔が入るようにする */
+/* 「人生の四季」の春・秋・冬の写真。スマホは右寄りに見せて、二人（三人）の顔が入るようにする */
 .fv-photo img[src*="life-winter"] { object-position: 100% 40%; }
 @media (max-width: 767px) {
   .fv-photo img[src*="life-"] { object-position: 92% 40%; }
   .fv-photo img[src*="life-autumn"] { object-position: 86% 40%; }  /* 三人が横に広がっているので、母親と父親の顔が両方入る位置に */
-}
-@media (max-width: 767px) {
-  .fv-photo img[src*="hero-autumn"] { object-position: 94% 40%; }
-  .fv-photo img[src*="hero-winter"] { object-position: 82% 40%; }
 }
 
   /* 試作の帯（--release では入れない） */

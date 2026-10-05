@@ -993,9 +993,15 @@ def write_motion(top):
     write('motion/index.html', html_)
 
 
-def season_photos(top, photos=('hero.jpg', 'hero-summer.jpg', 'hero-autumn.jpg', 'hero-winter.jpg')):
-    """トップのファーストビューの写真を、春→夏→秋→冬と切り替える（2026-10-05 採用。動きは src/season.css・season.js）。
-    photos は春・夏・秋・冬の順。トップは「同じ家族の1年」（春が今の hero.jpg）。
+# トップの季節の写真「人生の四季」（2026-10-05 採用。春→夏→秋→冬の順）：
+# 春＝新婚の二人、夏＝子育て（公園で肩車）、秋＝40歳前後の夫婦と男の子、冬＝60代前半の二人。
+# 「同じ家族の1年」（春＝hero.jpg・夏＝hero-summer.jpg・秋冬＝hero-autumn/winter.jpg）と見比べて、こちらに決めた。
+# 夏に hero.jpg を使うと、それまでのトップの写真と同じに見えるので、夏は hero-summer.jpg を使う
+SEASON_PHOTOS = ('life-spring.jpg', 'hero-summer.jpg', 'life-autumn.jpg', 'life-winter.jpg')
+
+
+def season_photos(top, photos=SEASON_PHOTOS):
+    """トップのファーストビューの写真を、春→夏→秋→冬と切り替える（動きは src/season.css・season.js）。
     1枚目は最初から見せ、2枚目以降は最初の画面が出てから読み込むので data-src に置く
     （data-src="/images/…" も relative()・image_version() で相対パスとバージョン番号が付く）"""
     hero = '<img src="/images/hero.jpg" alt="" fetchpriority="high" onerror="this.remove()">'
@@ -1005,13 +1011,7 @@ def season_photos(top, photos=('hero.jpg', 'hero-summer.jpg', 'hero-autumn.jpg',
     return top.replace(hero, first + rest, 1)
 
 
-# 「人生の四季」の試作（/life/）：春＝新婚の二人、夏＝hero-summer.jpg（子育て・肩車。トップの夏と同じ）、秋＝40代の家族、冬＝60代前半の二人。
-# 夏に hero.jpg を使うと、トップの「春」と同じ写真に見えてしまうので使わない
-# 2026-10-05、季節の写真の別案として作った。お客さまに今のトップ（同じ家族の1年）と見比べてもらう用で、本番には出さない
-LIFE_PHOTOS = ('life-spring.jpg', 'hero-summer.jpg', 'life-autumn.jpg', 'life-winter.jpg')
-
-
-# /season/ は試作のときのURL。お客さまに伝えている場合があるので、トップへ移す
+# /season/・/life/ は試作のときのURL。お客さまに伝えている場合があるので、トップへ移す
 SEASON_REDIRECT = """<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex">
 <meta http-equiv="refresh" content="0; url=../"><title>LFグループ株式会社</title></head>
@@ -1048,14 +1048,12 @@ def main():
     write('assets/style.css', css)
     write('assets/main.js', js)
 
-    top_base = layout('', TOP.replace('{{final_cta}}', final_cta()), loader=True)
-    top = season_photos(top_base)
+    top = season_photos(layout('', TOP.replace('{{final_cta}}', final_cta()), loader=True))
     write('index.html', top)
     if not RELEASE:
         write_motion(top)
         write('season/index.html', SEASON_REDIRECT)
-        write('life/index.html', season_photos(top_base, LIFE_PHOTOS)
-              .replace('リニューアルの試作です', 'リニューアルの試作です・人生の四季の写真の試作版', 1))
+        write('life/index.html', SEASON_REDIRECT)
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
     write('business/index.html', layout('事業内容', page_business(), 'business'))
     write('service/index.html', layout('取り扱いサービス', page_service(), 'service'))
