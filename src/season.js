@@ -10,6 +10,23 @@
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var cur = 0, timer = null, paused = reduce;
 
+    // 切り替え方は1周ごとに変える（見比べる用の試作）。中身は season.css の data-fx
+    var FX = [['diag', '斜めのワイプ（今の方式）'], ['fade', 'A ゆっくりクロスフェード'], ['soft', 'B やわらかいワイプ'],
+              ['white', 'C 白く溶けて変わる'], ['slit', 'D 縦のスリット']];
+    var fx = 0;
+    var fxLabel = document.createElement('p');
+    fxLabel.className = 'fv-fx';
+    fxLabel.setAttribute('aria-live', 'polite');
+    var setFx = function (n) {
+      fx = n % FX.length;
+      box.dataset.fx = FX[fx][0];
+      fxLabel.textContent = '切り替え：' + FX[fx][1];
+    };
+    // ?fx=fade のように URL で始める切り替え方を選べる（見たい方式からすぐ確かめる用）
+    var want = new URLSearchParams(location.search).get('fx');
+    setFx(Math.max(0, FX.findIndex(function (f) { return f[0] === want; })));
+    fv.appendChild(fxLabel);
+
     // ボタン：季節を選ぶと、その写真に切り替える。一時停止（動きを減らす設定の端末では、最初から止めておく）
     var bar = document.createElement('div');
     bar.className = 'fv-season';
@@ -45,17 +62,26 @@
       // まだ読み込めていない写真は飛ばさず、読み込めてから切り替える
       if (!next.complete || !next.naturalWidth) { next.addEventListener('load', function () { show(i); }, { once: true }); return; }
       imgs.forEach(function (img) { img.classList.remove('is-prev'); });
+      // 次の写真を、今の切り替え方の「待機中」の状態にすぐ合わせる（切り替え方が変わった直後は、
+      // 前の方式の待機中の状態のまま残っていて、そこから始めると動かずにパッと出てしまう）
+      next.style.transition = 'none';
+      void next.offsetWidth;
+      next.style.transition = '';
       imgs[cur].classList.add('is-prev');
       imgs[cur].classList.remove('is-show');
       next.classList.add('is-show');
       var prev = imgs[cur];
-      setTimeout(function () { if (!prev.classList.contains('is-show')) prev.classList.remove('is-prev'); }, 1900);
+      setTimeout(function () { if (!prev.classList.contains('is-show')) prev.classList.remove('is-prev'); }, 2700);
       cur = i;
       mark();
     };
     var restart = function () {
       clearInterval(timer);
-      if (!paused && !document.hidden) timer = setInterval(function () { show((cur + 1) % imgs.length); }, STAY);
+      if (!paused && !document.hidden) timer = setInterval(function () {
+        var next = (cur + 1) % imgs.length;
+        if (next === 0) setFx(fx + 1);  // 冬→春に戻るところから、次の切り替え方にする
+        show(next);
+      }, STAY);
     };
     // タブを見ていない間は止める（戻ったときに何枚も飛ばないように）
     document.addEventListener('visibilitychange', restart);
