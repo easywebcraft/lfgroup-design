@@ -25,6 +25,14 @@
 - `build.py` の `write_motion()` がトップページに動きの CSS・JS を足して書き出す。本番（`--release`）には出さない
 - 採用が決まったら、motion.css・motion.js を本体（style.css・main.js）に移し、/motion/ を消す
 
+## 季節の写真の試作（/season/）
+
+- URL：https://easywebcraft.github.io/lfgroup-design/season/ （トップページだけ）
+- 2026-10-05、お客さまから「トップの写真を春→夏→秋→冬とループさせたい」と要望があり作ったもの
+- 春は今の `images/hero.jpg`。夏・秋・冬は `images/hero-summer.jpg`・`hero-autumn.jpg`・`hero-winter.jpg`（ChatGPTで、今の写真を添付して同じ家族・構図で季節だけ変えて生成）
+- 6秒ごとにフェードで切り替え。写真の右下（スマホは写真の下端）に季節のボタンと一時停止。「動きを減らす」設定の端末では自動で切り替えない
+- 動きは `src/season.css`・`src/season.js`、書き出しは `build.py` の `write_season()`。本番（`--release`）には出さない
+
 ## 書き出しと確認
 
 ```bash

@@ -993,6 +993,26 @@ def write_motion(top):
     write('motion/index.html', html_)
 
 
+def write_season(top):
+    """ファーストビューの写真を春→夏→秋→冬と切り替える試作（/season/）。本番（--release）には出さない。
+    中身は今のトップと同じで、写真を4枚重ね、src/season.css・season.js を足す。
+    夏・秋・冬は最初の画面が出てから読み込むので data-src に置く（data-src は relative() で書き換わらないので、/season/ から見た相対パスで書く）"""
+    css, js = (SRC / 'season.css').read_text(), (SRC / 'season.js').read_text()
+    v = hashlib.sha1((css + js).encode()).hexdigest()[:8]
+    write('assets/season.css', css)
+    write('assets/season.js', js)
+    hero = '<img src="/images/hero.jpg" alt="" fetchpriority="high" onerror="this.remove()">'
+    assert hero in top, 'ファーストビューの写真の書き方が変わった'
+    rest = ''.join(
+        f'\n      <img data-src="../images/{name}?v={hashlib.sha1((BASE / "images" / name).read_bytes()).hexdigest()[:8]}" alt="" decoding="async">'
+        for name in ('hero-summer.jpg', 'hero-autumn.jpg', 'hero-winter.jpg'))
+    html_ = (top.replace(hero, hero.replace('<img ', '<img class="is-show" ') + rest, 1)
+                .replace('</head>', f'<link rel="stylesheet" href="/assets/season.css?v={v}">\n</head>', 1)
+                .replace('</body>', f'<script src="/assets/season.js?v={v}"></script>\n</body>', 1)
+                .replace('リニューアルの試作です', 'リニューアルの試作です・季節の写真の試作版', 1))
+    write('season/index.html', html_)
+
+
 def main():
     global ASSET_V, SITE, RELEASE, SITE_URL
     ap = argparse.ArgumentParser()
@@ -1026,6 +1046,7 @@ def main():
     write('index.html', top)
     if not RELEASE:
         write_motion(top)
+        write_season(top)
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
     write('business/index.html', layout('事業内容', page_business(), 'business'))
     write('service/index.html', layout('取り扱いサービス', page_service(), 'service'))
