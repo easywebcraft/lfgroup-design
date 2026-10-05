@@ -1,34 +1,19 @@
-  // ファーストビューの写真を、春→夏→秋→冬→春…と切り替える試作（/season/ だけで読み込む。見た目は season.css）
+  // トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（見た目は season.css。トップ以外では何もしない）
   (function () {
     var fv = document.querySelector('.fv');
     var box = fv && fv.querySelector('.fv-photo');
     if (!box) return;
     var imgs = Array.prototype.slice.call(box.querySelectorAll('img'));
-    var names = ['Spring', 'Summer', 'Autumn', 'Winter'];
-    var labels = ['春', '夏', '秋', '冬'];
     var STAY = 6000;  // 1枚を見せる時間
     var FIRST = 3500; // 最初の演出が終わってから、最初に切り替えるまで（春は演出の間も見えているので、ほかより短くする）
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var cur = 0, timer = null, paused = reduce;
 
-    // ボタン：季節を選ぶと、その写真に切り替える。一時停止（動きを減らす設定の端末では、最初から止めておく）
-    var bar = document.createElement('div');
-    bar.className = 'fv-season';
-    bar.setAttribute('role', 'group');
-    bar.setAttribute('aria-label', '季節の写真');
-    var dots = imgs.map(function (img, i) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.textContent = names[i];
-      b.setAttribute('aria-label', labels[i] + 'の写真を見る');
-      b.addEventListener('click', function () { show(i); restart(); });
-      bar.appendChild(b);
-      return b;
-    });
+    // 一時停止ボタン（自動で切り替わり続けるので、止められるようにする。動きを減らす設定の端末では、最初から止めておく）。
+    // 季節の名前のボタンは、2026-10-05 お客さまの希望で外した
     var pause = document.createElement('button');
     pause.type = 'button';
-    pause.className = 'fs-pause';
-    bar.appendChild(pause);
+    pause.className = 'fv-season';
     var setPause = function (p, first) {
       paused = p;
       pause.setAttribute('aria-label', p ? '写真の切り替えを再生する' : '写真の切り替えを一時停止する');
@@ -37,9 +22,8 @@
       restart(first);
     };
     pause.addEventListener('click', function () { setPause(!paused); });
-    fv.appendChild(bar);
+    fv.appendChild(pause);
 
-    var mark = function () { dots.forEach(function (b, i) { b.setAttribute('aria-current', i === cur ? 'true' : 'false'); }); };
     var show = function (i) {
       if (i === cur) return;
       var next = imgs[i];
@@ -52,7 +36,6 @@
       var prev = imgs[cur];
       setTimeout(function () { if (!prev.classList.contains('is-show')) prev.classList.remove('is-prev'); }, 2700);
       cur = i;
-      mark();
     };
     // first：次に切り替えるまでの時間（省略すると STAY）。そのあとは STAY ごと
     var restart = function (first) {
@@ -77,11 +60,9 @@
       loadRest();
       setTimeout(function () {
         imgs[0].classList.add('is-ready');
-        mark();
-        setPause(paused, FIRST - 1800);
+          setPause(paused, FIRST - 1800);
       }, 1800);
     };
-    mark();
     setPause(true);  // 始まるまでは止めておく
     paused = reduce;
     var wait = setInterval(function () {
