@@ -978,6 +978,21 @@ def release_files():
     write('robots.txt', robots)
 
 
+def write_motion(top):
+    """トップページの動きの試作（/motion/）。お客さまに今のトップと見比べてもらう用で、本番（--release）には出さない。
+    中身は今のトップと同じで、src/motion.css・motion.js を足し、写真の枠を「帯の後ろから現れる」用（m-reveal）にする。"""
+    css, js = (SRC / 'motion.css').read_text(), (SRC / 'motion.js').read_text()
+    v = hashlib.sha1((css + js).encode()).hexdigest()[:8]
+    write('assets/motion.css', css)
+    write('assets/motion.js', js)
+    html_ = (top.replace('</head>', f'<link rel="stylesheet" href="/assets/motion.css?v={v}">\n</head>', 1)
+                .replace('</body>', f'<script src="/assets/motion.js?v={v}"></script>\n</body>', 1)
+                .replace('リニューアルの試作です', 'リニューアルの試作です・動きの試作版', 1)
+                .replace('class="panel-photo"', 'class="panel-photo m-reveal"'))
+    html_ = re.sub(r'class="(split-photo|feature-photo|showcase-photo) fade"', r'class="\1 m-reveal"', html_)
+    write('motion/index.html', html_)
+
+
 def main():
     global ASSET_V, SITE, RELEASE, SITE_URL
     ap = argparse.ArgumentParser()
@@ -1007,7 +1022,10 @@ def main():
     write('assets/style.css', css)
     write('assets/main.js', js)
 
-    write('index.html', layout('', TOP.replace('{{final_cta}}', final_cta()), loader=True))
+    top = layout('', TOP.replace('{{final_cta}}', final_cta()), loader=True)
+    write('index.html', top)
+    if not RELEASE:
+        write_motion(top)
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
     write('business/index.html', layout('事業内容', page_business(), 'business'))
     write('service/index.html', layout('取り扱いサービス', page_service(), 'service'))

@@ -18,6 +18,13 @@
 | `assets/` | 書き出したCSS・JS（生成物） |
 | `images/` | 写真（ChatGPTで作ったイメージ素材。実在のスタッフ・お客様ではない。プロンプトは ewc-crm の `docs/LFグループ_画像生成プロンプト.md`） |
 
+## 動きの試作（/motion/）
+
+- URL：https://easywebcraft.github.io/lfgroup-design/motion/ （トップページだけ。今のトップと見比べてもらう用）
+- 2026-10-05、お客さまから「careerscout.co.jp のようなトップの動きを」と要望があり作ったもの。動きは `src/motion.css`・`src/motion.js`（先頭のコメントに A〜E の一覧）
+- `build.py` の `write_motion()` がトップページに動きの CSS・JS を足して書き出す。本番（`--release`）には出さない
+- 採用が決まったら、motion.css・motion.js を本体（style.css・main.js）に移し、/motion/ を消す
+
 ## 書き出しと確認
 
 ```bash
