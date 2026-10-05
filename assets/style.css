@@ -1246,13 +1246,13 @@
   .fv-photo img.is-ready, .fv-photo img.is-ready.is-show, .fv-photo img.is-ready.is-prev { scale: 1; }
 }
 
-/* 一時停止ボタン。写真の端は背景に溶かしてあるので、その外側（.fv の右下）に小さく置く */
+/* 一時停止ボタン。最初の画面の右下に小さく置く（上下の位置は season.js の place() が、写真と画面の下端から決める） */
 .fv { position: relative; }
-.fv-season { position: absolute; right: var(--gutter); bottom: 28px; z-index: 5; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .82); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: 0 4px 16px rgba(27, 51, 80, .12); color: var(--navy); cursor: pointer; }
+.fv-season { position: absolute; right: var(--gutter); top: calc(min(100%, 100svh) - 100px);  /* JS が動くまでの仮の位置 */ z-index: 5; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .82); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: 0 4px 16px rgba(27, 51, 80, .12); color: var(--navy); cursor: pointer; }
 .fv-season svg { width: 10px; height: 10px; fill: currentColor; }
-/* スマホは写真が見出しの上にあるので、写真の右下（写真の下端は背景に溶かしてあるので少し上）に置く */
+/* スマホは画面の端に近づけ、少し小さくする */
 @media (max-width: 767px) {
-  .fv-season { top: calc(var(--header-h) + min(62svh, 620px) - 84px); bottom: auto; right: 16px; width: 32px; height: 32px; }
+  .fv-season { right: 16px; width: 32px; height: 32px; }
 }
 
 /* 季節ごとに人物の位置が違うので、見せる位置を写真ごとに合わせる（今の hero.jpg の位置は変えない）。

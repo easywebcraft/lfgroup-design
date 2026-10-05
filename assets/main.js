@@ -167,6 +167,19 @@
     };
     pause.addEventListener('click', function () { setPause(!paused); });
     fv.appendChild(pause);
+    // 置く場所：写真の下端と、最初の画面の下端の、高いほうの少し上（右寄せは CSS）。
+    // .fv は画面の低いPCでは画面の下にはみ出し、タブレット・スマホでは写真が文章の上に並ぶので、CSS だけでは決めきれない。
+    // 写真が上に並ぶときは、写真の下端がぼかしてあるので、そのぶん上げる
+    var place = function () {
+      var f = fv.getBoundingClientRect(), ph = box.getBoundingClientRect();
+      var stacked = ph.width > f.width * .9;
+      var photoBottom = ph.bottom - f.top;
+      var screenBottom = window.innerHeight - (f.top + window.scrollY);
+      pause.style.top = (Math.min(photoBottom, screenBottom) - pause.offsetHeight - (stacked ? 52 : 28)) + 'px';
+    };
+    place();
+    window.addEventListener('resize', place);
+    window.addEventListener('load', place);
 
     var show = function (i) {
       if (i === cur) return;
