@@ -411,3 +411,27 @@
   @media (max-width: 767px) {
     .fv-photo { height: calc(56svh + var(--header-h)); min-height: calc(320px + var(--header-h)); }
   }
+
+  /* 写真の端を背景に溶かす（2026-10-05、お客さまの指摘「写真と背景の境目が気になる」で追加）。
+     左右・上下それぞれのぼかし幅を --fl/--fr/--ft/--fb で決め、横と縦のグラデーションを重ねたマスクで端を透かす。
+     画面の端まで広がる写真は画面の端の側はぼかさず、文章の側を大きくぼかす */
+  .hero-band, .panel-photo, .feature-photo, .split-photo, .showcase-photo, .svc-row .photo {
+    --fl: 6%; --fr: 6%; --ft: 8%; --fb: 8%;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fl), #000 calc(100% - var(--fr)), transparent),
+                        linear-gradient(180deg, transparent, #000 var(--ft), #000 calc(100% - var(--fb)), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 var(--fl), #000 calc(100% - var(--fr)), transparent),
+                linear-gradient(180deg, transparent, #000 var(--ft), #000 calc(100% - var(--fb)), transparent);
+    -webkit-mask-composite: source-in; mask-composite: intersect;
+  }
+  /* 下層ページ冒頭の大きな写真：横長なので、左右を広めにぼかす */
+  .hero-band { --fl: 8%; --fr: 8%; --ft: 12%; --fb: 12%; }
+  @media (min-width: 1024px) {
+    /* 写真が左で画面の端まで（文章は右）：左はぼかさず、右（文章の側）を大きく */
+    .split-photo, .showcase:not(.is-reverse) .showcase-photo { --fl: 0%; --fr: 26%; --ft: 10%; --fb: 10%; }
+    /* 写真が右で画面の端まで（文章は左） */
+    .showcase.is-reverse .showcase-photo { --fl: 26%; --fr: 0%; --ft: 10%; --fb: 10%; }
+  }
+  @media (max-width: 1023px) {
+    /* タブレット・スマホは写真が文章の上に並ぶので、下を大きくぼかして文章へつなげる */
+    .split-photo, .showcase-photo { --fl: 0%; --fr: 0%; --ft: 6%; --fb: 22%; }
+  }
