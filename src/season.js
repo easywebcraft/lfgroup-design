@@ -7,6 +7,7 @@
     var names = ['Spring', 'Summer', 'Autumn', 'Winter'];
     var labels = ['春', '夏', '秋', '冬'];
     var STAY = 6000;  // 1枚を見せる時間
+    var FIRST = 3500; // 最初の演出が終わってから、最初に切り替えるまで（春は演出の間も見えているので、ほかより短くする）
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var cur = 0, timer = null, paused = reduce;
 
@@ -28,12 +29,12 @@
     pause.type = 'button';
     pause.className = 'fs-pause';
     bar.appendChild(pause);
-    var setPause = function (p) {
+    var setPause = function (p, first) {
       paused = p;
       pause.setAttribute('aria-label', p ? '写真の切り替えを再生する' : '写真の切り替えを一時停止する');
       pause.innerHTML = p ? '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 0.5 9.5 5 1.5 9.5z"/></svg>'
                           : '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 0.5h2.5v9H1.5zM6 0.5h2.5v9H6z"/></svg>';
-      restart();
+      restart(first);
     };
     pause.addEventListener('click', function () { setPause(!paused); });
     fv.appendChild(bar);
@@ -53,12 +54,16 @@
       cur = i;
       mark();
     };
-    var restart = function () {
+    // first：次に切り替えるまでの時間（省略すると STAY）。そのあとは STAY ごと
+    var restart = function (first) {
+      clearTimeout(timer);
       clearInterval(timer);
-      if (!paused && !document.hidden) timer = setInterval(function () { show((cur + 1) % imgs.length); }, STAY);
+      if (paused || document.hidden) return;
+      var next = function () { show((cur + 1) % imgs.length); };
+      timer = setTimeout(function () { next(); timer = setInterval(next, STAY); }, typeof first === 'number' ? first : STAY);
     };
     // タブを見ていない間は止める（戻ったときに何枚も飛ばないように）
-    document.addEventListener('visibilitychange', restart);
+    document.addEventListener('visibilitychange', function () { restart(); });
 
     // 夏・秋・冬の写真は、最初の画面が出てから読み込む（最初の表示を遅くしないため）
     var loadRest = function () {
@@ -67,13 +72,13 @@
         if (i) img.classList.add('is-ready');
       });
     };
-    // 最初の演出とズーム（main.js）が終わってから切り替えを始める
+    // 最初の演出とズーム（main.js）が終わるのを待ってから（1.8秒）切り替えを始める
     var start = function () {
       loadRest();
       setTimeout(function () {
         imgs[0].classList.add('is-ready');
         mark();
-        setPause(paused);
+        setPause(paused, FIRST - 1800);
       }, 1800);
     };
     mark();
