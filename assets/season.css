@@ -2,16 +2,19 @@
    春は今の hero.jpg。夏・秋・冬は hero-summer / hero-autumn / hero-winter.jpg（2026-10-05 生成）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 
-/* 全部の写真を重ね、見せている1枚（.is-show）だけ不透明にする。
-   次の写真は、前の写真（.is-prev）を出したまま上に重ねてフェードさせる（両方を薄くすると間で白っぽくなるため） */
+/* 全部の写真を重ね、見せている1枚（.is-show）だけを見せる。
+   次の写真は、前の写真（.is-prev）を出したまま上に重ね、左から斜めのワイプで現れる
+   （フェードだと2枚が重なって、変わらない部分が目立つため。動きの試作 /motion/ の C と同じ形） */
 .fv-photo img { opacity: 0; z-index: 0; }
 .fv-photo img.is-show { opacity: 1; z-index: 2; }
 .fv-photo img.is-prev { opacity: 1; z-index: 1; }
-.fv-photo img.is-ready { transition: opacity 1.8s ease, scale 0s linear 1.8s; scale: 1.06; }
+.fv-photo img.is-ready { opacity: 1; clip-path: polygon(0 0, 0 0, -30% 100%, -30% 100%); scale: 1.06; transition: clip-path 0s linear 1.8s, scale 0s linear 1.8s; }
+.fv-photo img.is-ready.is-prev { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); transition: none; }
 /* 見せている間は、ゆっくり寄っていた分を戻す（今の最初のズームと同じ考え方） */
-.fv-photo img.is-ready.is-show { transition: opacity 1.8s ease, scale 8s linear; scale: 1; }
+.fv-photo img.is-ready.is-show { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); scale: 1; transition: clip-path 1.6s cubic-bezier(.77, 0, .18, 1), scale 8s linear; }
 @media (prefers-reduced-motion: reduce) {
-  .fv-photo img.is-ready, .fv-photo img.is-ready.is-show { transition: opacity .3s ease; scale: 1; }
+  .fv-photo img.is-ready.is-show { transition: clip-path .4s ease; scale: 1; }
+  .fv-photo img.is-ready { scale: 1; }
 }
 
 /* 季節の切り替えボタンと一時停止。写真の端は背景に溶かしてあるので、その外側（.fv の右下）に置く */
