@@ -151,35 +151,9 @@
     var STAY = 6000;  // 1枚を見せる時間
     var FIRST = 3500; // 最初の演出が終わってから、最初に切り替えるまで（春は演出の間も見えているので、ほかより短くする）
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var cur = 0, timer = null, paused = reduce;
+    var cur = 0, timer = null, started = false;
 
-    // 一時停止ボタン（自動で切り替わり続けるので、止められるようにする。動きを減らす設定の端末では、最初から止めておく）。
-    // 季節の名前のボタンは、2026-10-05 お客さまの希望で外した
-    var pause = document.createElement('button');
-    pause.type = 'button';
-    pause.className = 'fv-season';
-    var setPause = function (p, first) {
-      paused = p;
-      pause.setAttribute('aria-label', p ? '写真の切り替えを再生する' : '写真の切り替えを一時停止する');
-      pause.innerHTML = p ? '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 0.5 9.5 5 1.5 9.5z"/></svg>'
-                          : '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 0.5h2.5v9H1.5zM6 0.5h2.5v9H6z"/></svg>';
-      restart(first);
-    };
-    pause.addEventListener('click', function () { setPause(!paused); });
-    fv.appendChild(pause);
-    // 置く場所：写真の下端と、最初の画面の下端の、高いほうの少し上（右寄せは CSS）。
-    // .fv は画面の低いPCでは画面の下にはみ出し、タブレット・スマホでは写真が文章の上に並ぶので、CSS だけでは決めきれない。
-    // 写真が上に並ぶときは、写真の下端がぼかしてあるので、そのぶん上げる
-    var place = function () {
-      var f = fv.getBoundingClientRect(), ph = box.getBoundingClientRect();
-      var stacked = ph.width > f.width * .9;
-      var photoBottom = ph.bottom - f.top;
-      var screenBottom = window.innerHeight - (f.top + window.scrollY);
-      pause.style.top = (Math.min(photoBottom, screenBottom) - pause.offsetHeight - (stacked ? 52 : 28)) + 'px';
-    };
-    place();
-    window.addEventListener('resize', place);
-    window.addEventListener('load', place);
+    // 季節の名前のボタン・一時停止ボタンは、2026-10-05 お客さまの希望で外した（動きを減らす設定の端末では切り替えない）
 
     var show = function (i) {
       if (i === cur) return;
@@ -198,7 +172,7 @@
     var restart = function (first) {
       clearTimeout(timer);
       clearInterval(timer);
-      if (paused || document.hidden) return;
+      if (!started || reduce || document.hidden) return;  // 最初の演出が終わるまでは動かさない
       var next = function () { show((cur + 1) % imgs.length); };
       timer = setTimeout(function () { next(); timer = setInterval(next, STAY); }, typeof first === 'number' ? first : STAY);
     };
@@ -217,11 +191,10 @@
       loadRest();
       setTimeout(function () {
         imgs[0].classList.add('is-ready');
-          setPause(paused, FIRST - 1800);
+        started = true;
+        restart(FIRST - 1800);
       }, 1800);
     };
-    setPause(true);  // 始まるまでは止めておく
-    paused = reduce;
     var wait = setInterval(function () {
       if (fv.classList.contains('is-loaded')) { clearInterval(wait); start(); }
     }, 200);
