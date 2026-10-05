@@ -33,6 +33,13 @@
 - 季節の名前のボタン・一時停止ボタンは、お客さまの希望で付けない。「動きを減らす」設定の端末では自動で切り替えない
 - 動きは `src/season.css`・`src/season.js`（`build.py` が style.css・main.js に足す）。写真の書き出しは `build.py` の `season_photos()`
 
+## 「人生の四季」の写真の試作（/life/）
+
+- URL：https://easywebcraft.github.io/lfgroup-design/life/ （トップページだけ。今のトップ「同じ家族の1年」と見比べてもらう用。本番には出さない）
+- 2026-10-05、季節の写真の別案として作った。春＝新婚の二人（`images/life-spring.jpg`）、夏＝今の `hero.jpg`（子育て）、秋＝夫婦と小学生の男の子・新しい家（`life-autumn.jpg`）、冬＝70代の二人（`life-winter.jpg`）
+- 写真は ChatGPT で、今の hero.jpg を添付して「同じ夫婦の人生」として生成。最初は3枚とも夫婦の向きが同じ・秋の子どもが女の子・年齢が若すぎたので、秋と冬を作り直した（春は最初のまま）
+- 書き出しは `build.py` の `LIFE_PHOTOS`（`season_photos()` に写真を渡す）。スマホで顔が切れないよう、見せる位置は season.css で写真ごとに合わせている
+
 ## 書き出しと確認
 
 ```bash

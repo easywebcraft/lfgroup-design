@@ -993,15 +993,21 @@ def write_motion(top):
     write('motion/index.html', html_)
 
 
-def season_photos(top):
+def season_photos(top, photos=('hero.jpg', 'hero-summer.jpg', 'hero-autumn.jpg', 'hero-winter.jpg')):
     """トップのファーストビューの写真を、春→夏→秋→冬と切り替える（2026-10-05 採用。動きは src/season.css・season.js）。
-    春は今の hero.jpg。夏・秋・冬は最初の画面が出てから読み込むので data-src に置く
+    photos は春・夏・秋・冬の順。トップは「同じ家族の1年」（春が今の hero.jpg）。
+    1枚目は最初から見せ、2枚目以降は最初の画面が出てから読み込むので data-src に置く
     （data-src="/images/…" も relative()・image_version() で相対パスとバージョン番号が付く）"""
     hero = '<img src="/images/hero.jpg" alt="" fetchpriority="high" onerror="this.remove()">'
     assert hero in top, 'ファーストビューの写真の書き方が変わった'
-    rest = ''.join(f'\n      <img data-src="/images/{name}" alt="">'
-                   for name in ('hero-summer.jpg', 'hero-autumn.jpg', 'hero-winter.jpg'))
-    return top.replace(hero, hero.replace('<img ', '<img class="is-show" ') + rest, 1)
+    first = hero.replace('<img ', '<img class="is-show" ').replace('/images/hero.jpg', f'/images/{photos[0]}')
+    rest = ''.join(f'\n      <img data-src="/images/{name}" alt="">' for name in photos[1:])
+    return top.replace(hero, first + rest, 1)
+
+
+# 「人生の四季」の試作（/life/）：春＝新婚の二人、夏＝今の hero.jpg（子育て）、秋＝40代の家族、冬＝70代の二人。
+# 2026-10-05、季節の写真の別案として作った。お客さまに今のトップ（同じ家族の1年）と見比べてもらう用で、本番には出さない
+LIFE_PHOTOS = ('life-spring.jpg', 'hero.jpg', 'life-autumn.jpg', 'life-winter.jpg')
 
 
 # /season/ は試作のときのURL。お客さまに伝えている場合があるので、トップへ移す
@@ -1041,11 +1047,14 @@ def main():
     write('assets/style.css', css)
     write('assets/main.js', js)
 
-    top = season_photos(layout('', TOP.replace('{{final_cta}}', final_cta()), loader=True))
+    top_base = layout('', TOP.replace('{{final_cta}}', final_cta()), loader=True)
+    top = season_photos(top_base)
     write('index.html', top)
     if not RELEASE:
         write_motion(top)
         write('season/index.html', SEASON_REDIRECT)
+        write('life/index.html', season_photos(top_base, LIFE_PHOTOS)
+              .replace('リニューアルの試作です', 'リニューアルの試作です・人生の四季の写真の試作版', 1))
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
     write('business/index.html', layout('事業内容', page_business(), 'business'))
     write('service/index.html', layout('取り扱いサービス', page_service(), 'service'))
