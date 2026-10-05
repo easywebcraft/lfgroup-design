@@ -993,24 +993,23 @@ def write_motion(top):
     write('motion/index.html', html_)
 
 
-def write_season(top):
-    """ファーストビューの写真を春→夏→秋→冬と切り替える試作（/season/）。本番（--release）には出さない。
-    中身は今のトップと同じで、写真を4枚重ね、src/season.css・season.js を足す。
-    夏・秋・冬は最初の画面が出てから読み込むので data-src に置く（data-src は relative() で書き換わらないので、/season/ から見た相対パスで書く）"""
-    css, js = (SRC / 'season.css').read_text(), (SRC / 'season.js').read_text()
-    v = hashlib.sha1((css + js).encode()).hexdigest()[:8]
-    write('assets/season.css', css)
-    write('assets/season.js', js)
+def season_photos(top):
+    """トップのファーストビューの写真を、春→夏→秋→冬と切り替える（2026-10-05 採用。動きは src/season.css・season.js）。
+    春は今の hero.jpg。夏・秋・冬は最初の画面が出てから読み込むので data-src に置く
+    （data-src="/images/…" も relative()・image_version() で相対パスとバージョン番号が付く）"""
     hero = '<img src="/images/hero.jpg" alt="" fetchpriority="high" onerror="this.remove()">'
     assert hero in top, 'ファーストビューの写真の書き方が変わった'
-    rest = ''.join(
-        f'\n      <img data-src="../images/{name}?v={hashlib.sha1((BASE / "images" / name).read_bytes()).hexdigest()[:8]}" alt="" decoding="async">'
-        for name in ('hero-summer.jpg', 'hero-autumn.jpg', 'hero-winter.jpg'))
-    html_ = (top.replace(hero, hero.replace('<img ', '<img class="is-show" ') + rest, 1)
-                .replace('</head>', f'<link rel="stylesheet" href="/assets/season.css?v={v}">\n</head>', 1)
-                .replace('</body>', f'<script src="/assets/season.js?v={v}"></script>\n</body>', 1)
-                .replace('リニューアルの試作です', 'リニューアルの試作です・季節の写真の試作版', 1))
-    write('season/index.html', html_)
+    rest = ''.join(f'\n      <img data-src="/images/{name}" alt="">'
+                   for name in ('hero-summer.jpg', 'hero-autumn.jpg', 'hero-winter.jpg'))
+    return top.replace(hero, hero.replace('<img ', '<img class="is-show" ') + rest, 1)
+
+
+# /season/ は試作のときのURL。お客さまに伝えている場合があるので、トップへ移す
+SEASON_REDIRECT = """<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<meta http-equiv="refresh" content="0; url=../"><title>LFグループ株式会社</title></head>
+<body><p><a href="/">トップページへ</a></p></body></html>
+"""
 
 
 def main():
@@ -1025,7 +1024,7 @@ def main():
         shutil.rmtree(SITE, ignore_errors=True)
         release_files()
 
-    css = (SRC / 'style.css').read_text() + (SRC / 'pages.css').read_text() + (SRC / 'brand.css').read_text() + (SRC / 'refine.css').read_text()
+    css = (SRC / 'style.css').read_text() + (SRC / 'pages.css').read_text() + (SRC / 'brand.css').read_text() + (SRC / 'refine.css').read_text() + (SRC / 'season.css').read_text()
     if RELEASE:
         css = re.sub(r'/\*[\s\S]*?\*/', '', css)
     else:
@@ -1035,18 +1034,18 @@ def main():
   .design-preview-note ~ .header:not(.is-scrolled) { top: 30px; }
   .design-preview-note ~ .drawer { padding-top: calc(var(--header-h) + 54px); }
 """
-    js = (SRC / 'main.js').read_text()
+    js = (SRC / 'main.js').read_text() + (SRC / 'season.js').read_text()
     # CSS・JS の中身が変わったら URL も変える。GitHub Pages は10分間ブラウザに覚えさせるため、
     # 変えないと「新しいページ＋古いデザイン」が組み合わさって表示が崩れる（MISSION の写真が消えた）
     ASSET_V = hashlib.sha1((css + js).encode()).hexdigest()[:8]
     write('assets/style.css', css)
     write('assets/main.js', js)
 
-    top = layout('', TOP.replace('{{final_cta}}', final_cta()), loader=True)
+    top = season_photos(layout('', TOP.replace('{{final_cta}}', final_cta()), loader=True))
     write('index.html', top)
     if not RELEASE:
         write_motion(top)
-        write_season(top)
+        write('season/index.html', SEASON_REDIRECT)
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
     write('business/index.html', layout('事業内容', page_business(), 'business'))
     write('service/index.html', layout('取り扱いサービス', page_service(), 'service'))
