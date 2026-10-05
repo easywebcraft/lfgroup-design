@@ -1226,6 +1226,16 @@
   @media (min-width: 1024px) {
     .foryou-grid .panel:not(.panel-main) .panel-photo, .foryou-grid .panel-main .panel-photo { flex: none; aspect-ratio: auto; height: clamp(320px, 31vw, 460px); min-height: 0; }
   }
+
+  /* スマホ・タブレット（写真が文章の上に並ぶとき）：写真をヘッダーの下まで広げ、透明なヘッダーを空の上にのせる
+     （ヘッダーの高さ分の余白があると、白い帯と写真の上端の境目が目立つため。2026-10-05、お客さまの指摘で変更。PC は変えない）。
+     写真の高さはヘッダーの分だけ足して、人物の見える大きさは変えない。スクロールするとヘッダーは今までどおり白くなる */
+  @media (max-width: 1023px) {
+    .fv-photo { margin-top: 0; height: calc(62svh + var(--header-h)); min-height: calc(360px + var(--header-h)); max-height: calc(620px + var(--header-h)); }
+  }
+  @media (max-width: 767px) {
+    .fv-photo { height: calc(56svh + var(--header-h)); min-height: calc(320px + var(--header-h)); }
+  }
 /* ファーストビューの写真を、春→夏→秋→冬→春…と切り替える試作（/season/ だけで読み込む）
    春は今の hero.jpg。夏・秋・冬は hero-summer / hero-autumn / hero-winter.jpg（2026-10-05 生成）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
