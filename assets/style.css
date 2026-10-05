@@ -1236,31 +1236,6 @@
   @media (max-width: 767px) {
     .fv-photo { height: calc(56svh + var(--header-h)); min-height: calc(320px + var(--header-h)); }
   }
-
-  /* 写真の端を背景に溶かす（2026-10-05、お客さまの指摘「写真と背景の境目が気になる」で追加）。
-     左右・上下それぞれのぼかし幅を --fl/--fr/--ft/--fb で決め、横と縦のグラデーションを重ねたマスクで端を透かす。
-     画面の端まで広がる写真は画面の端の側はぼかさず、文章の側を少し広めにぼかす。
-     最初は強すぎたので（2026-10-06 お客さま）、3回に分けて、縁がほんのり柔らかく見える程度まで弱めた */
-  .hero-band, .panel-photo, .feature-photo, .split-photo, .showcase-photo, .svc-row .photo {
-    --fl: 1%; --fr: 1%; --ft: 1.2%; --fb: 1.2%;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fl), #000 calc(100% - var(--fr)), transparent),
-                        linear-gradient(180deg, transparent, #000 var(--ft), #000 calc(100% - var(--fb)), transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 var(--fl), #000 calc(100% - var(--fr)), transparent),
-                linear-gradient(180deg, transparent, #000 var(--ft), #000 calc(100% - var(--fb)), transparent);
-    -webkit-mask-composite: source-in; mask-composite: intersect;
-  }
-  /* 下層ページ冒頭の大きな写真：横長なので、左右を広めにぼかす */
-  .hero-band { --fl: 1.2%; --fr: 1.2%; --ft: 1.5%; --fb: 1.5%; }
-  @media (min-width: 1024px) {
-    /* 写真が左で画面の端まで（文章は右）：左はぼかさず、右（文章の側）を大きく */
-    .split-photo, .showcase:not(.is-reverse) .showcase-photo { --fl: 0%; --fr: 4%; --ft: 1.5%; --fb: 1.5%; }
-    /* 写真が右で画面の端まで（文章は左） */
-    .showcase.is-reverse .showcase-photo { --fl: 4%; --fr: 0%; --ft: 1.5%; --fb: 1.5%; }
-  }
-  @media (max-width: 1023px) {
-    /* タブレット・スマホは写真が文章の上に並ぶので、下を大きくぼかして文章へつなげる */
-    .split-photo, .showcase-photo { --fl: 0%; --fr: 0%; --ft: 1%; --fb: 4%; }
-  }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 
