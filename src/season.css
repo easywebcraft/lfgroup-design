@@ -9,7 +9,9 @@
 .fv-photo img.is-show { opacity: 1; z-index: 2; }
 .fv-photo img.is-prev { opacity: 1; z-index: 1; }
 .fv-photo img.is-ready { opacity: 1; clip-path: polygon(0 0, 0 0, -30% 100%, -30% 100%); scale: 1.06; transition: clip-path 0s linear 1.8s, scale 0s linear 1.8s; }
-.fv-photo img.is-ready.is-prev { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); transition: none; }
+/* 前の写真は、次の写真に覆われるまで見えているので、ズームをそのまま続ける（ここで 1.06 に戻すと、急に拡大されてカクつく）。
+   完全に隠れてから（.is-prev が外れて 1.8 秒後）、待機中の大きさに戻す */
+.fv-photo img.is-ready.is-prev { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); scale: 1; transition: scale 8s linear; }
 /* 見せている間は、ゆっくり寄っていた分を戻す（今の最初のズームと同じ考え方） */
 .fv-photo img.is-ready.is-show { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); scale: 1; transition: clip-path 1.6s cubic-bezier(.77, 0, .18, 1), scale 8s linear; }
 @media (prefers-reduced-motion: reduce) {
