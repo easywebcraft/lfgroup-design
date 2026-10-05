@@ -6,6 +6,9 @@
     var imgs = Array.prototype.slice.call(box.querySelectorAll('img'));
     var STAY = 6000;  // 1枚を見せる時間
     var FIRST = 3500; // 最初の演出が終わってから、最初に切り替えるまで（春は演出の間も見えているので、ほかより短くする）
+    // 最後の写真から最初の写真へ戻るときは、白をはさんでゆっくり切り替える（一区切りが分かるように。見た目は season.css の .is-wrap）。
+    // その分（白へ消える2.2秒＋白0.6秒）だけ、最初の写真を見せる時間をのばす
+    var WRAP = 2800, WRAP_END = 5200;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var cur = 0, timer = null, started = false;
 
@@ -16,21 +19,31 @@
       var next = imgs[i];
       // まだ読み込めていない写真は飛ばさず、読み込めてから切り替える
       if (!next.complete || !next.naturalWidth) { next.addEventListener('load', function () { show(i); }, { once: true }); return; }
+      var wrap = i === 0;
+      box.classList.toggle('is-wrap', wrap);
       imgs.forEach(function (img) { img.classList.remove('is-prev'); });
       imgs[cur].classList.add('is-prev');
       imgs[cur].classList.remove('is-show');
       next.classList.add('is-show');
       var prev = imgs[cur];
-      setTimeout(function () { if (!prev.classList.contains('is-show')) prev.classList.remove('is-prev'); }, 2700);
+      setTimeout(function () {
+        if (!prev.classList.contains('is-show')) prev.classList.remove('is-prev');
+        if (wrap) box.classList.remove('is-wrap');
+      }, wrap ? WRAP_END : 2700);
       cur = i;
     };
-    // first：次に切り替えるまでの時間（省略すると STAY）。そのあとは STAY ごと
+    // first：次に切り替えるまでの時間（省略すると STAY）。そのあとは STAY ごと（最初の写真へ戻ったときだけ WRAP 長く）
     var restart = function (first) {
       clearTimeout(timer);
-      clearInterval(timer);
       if (!started || reduce || document.hidden) return;  // 最初の演出が終わるまでは動かさない
-      var next = function () { show((cur + 1) % imgs.length); };
-      timer = setTimeout(function () { next(); timer = setInterval(next, STAY); }, typeof first === 'number' ? first : STAY);
+      var tick = function (ms) {
+        timer = setTimeout(function () {
+          var i = (cur + 1) % imgs.length;
+          show(i);
+          tick(STAY + (i === 0 ? WRAP : 0));
+        }, ms);
+      };
+      tick(typeof first === 'number' ? first : STAY);
     };
     // タブを見ていない間は止める（戻ったときに何枚も飛ばないように）
     document.addEventListener('visibilitychange', function () { restart(); });
