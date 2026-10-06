@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="./images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="./images/apple-touch-icon.png">
-<link rel="stylesheet" href="./assets/style.css?v=47ec6478">
+<link rel="stylesheet" href="./assets/style.css?v=00778dcd">
 <script>
   // 表示前に「フェード待ち」の状態にする（本文の最後で付けると、文字が一度見えてから消えてフェードする）。
   // main.js が読み込めなかったときに文字が隠れたままにならないよう、3秒で解除する。
@@ -115,7 +115,15 @@
   <!-- 04 FOR YOU：見る人の目的から選べる入口。写真の上に文字をのせたブロックを、画面いっぱいに2段×2列で均等に並べる
        （2026-10-06 お客さまのイメージ画像に合わせて作り直し。スマホは1列）。
        個人保険・法人保険・アライアンス事業は別の事業（2026-10-04 クライアント確認）。採用情報は今のサイトにあるページ -->
-  <section class="entries" id="foryou" aria-label="目的から探す">
+  <!-- 入口の前の一言（2026-10-06）。Scroll の飛び先（#foryou）もここ -->
+  <div class="entries-head" id="foryou">
+    <div class="wrap">
+      <p class="eyebrow fade">Find Your Page</p>
+      <h2 class="fade">目的に合わせて、ご覧ください。</h2>
+      <p class="text fade">個人のお客様・法人のお客様・提携企業様など、目的に合わせたページをご用意しています。</p>
+    </div>
+  </div>
+  <section class="entries" aria-label="目的から探す">
     <a class="entry" href="./personal/">
       <img loading="lazy" decoding="async" width="1536" height="1024" src="./images/service-insurance.jpg?v=64ef13b0" alt="" onerror="this.remove()">
       <span class="entry-body fade">
@@ -255,6 +263,6 @@
   <a class="t" href="tel:0528462135"><svg><use href="#i-tel"/></svg>電話する</a>
 </div>
 
-<script src="./assets/main.js?v=47ec6478"></script>
+<script src="./assets/main.js?v=00778dcd"></script>
 </body>
 </html>
