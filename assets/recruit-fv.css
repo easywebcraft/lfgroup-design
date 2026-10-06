@@ -221,3 +221,7 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 .rf-top .rc-fv-copy { text-shadow: 0 2px 14px rgba(8, 18, 32, .55); }
 @media (max-width: 1023px) { .rf-top .rf-media::after { background: linear-gradient(180deg, rgba(8, 18, 32, .1) 0%%, rgba(8, 18, 32, .25) 40%%, rgba(8, 18, 32, .65) 100%%); } }
 .rf-top .rc-fv-copy .btn { text-shadow: none; }
+/* /top-a2/：見出しの「未来」とボタンの文字を白に（2026-10-07）。ボタンの地は紺にして白文字を読みやすく */
+.rf-top .rv-title em { color: #fff; }
+.rf-top .btn-primary { background: var(--navy); color: #fff; border: 1px solid rgba(255, 255, 255, .35); }
+.rf-top .btn-primary:hover { background: #fff; color: var(--navy); }
