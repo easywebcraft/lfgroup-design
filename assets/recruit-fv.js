@@ -28,7 +28,11 @@
     sec.style.setProperty('--stay', STAY / 1000 + 's');
     var n = 0;
     var sweep = sec.querySelector('.rv-sweep');
+    // /top-a2/：季節が変わるたびに、「CHANGE YOUR FUTURE」の輪郭線をなぞるように描き直す
+    var drawSvg = sec.querySelector('.rv-draw svg');
+    var redraw = function () { if (!drawSvg) return; drawSvg.classList.remove('is-draw'); void drawSvg.getBoundingClientRect(); drawSvg.classList.add('is-draw'); };
     var show = function (i) {
+      redraw();
       sec.setAttribute('data-season', i);  // /top-a2/：今の季節（0春 1夏 2秋 3冬）。秋→冬の雪の演出に使う
       step(imgs, i);
       if (sweep && !sec.classList.contains('rf-top')) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }  // A2：金の光の帯（切り替えのたびに。/top-a2/ では外した 2026-10-07）
@@ -41,7 +45,7 @@
     // 4枚とも先に読み込み・描画の準備（decode）を済ませてから動かす（初めて出す写真で引っかからないように）
     Promise.all(imgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : null; })).then(function () {
       // ロゴの演出のあとは、最初の写真がもう見えているので現れ直させない（春がぼやけ直して見えるため）
-      if (!window.LF_LOADER_RUN) { imgs[0].classList.remove('is-on'); show(0); }
+      if (!window.LF_LOADER_RUN) { imgs[0].classList.remove('is-on'); show(0); } else redraw();
       // 季節ごとに見せる時間を変えられる（data-stays="春,夏,秋,冬" ミリ秒。冬は雪の演出のあとに現れるので長め）
       var stays = (sec.getAttribute('data-stays') || '').split(',').map(Number);
       var next = function () {

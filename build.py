@@ -1073,7 +1073,7 @@ def write_top_a2(top):
     imgs = ''.join(f'<img class="{"is-on" if n == 0 else ""}" src="/images/{f}" alt="" data-eager onerror="this.remove()">' for n, (_, _, _, f) in enumerate(times))
     sec = f'''<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000" id="top">
     <div class="rf-media">{imgs}</div>
-    <p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>
+    <p class="rv-big rv-draw" aria-hidden="true"><svg viewBox="0 0 640 345"><text x="640" y="110">CHANGE</text><text x="640" y="225">YOUR</text><text x="640" y="340">FUTURE</text></svg></p>
     <span class="rv-sweep" aria-hidden="true"></span>
     <div class="wrap rc-fv-copy">
       <p class="eyebrow">Insurance &amp; Lifeline</p>
