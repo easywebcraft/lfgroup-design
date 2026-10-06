@@ -1,0 +1,100 @@
+/* ===== 採用情報のFVの試作（/recruitment-a/・-b/・-c/。2026-10-06）=====
+   人を写さずに「ここで働く1日・仕事・未来」を見せる3案。build.py の write_recruit_trials()。
+   動きを減らす設定の人には、最初の1枚を止めて見せる（recruit-fv.js が html.rf-go を付けない） */
+
+.rf { position: relative; overflow: hidden; }
+.rf .rc-fv-copy { position: relative; z-index: 2; width: 100%; }
+.rf .rc-fv-copy > * { max-width: 620px; }
+.rf .crumb { margin-bottom: 36px; }
+.rf .rc-status { margin-top: 32px; }
+.rf .rc-photo-todo { position: absolute; right: 16px; top: calc(var(--header-h) + 16px); z-index: 4; padding: 2px 10px; border-radius: 2px;
+  background: #C0392B; font-size: 11px; letter-spacing: .08em; color: #fff; }
+
+/* 写真の上に白い文字を置く案（A・C）の共通 */
+.rf-a, .rf-c .rf-sticky { display: flex; align-items: center; min-height: 100vh; min-height: 100svh; padding: calc(var(--header-h) + 40px) 0 190px; color: #fff; }
+.rf-media { position: absolute; inset: 0; z-index: 0; background: var(--navy); }
+.rf-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+.rf-media img.is-on { opacity: 1; }
+.rf-a .rf-media::after, .rf-c .rf-media::after { content: ""; position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(90deg, rgba(20, 38, 60, .72) 0%, rgba(20, 38, 60, .38) 45%, rgba(20, 38, 60, .05) 80%); }
+.rf-a .crumb, .rf-a .crumb a, .rf-c .crumb, .rf-c .crumb a { color: rgba(255, 255, 255, .8); }
+.rf-a .eyebrow, .rf-c .eyebrow { color: #fff; }
+.rf-a .rc-fv-title, .rf-c .rc-fv-title { color: #fff; text-shadow: 0 2px 18px rgba(10, 25, 45, .35); }
+.rf-a .rc-fv-lead, .rf-c .rc-fv-lead { color: rgba(255, 255, 255, .92); }
+.rf-a .rc-status, .rf-c .rc-status { background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .35); }
+.rf-a .simple-cta-tel, .rf-c .simple-cta-tel { color: #fff; }
+.rf-a .btn-primary, .rf-c .btn-primary { background: #fff; color: var(--navy); }
+
+/* ===== 案A：オフィスの1日 ===== */
+/* 仮の写真は1枚なので、色味で朝・昼・夕方・夜を作る（本番は生成AIで光だけ変えた4枚にする） */
+.rf-a .rf-media img.is-morning { filter: brightness(1.04) saturate(.85) hue-rotate(-8deg); }
+.rf-a .rf-media img.is-noon { filter: brightness(1.08) saturate(1.05); }
+.rf-a .rf-media img.is-evening { filter: sepia(.45) saturate(1.5) hue-rotate(-12deg) brightness(.92); }
+.rf-a .rf-media img.is-night { filter: brightness(.42) saturate(.7) hue-rotate(10deg); }
+/* 切り替え：次の写真が斜めのマスクで開く */
+.rf-go .rf-a .rf-media img { opacity: 1; clip-path: polygon(0 0, 0 0, -30% 100%, -30% 100%); z-index: 0; scale: 1.08; }
+.rf-go .rf-a .rf-media img.is-prev { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); z-index: 1; }
+.rf-go .rf-a .rf-media img.is-on { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); z-index: 1; scale: 1;
+  transition: clip-path 1.4s cubic-bezier(.77, 0, .18, 1), scale 5s linear; }
+.rf-go .rf-a .rf-media img.is-on:not(.is-first) { z-index: 1; }
+.rf-go .rf-a .rf-media img.is-prev { z-index: 0; }
+/* 時刻（左下）と進み具合の線 */
+.rf-clock { position: absolute; left: 0; right: 0; bottom: 72px; z-index: 3; }
+.rf-time { position: absolute; bottom: 22px; display: flex; align-items: baseline; gap: 14px; opacity: 0; translate: 0 14px;
+  transition: opacity .6s ease, translate .8s cubic-bezier(.19, 1, .22, 1); }
+.rf-time.is-on { opacity: 1; translate: 0 0; transition-delay: .5s; }
+.rf-time b { font-family: var(--en); font-size: clamp(40px, 5vw, 64px); font-weight: 500; line-height: 1; letter-spacing: .02em; }
+.rf-time span { font-family: var(--en); font-size: 12px; letter-spacing: .24em; color: var(--gold); }
+.rf-time small { font-size: 13px; letter-spacing: .1em; }
+.rf-bar { position: absolute; bottom: 0; display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.rf-bar li { width: 48px; height: 2px; background: rgba(255, 255, 255, .3); overflow: hidden; }
+.rf-bar li::after { content: ""; display: block; height: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
+.rf-bar li.is-done::after { transform: none; }
+.rf-bar li.is-on::after { animation: rf-bar var(--stay, 4s) linear forwards; }
+@keyframes rf-bar { to { transform: none; } }
+
+/* ===== 案B：仕事の道具 ===== */
+.rf-b { display: flex; align-items: center; min-height: min(92vh, 820px); padding: calc(var(--header-h) + 40px) 0 160px; background: var(--paper); }
+.rf-panels { position: absolute; top: 0; right: 0; bottom: 120px; width: 58%; display: flex; gap: 0; }
+.rf-panel { position: relative; flex: 1; margin-left: -6%; overflow: hidden; clip-path: polygon(22% 0, 100% 0, 78% 100%, 0 100%); background: var(--mist); }
+.rf-panel:first-child { margin-left: 0; }
+.rf-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+.rf-panel img.is-on { opacity: 1; }
+.rf-go .rf-panel img { opacity: 1; clip-path: inset(100% 0 0 0); scale: 1.15; }
+.rf-go .rf-panel img.is-prev { clip-path: inset(0); z-index: 0; }
+.rf-go .rf-panel img.is-on { clip-path: inset(0); z-index: 1; scale: 1; transition: clip-path 1.2s cubic-bezier(.77, 0, .18, 1), scale 4s cubic-bezier(.2, .6, .2, 1); }
+/* 下で小さな写真が横へ流れる */
+.rf-strip { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; overflow: hidden; background: var(--navy); }
+.rf-track { display: flex; gap: 8px; width: max-content; height: 100%; padding: 12px 0; }
+.rf-track img { height: 100%; width: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 2px; opacity: .9; }
+.rf-go .rf-track { animation: rf-flow 40s linear infinite; }
+@keyframes rf-flow { to { transform: translateX(-50%); } }
+
+/* ===== 案C：街と道（スクロールで奥へ進む） ===== */
+.rf-c { height: 320vh; height: 320svh; overflow: visible; }  /* 外側で隠すと、中の sticky（画面に留める）が効かない */
+.rf-c .rf-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.rf-go .rf-c .rf-media img { opacity: 0; transition: opacity 1s ease; scale: var(--z, 1); }
+.rf-go .rf-c .rf-media img.is-on { opacity: 1; }
+.rf-words { position: absolute; left: 0; right: 0; bottom: 56px; z-index: 3; }
+.rf-word { position: absolute; bottom: 0; margin: 0; display: flex; align-items: baseline; gap: 16px; font-family: var(--serif); font-size: clamp(26px, 3vw, 40px);
+  letter-spacing: .1em; opacity: 0; translate: 0 24px; transition: opacity .7s ease, translate .9s cubic-bezier(.19, 1, .22, 1); }
+.rf-word small { font-family: var(--en); font-size: 12px; letter-spacing: .2em; color: var(--gold); }
+.rf-word.is-on { opacity: 1; translate: 0 0; }
+.rf-c .rf-scrollhint { position: absolute; right: var(--gutter); bottom: 56px; z-index: 3; font-family: var(--en); font-size: 11px; letter-spacing: .24em; color: #fff; }
+
+/* スマホ */
+@media (max-width: 1023px) {
+  .rf .rc-fv-copy > * { max-width: none; }
+  .rf-a, .rf-c .rf-sticky { align-items: flex-end; padding-bottom: 150px; }
+  .rf-a .rf-media::after, .rf-c .rf-media::after { background: linear-gradient(180deg, rgba(20, 38, 60, .15) 0%, rgba(20, 38, 60, .45) 40%, rgba(20, 38, 60, .82) 100%); }
+  .rf-a .rc-fv-lead br, .rf-c .rc-fv-lead br { display: none; }
+  .rf-b { display: block; padding: var(--header-h) 0 150px; }
+  .rf-panels { position: relative; width: 100%; height: 44vh; bottom: auto; }
+  .rf-b .crumb { margin-top: 24px; }
+  .rf-strip { height: 96px; }
+  .rf-c .rf-sticky .crumb { display: none; }
+}
+@media (max-width: 767px) {
+  .rf-time b { font-size: 36px; }
+  .rf-bar li { width: 32px; }
+}

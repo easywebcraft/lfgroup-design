@@ -992,6 +992,59 @@ def release_files():
     write('robots.txt', robots)
 
 
+def write_recruit_trials():
+    """採用情報のFVの試作（2026-10-06「人を写さなくても成立する採用ページ」）。/recruitment-a/・-b/・-c/ に、
+    今の採用情報ページの FV だけを差し替えて書き出す。写真は生成AIの素材ができるまで、今ある人物なしの写真で仮。
+    見た目と動きは src/recruit-fv.css・recruit-fv.js。本番（--release）には出さない。
+      A オフィスの1日：同じオフィスの写真が朝→昼→夕方→夜と斜めに切り替わり、時刻が変わる
+      B 仕事の道具：斜めのパネル3枚の写真が時間差で切り替わり、下に小さな写真が横へ流れる
+      C 街と道：スクロールすると、街→並木道→玄関へ続く道→空へ「奥へ進む」ように切り替わり、言葉が変わる"""
+    css, js = (SRC / 'recruit-fv.css').read_text(), (SRC / 'recruit-fv.js').read_text()
+    v = hashlib.sha1((css + js).encode()).hexdigest()[:8]
+    write('assets/recruit-fv.css', css)
+    write('assets/recruit-fv.js', js)
+    base = layout('採用情報', page_recruitment(), 'recruitment')
+    i = base.index('<section class="rc-fv">')
+    j = base.index('</section>', i) + len('</section>')
+    old = base[i:j]
+    k = old.index('<div class="wrap rc-fv-copy">')
+    copy = old[k:old.rindex('</div>') + len('</div>')]
+    img = lambda f, cls='': f'<img class="{cls}" src="/images/{f}" alt="" data-eager onerror="this.remove()">'
+    tag = '<span class="rc-photo-todo">写真は仮（生成AIの素材に差し替え）</span>'
+    times = [('10:00', 'START', '一日のはじまり', 'is-morning'), ('13:00', 'MEETING', 'お客様とのご相談', 'is-noon'),
+             ('16:00', 'PROPOSAL', 'ご提案の準備', 'is-evening'), ('18:00', 'FINISH', '一日のおわり', 'is-night')]
+    fv = {
+        'a': f'''<section class="rf rf-a" data-fx="a">
+    <div class="rf-media">{''.join(img('about-hero.jpg', c + (' is-on' if n == 0 else '')) for n, (_, _, _, c) in enumerate(times))}</div>
+    {copy}
+    <div class="wrap rf-clock" aria-hidden="true">{''.join(f'<p class="rf-time{" is-on" if n == 0 else ""}"><b>{t}</b><span>{en}</span><small>{ja}</small></p>' for n, (t, en, ja, _) in enumerate(times))}
+      <ol class="rf-bar">{'<li></li>' * len(times)}</ol></div>
+    {tag}
+  </section>''',
+        'b': f'''<section class="rf rf-b" data-fx="b">
+    <div class="rf-panels">{''.join(f'<div class="rf-panel">{"".join(img(f, "is-on" if m == 0 else "") for m, f in enumerate(fs))}</div>' for fs in (
+            ('about-hero.jpg', 'scene-dining.jpg', 'mission-2.jpg'), ('scene-dining.jpg', 'mission-2.jpg', 'about-hero.jpg'), ('mission-2.jpg', 'scene-shop.jpg', 'scene-dining.jpg')))}</div>
+    {copy}
+    <div class="rf-strip" aria-hidden="true"><div class="rf-track">{''.join(img(f) for f in ('about-hero.jpg', 'scene-dining.jpg', 'mission-2.jpg', 'scene-shop.jpg', 'cta-final.jpg', 'scene-home.jpg') * 2)}</div></div>
+    {tag}
+  </section>''',
+        'c': f'''<section class="rf rf-c" data-fx="c">
+    <div class="rf-sticky">
+      <div class="rf-media">{''.join(img(f, 'is-on' if n == 0 else '') for n, f in enumerate(('cta-final.jpg', 'scene-shop.jpg', 'scene-home.jpg', 'cta.jpg')))}</div>
+      {copy}
+      <div class="wrap rf-words" aria-hidden="true">{''.join(f'<p class="rf-word{" is-on" if n == 0 else ""}"><small>0{n + 1}</small>{w}</p>' for n, w in enumerate(('名古屋・東区から', '一歩ずつ', '自分の未来へ', 'ここから、はじまる')))}</div>
+      {tag}
+    </div>
+  </section>''',
+    }
+    for key, sec in fv.items():
+        html_ = (base[:i] + sec + base[j:])
+        html_ = (html_.replace('</head>', f'<link rel="stylesheet" href="/assets/recruit-fv.css?v={v}">\n</head>', 1)
+                      .replace('</body>', f'<script src="/assets/recruit-fv.js?v={v}"></script>\n</body>', 1)
+                      .replace('リニューアルの試作です', f'リニューアルの試作です・採用情報のFV 案{key.upper()}', 1))
+        write(f'recruitment-{key}/index.html', html_)
+
+
 def stylish_top(top):
     """トップページに動き（src/stylish.css・stylish.js ＋なめらかなスクロールの lenis.min.js）を足す。
     2026-10-06「もっとスタイリッシュで動きのあるホームページ」から /stylish/ で試作し、同日、本流のトップに反映した。
@@ -1093,6 +1146,7 @@ def main():
         write('motion/index.html', redirect('../'))
         # スタイリッシュ版の試作（/stylish/）は本流のトップに反映した（2026-10-06）。前のURLはトップへ移す
         write('stylish/index.html', redirect('../'))
+        write_recruit_trials()
         write('season/index.html', SEASON_REDIRECT)
         write('life/index.html', SEASON_REDIRECT)
         write('scene/index.html', season_photos(top_base, SCENE_PHOTOS, white_wrap=False)
