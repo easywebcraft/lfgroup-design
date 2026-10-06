@@ -1374,6 +1374,7 @@
     .entries-head h2 { font-size: 21px; letter-spacing: .06em; }
     .entries-head .text { font-size: 13.5px; text-align: left; }
   }
+  .entries-head h2 span { display: inline-block; }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 

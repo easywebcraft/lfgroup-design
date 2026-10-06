@@ -549,3 +549,4 @@
     .entries-head h2 { font-size: 21px; letter-spacing: .06em; }
     .entries-head .text { font-size: 13.5px; text-align: left; }
   }
+  .entries-head h2 span { display: inline-block; }
