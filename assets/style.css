@@ -1257,6 +1257,41 @@
     .entry-text { font-size: 14px; }
   }
 
+  /* 見る人ごとのページ（個人のお客様・法人のお客様・提携企業様・会社概要。2026-10-06） */
+  /* 強み：番号・英字・見出し・本文のカード。列の数は --cols */
+  .str-list { display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr); gap: 24px; margin-top: 48px; }
+  .str-item { padding: 40px 36px; background: #fff; border-radius: var(--radius); }
+  .str-num { display: flex; align-items: baseline; gap: 14px; font-family: var(--en); font-size: 30px; font-weight: 500; color: var(--accent); line-height: 1; }
+  .str-num span { font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
+  .str-item h3 { margin: 24px 0 16px; font-family: var(--serif); font-weight: 500; font-size: clamp(20px, 1.9vw, 24px); line-height: 1.6; letter-spacing: .06em; color: var(--navy); }
+  @media (max-width: 1023px) { .str-list { grid-template-columns: 1fr; } .str-item { padding: 32px 24px; } }
+  /* サービスの中の小見出し（保険・ファイナンシャルプランニングなど） */
+  .sub-title { margin-top: 64px; font-family: var(--serif); font-weight: 500; font-size: clamp(22px, 2.2vw, 28px); letter-spacing: .08em; color: var(--navy); }
+  .sub-title span { display: inline-block; }
+  .svc-fp { margin-top: 72px; padding-top: 56px; border-top: 1px solid var(--line); max-width: 760px; }
+  /* 会社概要：企業理念 */
+  .co-philosophy-main { margin-top: 32px; font-family: var(--serif); font-weight: 500; font-size: clamp(26px, 3vw, 40px); line-height: 1.7; letter-spacing: .1em; color: var(--navy); }
+  .co-philosophy-main span { display: inline-block; }
+  .co-philosophy-sub { margin-top: 40px; max-width: 680px; }
+  .co-philosophy-head { font-family: var(--serif); font-size: 20px; letter-spacing: .08em; color: var(--navy); }
+  .co-philosophy-sub .text { margin-top: 16px; }
+  /* 会社概要：代表挨拶（原稿をいただくまでは仮の枠） */
+  .co-message { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start; }
+  @media (max-width: 1023px) { .co-message { grid-template-columns: 1fr; gap: 24px; } }
+  .note-todo { padding: 24px 28px; border: 1px dashed #D9A35B; border-radius: 8px; background: #FFF8EE; color: #8A5A1B; font-size: 14px; line-height: 1.9; }
+  .co-message-name { margin-top: 24px; text-align: right; font-family: var(--serif); font-size: 16px; letter-spacing: .1em; color: var(--navy); }
+  /* メニューが6つになったので（2026-10-06）、1行に収まらない幅（1180px未満）はスマホと同じハンバーガーメニューにし、
+     1180〜1365px は間隔と文字を少し詰める。文字が途中で折り返さないようにする */
+  .gnav a, .header .btn { white-space: nowrap; }
+  @media (max-width: 1179px) {
+    .gnav, .header .btn { display: none; }
+    .menu-btn { display: block; }
+  }
+  @media (min-width: 1180px) and (max-width: 1365px) {
+    .gnav ul { gap: 20px; }
+    .gnav a { font-size: 12.5px; letter-spacing: .05em; }
+  }
+
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 

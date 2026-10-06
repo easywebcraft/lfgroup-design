@@ -36,11 +36,13 @@ POSTAL = '461-0004'  # 今のサイトに記載がなく、2026-10-05 にクラ�
 COMPANY = 'LFグループ株式会社'
 
 # メインメニュー（ヘッダー・ドロワー・フッターで共通）
+# 2026-10-06 お客さまの指定で、見る人ごとの構成にした（それまでは 私たちについて・事業内容・サービス・会社情報・採用情報）
 NAV = [
     ('about', '私たちについて', '/about/'),
-    ('business', '事業内容', '/business/'),
-    ('service', 'サービス', '/service/'),        # メニューでは短く。ページの見出しは「取り扱いサービス」
-    ('company', '会社情報', '/company/'),        # 同上「会社概要」
+    ('personal', '個人のお客様', '/personal/'),
+    ('corporate', '法人のお客様', '/corporate/'),
+    ('partner', '提携企業様', '/partner/'),
+    ('company', '会社概要', '/company/'),
     ('recruitment', '採用情報', '/recruitment/'),
 ]
 POLICIES = [
@@ -371,75 +373,6 @@ def page_about():
 ''' + company_brief() + final_cta()
 
 
-BUSINESS = [
-    ('insuranceagency', '保険代理店事業', 'Insurance Agency', [
-        'LFグループ株式会社では、大手保険会社の代理店として、個人のお客様・法人のお客様の各種保険を取り扱っています。',
-        '自動車・バイク・病気・ケガ・旅行・趣味・こども・生命保険等、お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。',
-    ], ''),
-    ('financialplanning', 'ファイナンシャルプランニング事業', 'Financial Planning', [
-        'LFグループ株式会社では、ファイナンシャルプランニング技能士（国家資格）を保有するスタッフが多数在籍しています。',
-        'お金の専門家であるFPがライフプラン・家計・保険・年金・住宅資金・教育資金・税金・資産運用・介護・医療費・相続・贈与などのお悩みに対して、適切なアドバイスを行い、お客様の人生がより良くなるようサポートさせて頂きます。',
-    ], ''),
-    ('alliance', 'アライアンス事業', 'Alliance', [
-        '私たちLFグループ株式会社は、マンションやアパートのご入居者様へガスや電気などのライフライン、インターネット回線、ウォーターサーバーなどのお手続きやご案内を行います。',
-        '経験豊富なオペレーターによる丁寧なご案内に加え、選りすぐりの商材を取り揃えており、提携いただく企業様とエンドユーザー様に安心確実なサポートをご提供いたします。',
-    ], ''),
-    ('partner', 'パートナー事業', 'Partner', [
-        'LFグループ株式会社では、当社が取り扱っている商材やサービスを提携企業様、パートナー様と協力してお客様にご提供しています。',
-        'アライアンス事業で培ったノウハウを活かして、お客様に本当に必要なものを丁寧にご提案するとともに、厳格なチェック体制と管理の下でミスなくきめ細やかな対応を行うことができます。',
-        '提携企業様・パートナー様の事業繁栄をお手伝いし、相互の長期的な利益追求・価値創造を目指します。',
-    ], '提携企業様・パートナー様募集中'),
-]
-# 「これは自分向けか」をすぐ判断できるよう、4事業を2つに分けて見せる
-BIZ_GROUPS = [
-    ('customers', '個人・法人のお客様へ', 'For Customers', ('insuranceagency', 'financialplanning')),
-    ('partners', '提携企業様へ', 'For Partners', ('alliance', 'partner')),
-]
-
-
-def page_business():
-    num = {k: i + 1 for i, (k, *_) in enumerate(BUSINESS)}
-    name = {k: n for k, n, *_ in BUSINESS}
-    # 冒頭の一覧：個人向け・法人向けの見出しの下に、番号付きのリンクカード。主力の保険代理店事業だけ軽く強調する
-    index = ''
-    for gid, glabel, _, keys in BIZ_GROUPS:
-        links = ''.join(
-            f'<a class="hero-biz" href="#{k}"><b>{num[k]:02d}</b><span class="hb-name">{name[k]}</span>'
-            f'{"<small>Main</small>" if k == "insuranceagency" else ""}{ARROW}</a>'
-            for k in keys)
-        index += f'<div class="hero-biz-group"><p class="hbg-label">{glabel}</p><div class="hero-bizs">{links}</div></div>'
-    groups = []
-    for gid, glabel, gen, keys in BIZ_GROUPS:
-        blocks = []
-        for key, bname, en, paras, note in BUSINESS:
-            if key not in keys:
-                continue
-            texts = ''.join(f'<p class="text">{p}</p>' for p in paras)
-            note_html = f'<p class="biz-note">{note}</p>' if note else ''
-            if key == 'insuranceagency':
-                note_html = f'<p style="margin-top:24px"><a class="link-arrow" href="/insurance/">取り扱い保険・事故対応について見る{ARROW}</a></p>'
-            blocks.append(f'''      <article class="biz-block fade" id="{key}">
-        <div class="biz-visual"><span class="num">{num[key]:02d}</span>{ICONS[key]}</div>
-        <div>
-          <h2>{bname.replace('ファイナンシャルプランニング', '<span>ファイナンシャル</span><span>プランニング</span>')}</h2>
-          <span class="card-en">{en}</span>
-          {'<p class="badge"><span>国家資格</span>FP技能士在籍</p>' if key == 'financialplanning' else ''}
-          <div style="margin-top:28px">{texts}</div>
-          {note_html}
-        </div>
-      </article>''')
-        groups.append(f'''  <section class="section biz-section{" bg-blue" if gid == "corporate" else ""}" id="{gid}">
-    <div class="wrap">
-      <div class="biz-group-head fade"><p class="eyebrow">{gen}</p><p class="biz-group-title">{glabel}</p></div>
-{chr(10).join(blocks)}
-    </div>
-  </section>''')
-    hero = page_hero('Business', '事業内容', [('事業内容', '/business/')], photo='hero.jpg', pos='70% 42%', zoom=1.12,
-                     lead='保険、ファイナンシャルプランニング、固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。',
-                     extra=f'        <nav class="hero-biz-groups fade" aria-label="事業の一覧">{index}</nav>')
-    return hero + '\n' + '\n\n'.join(groups) + '\n\n' + final_cta()
-
-
 def tags(items):
     return '<ul class="svc-items">' + ''.join(f'<li>{t}</li>' for t in items) + '</ul>'
 
@@ -448,59 +381,39 @@ LIFE_INS = ['医療保険', 'がん保険', '終身保険', '変額保険', '収
 NONLIFE_INS = ['自動車保険', '火災保険', '損害保険', '賠償責任保険', '労災保険']
 
 
-def page_insurance():
-    """保険の詳細ページ。今のサイトの「保険代理店事業」「取り扱いサービス」「お客様本位の業務運営方針」
-    「勧誘方針」「ファイナンシャルプランニング事業」の文言だけで組む。"""
-    tiles = lambda items: ''.join(f'<li>{t}</li>' for t in items) + '<li class="etc">ほか</li>'
-    sol = [
-        '金融商品の販売等に際して、各種法令等を遵守し、適正な販売等に努めます。',
-        'お客さまの金融商品に関するお客さまの知識・経験、契約目的、財産の状況等を総合的に勘案し、お客さまの意向と実情に応じた金融商品の販売等に努めます。',
-        'お客さまへの商品説明等については、販売・勧誘形態に応じて、お客さま本位の方法等の創意工夫に努めます。',
-        'お客さまのご意見等の収集に努め現状を把握し、また、お客さまの満足度を高めるよう努めます。',
-    ]
-    return page_hero('Insurance', '保険', [('取り扱いサービス', '/service/'), ('保険', '/insurance/')],
-                     '大手保険会社の代理店として、個人のお客様・法人のお客様の各種保険を取り扱っています。',
-                     photo='service-insurance.jpg', pos='45% 50%', chips=('個人保険', '法人保険', '生命保険', '損害保険')) + f'''
-  <section class="section">
-    <div class="wrap ins-intro">
-      <div>
-        <p class="eyebrow fade">Insurance Agency</p>
-        <h2 class="fade">保険代理店事業</h2>
-        <p class="text fade" style="margin-top:28px">LFグループ株式会社では、大手保険会社の代理店として、個人のお客様・法人のお客様の各種保険を取り扱っています。</p>
-        <p class="text fade">自動車・バイク・病気・ケガ・旅行・趣味・こども・生命保険等、お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。</p>
-      </div>
-      <aside class="ins-partners fade" aria-label="主力会社">
-        <p class="ins-partners-head">主力会社</p>
-        <ul>
-          <li><span class="kind">生命保険</span>SOMPOひまわり生命</li>
-          <li><span class="kind">損害保険</span>日新火災海上保険</li>
-        </ul>
-      </aside>
-    </div>
-  </section>
+LIFE_SERVICES = [
+    ('ライフライン', 'Lifeline', 'service-lifeline.jpg', 'IMAGE：暮らしのあかり', ['電気', 'ガス', '水道']),
+    ('インターネット', 'Internet', 'service-internet.jpg', 'IMAGE：住まいとネット', ['フレッツ光', '光コラボレーション', 'ダークファイバー系光回線', '電力系光回線']),
+    ('ウォーターサーバー', 'Water Server', 'service-water.jpg', 'IMAGE：水・キッチン', ['浄水器型ウォーターサーバー']),
+]
 
-  <!-- 個人保険・法人保険は別の事業として扱う（2026-10-04 クライアント確認）。トップの「目的から探す」からここへ来る -->
-  <section class="section ins-for">
-    <div class="wrap ins-for-grid">
-      <article class="ins-for-item fade" id="personal">
-        <p class="eyebrow">Personal</p>
-        <h2>個人保険のお客様</h2>
-        <p class="text">生命保険・損害保険を、お客様のライフプランに合わせてご提案します。家計やライフプランのご相談は、ファイナンシャルプランニング技能士（国家資格）がお受けします。</p>
-        <p><a class="link-arrow" href="/contact/">保険について相談する{ARROW}</a></p>
-      </article>
-      <article class="ins-for-item fade" id="corporate">
-        <p class="eyebrow">Corporate</p>
-        <h2>法人保険のお客様</h2>
-        <p class="text">法人のお客様の保険も取り扱っています。保険の見直しなど、お気軽にご相談ください。</p>
-        <p><a class="link-arrow" href="/contact/">保険について相談する{ARROW}</a></p>
-      </article>
-    </div>
-  </section>
 
-  <section class="section bg-blue">
+# ───── 見る人ごとのページ（2026-10-06）：個人のお客様・法人のお客様・提携企業様 ─────
+# 文言は今のサイト（保険代理店事業・ファイナンシャルプランニング事業・アライアンス事業・パートナー事業・
+# 取り扱いサービス・お客様本位の業務運営方針・勧誘方針）にあるものだけで組む
+
+def strengths(items, cols=3):
+    """強みのカード。items は (英字, 見出し, 本文)。見出しは <br> で改行位置を決められる"""
+    cards = ''.join(f'''
+        <article class="str-item fade">
+          <p class="str-num">{i + 1:02d}<span>{en}</span></p>
+          <h3>{title}</h3>
+          <p class="text">{text}</p>
+        </article>''' for i, (en, title, text) in enumerate(items))
+    return f'''  <section class="section bg-blue" id="strengths">
     <div class="wrap">
-      <p class="eyebrow fade">Lineup</p>
-      <h2 class="fade">取り扱い保険</h2>
+      <p class="eyebrow fade">Strengths</p>
+      <h2 class="fade">強み</h2>
+      <div class="str-list" style="--cols:{cols}">{cards}
+      </div>
+    </div>
+  </section>
+'''
+
+
+def ins_lineup(title='取り扱い保険'):
+    tiles = lambda items: ''.join(f'<li>{t}</li>' for t in items) + '<li class="etc">ほか</li>'
+    return f'''      <h3 class="sub-title fade">{title}</h3>
       <div class="ins-lineup">
         <article class="ins-cat fade">
           <h3>生命保険<span>Life Insurance</span></h3>
@@ -510,11 +423,18 @@ def page_insurance():
           <h3>損害保険<span>Non-Life Insurance</span></h3>
           <ul class="ins-tiles">{tiles(NONLIFE_INS)}</ul>
         </article>
-      </div>
-    </div>
-  </section>
+      </div>'''
 
-  <section class="section">
+
+INS_PARTNERS = '''<aside class="ins-partners fade" aria-label="主力会社">
+        <p class="ins-partners-head">主力会社</p>
+        <ul>
+          <li><span class="kind">生命保険</span>SOMPOひまわり生命</li>
+          <li><span class="kind">損害保険</span>日新火災海上保険</li>
+        </ul>
+      </aside>'''
+
+INS_SUPPORT = f'''  <section class="section">
     <div class="wrap ins-support">
       <div>
         <p class="eyebrow fade">Support</p>
@@ -527,6 +447,76 @@ def page_insurance():
           <li>休日・夜間の事故対応。</li>
         </ul>
         <p style="margin-top:24px"><a class="link-arrow" href="/operation/">お客様本位の業務運営方針を見る{ARROW}</a></p>
+      </div>
+    </div>
+  </section>
+'''
+
+
+def life_cards():
+    """ライフライン・インターネット・ウォーターサーバーのカード（取り扱いサービスのページと同じ形）"""
+    return ''.join(f'''
+        <article class="svc fade">
+          <div class="photo"><span class="ph">{ph}</span><img src="/images/{img}" alt="" onerror="this.remove()"></div>
+          <div class="svc-body">
+            <h3>{name}<small>{en}</small></h3>
+            {tags(items)}
+          </div>
+        </article>''' for (name, en, img, ph, items) in LIFE_SERVICES)
+
+
+def page_nav(items):
+    """冒頭に置くページ内の目次（強み・サービスなどへ移動）"""
+    links = ''.join(f'<a class="svc-nav-item" href="#{k}"><b>{i + 1:02d}</b><span class="sn-name">{n}</span>{ARROW}</a>'
+                    for i, (k, n) in enumerate(items))
+    return f'        <nav class="svc-nav fade" aria-label="このページの内容">{links}</nav>'
+
+
+def page_personal():
+    sol = [
+        '金融商品の販売等に際して、各種法令等を遵守し、適正な販売等に努めます。',
+        'お客さまの金融商品に関するお客さまの知識・経験、契約目的、財産の状況等を総合的に勘案し、お客さまの意向と実情に応じた金融商品の販売等に努めます。',
+        'お客さまへの商品説明等については、販売・勧誘形態に応じて、お客さま本位の方法等の創意工夫に努めます。',
+        'お客さまのご意見等の収集に努め現状を把握し、また、お客さまの満足度を高めるよう努めます。',
+    ]
+    hero = page_hero('Personal', '個人のお客様', [('個人のお客様', '/personal/')],
+                     lead='保険、ファイナンシャルプランニング、固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。',
+                     photo='service-insurance.jpg', pos='45% 50%',
+                     extra=page_nav([('strengths', '強み'), ('service', 'サービス'), ('alliance-service', 'アライアンスサービス')]))
+    return hero + strengths([
+        ('Professional', 'お金の専門家に<br>相談できる。', 'ファイナンシャルプランニング技能士（国家資格）を保有するスタッフが多数在籍しています。'),
+        ('Life Support', '保険だけでなく、<br>暮らし全体から考える。', '家計・保険・年金・住宅資金・教育資金・資産運用など、暮らしにかかるお金のお悩みに幅広く対応します。'),
+        ('One Stop', '保険から<br>ライフラインまで。', '保険に加え、電気・ガスなどのライフライン、インターネット回線、ウォーターサーバーのお手続きやご案内も行っています。'),
+    ]) + f'''
+  <section class="section" id="service">
+    <div class="wrap">
+      <p class="eyebrow fade">Service</p>
+      <h2 class="fade">サービス</h2>
+      <div class="ins-intro" style="margin-top:48px">
+        <div>
+          <h3 class="sub-title fade" style="margin-top:0">保険</h3>
+          <p class="text fade" style="margin-top:20px">LFグループ株式会社では、大手保険会社の代理店として、個人のお客様の各種保険を取り扱っています。</p>
+          <p class="text fade">自動車・バイク・病気・ケガ・旅行・趣味・こども・生命保険等、お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。</p>
+        </div>
+      {INS_PARTNERS}
+      </div>
+{ins_lineup()}
+      <div class="svc-fp fade" id="financialplanning">
+        <h3 class="sub-title" style="margin-top:0"><span>ファイナンシャル</span><span>プランニング</span></h3>
+        <p class="badge"><span>国家資格</span>FP技能士在籍</p>
+        <p class="text" style="margin-top:20px">LFグループ株式会社では、ファイナンシャルプランニング技能士（国家資格）を保有するスタッフが多数在籍しています。</p>
+        <p class="text">お金の専門家であるFPがライフプラン・家計・保険・年金・住宅資金・教育資金・税金・資産運用・介護・医療費・相続・贈与などのお悩みに対して、適切なアドバイスを行い、お客様の人生がより良くなるようサポートさせて頂きます。</p>
+      </div>
+    </div>
+  </section>
+
+''' + INS_SUPPORT + f'''
+  <section class="section bg-blue svc-life" id="alliance-service">
+    <div class="wrap">
+      <p class="eyebrow fade">Alliance Service</p>
+      <h2 class="fade">アライアンスサービス</h2>
+      <p class="text fade" style="margin-top:16px">マンションやアパートのご入居者様へ、ガスや電気などのライフライン、インターネット回線、ウォーターサーバーなどのお手続きやご案内を行います。<br class="pc">経験豊富なオペレーターが、丁寧にご案内します。</p>
+      <div class="svc-grid svc-sub-grid">{life_cards()}
       </div>
     </div>
   </section>
@@ -544,81 +534,78 @@ def page_insurance():
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap">
-      <a class="ins-related fade" href="/business/#financialplanning">
-        <div>
-          <p class="eyebrow">Related</p>
-          <p class="ins-related-title"><span>ファイナンシャル</span><span>プランニング事業</span></p>
-          <p class="badge"><span>国家資格</span>FP技能士在籍</p>
-          <p class="text" style="margin-top:16px">お金の専門家であるFPがライフプラン・家計・保険・年金・住宅資金・教育資金・税金・資産運用・介護・医療費・相続・贈与などのお悩みに対して、適切なアドバイスを行い、お客様の人生がより良くなるようサポートさせて頂きます。</p>
-        </div>
-        <span class="link-arrow">詳しく見る{ARROW}</span>
-      </a>
-    </div>
-  </section>
-
 ''' + final_cta()
 
 
-LIFE_SERVICES = [
-    ('ライフライン', 'Lifeline', 'service-lifeline.jpg', 'IMAGE：暮らしのあかり', ['電気', 'ガス', '水道']),
-    ('インターネット', 'Internet', 'service-internet.jpg', 'IMAGE：住まいとネット', ['フレッツ光', '光コラボレーション', 'ダークファイバー系光回線', '電力系光回線']),
-    ('ウォーターサーバー', 'Water Server', 'service-water.jpg', 'IMAGE：水・キッチン', ['浄水器型ウォーターサーバー']),
-]
-
-
-def page_service():
-    rows = [
-        ('保険', 'Insurance', 'service-insurance.jpg', 'IMAGE：家族の安心', f'''
-          <div class="svc-group"><h3>主力会社</h3><p>SOMPOひまわり生命・日新火災海上保険</p></div>
-          <div class="svc-group"><h3>生命保険</h3>{tags(['医療保険', 'がん保険', '終身保険', '変額保険', '収入保障保険', '定期保険', 'こども保険', '学資保険', 'ほか'])}</div>
-          <div class="svc-group"><h3>損害保険</h3>{tags(['自動車保険', '火災保険', '損害保険', '賠償責任保険', '労災保険', 'ほか'])}</div>
-          <p class="svc-group"><a class="link-arrow" href="/insurance/">保険について詳しく見る{ARROW}</a></p>'''),
-    ]
-    ids = ['insurance', 'lifeline', 'internet', 'water']
-    # 主力の保険は写真つきの大きな1段。その下に「暮らしのサービス」として3つをカードで並べる
-    (name, en, img, ph, inner) = rows[0]
-    main = f'''      <article class="svc-row svc-row-main fade" id="svc-insurance">
-        <div class="photo"><span class="ph">{ph}</span><img src="/images/{img}" alt="" onerror="this.remove()"></div>
-        <div>
-          <p class="svc-main-tag">Main Service</p>
-          <h2>{name}</h2>
-          <p class="eyebrow">{en}</p>
-          <p class="text" style="margin-top:20px">大手保険会社の代理店として、お客様のライフプランに合わせた最適な保険を提案します。</p>{inner}
-        </div>
-      </article>'''
-    cards = ''.join(f'''
-        <article class="svc fade" id="svc-{sid}">
-          <div class="photo"><span class="ph">{ph}</span><img src="/images/{img}" alt="" onerror="this.remove()"></div>
-          <div class="svc-body">
-            <h3>{name}<small>{en}</small></h3>
-            {tags(items)}
-          </div>
-        </article>''' for (name, en, img, ph, items), sid in zip(LIFE_SERVICES, ids[1:]))
-    # 4サービスは番号＋名称＋矢印のナビ（各サービスの説明へ移動）。主力の保険だけ軽く強調する
-    nav = ''.join(
-        f'<a class="svc-nav-item{" main" if sid == "insurance" else ""}" href="#svc-{sid}">'
-        f'<b>{i + 1:02d}</b><span class="sn-name">{name}<small>{en}</small></span>'
-        f'{"<em>Main Service</em>" if sid == "insurance" else ""}{ARROW}</a>'
-        for i, ((name, en, *_), sid) in enumerate(zip(rows[:1] + LIFE_SERVICES, ids)))
-    return page_hero('Service', '取り扱いサービス', [('取り扱いサービス', '/service/')],
-                     # 説明は今のサイトの「大手保険会社の代理店として」と取り扱い商材の名前を組み合わせたもの
-                     lead='大手保険会社の代理店としての保険をはじめ、<br class="pc">電気・ガス・水道などのライフライン、インターネット回線、<br class="pc">ウォーターサーバーを取り扱っています。',
-                     photo='service-lifeline.jpg', pos='55% 50%',
-                     extra=f'        <nav class="svc-nav fade" aria-label="取り扱いサービスの一覧">{nav}</nav>') + f'''
-  <section class="section">
+def page_corporate():
+    hero = page_hero('Corporate', '法人のお客様', [('法人のお客様', '/corporate/')],
+                     lead='大手保険会社の代理店として、<br class="pc">法人のお客様の各種保険を取り扱っています。',
+                     photo='cta-final.jpg', pos='50% 62%',
+                     extra=page_nav([('strengths', '強み'), ('service', 'サービス')]))
+    # ★要確認：法人のお客様向けの強み・取り扱い保険は、今のサイトに個人と分けた記載がない。
+    #   今は保険代理店事業・FP・事故対応の記載から組んでいる。法人向けの内容をいただいたら差し替える
+    return hero + strengths([
+        ('Insurance Agency', '大手保険会社の<br>代理店。', 'SOMPOひまわり生命・日新火災海上保険を主力に、法人のお客様の各種保険を取り扱っています。'),
+        ('Professional', 'お金の専門家が<br>在籍。', 'ファイナンシャルプランニング技能士（国家資格）を保有するスタッフが多数在籍し、金融コンサルも行っています。'),
+        ('Support', '迅速な<br>事故対応。', '事故に遭われたお客様に対して、迅速に保険金のお支払いができるようアドバイスし、事故処理完了まで適切な対応を行います。休日・夜間の事故対応も行っています。'),
+    ]) + f'''
+  <section class="section" id="service">
     <div class="wrap">
-{main}
+      <p class="eyebrow fade">Service</p>
+      <h2 class="fade">サービス</h2>
+      <div class="ins-intro" style="margin-top:48px">
+        <div>
+          <h3 class="sub-title fade" style="margin-top:0">法人のお客様の保険</h3>
+          <p class="text fade" style="margin-top:20px">LFグループ株式会社では、大手保険会社の代理店として、法人のお客様の各種保険を取り扱っています。</p>
+          <p class="text fade">保険の見直しなど、お気軽にご相談ください。お客様の状況に合わせた最適な保険を提案するとともに、長期的なサポートを行います。</p>
+        </div>
+      {INS_PARTNERS}
+      </div>
+{ins_lineup()}
+    </div>
+  </section>
+
+''' + INS_SUPPORT + final_cta()
+
+
+def page_partner():
+    hero = page_hero('Partner', '提携企業様', [('提携企業様', '/partner/')],
+                     lead='マンション・アパートのご入居者様へのご案内を通じて、<br class="pc">提携企業様・パートナー様の事業繁栄をお手伝いします。',
+                     photo='scene-home.jpg', pos='70% 55%',
+                     extra=page_nav([('strengths', '強み'), ('service', 'サービス')]))
+    return hero + strengths([
+        ('Operator', '経験豊富な<br>オペレーター。', '経験豊富なオペレーターが、ご入居者様へ丁寧にご案内します。'),
+        ('Lineup', '選りすぐりの<br>商材。', 'ライフライン・インターネット回線・ウォーターサーバーなど、選りすぐりの商材を取り揃えています。'),
+        ('Check', '厳格なチェック体制と<br>管理。', 'アライアンス事業で培ったノウハウを活かし、厳格なチェック体制と管理の下で、ミスなくきめ細やかな対応を行います。'),
+        ('Partnership', '長期的な<br>パートナーとして。', '提携企業様・パートナー様の事業繁栄をお手伝いし、相互の長期的な利益追求・価値創造を目指します。'),
+    ], cols=2) + f'''
+  <section class="section" id="service">
+    <div class="wrap">
+      <p class="eyebrow fade">Service</p>
+      <h2 class="fade">サービス</h2>
+      <div class="ins-for-grid" style="margin-top:48px">
+        <article class="ins-for-item fade" id="alliance">
+          <p class="eyebrow">Alliance</p>
+          <h2>アライアンス事業</h2>
+          <p class="text">私たちLFグループ株式会社は、マンションやアパートのご入居者様へガスや電気などのライフライン、インターネット回線、ウォーターサーバーなどのお手続きやご案内を行います。</p>
+          <p class="text">経験豊富なオペレーターによる丁寧なご案内に加え、選りすぐりの商材を取り揃えており、提携いただく企業様とエンドユーザー様に安心確実なサポートをご提供いたします。</p>
+        </article>
+        <article class="ins-for-item fade" id="partner">
+          <p class="eyebrow">Partner</p>
+          <h2>パートナー事業</h2>
+          <p class="text">LFグループ株式会社では、当社が取り扱っている商材やサービスを提携企業様、パートナー様と協力してお客様にご提供しています。</p>
+          <p class="text">アライアンス事業で培ったノウハウを活かして、お客様に本当に必要なものを丁寧にご提案するとともに、厳格なチェック体制と管理の下でミスなくきめ細やかな対応を行うことができます。</p>
+          <p class="biz-note">提携企業様・パートナー様募集中</p>
+        </article>
+      </div>
     </div>
   </section>
 
   <section class="section bg-blue svc-life">
     <div class="wrap">
-      <p class="eyebrow fade">Life Service</p>
-      <h2 class="fade">暮らしのサービス</h2>
-      <p class="text fade" style="margin-top:16px">毎月かかる固定費の見直しにつながる、暮らしのサービスのお手続きやご案内を行います。</p>
-      <div class="svc-grid svc-sub-grid">{cards}
+      <p class="eyebrow fade">Lineup</p>
+      <h2 class="fade">取り扱い商材</h2>
+      <div class="svc-grid svc-sub-grid">{life_cards()}
       </div>
     </div>
   </section>
@@ -638,6 +625,33 @@ def page_company():
                             f'          <p class="co-addr">〒{POSTAL}<br>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</p>\n'
                             f'          <p class="co-biz">ファイナンシャルプランニング・金融コンサル・<br class="pc">保険代理店業務を行っています。</p>\n'
                             f'        </div>')) + f'''
+  <section class="section co-philosophy" id="philosophy">
+    <div class="wrap">
+      <p class="eyebrow fade">Philosophy</p>
+      <h2 class="fade">企業理念</h2>
+      <p class="co-philosophy-main fade"><span>顧客満足度を最優先に、</span><span>人々の生活を向上させます。</span></p>
+      <div class="co-philosophy-sub fade">
+        <p class="co-philosophy-head">固定費削減で、家計を見直す。</p>
+        <p class="text">固定費は、見直し削減することで半永久的に節約することができます。LFグループ株式会社では、ゆとりある生活の実現のためにお役立ちをさせていただきます。</p>
+        <p class="text">金銭的な余裕は、人生の幸福度を高めます。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-blue" id="message">
+    <div class="wrap co-message">
+      <div>
+        <p class="eyebrow fade">Message</p>
+        <h2 class="fade">代表挨拶</h2>
+      </div>
+      <div class="fade">
+        <!-- ★公開前に必要：代表挨拶の原稿（とお写真）は今のサイトにないので、いただいてから掲載する -->
+        <p class="note-todo">代表挨拶の原稿は、今のホームページに記載がありません。原稿（とお写真）をいただいたら、ここに掲載します。</p>
+        <p class="co-message-name">代表 遠藤 昇平</p>
+      </div>
+    </div>
+  </section>
+
   <section class="section co-first">
     <div class="wrap">
       <dl class="company-list full">
@@ -733,7 +747,7 @@ def page_recruitment():
       <div class="fade">
         <p class="rc-work-lead">生命保険、損害保険などの金融商品の販売とアフターサービス</p>
         <p class="text">LFグループ株式会社は、大手保険会社の代理店として各種保険を取り扱っています。お客様のライフプランに合わせた最適な保険を提案するとともに、生涯を安心して過ごせるように長期的なサポートを行います。</p>
-        <p style="margin-top:24px"><a class="link-arrow" href="/business/#insuranceagency">保険代理店事業について見る{ARROW}</a></p>
+        <p style="margin-top:24px"><a class="link-arrow" href="/personal/#service">保険について見る{ARROW}</a></p>
       </div>
     </div>
   </section>
@@ -961,7 +975,7 @@ def page_404():
                      compact=True)
 
 
-PAGES = ['', 'about/', 'business/', 'service/', 'insurance/', 'company/', 'contact/', 'recruitment/',
+PAGES = ['', 'about/', 'personal/', 'corporate/', 'partner/', 'company/', 'contact/', 'recruitment/',
          'operation/', 'solicitation/', 'privacyprotection/', 'informationsecurity/']
 
 
@@ -1020,12 +1034,17 @@ def season_photos(top, photos=SEASON_PHOTOS, white_wrap=True):
     return top
 
 
-# /season/・/life/ は試作のときのURL。お客さまに伝えている場合があるので、トップへ移す
-SEASON_REDIRECT = """<!doctype html>
+def redirect(to):
+    """前のURLから新しいページへ移すだけのページ。to は移る先（そのページから見た相対パス）"""
+    return f"""<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex">
-<meta http-equiv="refresh" content="0; url=../"><title>LFグループ株式会社</title></head>
-<body><p><a href="/">トップページへ</a></p></body></html>
+<meta http-equiv="refresh" content="0; url={to}"><title>LFグループ株式会社</title></head>
+<body><p><a href="{to}">ページを移動しました</a></p></body></html>
 """
+
+
+# /season/・/life/ は試作のときのURL。お客さまに伝えている場合があるので、トップへ移す
+SEASON_REDIRECT = redirect('../')
 
 
 def main():
@@ -1067,9 +1086,13 @@ def main():
         write('scene/index.html', season_photos(top_base, SCENE_PHOTOS, white_wrap=False)
               .replace('リニューアルの試作です', 'リニューアルの試作です・人物なしの写真の試作版', 1))
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
-    write('business/index.html', layout('事業内容', page_business(), 'business'))
-    write('service/index.html', layout('取り扱いサービス', page_service(), 'service'))
-    write('insurance/index.html', layout('保険', page_insurance(), 'service'))
+    write('personal/index.html', layout('個人のお客様', page_personal(), 'personal'))
+    write('corporate/index.html', layout('法人のお客様', page_corporate(), 'corporate'))
+    write('partner/index.html', layout('提携企業様', page_partner(), 'partner'))
+    # 事業内容・取り扱いサービス・保険は、中身を上の3ページに分けた（2026-10-06）。前のURLは近いページへ移す
+    write('business/index.html', redirect('../about/'))
+    write('service/index.html', redirect('../personal/'))
+    write('insurance/index.html', redirect('../personal/'))
     write('company/index.html', layout('会社概要', page_company(), 'company'))
     write('contact/index.html', layout('お問い合わせ', page_contact(), 'contact'))
     write('recruitment/index.html', layout('採用情報', page_recruitment(), 'recruitment'))
