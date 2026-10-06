@@ -29,47 +29,18 @@
       whenReady(function () { setTimeout(function () {
         if (!el.classList.contains('entry')) { el.classList.add('is-shown'); return; }
         el.classList.add('is-open');
-        setTimeout(function () { el.classList.add('is-text'); }, 1000);  // ① 帯が抜けてから文字を出す（帯は1.5秒、中ほどで抜け始める）
+        setTimeout(function () { el.classList.add('is-text'); }, 600);  // ① タイルが広がってから文字を出す
       }, delay); });
     });
   }, { rootMargin: '0px 0px -12% 0px' });
   Array.prototype.forEach.call(lines, function (h) { io.observe(h); });
   // ① 入口のタイル：同じ段の左右で少しずらす
-  // 6案の見比べ（2026-10-06）：6枚に順に A〜F の現れ方を当て、右上に案の名前を出す（見た目は stylish.css の末尾）
-  var FX = [['a', '帯が横切る'], ['b', '中央から開く'], ['c', '斜めに切り替わる'], ['d', '格子状に'], ['e', 'ぼかしから'], ['f', '下から押し上がる']];
+  // ① 入口のタイル（案D）：同じ段の左右で少しずらし、左上→右下の順に広がって見えるようにする
   var tiles = Array.prototype.slice.call(document.querySelectorAll('.entry'));
   tiles.forEach(function (el, i) {
-    var fx = FX[i % FX.length];
-    el.setAttribute('data-fx', fx[0]);
-    el.insertAdjacentHTML('beforeend', '<span class="fx-tag" aria-hidden="true"><b>' + fx[0].toUpperCase() + '</b>' + fx[1] + '</span>');
-    el.setAttribute('data-delay', (i % 2) * 220);
+    el.setAttribute('data-delay', (i % 2) * 180);
     io.observe(el);
   });
-  // 「もう一度見る」：タイルを閉じた状態に戻し、画面に見えているものから順に、もう一度動かす
-  var replay = document.createElement('button');
-  replay.type = 'button';
-  replay.className = 's-replay';
-  replay.textContent = 'タイルの動きをもう一度見る';
-  // 閉じるときは動きを止めて（.s-reset）一瞬で戻す。止めないと、閉じる動きの途中で開き直して、何も起きないように見える
-  var timers = [];
-  replay.addEventListener('click', function () {
-    timers.forEach(clearTimeout);
-    timers = [];
-    tiles.forEach(function (el) { el.classList.add('s-reset'); el.classList.remove('is-open', 'is-text'); });
-    void document.body.offsetHeight;  // 閉じた状態をいったん画面に反映させてから
-    requestAnimationFrame(function () { requestAnimationFrame(function () {
-      tiles.forEach(function (el) {
-        el.classList.remove('s-reset');
-        var r = el.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > window.innerHeight) { io.observe(el); return; }
-        timers.push(setTimeout(function () {
-          el.classList.add('is-open');
-          timers.push(setTimeout(function () { el.classList.add('is-text'); }, 1000));
-        }, 150 + +el.getAttribute('data-delay')));
-      });
-    }); });
-  });
-  document.body.appendChild(replay);
   // ③ 小見出しの金の線（最初の写真の中のものは除く）
   var lio = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {

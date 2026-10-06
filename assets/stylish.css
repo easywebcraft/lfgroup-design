@@ -1,7 +1,8 @@
 /* ===== スタイリッシュ版の試作（/stylish/・2026-10-06）=====
    今のトップに足すだけ。本番（--release）には出さない。動きを減らす設定の人には何もしない（html.s-ready が付かない）
    careerscout の動きの形を借り、色は LF の紺と金にする（2026-10-06 /motion/ の試作をこちらにまとめた）
-   ① 入口のタイル：紺の帯（端に金の線）が横切り、その後ろから写真が現れる（.entry.is-open）
+   ① 入口のタイル：少し縮んだ状態から、ふわっと広がる。同じ段は左→右の順（.entry.is-open）。
+      2026-10-06 に6案（帯が横切る・中央から開く・斜め・格子状・ぼかし・押し上がる）を見比べて、格子状（案D）に決めた
    ② 最初の写真：ロゴの演出のあと斜めに開き、続けてメニューと相談ボタンが上から降りてくる（html.s-head）
    ③ 見出し：小見出しの金の線が伸び（.eyebrow.s-line）、見出しが1行ずつ下からせり上がる（.s-lines）
    ④ 数字の段：カード状の写真が、スクロールに合わせて画面いっぱいに広がる（--p）。そのあと数字が増える
@@ -16,27 +17,16 @@
 .s-ready main .eyebrow::before { width: 56px; height: 2px; transform: scaleX(0); transform-origin: left; transition: transform 1.2s cubic-bezier(.65, 0, .35, 1) .1s; }
 .s-ready main .eyebrow.s-line::before { transform: none; }
 
-/* ① 入口のタイル：帯が横切り、帯が抜けたところから写真と文字が現れる */
-.s-ready .entry::before {
-  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
-  background: var(--navy); box-shadow: inset -6px 0 0 var(--gold);
-  transform: scaleX(0); transform-origin: left;
-}
-.s-ready .entry.is-open::before { animation: s-band 1.5s cubic-bezier(.77, 0, .18, 1) forwards; }
-.s-ready .entry img { clip-path: inset(0 100% 0 0); transform: none; translate: 0 var(--py, 0px); scale: 1.3;
-  transition: clip-path .01s linear .75s, scale 2.2s cubic-bezier(.2, .6, .2, 1) .7s; will-change: translate; }
-.s-ready .entry.is-open img { clip-path: inset(0); scale: 1.1; }
-.s-ready .entry::after { opacity: 0; transition: opacity .6s ease .75s; }
+/* ① 入口のタイル：少し縮んだ状態から、ふわっと広がる（案D）。写真も少し寄った状態から戻る */
+.s-ready .entry { opacity: 0; scale: .86; transition: opacity 1s ease, scale 1.2s cubic-bezier(.19, 1, .22, 1); }
+.s-ready .entry.is-open { opacity: 1; scale: 1; }
+.s-ready .entry img { transform: none; translate: 0 var(--py, 0px); scale: 1.18; transition: scale 2s cubic-bezier(.2, .6, .2, 1); will-change: translate; }
+.s-ready .entry.is-open img { scale: 1.1; }
+.s-ready .entry::after { opacity: 0; transition: opacity .6s ease .2s; }
 .s-ready .entry.is-open::after { opacity: 1; }
-/* 文字は、帯が抜けてから（stylish.js が .is-text を付けてから）出す。もとの .fade の仕組みは使わない（表示の待ち時間を上書きして、帯の途中で文字が見えてしまうため） */
+/* 文字は、タイルが広がってから（stylish.js が .is-text を付けてから）出す。もとの .fade の仕組みは使わない（表示の待ち時間を上書きされるため） */
 .s-ready .entry .entry-body { opacity: 0; translate: 0 18px; transition: opacity .9s ease, translate .9s cubic-bezier(.19, 1, .22, 1); }
 .s-ready .entry.is-text .entry-body { opacity: 1; translate: 0 0; }
-@keyframes s-band {
-  0% { transform: scaleX(0); transform-origin: left; }
-  48% { transform: scaleX(1); transform-origin: left; }
-  52% { transform: scaleX(1); transform-origin: right; }
-  100% { transform: scaleX(0); transform-origin: right; }
-}
 
 /* ② 最初の写真を斜めに開く（今のフェードの代わり。四季の写真の切り替えとズームはそのまま） */
 .s-ready.js .fv .fv-photo { opacity: 1; clip-path: polygon(0 0, 0 0, -30% 100%, 0 100%); transition: none; }
@@ -131,50 +121,3 @@ html.lenis, html.lenis body { height: auto; }
   .s-ready .fv .fv-photo, .s-ready .fv .fv-copy { translate: none; opacity: 1; }
 }
 
-/* ===== 入口のタイルの現れ方を6案見比べる（2026-10-06）=====
-   stylish.js が6枚に順に data-fx="a"〜"f" を付け、右上に案の名前（.fx-tag）を出す。決まったら、選んだ案だけを残す。
-   A 帯が横切る（上の ① のまま）／B 中央から開く／C 斜めに切り替わる／D 格子状に（縮んだ状態から広がる）／E ぼかしから現れる／F 下から押し上がる */
-.fx-tag { position: absolute; top: 14px; right: 14px; z-index: 5; padding: 3px 10px; border-radius: 2px; background: rgba(27, 51, 80, .82);
-  font-size: 12px; font-weight: 700; letter-spacing: .06em; color: #fff; pointer-events: none; }
-.fx-tag b { margin-right: 6px; color: var(--gold); }
-.s-replay { position: fixed; right: 16px; bottom: 96px; z-index: 90; padding: 10px 16px; border: 0; border-radius: 999px; background: var(--gold);
-  font: inherit; font-size: 13px; font-weight: 700; color: #fff; box-shadow: 0 6px 18px rgba(0, 0, 0, .2); cursor: pointer; }
-@media (min-width: 768px) { .s-replay { bottom: 24px; } }
-
-/* B〜F は帯を使わない */
-.s-ready .entry:not([data-fx="a"])::before { display: none; }
-
-/* B 中央から開く：中央の細い縦線から、左右へ扉が開くように */
-.s-ready .entry[data-fx="b"] img { clip-path: inset(0 50% 0 50%); scale: 1.2; transition: clip-path 1.4s cubic-bezier(.77, 0, .18, 1), scale 2s cubic-bezier(.2, .6, .2, 1); }
-.s-ready .entry[data-fx="b"].is-open img { clip-path: inset(0 0 0 0); scale: 1.1; }
-.s-ready .entry[data-fx="b"]::after { transition-delay: .5s; }
-
-/* C 斜めに切り替わる：白から、斜めの線が通過して写真に（最初の写真の開き方とそろえる） */
-.s-ready .entry[data-fx="c"] { background: var(--paper, #fff); }
-.s-ready .entry[data-fx="c"] img { clip-path: polygon(0 0, 0 0, -30% 100%, -30% 100%); scale: 1.2;
-  transition: clip-path 1.3s cubic-bezier(.77, 0, .18, 1), scale 2s cubic-bezier(.2, .6, .2, 1); }
-.s-ready .entry[data-fx="c"].is-open img { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); scale: 1.1; }
-.s-ready .entry[data-fx="c"]::after { transition-delay: .4s; }
-
-/* D 格子状に：少し縮んだ状態から、ふわっと広がる（6枚すべてに使うと、左上→右下の市松の順に現れる） */
-.s-ready .entry[data-fx="d"] { opacity: 0; scale: .86; transition: opacity 1s ease, scale 1.2s cubic-bezier(.19, 1, .22, 1); }
-.s-ready .entry[data-fx="d"].is-open { opacity: 1; scale: 1; }
-.s-ready .entry[data-fx="d"] img { clip-path: none; scale: 1.18; transition: scale 2s cubic-bezier(.2, .6, .2, 1); }
-.s-ready .entry[data-fx="d"].is-open img { scale: 1.1; }
-.s-ready .entry[data-fx="d"]::after { transition-delay: .2s; }
-
-/* E ぼかしから現れる：強くぼけた状態から、ピントが合うように */
-.s-ready .entry[data-fx="e"] img { clip-path: none; opacity: 0; filter: blur(28px); scale: 1.25;
-  transition: opacity 1s ease, filter 1.6s ease, scale 2s cubic-bezier(.2, .6, .2, 1); }
-.s-ready .entry[data-fx="e"].is-open img { opacity: 1; filter: blur(0); scale: 1.1; }
-.s-ready .entry[data-fx="e"]::after { transition-delay: .3s; }
-
-/* F 下から押し上がる：タイル全体が、少し奥（傾いた状態）から押し上がってくる */
-.s-ready .entry[data-fx="f"] { opacity: 0; transform: perspective(1400px) translateY(90px) rotateX(14deg); transform-origin: 50% 100%;
-  transition: opacity .9s ease, transform 1.3s cubic-bezier(.19, 1, .22, 1); }
-.s-ready .entry[data-fx="f"].is-open { opacity: 1; transform: none; }
-.s-ready .entry[data-fx="f"] img { clip-path: none; scale: 1.18; transition: scale 2s cubic-bezier(.2, .6, .2, 1); }
-.s-ready .entry[data-fx="f"].is-open img { scale: 1.1; }
-.s-ready .entry[data-fx="f"]::after { transition-delay: .2s; }
-/* 「もう一度見る」で閉じた状態へ戻すときは、動きを止めて一瞬で戻す */
-.s-ready .entry.s-reset, .s-ready .entry.s-reset *, .s-ready .entry.s-reset::before, .s-ready .entry.s-reset::after { transition: none !important; animation: none !important; }
