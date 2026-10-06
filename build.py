@@ -1047,7 +1047,10 @@ def write_recruit_trials():
                   .replace(' fade"', '"').replace('class="fade"', ''))
     assert 'rv-title' in copy_v
     hiring = ''.join('<span>WE ARE HIRING<i>―</i>JOIN LF GROUP<i>―</i></span>' for _ in range(6))
-    fv['a2'] = (fv['a'].replace('<section class="rf rf-a" data-fx="a">',
+    # A2 の写真は、生成AIで作った名古屋の街の朝〜夜（2026-10-07 松本さん作成。recruit-city-1000〜1800.jpg）。
+    # 実在のオフィスと違って見える「オフィスの写真」を避け、場所を特定しない街の写真にした
+    fv['a2'] = (fv['a'].replace('/images/recruit-1', '/images/recruit-city-1')
+                       .replace('<section class="rf rf-a" data-fx="a">',
                                 '<section class="rf rf-a rf-v" data-fx="a" data-stay="2500">')
                        .replace(copy, '<p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>\n    <span class="rv-sweep" aria-hidden="true"></span>\n    ' + copy_v)
                        .replace('  </section>', f'''    <div class="rv-band" aria-hidden="true"><div class="rv-track">{hiring}{hiring}</div></div>
