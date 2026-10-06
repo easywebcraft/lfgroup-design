@@ -1,4 +1,4 @@
-/* スタイリッシュ版の試作（/stylish/・2026-10-06）。中身は stylish.css の先頭のとおり。
+/* トップページの動き（2026-10-06 /stylish/ で試作し、同日に本流のトップへ反映）。中身は stylish.css の先頭のとおり。
    lenis.min.js（なめらかなスクロール。MIT License, darkroom.engineering）を先に読み込んでおく */
 (function () {
   var root = document.documentElement;

@@ -32,6 +32,7 @@
     setTimeout(function () { if (!window.LF_LOADER_RUN) r.classList.remove('is-loading'); }, 3000);
   })();
 </script>
+<link rel="stylesheet" href="./assets/stylish.css?v=89c0d7eb">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -94,7 +95,7 @@
   <!-- 02 HERO：大きな写真＋大きなコピー＋短い説明。CTAは1つだけ。
        ★最初の演出（main.js の runLoader）は .fv h1 と .header .logo の位置を使うので、この2つは残す -->
   <section class="fv" id="top">
-    <div class="fv-photo">
+    <div class="fv-photo" data-stay="3800" data-first="2600">
       <img decoding="async" width="1536" height="1024" class="is-show" src="./images/life-spring.jpg?v=11091abb" alt="" fetchpriority="high" onerror="this.remove()">
       <img loading="lazy" decoding="async" width="1536" height="1024" data-src="./images/hero-summer.jpg?v=9e2e7a62" alt="">
       <img loading="lazy" decoding="async" width="1536" height="1024" data-src="./images/life-autumn.jpg?v=6a05a14d" alt="">
@@ -119,14 +120,14 @@
   <div class="entries-head" id="foryou">
     <div class="wrap">
       <p class="eyebrow fade">Find Your Page</p>
-      <h2 class="fade"><span>目的に合わせて</span><span>ご覧ください</span></h2>
+      <h2 class="s-lines"><span>目的に合わせて</span><span>ご覧ください</span></h2>
       <p class="text fade">個人のお客様・法人のお客様・提携企業様など、目的に合わせたページをご用意しています。</p>
     </div>
   </div>
   <section class="entries" aria-label="目的から探す">
     <a class="entry" href="./personal/">
       <img loading="lazy" decoding="async" width="1536" height="1024" src="./images/service-insurance.jpg?v=64ef13b0" alt="" onerror="this.remove()">
-      <span class="entry-body fade">
+      <span class="entry-body">
         <span class="eyebrow">Personal</span>
         <span class="entry-title">個人のお客様</span>
         <span class="entry-text">保険や家計、これからの暮らしのお金について。</span>
@@ -135,7 +136,7 @@
     </a>
     <a class="entry" href="./corporate/">
       <img loading="lazy" decoding="async" width="1536" height="1024" src="./images/cta-final.jpg?v=2d4792a4" alt="" onerror="this.remove()">
-      <span class="entry-body fade">
+      <span class="entry-body">
         <span class="eyebrow">Corporate</span>
         <span class="entry-title">法人のお客様</span>
         <span class="entry-text">法人のお客様の保険について。</span>
@@ -144,7 +145,7 @@
     </a>
     <a class="entry" href="./partner/">
       <img loading="lazy" decoding="async" width="1536" height="1024" src="./images/scene-home.jpg?v=fe03c2af" alt="" onerror="this.remove()">
-      <span class="entry-body fade">
+      <span class="entry-body">
         <span class="eyebrow">Alliance</span>
         <span class="entry-title">アライアンス事業</span>
         <span class="entry-text">マンション・アパートのご入居者様へのご案内で、提携いただく企業様へ。</span>
@@ -153,7 +154,7 @@
     </a>
     <a class="entry" href="./recruitment/">
       <img loading="lazy" decoding="async" width="1536" height="1024" src="./images/cta.jpg?v=e3022b97" alt="" onerror="this.remove()">
-      <span class="entry-body fade">
+      <span class="entry-body">
         <span class="eyebrow">Recruit</span>
         <span class="entry-title">リクルート</span>
         <span class="entry-text">エントリー受付中です。</span>
@@ -166,7 +167,7 @@
   <div class="entries-head" id="about-us">
     <div class="wrap">
       <p class="eyebrow fade">About Us</p>
-      <h2 class="fade"><span>LFグループについて</span><span>もっと知る</span></h2>
+      <h2 class="s-lines"><span>LFグループについて</span><span>もっと知る</span></h2>
       <p class="text fade">会社の基本情報や、代表からのご挨拶をご覧いただけます。</p>
     </div>
   </div>
@@ -175,7 +176,7 @@
          ★代表挨拶の写真は仮（相談スペース）。代表のお写真をいただいたら差し替える -->
     <a class="entry" href="./company/">
       <img loading="lazy" decoding="async" width="1254" height="1254" src="./images/mission-2.jpg?v=368a9564" alt="" onerror="this.remove()">
-      <span class="entry-body fade">
+      <span class="entry-body">
         <span class="eyebrow">Company Overview</span>
         <span class="entry-title">会社概要</span>
         <span class="entry-text">LFグループ株式会社の基本情報です。</span>
@@ -184,7 +185,7 @@
     </a>
     <a class="entry" href="./company/#message">
       <img loading="lazy" decoding="async" width="1024" height="1536" src="./images/about-hero.jpg?v=0ad758a8" alt="" onerror="this.remove()">
-      <span class="entry-body fade">
+      <span class="entry-body">
         <span class="eyebrow">CEO Message</span>
         <span class="entry-title">代表挨拶</span>
         <span class="entry-text">代表からのご挨拶です。</span>
@@ -198,7 +199,7 @@
   <section class="numbers" id="numbers">
     <img loading="lazy" decoding="async" width="1536" height="1024" class="numbers-bg" src="./images/cta-final.jpg?v=2d4792a4" alt="">
     <div class="wrap numbers-inner">
-      <h2 class="fade">数字で見るLFグループ</h2>
+      <h2 class="s-lines">数字で見るLFグループ</h2>
       <p class="numbers-en fade">LF Group in Numbers</p>
       <ul class="numbers-list">
         <li class="num-card fade">
@@ -228,7 +229,7 @@
   <section class="contact-cta" id="final-cta">
     <div class="wrap contact-cta-inner">
       <p class="eyebrow fade">Contact</p>
-      <h2 class="fade"><span>保険やお金について</span><br><span>気になることから</span><span>ご相談ください</span></h2>
+      <h2 class="s-lines"><span>保険やお金について</span><br><span>気になることから</span><span>ご相談ください</span></h2>
       <p class="text fade">保険の見直しや家計、これからのお金について、まずはお気軽にお問い合わせください。</p>
       <p class="contact-cta-actions fade">
         <a class="btn btn-primary" href="./contact/">お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a>
@@ -275,5 +276,7 @@
 </div>
 
 <script src="./assets/main.js?v=0ac96948"></script>
+<script src="./assets/lenis.min.js?v=89c0d7eb"></script>
+<script src="./assets/stylish.js?v=89c0d7eb"></script>
 </body>
 </html>

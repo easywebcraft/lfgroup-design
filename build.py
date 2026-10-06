@@ -990,11 +990,11 @@ def release_files():
     write('robots.txt', robots)
 
 
-def write_stylish(top):
-    """スタイリッシュ版の試作（/stylish/・2026-10-06「もっとスタイリッシュで動きのあるホームページ」）。
-    中身は今のトップと同じで、src/stylish.css・stylish.js（＋なめらかなスクロールの lenis.min.js）を足し、
-    見出しを「1行ずつせり上がる」用（s-lines）にする。本番（--release）には出さない。
-    流れる英字の帯（C）は試したが外した（2026-10-06 松本さん）。"""
+def stylish_top(top):
+    """トップページに動き（src/stylish.css・stylish.js ＋なめらかなスクロールの lenis.min.js）を足す。
+    2026-10-06「もっとスタイリッシュで動きのあるホームページ」から /stylish/ で試作し、同日、本流のトップに反映した。
+    見出しを「1行ずつせり上がる」用（s-lines）にする。下層ページには足さない（動きはトップだけ）。
+    流れる英字の帯・スクロールで縮む全面写真＋切り替わる見出しは試して外した（2026-10-06 松本さん）。"""
     css, js, lenis = (SRC / 'stylish.css').read_text(), (SRC / 'stylish.js').read_text(), (SRC / 'lenis.min.js').read_text()
     v = hashlib.sha1((css + js).encode()).hexdigest()[:8]
     write('assets/stylish.css', css)
@@ -1003,7 +1003,6 @@ def write_stylish(top):
     html_ = (top.replace('</head>', f'<link rel="stylesheet" href="/assets/stylish.css?v={v}">\n</head>', 1)
                 .replace('</body>', f'<script src="/assets/lenis.min.js?v={v}"></script>\n'
                                     f'<script src="/assets/stylish.js?v={v}"></script>\n</body>', 1)
-                .replace('リニューアルの試作です', 'リニューアルの試作です・スタイリッシュ版', 1)
                 # 四季の切り替えを今のトップより早く（1枚 6秒→3.8秒、最初の切り替えまで 3.5秒→2.6秒。2026-10-06）
                 .replace('<div class="fv-photo">', '<div class="fv-photo" data-stay="3800" data-first="2600">', 1)
                 # 入口のタイルの文字は stylish.js が帯のあとに出すので、もとのふわっと表示（.fade）から外す
@@ -1012,7 +1011,7 @@ def write_stylish(top):
               '<h2 class="fade">数字で見るLFグループ', '<h2 class="fade"><span>保険やお金について'):
         assert a in html_, a
         html_ = html_.replace(a, a.replace('class="fade"', 'class="s-lines"'), 1)
-    write('stylish/index.html', html_)
+    return html_
 
 
 # トップの季節の写真「人生の四季」（2026-10-05 採用。春→夏→秋→冬→三世代の春の順）：
@@ -1085,12 +1084,13 @@ def main():
     write('assets/main.js', js)
 
     top_base = layout('', TOP.replace('{{final_cta}}', final_cta()), loader=True)
-    top = season_photos(top_base)
+    top = stylish_top(season_photos(top_base))  # 2026-10-06 スタイリッシュ版を本流に反映
     write('index.html', top)
     if not RELEASE:
-        # 動きの試作（/motion/）は /stylish/ にまとめた（2026-10-06）。前のURLは /stylish/ へ移す
-        write('motion/index.html', redirect('../stylish/'))
-        write_stylish(top)
+        # 動きの試作（/motion/）は /stylish/ にまとめ、本流のトップに反映した（2026-10-06）。前のURLはトップへ移す
+        write('motion/index.html', redirect('../'))
+        # スタイリッシュ版の試作（/stylish/）は本流のトップに反映した（2026-10-06）。前のURLはトップへ移す
+        write('stylish/index.html', redirect('../'))
         write('season/index.html', SEASON_REDIRECT)
         write('life/index.html', SEASON_REDIRECT)
         write('scene/index.html', season_photos(top_base, SCENE_PHOTOS, white_wrap=False)

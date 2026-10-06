@@ -21,7 +21,7 @@
 ## 動きの試作（/motion/）→ /stylish/ にまとめた
 
 - 2026-10-05、お客さまの「careerscout.co.jp のようなトップの動きを」から作った試作。その後トップの段を減らして中身が古くなったため、
-  2026-10-06 に動きを今のトップの構成に合わせて /stylish/ にまとめ、`src/motion.css`・`motion.js` は消した。/motion/ は /stylish/ へ移す
+  2026-10-06 に動きを今のトップの構成に合わせて /stylish/ にまとめ（`src/motion.css`・`motion.js` は消した）、同日に本流のトップへ反映。/motion/ はトップへ移す
 
 ## トップの写真の季節の切り替え（人生の四季）
 
@@ -58,9 +58,10 @@
 - その下に同じデザインで会社概要（`mission-2.jpg`）・代表挨拶（`about-hero.jpg`。代表のお写真をいただいたら差し替える）を足して3段×2列にした（2026-10-06）
 - 書き方は `src/top.html` の `.entries`、見た目は `src/refine.css` の最後
 
-## スタイリッシュ版の試作（/stylish/・2026-10-06）
+## トップの動き（スタイリッシュ版。2026-10-06 /stylish/ で試作し、同日に本流のトップへ反映）
 
-- URL：https://easywebcraft.github.io/lfgroup-design/stylish/ （トップページだけ。今のトップと見比べてもらう用。本番（`--release`）には出さない）
+- 本流のトップ（と `--release` の本番）に入っている。/stylish/・/motion/ を開くとトップへ移る。下層ページには動きを足していない
+- `build.py` の `stylish_top()` がトップに `stylish.css`・`stylish.js`・`lenis.min.js` を足す
 - お客様の「もっとスタイリッシュで動きのあるホームページ」と、careerscout.co.jp の動きを参考に。色は LF の紺と金
 - 中身は今のトップと同じで、`src/stylish.css`・`src/stylish.js` を足す（`build.py` の `write_stylish`。一覧は stylish.css の先頭）
   - ① 入口のタイル：少し縮んだ状態からふわっと広がる（同じ段は左→右の順）。6案を見比べて案D（格子状）に決めた
@@ -73,7 +74,6 @@
   - ほか：なめらかなスクロール（`src/lenis.min.js`。Lenis 1.1.20、MIT License。サイト内に置く）、タイルのマウスオーバー、写真の奥行き
 - 試して外したもの：大きな英字が横に流れる帯、スクロールで縮む全面写真＋「保険→家計→暮らし」と切り替わる見出し
 - 動きを減らす設定の人には動きを付けない。ロゴの演出中はスクロールと動きを止めておく
-- 採用が決まったら、stylish.css・stylish.js を本体（style.css・main.js）に移し、/stylish/ を消す
 
 ## 数字で見るLFグループ（2026-10-06）
 
