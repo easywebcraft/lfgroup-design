@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="../images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/style.css?v=a743a5dc">
+<link rel="stylesheet" href="../assets/style.css?v=44a185bf">
 <script>
   // 表示前に「フェード待ち」の状態にする（本文の最後で付けると、文字が一度見えてから消えてフェードする）。
   // main.js が読み込めなかったときに文字が隠れたままにならないよう、3秒で解除する。
@@ -32,7 +32,7 @@
     setTimeout(function () { if (!window.LF_LOADER_RUN) r.classList.remove('is-loading'); }, 3000);
   })();
 </script>
-<link rel="stylesheet" href="../assets/stylish.css?v=36f9eec6">
+<link rel="stylesheet" href="../assets/stylish.css?v=0d833614">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -95,7 +95,7 @@
   <!-- 02 HERO：大きな写真＋大きなコピー＋短い説明。CTAは1つだけ。
        ★最初の演出（main.js の runLoader）は .fv h1 と .header .logo の位置を使うので、この2つは残す -->
   <section class="fv" id="top">
-    <div class="fv-photo">
+    <div class="fv-photo" data-stay="3800" data-first="2600">
       <img decoding="async" width="1536" height="1024" class="is-show" src="../images/life-spring.jpg?v=11091abb" alt="" fetchpriority="high" onerror="this.remove()">
       <img loading="lazy" decoding="async" width="1536" height="1024" data-src="../images/hero-summer.jpg?v=9e2e7a62" alt="">
       <img loading="lazy" decoding="async" width="1536" height="1024" data-src="../images/life-autumn.jpg?v=6a05a14d" alt="">
@@ -275,8 +275,8 @@
   <a class="t" href="tel:0528462135"><svg><use href="#i-tel"/></svg>電話する</a>
 </div>
 
-<script src="../assets/main.js?v=a743a5dc"></script>
-<script src="../assets/lenis.min.js?v=36f9eec6"></script>
-<script src="../assets/stylish.js?v=36f9eec6"></script>
+<script src="../assets/main.js?v=44a185bf"></script>
+<script src="../assets/lenis.min.js?v=0d833614"></script>
+<script src="../assets/stylish.js?v=0d833614"></script>
 </body>
 </html>

@@ -176,8 +176,8 @@
     var box = fv && fv.querySelector('.fv-photo');
     if (!box) return;
     var imgs = Array.prototype.slice.call(box.querySelectorAll('img'));
-    var STAY = 6000;  // 1枚を見せる時間
-    var FIRST = 3500; // 最初の演出が終わってから、最初に切り替えるまで（春は演出の間も見えているので、ほかより短くする）
+    var STAY = +(box.dataset.stay || 6000);  // 1枚を見せる時間（data-stay で変えられる。/stylish/ は短め）
+    var FIRST = +(box.dataset.first || 3500); // 最初の演出が終わってから、最初に切り替えるまで（春は演出の間も見えているので、ほかより短くする）
     // 最後の写真から最初の写真へ戻るときは、白をはさんでゆっくり切り替える（一区切りが分かるように。見た目は season.css の .is-wrap）。
     // その分（白へ消える1.6秒＋白0.3秒）だけ、最初の写真を見せる時間をのばす
     var WRAP = 1900, WRAP_END = 3800;

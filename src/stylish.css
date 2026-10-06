@@ -86,10 +86,10 @@ html.lenis, html.lenis body { height: auto; }
 .s-ready .fv-photo img:nth-child(4) { --s0: 1.02; --s1: 1.22; --o: 82% 28%; }                     /* 冬：二人へゆっくり寄る */
 .s-ready .fv-photo img:nth-child(5) { --s0: 1.26; --s1: 1.08; --y0: 5%; --y1: -3.5%; }            /* 三世代の春：上へ流れながら引く */
 .s-ready .fv-photo img.is-ready { scale: var(--s0); translate: var(--x0) var(--y0); transition: opacity 0s 2.6s, scale 0s 2.6s, translate 0s 2.6s; }
-.s-ready .fv-photo img.is-ready.is-show { scale: var(--s1); translate: var(--x1) var(--y1); transition: opacity 2.4s ease, scale 9s linear, translate 9s linear; }
-.s-ready .fv-photo img.is-ready.is-prev { scale: var(--s1); translate: var(--x1) var(--y1); transition: scale 9s linear, translate 9s linear; }
-.s-ready .fv-photo.is-wrap img.is-ready.is-prev { opacity: 0; transition: opacity 1.6s ease-in-out, scale 9s linear, translate 9s linear; }
-.s-ready .fv-photo.is-wrap img.is-ready.is-show { transition: opacity 1.6s ease-in-out 1.9s, scale 9s linear 1.9s, translate 9s linear 1.9s; }
+.s-ready .fv-photo img.is-ready.is-show { scale: var(--s1); translate: var(--x1) var(--y1); transition: opacity 1.8s ease, scale 6.5s linear, translate 6.5s linear; }
+.s-ready .fv-photo img.is-ready.is-prev { scale: var(--s1); translate: var(--x1) var(--y1); transition: scale 6.5s linear, translate 6.5s linear; }
+.s-ready .fv-photo.is-wrap img.is-ready.is-prev { opacity: 0; transition: opacity 1.6s ease-in-out, scale 6.5s linear, translate 6.5s linear; }
+.s-ready .fv-photo.is-wrap img.is-ready.is-show { transition: opacity 1.6s ease-in-out 1.9s, scale 6.5s linear 1.9s, translate 6.5s linear 1.9s; }
 
 /* ⑧ スクロールで奥行き */
 .s-ready .fv .fv-photo { translate: 0 calc(var(--fy, 0) * .5px); }
