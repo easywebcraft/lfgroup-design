@@ -1375,6 +1375,11 @@
     .entries-head .text { font-size: 13.5px; text-align: left; }
   }
   .entries-head h2 span { display: inline-block; }
+  .entries-head h2 span + span { margin-left: .8em; }
+  @media (max-width: 767px) { .entries-head h2 span { display: block; } .entries-head h2 span + span { margin-left: 0; } }
+
+  /* 句読点を外した2行の見出しは、行ごとに改行する（「、」の代わり・2026-10-06） */
+  .no-punct span { display: block; }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 

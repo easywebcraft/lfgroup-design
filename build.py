@@ -236,7 +236,7 @@ LOADER = """
   </div>
   <div class="ll-p2">
     <p class="ll-logo"><img class="logo-mark" src="/images/logo.png" alt="" width="360" height="360" data-eager>LFグループ株式会社</p>
-    <p class="ll-catch"><span class="l1">保険とお金を整えて、</span><br><span class="l2">安心できる未来へ。</span></p>
+    <p class="ll-catch"><span class="l1">保険とお金を整えて</span><br><span class="l2">安心できる未来へ</span></p>
   </div>
   <span class="ll-skip">タップでスキップ</span>
 </div>"""
@@ -286,7 +286,7 @@ def final_cta():
     return f'''  <section class="contact-cta" id="final-cta">
     <div class="wrap contact-cta-inner">
       <p class="eyebrow fade">Contact</p>
-      <h2 class="fade"><span>保険やお金について、</span><br><span>気になることから</span><span>ご相談ください。</span></h2>
+      <h2 class="fade"><span>保険やお金について</span><br><span>気になることから</span><span>ご相談ください</span></h2>
       <p class="text fade">保険の見直しや家計、これからのお金について、まずはお気軽にお問い合わせください。</p>
       <p class="contact-cta-actions fade">
         <a class="btn btn-primary" href="/contact/">お問い合わせ{ARROW}</a>
@@ -339,7 +339,7 @@ def page_about():
     <div class="wrap">
       <div class="about-intro-body fade">
         <p class="eyebrow">Introduction</p>
-        <h2 class="about-intro-title"><span>顧客満足度を最優先に、</span><span>人々の生活を向上させます。</span></h2>
+        <h2 class="about-intro-title no-punct"><span>顧客満足度を最優先に</span><span>人々の生活を向上させます</span></h2>
         <p class="about-intro-text">弊社はお客様の固定費を削減することを目的に、電気やガスなどのライフラインの代行業務や、保険の見直しを行っています。</p>
       </div>
     </div>
@@ -348,7 +348,7 @@ def page_about():
   <section class="section about-mission" id="mission">
     <div class="wrap">
       <p class="eyebrow fade">Mission</p>
-      <h2 class="about-mission-msg fade"><span>固定費削減で、</span><br><span>家計を見直す。</span></h2>
+      <h2 class="about-mission-msg fade"><span>固定費削減で</span><br><span>家計を見直す</span></h2>
       <div class="about-mission-text fade">
         <p>毎月かかる固定費だからこそ、<br>一度の見直しが、これからの家計につながります。</p>
         <p>LFグループ株式会社は、<br>ゆとりある生活の実現をお手伝いします。</p>
@@ -484,9 +484,9 @@ def page_personal():
                      photo='service-insurance.jpg', pos='45% 50%',
                      extra=page_nav([('strengths', '強み'), ('service', 'サービス'), ('alliance-service', 'アライアンスサービス')]))
     return hero + strengths([
-        ('Insurance Agency', '大手保険会社の<br>代理店。', 'SOMPOひまわり生命・日新火災海上保険を主力に、お客様のライフプランに合わせた最適な保険を提案します。'),
-        ('Long-term Support', '生涯にわたる<br>サポート。', 'ご契約のあとも、生涯を安心して過ごせるように長期的なサポートを行います。事故の際は、休日・夜間も対応します。'),
-        ('One Stop', '保険から<br>ライフラインまで。', '保険に加え、電気・ガスなどのライフライン、インターネット回線、ウォーターサーバーのお手続きやご案内も行っています。'),
+        ('Insurance Agency', '大手保険会社の<br>代理店', 'SOMPOひまわり生命・日新火災海上保険を主力に、お客様のライフプランに合わせた最適な保険を提案します。'),
+        ('Long-term Support', '生涯にわたる<br>サポート', 'ご契約のあとも、生涯を安心して過ごせるように長期的なサポートを行います。事故の際は、休日・夜間も対応します。'),
+        ('One Stop', '保険から<br>ライフラインまで', '保険に加え、電気・ガスなどのライフライン、インターネット回線、ウォーターサーバーのお手続きやご案内も行っています。'),
     ]) + f'''
   <section class="section" id="service">
     <div class="wrap">
@@ -539,9 +539,9 @@ def page_corporate():
     # ★要確認：法人のお客様向けの強み・取り扱い保険は、今のサイトに個人と分けた記載がない。
     #   今は保険代理店事業・事故対応の記載から組んでいる。法人向けの内容をいただいたら差し替える
     return hero + strengths([
-        ('Insurance Agency', '大手保険会社の<br>代理店。', 'SOMPOひまわり生命・日新火災海上保険を主力に、法人のお客様の各種保険を取り扱っています。'),
-        ('Long-term Support', '長期的な<br>サポート。', '保険の見直しなど、お客様の状況に合わせた最適な保険を提案するとともに、長期的なサポートを行います。'),
-        ('Support', '迅速な<br>事故対応。', '事故に遭われたお客様に対して、迅速に保険金のお支払いができるようアドバイスし、事故処理完了まで適切な対応を行います。休日・夜間の事故対応も行っています。'),
+        ('Insurance Agency', '大手保険会社の<br>代理店', 'SOMPOひまわり生命・日新火災海上保険を主力に、法人のお客様の各種保険を取り扱っています。'),
+        ('Long-term Support', '長期的な<br>サポート', '保険の見直しなど、お客様の状況に合わせた最適な保険を提案するとともに、長期的なサポートを行います。'),
+        ('Support', '迅速な<br>事故対応', '事故に遭われたお客様に対して、迅速に保険金のお支払いができるようアドバイスし、事故処理完了まで適切な対応を行います。休日・夜間の事故対応も行っています。'),
     ]) + f'''
   <section class="section" id="service">
     <div class="wrap">
@@ -568,10 +568,10 @@ def page_partner():
                      photo='scene-home.jpg', pos='70% 55%',
                      extra=page_nav([('strengths', '強み'), ('service', 'サービス')]))
     return hero + strengths([
-        ('Operator', '経験豊富な<br>オペレーター。', '経験豊富なオペレーターが、ご入居者様へ丁寧にご案内します。'),
-        ('Lineup', '選りすぐりの<br>商材。', 'ライフライン・インターネット回線・ウォーターサーバーなど、選りすぐりの商材を取り揃えています。'),
-        ('Check', '厳格なチェック体制と<br>管理。', 'アライアンス事業で培ったノウハウを活かし、厳格なチェック体制と管理の下で、ミスなくきめ細やかな対応を行います。'),
-        ('Partnership', '長期的な<br>パートナーとして。', '提携企業様・パートナー様の事業繁栄をお手伝いし、相互の長期的な利益追求・価値創造を目指します。'),
+        ('Operator', '経験豊富な<br>オペレーター', '経験豊富なオペレーターが、ご入居者様へ丁寧にご案内します。'),
+        ('Lineup', '選りすぐりの<br>商材', 'ライフライン・インターネット回線・ウォーターサーバーなど、選りすぐりの商材を取り揃えています。'),
+        ('Check', '厳格なチェック体制と<br>管理', 'アライアンス事業で培ったノウハウを活かし、厳格なチェック体制と管理の下で、ミスなくきめ細やかな対応を行います。'),
+        ('Partnership', '長期的な<br>パートナーとして', '提携企業様・パートナー様の事業繁栄をお手伝いし、相互の長期的な利益追求・価値創造を目指します。'),
     ], cols=2) + f'''
   <section class="section" id="service">
     <div class="wrap">
@@ -623,9 +623,9 @@ def page_company():
     <div class="wrap">
       <p class="eyebrow fade">Philosophy</p>
       <h2 class="fade">企業理念</h2>
-      <p class="co-philosophy-main fade"><span>顧客満足度を最優先に、</span><span>人々の生活を向上させます。</span></p>
+      <p class="co-philosophy-main no-punct fade"><span>顧客満足度を最優先に</span><span>人々の生活を向上させます</span></p>
       <div class="co-philosophy-sub fade">
-        <p class="co-philosophy-head">固定費削減で、家計を見直す。</p>
+        <p class="co-philosophy-head">固定費削減で家計を見直す</p>
         <p class="text">固定費は、見直し削減することで半永久的に節約することができます。LFグループ株式会社では、ゆとりある生活の実現のためにお役立ちをさせていただきます。</p>
         <p class="text">金銭的な余裕は、人生の幸福度を高めます。</p>
       </div>
@@ -726,7 +726,7 @@ def page_recruitment():
     <div class="wrap rc-fv-copy">
       <ol class="crumb fade" aria-label="パンくずリスト"><li><a href="/">トップ</a></li><li aria-current="page">採用情報</li></ol>
       <p class="eyebrow fade">Recruitment<span class="rc-fv-ja">採用情報</span></p>
-      <h1 class="rc-fv-title fade"><span>人の人生に向き合いながら、</span><span>自分の未来も変えていく。</span></h1>
+      <h1 class="rc-fv-title fade"><span>人の人生に向き合いながら</span><span>自分の未来も変えていく</span></h1>
       <p class="rc-fv-lead fade">生命保険・損害保険のご提案とアフターサービスを通じて、<br class="pc">お客様のこれからの暮らしを支える仕事です。</p>
       <p class="rc-status fade"><span class="dot"></span>Entry Open<b>エントリー受付中</b></p>
       <p class="rc-links fade"><a class="btn btn-primary" href="#requirements">募集要項を見る{ARROW}</a><a class="simple-cta-tel" href="tel:0528468224"><svg class="ico"><use href="#i-tel"/></svg>052-846-8224</a></p>
