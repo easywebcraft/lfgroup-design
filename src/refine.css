@@ -555,3 +555,21 @@
 
   /* 句読点を外した2行の見出しは、行ごとに改行する（「、」の代わり・2026-10-06） */
   .no-punct span { display: block; }
+
+  /* ===== 各ページの冒頭（写真あり）を、採用情報のFVと同じ形に（2026-10-06）=====
+     左に見出し・説明・目次、右に写真を敷き、写真の左端を白へなじませる。スマホは写真が上・見出しが下 */
+  .page-hero.ph-fv { position: relative; overflow: hidden; display: flex; align-items: center; min-height: min(82vh, 760px); }
+  .ph-photo { position: absolute; top: 0; right: 0; bottom: 0; width: 52%; margin: 0; background: var(--mist); }
+  .ph-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .ph-photo::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(90deg, var(--paper) 0%, rgba(255, 255, 255, 0) 30%); }
+  .ph-photo figcaption { position: absolute; right: 20px; bottom: 16px; z-index: 2; font-family: var(--en); font-size: 11px; letter-spacing: .2em; color: #fff; text-shadow: 0 1px 6px rgba(0, 0, 0, .35); }
+  .ph-fv .sub-hero-copy { position: relative; z-index: 1; width: 100%; }
+  .ph-fv .sub-hero-copy > * { max-width: 560px; }
+  @media (max-width: 1023px) {
+    .page-hero.ph-fv { display: block; min-height: 0; padding-top: 0; }
+    .ph-photo { position: relative; width: 100%; height: 42vh; min-height: 260px; max-height: 420px; margin-top: var(--header-h); }
+    .ph-photo::before { background: linear-gradient(180deg, rgba(255, 255, 255, 0) 60%, var(--paper) 100%); }
+    .ph-fv .sub-hero-copy { padding-top: 24px; }
+    .ph-fv .sub-hero-copy > * { max-width: none; }
+  }

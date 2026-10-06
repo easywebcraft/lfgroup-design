@@ -254,19 +254,21 @@ def page_hero(label, title, crumbs, lead='', photo=None, chips=(), extra='', h1=
     lead_html = f'\n      <p class="hero-lead fade">{lead}</p>' if lead else ''
     chips_html = ('\n      <ul class="hero-chips fade">' + ''.join(f'<li>{c}</li>' for c in chips) + '</ul>') if chips else ''
     extra_html = f'\n{extra}' if extra else ''
-    band = ''
+    # 写真があるページは、採用情報のFVと同じく、見出しの右側に写真を敷き、左端を白へなじませる（2026-10-06。
+    # それまでは見出しの下に横長の写真を置いていた）。スマホは写真が上・見出しが下
+    photo_html = ''
     if photo:
         style = f'object-position:{pos}' + (f';transform:scale({zoom});transform-origin:{pos}' if zoom != 1 else '')
-        band = (f'\n    <div class="wrap"><figure class="hero-band fade">'
-                f'<img src="/images/{photo}" alt="" data-eager style="{style}" onerror="this.remove()">'
-                + (f'<figcaption>{caption}</figcaption>' if caption else '') + '</figure></div>')
-    cls = 'page-hero sub-hero' + (' has-photo' if photo else '') + (' compact' if compact else '')
-    return f'''  <section class="{cls}">
+        photo_html = (f'\n    <figure class="ph-photo fade">'
+                      f'<img src="/images/{photo}" alt="" data-eager style="{style}" onerror="this.remove()">'
+                      + (f'<figcaption>{caption}</figcaption>' if caption else '') + '</figure>')
+    cls = 'page-hero sub-hero' + (' has-photo ph-fv' if photo else '') + (' compact' if compact else '')
+    return f'''  <section class="{cls}">{photo_html}
     <div class="wrap sub-hero-copy">
       <ol class="crumb fade" aria-label="パンくずリスト">{''.join(items)}</ol>
       <p class="eyebrow fade">{label}</p>
       {title_html}{lead_html}{chips_html}{extra_html}
-    </div>{band}
+    </div>
   </section>
 '''
 
