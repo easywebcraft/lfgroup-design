@@ -1068,8 +1068,8 @@ def write_top_a2(top):
     """トップのヒーローに、採用情報のFV案A2（名古屋の街の朝〜夜・金の光・1文字ずつ跳ねる見出し・奥行き）を
     そのまま当てた試作（/top-a2/。2026-10-07）。コピーは今のトップのまま。本番には出さない。
     右下の時刻・ヒーロー下の流れる帯・ENTRY ボタンは外した（2026-10-07 松本さん）"""
-    times = [('10:00', 'START', '一日のはじまり', 'recruit-city-1000.jpg'), ('13:00', 'MEETING', 'お客様とのご相談', 'recruit-city-1300.jpg'),
-             ('16:00', 'PROPOSAL', 'ご提案の準備', 'recruit-city-1600.jpg'), ('18:00', 'FINISH', '一日のおわり', 'recruit-city-1800.jpg')]
+    # 写真は名古屋の街の四季（2026-10-07 松本さん作成。春＝桜とビル、夏＝入道雲と交差点、秋＝イチョウ並木と夕日、冬＝雪とイルミネーション）
+    times = [(None, None, None, f) for f in ('city-spring.jpg', 'city-summer.jpg', 'city-autumn.jpg', 'city-winter.jpg')]
     imgs = ''.join(f'<img class="{"is-on" if n == 0 else ""}" src="/images/{f}" alt="" data-eager onerror="this.remove()">' for n, (_, _, _, f) in enumerate(times))
     sec = f'''<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="2500" id="top">
     <div class="rf-media">{imgs}</div>
