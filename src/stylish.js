@@ -26,7 +26,11 @@
       if (!e.isIntersecting) return;
       io.unobserve(e.target);
       var el = e.target, delay = +(el.getAttribute('data-delay') || 0);
-      whenReady(function () { setTimeout(function () { el.classList.add(el.classList.contains('entry') ? 'is-open' : 'is-shown'); }, delay); });
+      whenReady(function () { setTimeout(function () {
+        if (!el.classList.contains('entry')) { el.classList.add('is-shown'); return; }
+        el.classList.add('is-open');
+        setTimeout(function () { el.classList.add('is-text'); }, 1000);  // ① 帯が抜けてから文字を出す（帯は1.5秒、中ほどで抜け始める）
+      }, delay); });
     });
   }, { rootMargin: '0px 0px -12% 0px' });
   Array.prototype.forEach.call(lines, function (h) { io.observe(h); });

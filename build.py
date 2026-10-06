@@ -1005,7 +1005,9 @@ def write_stylish(top):
                                     f'<script src="/assets/stylish.js?v={v}"></script>\n</body>', 1)
                 .replace('リニューアルの試作です', 'リニューアルの試作です・スタイリッシュ版', 1)
                 # 四季の切り替えを今のトップより早く（1枚 6秒→3.8秒、最初の切り替えまで 3.5秒→2.6秒。2026-10-06）
-                .replace('<div class="fv-photo">', '<div class="fv-photo" data-stay="3800" data-first="2600">', 1))
+                .replace('<div class="fv-photo">', '<div class="fv-photo" data-stay="3800" data-first="2600">', 1)
+                # 入口のタイルの文字は stylish.js が帯のあとに出すので、もとのふわっと表示（.fade）から外す
+                .replace('<span class="entry-body fade">', '<span class="entry-body">'))
     for a in ('<h2 class="fade"><span>目的に合わせて', '<h2 class="fade"><span>LFグループについて',
               '<h2 class="fade">数字で見るLFグループ', '<h2 class="fade"><span>保険やお金について'):
         assert a in html_, a
