@@ -1064,6 +1064,41 @@ def write_recruit_trials():
         write(f'recruitment-{key}/index.html', html_)
 
 
+def write_top_a2(top):
+    """トップのヒーローに、採用情報のFV案A2（名古屋の街の朝〜夜・金の光・1文字ずつ跳ねる見出し・奥行き）を
+    そのまま当てた試作（/top-a2/。2026-10-07）。コピーは今のトップのまま。本番には出さない。
+    採用向けの言葉（WE ARE HIRING の帯・ENTRY ボタン）は、トップ向けの英字に置き換え／外した"""
+    times = [('10:00', 'START', '一日のはじまり', 'recruit-city-1000.jpg'), ('13:00', 'MEETING', 'お客様とのご相談', 'recruit-city-1300.jpg'),
+             ('16:00', 'PROPOSAL', 'ご提案の準備', 'recruit-city-1600.jpg'), ('18:00', 'FINISH', '一日のおわり', 'recruit-city-1800.jpg')]
+    imgs = ''.join(f'<img class="{"is-on" if n == 0 else ""}" src="/images/{f}" alt="" data-eager onerror="this.remove()">' for n, (_, _, _, f) in enumerate(times))
+    clock = ''.join(f'<p class="rf-time{" is-on" if n == 0 else ""}"><b>{t}</b><span>{en}</span><small>{ja}</small></p>' for n, (t, en, ja, _) in enumerate(times))
+    band = ''.join('<span>INSURANCE<i>―</i>LIFELINE<i>―</i>LF GROUP<i>―</i></span>' for _ in range(6))
+    sec = f'''<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="2500" id="top">
+    <div class="rf-media">{imgs}</div>
+    <p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>
+    <span class="rv-sweep" aria-hidden="true"></span>
+    <div class="wrap rc-fv-copy">
+      <p class="eyebrow">Insurance &amp; Lifeline</p>
+      <h1 class="rc-fv-title rv-title"><span>保険とお金を整えて</span><span>安心できる<em>未来</em>へ</span></h1>
+      <p class="rc-fv-lead">保険の見直しや、電気・ガスなどの固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。</p>
+      <p class="rc-links"><a class="btn btn-primary" href="/contact/">保険・お金について相談する{ARROW}</a></p>
+    </div>
+    <div class="wrap rf-clock" aria-hidden="true">{clock}
+      <ol class="rf-bar">{'<li></li>' * len(times)}</ol></div>
+    <div class="rv-band" aria-hidden="true"><div class="rv-track">{band}{band}</div></div>
+  </section>'''
+    css, js = (SRC / 'recruit-fv.css').read_text(), (SRC / 'recruit-fv.js').read_text()
+    v = hashlib.sha1((css + js).encode()).hexdigest()[:8]
+    html_ = top.replace(LOADER_HEAD, '', 1).replace(LOADER, '', 1)  # ロゴの演出は今の見出しへ吸い込ませる作りなので外す
+    i = html_.index('<section class="fv" id="top">')
+    j = html_.index('</section>', i) + len('</section>')
+    html_ = (html_[:i] + sec + html_[j:])
+    html_ = (html_.replace('</head>', f'<link rel="stylesheet" href="/assets/recruit-fv.css?v={v}">\n</head>', 1)
+                  .replace('</body>', f'<script src="/assets/recruit-fv.js?v={v}"></script>\n</body>', 1)
+                  .replace('リニューアルの試作です', 'リニューアルの試作です・トップのヒーローに採用FV案A2を当てた版', 1))
+    write('top-a2/index.html', html_)
+
+
 def stylish_top(top):
     """トップページに動き（src/stylish.css・stylish.js ＋なめらかなスクロールの lenis.min.js）を足す。
     2026-10-06「もっとスタイリッシュで動きのあるホームページ」から /stylish/ で試作し、同日、本流のトップに反映した。
@@ -1166,6 +1201,7 @@ def main():
         # スタイリッシュ版の試作（/stylish/）は本流のトップに反映した（2026-10-06）。前のURLはトップへ移す
         write('stylish/index.html', redirect('../'))
         write_recruit_trials()
+        write_top_a2(top)
         write('season/index.html', SEASON_REDIRECT)
         write('life/index.html', SEASON_REDIRECT)
         write('scene/index.html', season_photos(top_base, SCENE_PHOTOS, white_wrap=False)
