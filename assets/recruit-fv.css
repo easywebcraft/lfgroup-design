@@ -205,7 +205,7 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 .rf-top .rc-links { margin-top: 32px; }
 /* トップに当てた版（/top-a2/）：見出しは元のトップと同じ明朝体（2026-10-07）。大きな英字はコピーに重ならないよう右半分に収める */
 .rf-top .rv-title { font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.65; letter-spacing: .08em; }
-.rf-top .rv-big { left: auto; right: 0; width: 46%%; top: auto; bottom: 120px; font-size: clamp(48px, 6.6vw, 110px); }
+.rf-top .rv-big { left: auto; right: 0; width: 46%; top: auto; bottom: 120px; font-size: clamp(48px, 6.6vw, 110px); }
 @media (max-width: 1023px) {
   .rf-top .rv-big { width: auto; left: 0; bottom: auto; top: calc(var(--header-h) + 24px); font-size: clamp(40px, 13vw, 80px); }
 }
@@ -216,10 +216,10 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 /* 背景に溶け込まないよう、輪郭線を太く濃くし、中にうっすら白、影を付ける（2026-10-07） */
 .rf-top .rv-big { color: rgba(255, 255, 255, .14); -webkit-text-stroke: 2px rgba(255, 255, 255, .85); filter: drop-shadow(0 4px 18px rgba(8, 18, 32, .55)); }
 @media (max-width: 767px) { .rf-top .rv-big { -webkit-text-stroke-width: 1.5px; } }
-/* /top-a2/：背景が暗いとのご指摘で、紺の重ねを薄くする（左端 90%%→55%%、右側は写真そのまま）。文字は影で読みやすさを保つ（2026-10-07） */
-.rf-top .rf-media::after { background: linear-gradient(90deg, rgba(8, 18, 32, .55) 0%%, rgba(8, 18, 32, .25) 40%%, rgba(8, 18, 32, 0) 65%%); }
+/* /top-a2/：背景が暗いとのご指摘で、紺の重ねを薄くする（左端 90%→55%、右側は写真そのまま）。文字は影で読みやすさを保つ（2026-10-07） */
+.rf-top .rf-media::after { background: linear-gradient(90deg, rgba(8, 18, 32, .55) 0%, rgba(8, 18, 32, .25) 40%, rgba(8, 18, 32, 0) 65%); }
 .rf-top .rc-fv-copy { text-shadow: 0 2px 14px rgba(8, 18, 32, .55); }
-@media (max-width: 1023px) { .rf-top .rf-media::after { background: linear-gradient(180deg, rgba(8, 18, 32, .1) 0%%, rgba(8, 18, 32, .25) 40%%, rgba(8, 18, 32, .65) 100%%); } }
+@media (max-width: 1023px) { .rf-top .rf-media::after { background: linear-gradient(180deg, rgba(8, 18, 32, .1) 0%, rgba(8, 18, 32, .25) 40%, rgba(8, 18, 32, .65) 100%); } }
 .rf-top .rc-fv-copy .btn { text-shadow: none; }
 /* /top-a2/：見出しの「未来」とボタンの文字を白に（2026-10-07）。ボタンの地は紺にして白文字を読みやすく */
 .rf-top .rv-title em { color: #fff; }
@@ -254,3 +254,7 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 .rf-go .rf-top .rf-media img:nth-child(2).is-on { transition: clip-path .85s cubic-bezier(.77, 0, .18, 1), scale 3.6s cubic-bezier(.3, .1, .3, 1); }
 .rf-go .rf-top .rf-media img:nth-child(3).is-on { transition: opacity .45s ease, filter 1.9s cubic-bezier(.2, .6, .2, 1), translate 3.6s linear; }
 .rf-go .rf-top .rf-media img:nth-child(4).is-on { transition: clip-path 1.5s cubic-bezier(.65, 0, .35, 1), scale 3.6s cubic-bezier(.3, .1, .3, 1); }
+/* /top-a2/：背景をもう少し明るく（2026-10-07。左端 55%→40%） */
+.rf-top .rf-media::after { background: linear-gradient(90deg, rgba(8, 18, 32, .4) 0%, rgba(8, 18, 32, .16) 40%, rgba(8, 18, 32, 0) 62%); }
+.rf-top .rc-fv-copy { text-shadow: 0 2px 16px rgba(8, 18, 32, .65); }
+@media (max-width: 1023px) { .rf-top .rf-media::after { background: linear-gradient(180deg, rgba(8, 18, 32, .05) 0%, rgba(8, 18, 32, .15) 40%, rgba(8, 18, 32, .5) 100%); } }
