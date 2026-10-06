@@ -203,3 +203,10 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 /* トップに当てた版（/top-a2/）：時刻と帯がないので、下の余白を戻す */
 .rf-v.rf-top { padding-bottom: 120px; }
 .rf-top .rc-links { margin-top: 32px; }
+/* トップに当てた版（/top-a2/）：見出しは元のトップと同じ明朝体（2026-10-07）。大きな英字はコピーに重ならないよう右半分に収める */
+.rf-top .rv-title { font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.65; letter-spacing: .08em; }
+.rf-top .rv-big { left: auto; right: 0; width: 46%%; top: auto; bottom: 120px; font-size: clamp(48px, 6.6vw, 110px); }
+@media (max-width: 1023px) {
+  .rf-top .rv-big { width: auto; left: 0; bottom: auto; top: calc(var(--header-h) + 24px); font-size: clamp(40px, 13vw, 80px); }
+}
+@media (max-width: 767px) { .rf-top .rv-title { font-size: clamp(26px, 7.4vw, 34px); letter-spacing: .04em; } }
