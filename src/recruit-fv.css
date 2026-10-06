@@ -319,23 +319,3 @@ html:has(.rf-top) .ll-ring .t { stroke: rgba(255, 255, 255, .18); }
 .rf-go .rf-top .rf-media img:nth-child(3).is-on { transition: opacity .5s ease, filter 1.2s ease, scale 6s linear, translate 6s linear; }
 .rf-go .rf-top .rf-media img:nth-child(4).is-on { transition: opacity 1s ease .2s, filter 1s ease .2s, scale 6s linear, translate 6s linear; }
 .rf-go .rf-top .rf-media img:nth-child(4).is-prev { transition: scale 6s linear, translate 6s linear; }
-
-/* ===== /top-a2/：「CHANGE YOUR FUTURE」の輪郭線を、季節が変わるたびにペンでなぞるように描き直す（2026-10-07）=====
-   文字は SVG（.rv-draw svg）。輪郭線（stroke）を点線の長さで隠しておき、0 まで縮めて描く。描き終わってから中のうっすら白が浮かぶ */
-.rf-top .rv-draw { line-height: 0; }
-.rf-top .rv-draw svg { display: inline-block; width: clamp(300px, 37vw, 620px); height: auto; overflow: visible; }
-.rv-draw text { font-family: var(--en); font-weight: 800; font-size: 118px; letter-spacing: -2px; text-anchor: end;
-  fill: rgba(255, 255, 255, .14); stroke: rgba(255, 255, 255, .88); stroke-width: 2.4px; stroke-linejoin: round; paint-order: stroke; }
-.rf-go .rv-draw svg.is-draw text { animation: rv-draw 2.6s cubic-bezier(.45, 0, .2, 1) both; }
-.rf-go .rv-draw svg.is-draw text:nth-child(2) { animation-delay: .18s; }
-.rf-go .rv-draw svg.is-draw text:nth-child(3) { animation-delay: .36s; }
-@keyframes rv-draw {
-  0% { stroke-dasharray: 0 1600; fill-opacity: 0; }
-  75% { stroke-dasharray: 1600 0; fill-opacity: 0; }
-  100% { stroke-dasharray: 1600 0; fill-opacity: 1; }
-}
-/* 横からすべり込む動き（span 用）は SVG では使わない */
-.rf-go .rf-top .rv-big { opacity: 1; }
-@media (max-width: 1023px) { .rf-top .rv-draw svg { width: min(78vw, 320px); } }
-.rf-top .rv-draw svg { width: clamp(340px, 44vw, 720px); }
-@media (max-width: 1023px) { .rf-top .rv-draw svg { width: min(86vw, 360px); } }
