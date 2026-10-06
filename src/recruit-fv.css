@@ -261,3 +261,12 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 /* /top-a2-full/：本番の .fv と、トップの動き（stylish.css）の指定を打ち消す */
 .fv.rf-top { height: auto; max-height: none; min-height: 100vh; min-height: 100svh; background: var(--navy); }
 .fv.rf-top h1 > span::after { display: none; }
+
+/* ===== /top-a2/：前の季節が止まってから次へ移るのを直す（2026-10-07）=====
+   カメラの動きを、表示時間（3.5秒）＋次の季節が現れきるまで（最大1.8秒）より長い 6秒・等速にし、
+   前の写真（.is-prev）にも同じ動きを残す（動きの指定を外すと、その場で止まって見えるため） */
+.rf-go .rf-top .rf-media img:nth-child(1).is-on { transition: opacity 1.6s ease, filter 1.8s ease, scale 6s linear, translate 6s linear; }
+.rf-go .rf-top .rf-media img:nth-child(2).is-on { transition: clip-path .85s cubic-bezier(.77, 0, .18, 1), scale 6s linear, translate 6s linear; }
+.rf-go .rf-top .rf-media img:nth-child(3).is-on { transition: opacity .45s ease, filter 1.9s cubic-bezier(.2, .6, .2, 1), scale 6s linear, translate 6s linear; }
+.rf-go .rf-top .rf-media img:nth-child(4).is-on { transition: clip-path 1.5s cubic-bezier(.65, 0, .35, 1), scale 6s linear, translate 6s linear; }
+.rf-go .rf-top .rf-media img.is-prev { transition: scale 6s linear, translate 6s linear; }
