@@ -319,27 +319,3 @@ html:has(.rf-top) .ll-ring .t { stroke: rgba(255, 255, 255, .18); }
 .rf-go .rf-top .rf-media img:nth-child(3).is-on { transition: opacity .5s ease, filter 1.2s ease, scale 6s linear, translate 6s linear; }
 .rf-go .rf-top .rf-media img:nth-child(4).is-on { transition: opacity 1s ease .2s, filter 1s ease .2s, scale 6s linear, translate 6s linear; }
 .rf-go .rf-top .rf-media img:nth-child(4).is-prev { transition: scale 6s linear, translate 6s linear; }
-
-/* ===== /top-a2/ のヒーローに動きを足す（2026-10-07）=====
-   季節の粒子（.rv-particles。recruit-fv.js が描く）、季節名がパタパタ入れ替わる英字（.rv-season）、4秒の進み具合の線（.rf-bar） */
-.rv-particles { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; pointer-events: none; }
-.rf-top .rf-media::before { display: none; }  /* 冬の切り替え時だけの雪は、季節の粒子（雪）に置き換えた */
-/* 季節名と進み具合の線：PCは「CHANGE YOUR FUTURE」の下、スマホは英字の下 */
-.rv-tempo { position: absolute; right: var(--gutter); bottom: 34px; z-index: 3; display: flex; align-items: center; gap: 18px; color: #fff; }
-.rf-top .rv-big { bottom: 96px; }
-.rv-season { margin: 0; display: flex; align-items: baseline; font-family: var(--en); font-size: 15px; font-weight: 700; letter-spacing: .28em; perspective: 400px;
-  text-shadow: 0 1px 8px rgba(8, 18, 32, .5); min-width: 9.5em; }
-.rv-season small { margin-right: 12px; font-size: 11px; letter-spacing: .16em; color: rgba(255, 255, 255, .7); }
-.rv-season span { display: inline-block; transform-origin: 50% 0; animation: rv-flap .5s cubic-bezier(.2, 1.3, .4, 1) both; }
-@keyframes rv-flap { from { opacity: 0; transform: rotateX(-90deg); } to { opacity: 1; transform: none; } }
-.rv-tempo .rf-bar { position: static; display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; }
-.rv-tempo .rf-bar li { width: 44px; height: 2px; background: rgba(255, 255, 255, .3); overflow: hidden; }
-.rv-tempo .rf-bar li::after { content: ""; display: block; height: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
-.rv-tempo .rf-bar li.is-done::after { transform: none; }
-.rv-tempo .rf-bar li.is-on::after { animation: rf-bar var(--stay, 4s) linear forwards; }
-@media (max-width: 1023px) {
-  .rv-tempo { right: auto; left: var(--gutter); bottom: auto; top: calc(var(--header-h) + 230px); gap: 12px; }
-  .rv-season { font-size: 12px; min-width: 8.6em; }
-  .rv-tempo .rf-bar li { width: 26px; }
-}
-@media (prefers-reduced-motion: reduce) { .rv-season span { animation: none; } }
