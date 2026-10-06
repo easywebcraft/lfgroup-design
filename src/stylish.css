@@ -33,3 +33,51 @@
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
+
+/* ===== FV（2026-10-06）：スクロールで写真が縮む＋言葉が切り替わる見出し =====
+   .sf は高さ（スクロールの助走）を持ち、中の .sf-sticky が画面に貼り付いたまま、写真を角の丸いカードへ縮める。
+   縮み具合 --p（0〜1）は stylish.js が入れる。動きを減らす設定の人には助走を付けず、ふつうの全面写真にする */
+.fv.sf { height: auto; min-height: 0; max-height: none; overflow: visible; background: #fff; }
+.s-ready .fv.sf { height: 190vh; height: 190svh; }
+.sf-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; align-items: center; }
+.sf-media { position: absolute; inset: 0; overflow: hidden; background: var(--mist);
+  clip-path: inset(calc(var(--p, 0) * 9vh) calc(var(--p, 0) * 8vw) calc(var(--p, 0) * 9vh) calc(var(--p, 0) * 8vw) round calc(var(--p, 0) * 28px)); }
+.sf-media img { width: 100%; height: 100%; object-fit: cover; object-position: 70% 40%; scale: calc(1.12 - var(--p, 0) * .12); }
+.sf-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(27, 51, 80, .5) 0%, rgba(27, 51, 80, .18) 50%, rgba(27, 51, 80, 0) 75%); }
+.s-ready .fv.sf:not(.is-loaded) .sf-media img { scale: 1.25; }
+.s-ready .fv.sf .sf-media img { transition: scale 2.4s cubic-bezier(.19, 1, .22, 1); }
+.s-ready .fv.sf.is-scrolling .sf-media img { transition: none; }
+.sf-copy { position: relative; z-index: 1; width: 100%; color: #fff; padding-top: var(--header-h);
+  opacity: calc(1 - var(--p, 0) * 1.6); translate: 0 calc(var(--p, 0) * -70px); }
+.sf-copy > * { max-width: 640px; }
+.fv.sf .eyebrow { color: #fff; }
+.fv.sf h1 { margin-top: 18px; color: #fff; text-shadow: 0 2px 18px rgba(20, 40, 64, .35); }
+.fv.sf h1 > span { display: block; }
+.fv.sf .fv-lead { color: rgba(255, 255, 255, .92); text-shadow: 0 1px 10px rgba(20, 40, 64, .35); }
+.fv.sf .fv-cta .link-arrow { color: #fff; }
+
+/* 言葉の切り替え：同じ場所に3つ重ね、今の言葉（.is-on）だけ見せる。入れ替わるときは下から上へ */
+.sf-rot { position: relative; display: inline-block; vertical-align: top; overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em;
+  transition: width .7s cubic-bezier(.19, 1, .22, 1); }
+.sf-rot > span { display: block; white-space: nowrap; color: #F3E3BE; transition: transform .8s cubic-bezier(.19, 1, .22, 1), opacity .8s ease; }
+.sf-rot > span:not(.is-on) { position: absolute; left: 0; top: 0; transform: translateY(110%); opacity: 0; }
+.sf-rot > span.is-out { transform: translateY(-110%); opacity: 0; }
+.sf-rot::after { content: ""; position: absolute; left: 0; right: .15em; bottom: .12em; height: 2px; background: var(--gold); opacity: .9; }
+
+/* スクロールの案内 */
+.sf-scroll { position: absolute; left: 50%; bottom: 28px; z-index: 1; translate: -50% 0; display: flex; flex-direction: column; align-items: center; gap: 10px;
+  font-family: var(--en); font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #fff; text-decoration: none; opacity: calc(1 - var(--p, 0) * 3); }
+.sf-scroll::after { content: ""; width: 1px; height: 56px; background: linear-gradient(#fff 50%, rgba(255, 255, 255, .3) 50%) 0 0 / 1px 200%; animation: sf-line 2s ease-in-out infinite; }
+@keyframes sf-line { from { background-position: 0 100%; } to { background-position: 0 -100%; } }
+
+@media (max-width: 767px) {
+  .s-ready .fv.sf { height: 160vh; height: 160svh; }
+  .sf-media { clip-path: inset(calc(var(--p, 0) * 7vh) calc(var(--p, 0) * 5vw) calc(var(--p, 0) * 7vh) calc(var(--p, 0) * 5vw) round calc(var(--p, 0) * 20px)); }
+  .sf-media img { object-position: 62% 40%; }
+  .sf-media::after { background: linear-gradient(180deg, rgba(27, 51, 80, .1) 0%, rgba(27, 51, 80, .2) 35%, rgba(27, 51, 80, .72) 100%); }
+  .sf-scroll { display: none; }
+  .sf-sticky { align-items: flex-end; }
+  .sf-copy { padding-bottom: 96px; }
+  .fv.sf .fv-lead br { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .sf-scroll::after { animation: none; } }
