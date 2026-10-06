@@ -1292,6 +1292,24 @@
     .gnav a { font-size: 12.5px; letter-spacing: .05em; }
   }
 
+  /* ===== 数字で見るLFグループ（2026-10-06）：写真に紺を重ね、半透明のカードに数字を置く ===== */
+  .numbers { position: relative; isolation: isolate; overflow: hidden; color: #fff; padding-block: clamp(80px, 9vw, 128px); text-align: center; }
+  .numbers-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%; }
+  .numbers::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(31, 54, 82, .78), rgba(31, 54, 82, .86)); }
+  .numbers h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: .12em; color: #fff; }
+  .numbers-en { margin: 10px 0 0; font-family: var(--en); font-size: 13px; letter-spacing: .2em; color: #D9C9A3; }
+  .numbers-list { list-style: none; margin: clamp(40px, 5vw, 64px) auto 0; padding: 0; max-width: 1080px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .num-card { position: relative; padding: 36px 20px 32px; border: 1px solid rgba(255, 255, 255, .28); border-radius: 12px; background: rgba(255, 255, 255, .08); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .num-label { margin: 0; font-size: 15px; font-weight: 500; letter-spacing: .14em; color: #E8DCC0; }
+  .num-value { margin: 10px 0 6px; line-height: 1; white-space: nowrap; }
+  .num { font-family: var(--en); font-weight: 600; font-size: clamp(52px, 5.6vw, 76px); letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+  .num-value small { margin-left: 6px; font-size: 18px; letter-spacing: .1em; }
+  .num-note { margin: 0; font-size: 13px; letter-spacing: .1em; color: rgba(255, 255, 255, .78); }
+  .num-todo { position: absolute; top: 10px; right: 10px; padding: 1px 8px; border-radius: 2px; background: #C0392B; font-size: 11px; letter-spacing: .1em; color: #fff; }
+  @media (max-width: 767px) {
+    .numbers-list { grid-template-columns: 1fr; gap: 14px; }
+    .num-card { padding: 26px 16px 22px; }
+  }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 

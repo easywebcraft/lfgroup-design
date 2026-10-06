@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="./images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="./images/apple-touch-icon.png">
-<link rel="stylesheet" href="./assets/style.css?v=60e7c5cd">
+<link rel="stylesheet" href="./assets/style.css?v=8f56b223">
 <script>
   // 表示前に「フェード待ち」の状態にする（本文の最後で付けると、文字が一度見えてから消えてフェードする）。
   // main.js が読み込めなかったときに文字が隠れたままにならないよう、3秒で解除する。
@@ -256,6 +256,36 @@
     </div>
   </section>
 
+  <!-- 数字で見るLFグループ：画面に入ると数字が0から増える（main.js の data-count）。
+       ★TODO：数字は今のサイトにないので「仮」。お客様に確認できたら data-count と表示の数字を差し替え、仮の印（.num-todo）を消す -->
+  <section class="numbers" id="numbers">
+    <img loading="lazy" decoding="async" width="1536" height="1024" class="numbers-bg" src="./images/cta-final.jpg?v=2d4792a4" alt="">
+    <div class="wrap numbers-inner">
+      <h2 class="fade">数字で見るLFグループ</h2>
+      <p class="numbers-en fade">LF Group in Numbers</p>
+      <ul class="numbers-list">
+        <li class="num-card fade">
+          <p class="num-label">お取り扱い保険会社</p>
+          <p class="num-value"><span class="num" data-count="10">10</span><small>社</small></p>
+          <p class="num-note">生命保険・損害保険</p>
+          <span class="num-todo">仮</span>
+        </li>
+        <li class="num-card fade">
+          <p class="num-label">保有契約件数</p>
+          <p class="num-value"><span class="num" data-count="1000">1,000</span><small>件</small></p>
+          <p class="num-note">個人・法人のお客様</p>
+          <span class="num-todo">仮</span>
+        </li>
+        <li class="num-card fade">
+          <p class="num-label">提携企業様</p>
+          <p class="num-value"><span class="num" data-count="50">50</span><small>社</small></p>
+          <p class="num-note">不動産管理会社など</p>
+          <span class="num-todo">仮</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <!-- 10 INSURANCE PARTNERS：今のサイトの「主力会社」に載っている2社だけ。ロゴは正式な素材がないので文字で。
        ★TODO：ロゴを使う場合は、各社の正式な素材と使用許諾を確認してから -->
   <section class="partners" id="partners">
@@ -336,6 +366,6 @@
   <a class="t" href="tel:0528462135"><svg><use href="#i-tel"/></svg>電話する</a>
 </div>
 
-<script src="./assets/main.js?v=60e7c5cd"></script>
+<script src="./assets/main.js?v=8f56b223"></script>
 </body>
 </html>

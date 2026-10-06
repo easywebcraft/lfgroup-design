@@ -142,3 +142,31 @@
       if (end) new IntersectionObserver(function (e) { endSeen = e[0].isIntersecting; update(); }).observe(end);
     }
   })();
+
+  // 数字のカウントアップ：画面に入ったら 0 から data-count まで増やす（1回だけ）。動きを減らす設定の人には最初から最終の数字を見せる
+  (function () {
+    var nums = document.querySelectorAll('.num[data-count]');
+    if (!nums.length || !('IntersectionObserver' in window)) return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var fmt = function (n) { return n.toLocaleString('ja-JP'); };
+    var run = function (el) {
+      // ページを開いたときのロゴの演出中は、終わるまで待ってから増やす（演出の裏で終わってしまわないように）
+      if (document.documentElement.classList.contains('is-loading')) return setTimeout(function () { run(el); }, 200);
+      var to = +el.getAttribute('data-count'), dur = 1800, t0 = null;
+      var step = function (t) {
+        if (t0 === null) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        el.textContent = fmt(Math.round(to * (1 - Math.pow(1 - p, 3))));  // 終わりに向けてゆっくり
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        io.unobserve(entry.target);
+        run(entry.target);
+      });
+    }, { threshold: 0.6 });
+    Array.prototype.forEach.call(nums, function (el) { el.textContent = '0'; io.observe(el); });
+  })();
