@@ -71,3 +71,37 @@
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
+
+/* ===== ヒーローの動きを足す（2026-10-06）=====
+   ⑦ 写真ごとにカメラの動きを変える：今はどれも「8秒かけて少し寄る」なので、写真ごとに
+      寄る／引く／横に流れる／上へ流れる を割り当てる（season.css の切り替えの仕組みはそのまま、動きの量と向きだけ変える）。
+      --s0・--x0・--y0 ＝ 始まり、--s1・--x1・--y1 ＝ 終わり、--o ＝ 寄る中心
+   ⑧ スクロールで奥行き：写真はゆっくり下へ、文字は速く上へ流れて薄くなる（--fy ＝ スクロールした量。stylish.js）
+   ⑨ 見出しの「安心できる未来へ」の下に金の線を引く（html.s-ul） */
+.s-ready .fv-photo img { --s0: 1.04; --s1: 1.12; --x0: 0%; --x1: 0%; --y0: 0%; --y1: 0%; --o: 70% 40%;
+  scale: var(--s0); translate: var(--x0) var(--y0); transform-origin: var(--o); }
+.s-ready .fv-photo img:nth-child(1) { --s0: 1.02; --s1: 1.12; --o: 72% 38%; }                     /* 春：二人へ寄る */
+.s-ready .fv-photo img:nth-child(2) { --s0: 1.18; --s1: 1.04; --o: 60% 30%; }                     /* 夏：空が広がるように引く */
+.s-ready .fv-photo img:nth-child(3) { --s0: 1.1; --s1: 1.1; --x0: 3%; --x1: -3%; }                /* 秋：夕暮れの道を横に流れる */
+.s-ready .fv-photo img:nth-child(4) { --s0: 1.03; --s1: 1.14; --o: 85% 45%; }                     /* 冬：二人へゆっくり寄る */
+.s-ready .fv-photo img:nth-child(5) { --s0: 1.16; --s1: 1.06; --y0: 2.5%; --y1: -2%; }            /* 三世代の春：上へ流れながら引く */
+.s-ready .fv-photo img.is-ready { scale: var(--s0); translate: var(--x0) var(--y0); transition: opacity 0s 2.6s, scale 0s 2.6s, translate 0s 2.6s; }
+.s-ready .fv-photo img.is-ready.is-show { scale: var(--s1); translate: var(--x1) var(--y1); transition: opacity 2.4s ease, scale 9s linear, translate 9s linear; }
+.s-ready .fv-photo img.is-ready.is-prev { scale: var(--s1); translate: var(--x1) var(--y1); transition: scale 9s linear, translate 9s linear; }
+.s-ready .fv-photo.is-wrap img.is-ready.is-prev { opacity: 0; transition: opacity 1.6s ease-in-out, scale 9s linear, translate 9s linear; }
+.s-ready .fv-photo.is-wrap img.is-ready.is-show { transition: opacity 1.6s ease-in-out 1.9s, scale 9s linear 1.9s, translate 9s linear 1.9s; }
+
+/* ⑧ スクロールで奥行き */
+.s-ready .fv .fv-photo { translate: 0 calc(var(--fy, 0) * .35px); }
+.s-ready .fv .fv-copy { translate: 0 calc(var(--fy, 0) * -.22px); opacity: calc(1 - var(--fy, 0) / 520); }
+.s-ready .fv .fv-scroll { opacity: calc(1 - var(--fy, 0) / 160); }
+
+/* ⑨ 金の下線（ロゴの演出で見出しが収まり、メニューが降りたあとに左から引く） */
+.s-ready .fv h1 > span:last-of-type { position: relative; }
+.s-ready .fv h1 > span:last-of-type::after { content: ""; position: absolute; left: 0; right: 0; bottom: -.04em; height: 2px; background: var(--gold);
+  transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(.65, 0, .35, 1); }
+.s-ready.s-ul .fv h1 > span:last-of-type::after { transform: none; }
+.s-ready .fv .eyebrow::before { transform: none; }  /* ヒーローの小見出しの線は最初から出しておく（線が伸びる動きは下の段だけ） */
+@media (max-width: 1023px) {  /* 写真が上・文字が下に並ぶ幅では、奥行きを付けると重なるので止める */
+  .s-ready .fv .fv-photo, .s-ready .fv .fv-copy { translate: none; opacity: 1; }
+}

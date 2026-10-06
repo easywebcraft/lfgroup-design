@@ -50,6 +50,7 @@
   var dropHeader = function () {
     if (fv && !fv.classList.contains('is-loaded')) return setTimeout(dropHeader, 100);
     setTimeout(function () { root.classList.add('s-head'); }, fv ? 900 : 0);
+    setTimeout(function () { root.classList.add('s-ul'); }, fv ? 1500 : 0);  // ⑨ 見出しの金の下線は、メニューが降りたあとに
   };
   whenReady(dropHeader);
 
@@ -66,6 +67,8 @@
       var t = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);  // 画面の中央で 0、上下の端で ±1
       p[0].style.setProperty('--py', (-t * p[2]).toFixed(1) + 'px');
     });
+    // ⑧ ヒーローの奥行き：スクロールした量（画面の高さまで）を渡す。写真はゆっくり、文字は速く流れる
+    if (fv) fv.style.setProperty('--fy', Math.min(window.scrollY, vh).toFixed(0));
     // ④ 数字の段：上端が画面の下端に来たとき 0、画面の 25% の高さまで上がったとき 1
     if (nums) {
       var s = nums.getBoundingClientRect();
