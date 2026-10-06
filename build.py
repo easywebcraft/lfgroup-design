@@ -990,21 +990,6 @@ def release_files():
     write('robots.txt', robots)
 
 
-def write_motion(top):
-    """トップページの動きの試作（/motion/）。お客さまに今のトップと見比べてもらう用で、本番（--release）には出さない。
-    中身は今のトップと同じで、src/motion.css・motion.js を足し、写真の枠を「帯の後ろから現れる」用（m-reveal）にする。"""
-    css, js = (SRC / 'motion.css').read_text(), (SRC / 'motion.js').read_text()
-    v = hashlib.sha1((css + js).encode()).hexdigest()[:8]
-    write('assets/motion.css', css)
-    write('assets/motion.js', js)
-    html_ = (top.replace('</head>', f'<link rel="stylesheet" href="/assets/motion.css?v={v}">\n</head>', 1)
-                .replace('</body>', f'<script src="/assets/motion.js?v={v}"></script>\n</body>', 1)
-                .replace('リニューアルの試作です', 'リニューアルの試作です・動きの試作版', 1)
-                .replace('class="panel-photo"', 'class="panel-photo m-reveal"'))
-    html_ = re.sub(r'class="(split-photo|feature-photo|showcase-photo) fade"', r'class="\1 m-reveal"', html_)
-    write('motion/index.html', html_)
-
-
 def write_stylish(top):
     """スタイリッシュ版の試作（/stylish/・2026-10-06「もっとスタイリッシュで動きのあるホームページ」）。
     中身は今のトップと同じで、src/stylish.css・stylish.js（＋なめらかなスクロールの lenis.min.js）を足し、
@@ -1099,7 +1084,8 @@ def main():
     top = season_photos(top_base)
     write('index.html', top)
     if not RELEASE:
-        write_motion(top)
+        # 動きの試作（/motion/）は /stylish/ にまとめた（2026-10-06）。前のURLは /stylish/ へ移す
+        write('motion/index.html', redirect('../stylish/'))
         write_stylish(top)
         write('season/index.html', SEASON_REDIRECT)
         write('life/index.html', SEASON_REDIRECT)

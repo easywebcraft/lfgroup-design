@@ -1,35 +1,73 @@
 /* ===== スタイリッシュ版の試作（/stylish/・2026-10-06）=====
    今のトップに足すだけ。本番（--release）には出さない。動きを減らす設定の人には何もしない（html.s-ready が付かない）
-   A 見出しが1行ずつ下からせり上がる（.s-lines）
-   B 入口の写真が幕を開けるように現れ、スクロールに合わせて少し奥行きが動く（.entry.is-open／--py）
-   （C 大きな英字が横に流れる帯は、試して外した）
-   D なめらかなスクロール（Lenis。stylish.js）
-   E 入口のタイルにマウスを乗せると、写真が寄って明るくなり、矢印が伸びる */
+   careerscout の動きの形を借り、色は LF の紺と金にする（2026-10-06 /motion/ の試作をこちらにまとめた）
+   ① 入口のタイル：紺の帯（端に金の線）が横切り、その後ろから写真が現れる（.entry.is-open）
+   ② 最初の写真：ロゴの演出のあと斜めに開き、続けてメニューと相談ボタンが上から降りてくる（html.s-head）
+   ③ 見出し：小見出しの金の線が伸び（.eyebrow.s-line）、見出しが1行ずつ下からせり上がる（.s-lines）
+   ④ 数字の段：カード状の写真が、スクロールに合わせて画面いっぱいに広がる（--p）。そのあと数字が増える
+   ほか：なめらかなスクロール（Lenis）、入口のタイルにマウスを乗せたときの反応、写真の奥行き（--py）
+   （大きな英字が横に流れる帯・スクロールで縮む全面写真＋切り替わる見出しは、試して外した） */
 
-/* A 見出しが1行ずつせり上がる */
+/* ③ 見出しが1行ずつせり上がる */
 .s-ready .s-lines .s-row { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
 .s-ready .s-lines .s-in { display: inline-block; transform: translateY(110%); transition: transform 1.1s cubic-bezier(.19, 1, .22, 1); }
 .s-ready .s-lines.is-shown .s-in { transform: none; }
+/* ③ 小見出しの金の線が伸びる（線を長く・少し太くして、伸びるのが分かるようにする） */
+.s-ready main .eyebrow::before { width: 56px; height: 2px; transform: scaleX(0); transform-origin: left; transition: transform 1.2s cubic-bezier(.65, 0, .35, 1) .1s; }
+.s-ready main .eyebrow.s-line::before { transform: none; }
 
-/* B 入口の写真が幕を開けるように現れる。奥行き（--py）はスクロールで stylish.js が入れる */
-.s-ready .entry { clip-path: inset(0 100% 0 0); transition: clip-path 1.3s cubic-bezier(.77, 0, .18, 1); }
-.s-ready .entry.is-open { clip-path: inset(0 0 0 0); }
-.s-ready .entry img { transform: none; translate: 0 var(--py, 0px); scale: 1.22; transition: scale 1.8s cubic-bezier(.19, 1, .22, 1); will-change: translate; }
-.s-ready .entry.is-open img { scale: 1.1; }
-.s-ready .numbers-bg { top: -12%; height: 124%; translate: 0 var(--py, 0px); will-change: translate; }
+/* ① 入口のタイル：帯が横切り、帯が抜けたところから写真と文字が現れる */
+.s-ready .entry::before {
+  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: var(--navy); box-shadow: inset -6px 0 0 var(--gold);
+  transform: scaleX(0); transform-origin: left;
+}
+.s-ready .entry.is-open::before { animation: s-band 1.5s cubic-bezier(.77, 0, .18, 1) forwards; }
+.s-ready .entry img { clip-path: inset(0 100% 0 0); transform: none; translate: 0 var(--py, 0px); scale: 1.3;
+  transition: clip-path .01s linear .75s, scale 2.2s cubic-bezier(.2, .6, .2, 1) .7s; will-change: translate; }
+.s-ready .entry.is-open img { clip-path: inset(0); scale: 1.1; }
+.s-ready .entry::after { opacity: 0; transition: opacity .6s ease .75s; }
+.s-ready .entry.is-open::after { opacity: 1; }
+.s-ready .entry .entry-body { opacity: 0; translate: 0 18px; transition: opacity .9s ease 1s, translate .9s cubic-bezier(.19, 1, .22, 1) 1s; }
+.s-ready .entry.is-open .entry-body { opacity: 1; translate: 0 0; }
+@keyframes s-band {
+  0% { transform: scaleX(0); transform-origin: left; }
+  48% { transform: scaleX(1); transform-origin: left; }
+  52% { transform: scaleX(1); transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
 
-/* E タイルにマウスを乗せたとき */
+/* ② 最初の写真を斜めに開く（今のフェードの代わり。四季の写真の切り替えとズームはそのまま） */
+.s-ready.js .fv .fv-photo { opacity: 1; clip-path: polygon(0 0, 0 0, -30% 100%, 0 100%); transition: none; }
+.s-ready.js .fv.is-loaded .fv-photo { animation: s-wipe 1.8s cubic-bezier(.77, 0, .18, 1) .1s forwards; }
+@keyframes s-wipe { to { clip-path: polygon(0 0, 130% 0, 100% 100%, 0 100%); } }
+/* ② メニューと相談ボタンが上から降りてくる（ロゴは演出でヘッダーへ飛んで収まるので動かさない） */
+.s-ready .header .gnav li, .s-ready .header .btn, .s-ready .header .menu-btn {
+  opacity: 0; translate: 0 -28px; transition: opacity .8s ease, translate .9s cubic-bezier(.19, 1, .22, 1); }
+.s-ready.s-head .header .gnav li, .s-ready.s-head .header .btn, .s-ready.s-head .header .menu-btn { opacity: 1; translate: 0 0; }
+.s-ready .header .gnav li:nth-child(2) { transition-delay: .06s; }
+.s-ready .header .gnav li:nth-child(3) { transition-delay: .12s; }
+.s-ready .header .gnav li:nth-child(4) { transition-delay: .18s; }
+.s-ready .header .gnav li:nth-child(5) { transition-delay: .24s; }
+.s-ready .header .gnav li:nth-child(6) { transition-delay: .3s; }
+.s-ready .header .btn, .s-ready .header .menu-btn { transition-delay: .38s; }
+
+/* ④ 数字の段：カード状から画面いっぱいへ広がる（--p：0＝小さいカード、1＝広がりきった）。写真の奥行き（--py）も */
+.s-ready .numbers { clip-path: inset(calc(7% * (1 - var(--p, 0))) calc(9vw * (1 - var(--p, 0))) calc(7% * (1 - var(--p, 0))) calc(9vw * (1 - var(--p, 0))) round calc(24px * (1 - var(--p, 0)))); }
+.s-ready .numbers-bg { top: -12%; height: 124%; translate: 0 var(--py, 0px); scale: calc(1.25 - .25 * var(--p, 0)); will-change: translate; }
+
+/* 入口のタイルにマウスを乗せたとき */
 .entry::after { transition: opacity .6s ease; }
 .entry .link-arrow .arw { transition: transform .5s cubic-bezier(.19, 1, .22, 1); }
 @media (hover: hover) {
-  .s-ready .entry.is-open:hover img { scale: 1.16; }
-  .entry:hover::after { opacity: .55; }
+  .s-ready .entry.is-open:hover img { scale: 1.16; transition: scale 1.2s cubic-bezier(.19, 1, .22, 1); }
+  .s-ready .entry.is-open:hover::after, .entry:hover::after { opacity: .55; transition-delay: 0s; }
   .entry:hover .link-arrow .arw { transform: translateX(8px); }
   .entry:hover .link-arrow::after { width: 100%; }
 }
 .entry .link-arrow::after { transition: width .5s cubic-bezier(.19, 1, .22, 1); }
 
-/* D なめらかなスクロール（Lenis が html に付けるクラス） */
+/* なめらかなスクロール（Lenis が html に付けるクラス） */
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }

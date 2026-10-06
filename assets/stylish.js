@@ -30,13 +30,30 @@
     });
   }, { rootMargin: '0px 0px -12% 0px' });
   Array.prototype.forEach.call(lines, function (h) { io.observe(h); });
-  // B 入口のタイル：同じ段の左右で少しずらす
+  // ① 入口のタイル：同じ段の左右で少しずらす
   Array.prototype.forEach.call(document.querySelectorAll('.entry'), function (el, i) {
-    el.setAttribute('data-delay', (i % 2) * 160);
+    el.setAttribute('data-delay', (i % 2) * 220);
     io.observe(el);
   });
+  // ③ 小見出しの金の線（最初の写真の中のものは除く）
+  var lio = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      lio.unobserve(e.target);
+      whenReady(function () { e.target.classList.add('s-line'); });
+    });
+  }, { rootMargin: '0px 0px -12% 0px' });
+  Array.prototype.forEach.call(document.querySelectorAll('main .eyebrow'), function (el) { if (!el.closest('.fv')) lio.observe(el); });
 
-  // B 奥行き：画面の中での位置に合わせて、写真を上下に少しだけずらす
+  // ② 最初の写真が開き始めたら、少し遅れてメニューと相談ボタンを降ろす
+  var fv = document.querySelector('.fv');
+  var dropHeader = function () {
+    if (fv && !fv.classList.contains('is-loaded')) return setTimeout(dropHeader, 100);
+    setTimeout(function () { root.classList.add('s-head'); }, fv ? 900 : 0);
+  };
+  whenReady(dropHeader);
+
+  // ①・④ 奥行き：画面の中での位置に合わせて、写真を上下に少しだけずらす
   var par = [];
   Array.prototype.forEach.call(document.querySelectorAll('.entry img'), function (img) { par.push([img, img.parentNode, 28]); });
   var nb = document.querySelector('.numbers-bg');
@@ -49,7 +66,13 @@
       var t = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);  // 画面の中央で 0、上下の端で ±1
       p[0].style.setProperty('--py', (-t * p[2]).toFixed(1) + 'px');
     });
+    // ④ 数字の段：上端が画面の下端に来たとき 0、画面の 25% の高さまで上がったとき 1
+    if (nums) {
+      var s = nums.getBoundingClientRect();
+      nums.style.setProperty('--p', Math.min(1, Math.max(0, (vh - s.top) / (vh * .75))).toFixed(3));
+    }
   };
+  var nums = document.querySelector('.numbers');
   window.addEventListener('resize', function () { vh = window.innerHeight; parallax(); });
 
   // D なめらかなスクロール。ロゴの演出中は止めておく。ページ内リンクは固定ヘッダーの分だけずらす

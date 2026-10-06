@@ -18,12 +18,10 @@
 | `assets/` | 書き出したCSS・JS（生成物） |
 | `images/` | 写真（ChatGPTで作ったイメージ素材。実在のスタッフ・お客様ではない。プロンプトは ewc-crm の `docs/LFグループ_画像生成プロンプト.md`） |
 
-## 動きの試作（/motion/）
+## 動きの試作（/motion/）→ /stylish/ にまとめた
 
-- URL：https://easywebcraft.github.io/lfgroup-design/motion/ （トップページだけ。今のトップと見比べてもらう用）
-- 2026-10-05、お客さまから「careerscout.co.jp のようなトップの動きを」と要望があり作ったもの。動きは `src/motion.css`・`src/motion.js`（先頭のコメントに A〜E の一覧）
-- `build.py` の `write_motion()` がトップページに動きの CSS・JS を足して書き出す。本番（`--release`）には出さない
-- 採用が決まったら、motion.css・motion.js を本体（style.css・main.js）に移し、/motion/ を消す
+- 2026-10-05、お客さまの「careerscout.co.jp のようなトップの動きを」から作った試作。その後トップの段を減らして中身が古くなったため、
+  2026-10-06 に動きを今のトップの構成に合わせて /stylish/ にまとめ、`src/motion.css`・`motion.js` は消した。/motion/ は /stylish/ へ移す
 
 ## トップの写真の季節の切り替え（人生の四季）
 
@@ -62,13 +60,17 @@
 
 ## スタイリッシュ版の試作（/stylish/・2026-10-06）
 
-- お客様の「もっとスタイリッシュで動きのあるホームページ」への提案。今のトップと見比べてもらう用で、本番（`--release`）には出さない
-- 中身は今のトップと同じで、`src/stylish.css`・`src/stylish.js` を足す（`build.py` の `write_stylish`）
-  - 見出しが1行ずつ下からせり上がる／入口の写真が幕を開けるように現れ、スクロールで少し奥行きが動く
-  - 大きな英字が横に流れる帯も試したが、外した（2026-10-06）
-  - なめらかなスクロール（`src/lenis.min.js`。Lenis 1.1.20、MIT License。外部から読み込まずサイト内に置く）
-  - 入口のタイルにマウスを乗せると、写真が寄って明るくなり、矢印が伸びる
+- URL：https://easywebcraft.github.io/lfgroup-design/stylish/ （トップページだけ。今のトップと見比べてもらう用。本番（`--release`）には出さない）
+- お客様の「もっとスタイリッシュで動きのあるホームページ」と、careerscout.co.jp の動きを参考に。色は LF の紺と金
+- 中身は今のトップと同じで、`src/stylish.css`・`src/stylish.js` を足す（`build.py` の `write_stylish`。一覧は stylish.css の先頭）
+  - ① 入口のタイル：紺の帯（端に金の線）が横切り、その後ろから写真と文字が現れる
+  - ② 最初の写真：ロゴの演出のあと斜めに開き、メニューと相談ボタンが上から降りてくる
+  - ③ 見出し：小見出しの金の線が伸び、見出しが1行ずつ下からせり上がる
+  - ④ 数字の段：角の丸いカードから、スクロールに合わせて画面いっぱいに広がる
+  - ほか：なめらかなスクロール（`src/lenis.min.js`。Lenis 1.1.20、MIT License。サイト内に置く）、タイルのマウスオーバー、写真の奥行き
+- 試して外したもの：大きな英字が横に流れる帯、スクロールで縮む全面写真＋「保険→家計→暮らし」と切り替わる見出し
 - 動きを減らす設定の人には動きを付けない。ロゴの演出中はスクロールと動きを止めておく
+- 採用が決まったら、stylish.css・stylish.js を本体（style.css・main.js）に移し、/stylish/ を消す
 
 ## 数字で見るLFグループ（2026-10-06）
 
