@@ -16,6 +16,67 @@
     items[i].classList.add('is-on');
   };
 
+  // 季節の粒子：春＝花びら、夏＝立ちのぼる光の粒、秋＝イチョウの葉、冬＝雪。季節が変わると、前の粒は薄れて消え、新しい粒が浮かぶ。
+  // ヒーローが画面の外にあるときと、タブを見ていないときは描かない（重くしないため）
+  var makeParticles = function (cv, box) {
+    var ctx = cv.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2), W = 0, H = 0, P = [], kind = 0;
+    var size = function () { W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    size();
+    window.addEventListener('resize', size);
+    var MAX = function () { return W < 768 ? 16 : 34; };
+    var make = function (k, anywhere) {
+      var rise = k === 1;
+      return { k: k, life: 0, x: Math.random() * W,
+        y: anywhere ? Math.random() * H : (rise ? H + 20 : -20),
+        r: k === 0 ? 5 + Math.random() * 4 : k === 1 ? 1.5 + Math.random() * 2.5 : k === 2 ? 6 + Math.random() * 5 : 1.5 + Math.random() * 2.5,
+        vy: rise ? -(0.25 + Math.random() * 0.45) : k === 3 ? 0.5 + Math.random() * 0.9 : 0.6 + Math.random() * 0.8,
+        vx: -0.4 + Math.random() * 0.5, a: Math.random() * 6.28, va: -0.03 + Math.random() * 0.06, ph: Math.random() * 6.28 };
+    };
+    var season = function (k) {
+      kind = k;
+      for (var n = 0; n < MAX(); n++) P.push(make(k, true));  // 新しい季節の粒を、画面のあちこちに薄く浮かべる
+    };
+    var draw = function (p) {
+      var al = Math.max(0, Math.min(1, p.life));
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.a);
+      if (p.k === 0) { ctx.fillStyle = 'rgba(255, 218, 230,' + (.85 * al) + ')'; ctx.beginPath(); ctx.ellipse(0, 0, p.r, p.r * .58, 0, 0, 6.28); ctx.fill(); }
+      else if (p.k === 1) {
+        var tw = .55 + .45 * Math.sin(p.ph * 3), g = ctx.createRadialGradient(0, 0, 0, 0, 0, p.r * 4);
+        g.addColorStop(0, 'rgba(255, 246, 214,' + (.9 * al * tw) + ')'); g.addColorStop(1, 'rgba(255, 246, 214, 0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, p.r * 4, 0, 6.28); ctx.fill();
+      } else if (p.k === 2) {
+        ctx.fillStyle = 'rgba(232, 176, 48,' + (.9 * al) + ')';
+        ctx.beginPath(); ctx.moveTo(0, p.r * .5); ctx.quadraticCurveTo(-p.r, -p.r * .2, -p.r * .55, -p.r * .8);
+        ctx.quadraticCurveTo(0, -p.r * .45, p.r * .55, -p.r * .8); ctx.quadraticCurveTo(p.r, -p.r * .2, 0, p.r * .5); ctx.fill();
+      } else { ctx.fillStyle = 'rgba(255, 255, 255,' + (.85 * al) + ')'; ctx.beginPath(); ctx.arc(0, 0, p.r, 0, 6.28); ctx.fill(); }
+      ctx.restore();
+    };
+    var tick = function () {
+      requestAnimationFrame(tick);
+      if (document.hidden || box.getBoundingClientRect().bottom < 0) return;
+      ctx.clearRect(0, 0, W, H);
+      var live = 0;
+      P = P.filter(function (p) {
+        p.ph += .02; p.a += p.va;
+        p.x += p.vx + Math.sin(p.ph) * (p.k === 3 ? .25 : .5);
+        p.y += p.vy;
+        p.life += p.k === kind ? .02 : -.02;  // 今の季節の粒は浮かび、前の季節の粒は薄れる
+        if (p.life > 1) p.life = 1;
+        var out = p.y > H + 30 || p.y < -30 || p.x < -30 || p.x > W + 30;
+        if (p.k !== kind && p.life <= 0) return false;
+        if (out) { if (p.k !== kind) return false; Object.assign(p, make(p.k, false), { life: 1 }); }
+        if (p.k === kind) live++;
+        draw(p);
+        return true;
+      });
+      if (live < MAX() && Math.random() < .3) P.push(Object.assign(make(kind, false), { life: 1 }));
+    };
+    requestAnimationFrame(tick);
+    return { season: season };
+  };
+
   // トップ（/top-a2-full/）では、ページを開いたときのロゴの演出（main.js）が終わるまで待ってから動かす
   var begin = function () {
   if (root.classList.contains('is-loading')) { setTimeout(begin, 100); return; }
@@ -28,20 +89,32 @@
     sec.style.setProperty('--stay', STAY / 1000 + 's');
     var n = 0;
     var sweep = sec.querySelector('.rv-sweep');
-    var show = function (i) {
-      sec.setAttribute('data-season', i);  // /top-a2/：今の季節（0春 1夏 2秋 3冬）。秋→冬の雪の演出に使う
-      step(imgs, i);
-      if (sweep && !sec.classList.contains('rf-top')) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }  // A2：金の光の帯（切り替えのたびに。/top-a2/ では外した 2026-10-07）
-      times.forEach(function (t, k) { t.classList.toggle('is-on', k === i); });
-      if (!bars.length) return;  // 時刻を出さない版（/top-a2/）
+    // /top-a2/：季節の名前（パタパタ入れ替わる英字）と、季節の粒子（花びら・光・イチョウ・雪）
+    var label = sec.querySelector('.rv-season'), NAMES = ['SPRING', 'SUMMER', 'AUTUMN', 'WINTER'];
+    var particles = sec.querySelector('.rv-particles') ? makeParticles(sec.querySelector('.rv-particles'), sec) : null;
+    var mark = function (i) {
+      sec.setAttribute('data-season', i);  // 今の季節（0春 1夏 2秋 3冬）
+      if (particles) particles.season(i);
+      if (label) {
+        label.innerHTML = '<small>0' + (i + 1) + '</small>' + NAMES[i].split('').map(function (ch, k) {
+          return '<span style="animation-delay:' + (k * 0.05) + 's">' + ch + '</span>';
+        }).join('');
+      }
+      if (!bars.length) return;
       bars.forEach(function (b, k) { b.classList.toggle('is-done', k < i); b.classList.remove('is-on'); });
       void bars[i].offsetWidth;
       bars[i].classList.add('is-on');
     };
+    var show = function (i) {
+      mark(i);
+      step(imgs, i);
+      if (sweep && !sec.classList.contains('rf-top')) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }  // A2：金の光の帯（切り替えのたびに。/top-a2/ では外した 2026-10-07）
+      times.forEach(function (t, k) { t.classList.toggle('is-on', k === i); });
+    };
     // 4枚とも先に読み込み・描画の準備（decode）を済ませてから動かす（初めて出す写真で引っかからないように）
     Promise.all(imgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : null; })).then(function () {
       // ロゴの演出のあとは、最初の写真がもう見えているので現れ直させない（春がぼやけ直して見えるため）
-      if (!window.LF_LOADER_RUN) { imgs[0].classList.remove('is-on'); show(0); }
+      if (!window.LF_LOADER_RUN) { imgs[0].classList.remove('is-on'); show(0); } else mark(0);
       // 季節ごとに見せる時間を変えられる（data-stays="春,夏,秋,冬" ミリ秒。冬は雪の演出のあとに現れるので長め）
       var stays = (sec.getAttribute('data-stays') || '').split(',').map(Number);
       var next = function () {

@@ -1072,8 +1072,9 @@ def write_top_a2(top):
     times = [(None, None, None, f) for f in ('city-spring.jpg', 'city-summer.jpg', 'city-autumn.jpg', 'city-winter.jpg')]
     imgs = ''.join(f'<img class="{"is-on" if n == 0 else ""}" src="/images/{f}" alt="" data-eager onerror="this.remove()">' for n, (_, _, _, f) in enumerate(times))
     sec = f'''<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000" id="top">
-    <div class="rf-media">{imgs}</div>
+    <div class="rf-media">{imgs}<canvas class="rv-particles" aria-hidden="true"></canvas></div>
     <p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>
+    <div class="rv-tempo" aria-hidden="true"><p class="rv-season"></p><ol class="rf-bar">{'<li></li>' * len(times)}</ol></div>
     <span class="rv-sweep" aria-hidden="true"></span>
     <div class="wrap rc-fv-copy">
       <p class="eyebrow">Insurance &amp; Lifeline</p>
