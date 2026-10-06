@@ -203,3 +203,6 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 /* トップに当てた版（/top-a2/）：時刻と帯がないので、下の余白を戻す */
 .rf-v.rf-top { padding-bottom: 120px; }
 .rf-top .rc-links { margin-top: 32px; }
+/* 見出しが短い（豊かな未来へ／共に）ので、大きく見せる */
+.rf-top .rv-title { font-size: clamp(44px, 6.4vw, 92px); line-height: 1.2; }
+@media (max-width: 767px) { .rf-top .rv-title { font-size: clamp(32px, 9.6vw, 40px); } }

@@ -1066,7 +1066,7 @@ def write_recruit_trials():
 
 def write_top_a2(top):
     """トップのヒーローに、採用情報のFV案A2（名古屋の街の朝〜夜・金の光・1文字ずつ跳ねる見出し・奥行き）を
-    そのまま当てた試作（/top-a2/。2026-10-07）。コピーは今のトップのまま。本番には出さない。
+    そのまま当てた試作（/top-a2/。2026-10-07）。コピーは今のトップのまま（見出しだけ「豊かな未来へ共に」を試す。2026-10-07 松本さん）。本番には出さない。
     右下の時刻・ヒーロー下の流れる帯・ENTRY ボタン・大きな英字（CHANGE YOUR FUTURE）は外した（2026-10-07 松本さん）"""
     times = [('10:00', 'START', '一日のはじまり', 'recruit-city-1000.jpg'), ('13:00', 'MEETING', 'お客様とのご相談', 'recruit-city-1300.jpg'),
              ('16:00', 'PROPOSAL', 'ご提案の準備', 'recruit-city-1600.jpg'), ('18:00', 'FINISH', '一日のおわり', 'recruit-city-1800.jpg')]
@@ -1076,7 +1076,7 @@ def write_top_a2(top):
     <span class="rv-sweep" aria-hidden="true"></span>
     <div class="wrap rc-fv-copy">
       <p class="eyebrow">Insurance &amp; Lifeline</p>
-      <h1 class="rc-fv-title rv-title"><span>保険とお金を整えて</span><span>安心できる<em>未来</em>へ</span></h1>
+      <h1 class="rc-fv-title rv-title"><span>豊かな<em>未来</em>へ</span><span>共に</span></h1>
       <p class="rc-fv-lead">保険の見直しや、電気・ガスなどの固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。</p>
       <p class="rc-links"><a class="btn btn-primary" href="/contact/">保険・お金について相談する{ARROW}</a></p>
     </div>
