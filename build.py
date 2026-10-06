@@ -1040,22 +1040,19 @@ def write_recruit_trials():
     # 案A2（2026-10-07「もっとベンチャー企業感・イケイケの中小企業感を」）：案A の写真と仕組みのまま、
     # 極太のゴシック＋大きな英字、濃い背景に明るいゴールド、募集要項の数字のカウントアップ、2.5秒の切り替え、
     # 「WE ARE HIRING」の流れる帯、画面右下の ENTRY ボタン。コピーは募集要項にある内容（成果報酬・年収1,000万円も可能）から
+    # コピーは今の採用情報ページのまま（2026-10-07 松本さん「コピーは今まで通りで、動きをいけいけに」）。
+    # 見出しを1文字ずつ出すために rv-title を付け、ほかの要素は .fade を外して recruit-fv.js で順にすべり込ませる
     copy_v = (copy.replace('<h1 class="rc-fv-title fade"><span>人の人生に向き合いながら</span><span>自分の未来も変えていく</span></h1>',
-                           '<h1 class="rc-fv-title rv-title"><span>成果が</span><span>そのまま<em>年収</em>になる</span></h1>')
-                  .replace('<p class="rc-status fade">',
-                           '<div class="rv-nums fade">'
-                           '<p><small>年収</small><b class="rv-count" data-count="1000">1,000</b><span>万円も可能</span></p>'
-                           '<p><small>固定給</small><b class="rv-count" data-count="20">20</b><span>万円＋成果報酬</span></p>'
-                           '<p class="rv-note">※成果連動型の報酬です。年収は営業成績により異なります</p></div>\n'
-                           '      <p class="rc-status fade">'))
-    assert 'rv-title' in copy_v and 'rv-nums' in copy_v
+                           '<h1 class="rc-fv-title rv-title"><span>人の人生に向き合いながら</span><span>自分の<em>未来</em>も変えていく</span></h1>')
+                  .replace(' fade"', '"').replace('class="fade"', ''))
+    assert 'rv-title' in copy_v
     hiring = ''.join('<span>WE ARE HIRING<i>―</i>JOIN LF GROUP<i>―</i></span>' for _ in range(6))
     fv['a2'] = (fv['a'].replace('<section class="rf rf-a" data-fx="a">',
                                 '<section class="rf rf-a rf-v" data-fx="a" data-stay="2500">')
-                       .replace(copy, '<p class="rv-big" aria-hidden="true">CHANGE<br>YOUR FUTURE</p>\n    ' + copy_v)
+                       .replace(copy, '<p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>\n    <span class="rv-sweep" aria-hidden="true"></span>\n    ' + copy_v)
                        .replace('  </section>', f'''    <div class="rv-band" aria-hidden="true"><div class="rv-track">{hiring}{hiring}</div></div>
   </section>
-  <a class="rv-entry" href="tel:0528468224" aria-label="電話で応募する 052-846-8224"><b>ENTRY</b><small>電話で応募</small></a>'''))
+  <a class="rv-entry" href="tel:0528468224" aria-label="電話で応募する 052-846-8224"><svg class="rv-ring" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="rvRing" d="M50,50 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs><text><textPath href="#rvRing">WE ARE HIRING ・ JOIN US ・ WE ARE HIRING ・ JOIN US ・</textPath></text></svg><b>ENTRY</b><small>電話で応募</small></a>'''))
     for key, sec in fv.items():
         html_ = (base[:i] + sec + base[j:])
         html_ = (html_.replace('</head>', f'<link rel="stylesheet" href="/assets/recruit-fv.css?v={v}">\n</head>', 1)

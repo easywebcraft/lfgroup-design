@@ -24,8 +24,10 @@
     var imgs = all('.rf-media img', sec), times = all('.rf-time', sec), bars = all('.rf-bar li', sec);
     sec.style.setProperty('--stay', STAY / 1000 + 's');
     var n = 0;
+    var sweep = sec.querySelector('.rv-sweep');
     var show = function (i) {
       step(imgs, i);
+      if (sweep) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }  // A2：金の光の帯
       times.forEach(function (t, k) { t.classList.toggle('is-on', k === i); });
       bars.forEach(function (b, k) { b.classList.toggle('is-done', k < i); b.classList.remove('is-on'); });
       void bars[i].offsetWidth;
@@ -56,7 +58,17 @@
         if (node.nodeType === 3) row.replaceChild(wrap, node); else { node.textContent = ''; node.appendChild(wrap); }
       });
     });
-    requestAnimationFrame(function () { requestAnimationFrame(function () { vt.classList.add('is-go'); }); });
+    requestAnimationFrame(function () { requestAnimationFrame(function () { vt.classList.add('is-go'); sec.classList.add('is-go'); }); });
+    // マウスの位置（PCだけ）とスクロールの量を渡す。写真・大きな英字・コピーが別々の量でずれて、奥行きが出る
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      window.addEventListener('mousemove', function (e) {
+        sec.style.setProperty('--mx', (e.clientX / window.innerWidth * 2 - 1).toFixed(3));
+        sec.style.setProperty('--my', (e.clientY / window.innerHeight * 2 - 1).toFixed(3));
+      }, { passive: true });
+    }
+    var onScroll = function () { sec.style.setProperty('--sy', Math.min(window.scrollY, window.innerHeight).toFixed(0)); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
     all('.rv-count', sec).forEach(function (el) {
       var to = +el.getAttribute('data-count'), t0 = null;
       el.textContent = '0';
