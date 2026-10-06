@@ -50,17 +50,24 @@
   replay.type = 'button';
   replay.className = 's-replay';
   replay.textContent = 'タイルの動きをもう一度見る';
+  // 閉じるときは動きを止めて（.s-reset）一瞬で戻す。止めないと、閉じる動きの途中で開き直して、何も起きないように見える
+  var timers = [];
   replay.addEventListener('click', function () {
-    tiles.forEach(function (el) { el.classList.remove('is-open', 'is-text'); });
+    timers.forEach(clearTimeout);
+    timers = [];
+    tiles.forEach(function (el) { el.classList.add('s-reset'); el.classList.remove('is-open', 'is-text'); });
     void document.body.offsetHeight;  // 閉じた状態をいったん画面に反映させてから
-    tiles.forEach(function (el) {
-      var r = el.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > window.innerHeight) { io.observe(el); return; }
-      setTimeout(function () {
-        el.classList.add('is-open');
-        setTimeout(function () { el.classList.add('is-text'); }, 1000);
-      }, 120 + +el.getAttribute('data-delay'));
-    });
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      tiles.forEach(function (el) {
+        el.classList.remove('s-reset');
+        var r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) { io.observe(el); return; }
+        timers.push(setTimeout(function () {
+          el.classList.add('is-open');
+          timers.push(setTimeout(function () { el.classList.add('is-text'); }, 1000));
+        }, 150 + +el.getAttribute('data-delay')));
+      });
+    }); });
   });
   document.body.appendChild(replay);
   // ③ 小見出しの金の線（最初の写真の中のものは除く）

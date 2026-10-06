@@ -176,3 +176,5 @@ html.lenis, html.lenis body { height: auto; }
 .s-ready .entry[data-fx="f"] img { clip-path: none; scale: 1.18; transition: scale 2s cubic-bezier(.2, .6, .2, 1); }
 .s-ready .entry[data-fx="f"].is-open img { scale: 1.1; }
 .s-ready .entry[data-fx="f"]::after { transition-delay: .2s; }
+/* 「もう一度見る」で閉じた状態へ戻すときは、動きを止めて一瞬で戻す */
+.s-ready .entry.s-reset, .s-ready .entry.s-reset *, .s-ready .entry.s-reset::before, .s-ready .entry.s-reset::after { transition: none !important; animation: none !important; }
