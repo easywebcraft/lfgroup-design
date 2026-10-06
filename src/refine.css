@@ -74,7 +74,7 @@
   .header.is-scrolled .header-inner { height: 72px; }
   .gnav { margin-left: auto; }
   .gnav ul { gap: 32px; }
-  .gnav a { font-size: 13px; letter-spacing: .1em; color: var(--ink); }
+  .gnav a { font-size: 15px; letter-spacing: .08em; color: var(--ink); }  /* 2026-10-06 13px→15px（小さいとのご指摘） */
   .header .btn { padding: 11px 20px; font-size: 12px; min-height: 0; gap: 12px; }
   @media (max-width: 767px) { .header.is-scrolled .header-inner { height: var(--header-h); } }
 
@@ -464,7 +464,7 @@
   }
   @media (min-width: 1180px) and (max-width: 1365px) {
     .gnav ul { gap: 20px; }
-    .gnav a { font-size: 12.5px; letter-spacing: .05em; }
+    .gnav a { font-size: 14px; letter-spacing: .04em; }
   }
 
   /* ===== 数字で見るLFグループ（2026-10-06）：写真に紺を重ね、半透明のカードに数字を置く ===== */
