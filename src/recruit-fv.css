@@ -312,3 +312,10 @@ html:has(.rf-top) .ll-ring .t { stroke: rgba(255, 255, 255, .18); }
 .rf-go .rf-top .rf-media img:nth-child(4).is-on { transition: opacity 1s ease .25s, filter 1.3s ease .25s, scale 8s linear, translate 8s linear; }
 .rf-go .rf-top[data-season="3"] .rf-media::before { animation: rf-snow-fall 10s linear infinite, rf-snow-show 4.5s ease forwards; }
 @keyframes rf-snow-show { 0% { opacity: 0; } 10% { opacity: 1; } 60% { opacity: .9; } 100% { opacity: .35; } }
+
+/* 等間隔・同じテンポに（2026-10-07）：4季とも見せる時間4秒、切り替わり約1.2秒、カメラの動き6秒 */
+.rf-go .rf-top .rf-media img:nth-child(1).is-on { transition: opacity 1.2s ease, filter 1.2s ease, scale 6s linear, translate 6s linear; }
+.rf-go .rf-top .rf-media img:nth-child(2).is-on { transition: clip-path 1.2s cubic-bezier(.65, 0, .35, 1), scale 6s linear, translate 6s linear; }
+.rf-go .rf-top .rf-media img:nth-child(3).is-on { transition: opacity .5s ease, filter 1.2s ease, scale 6s linear, translate 6s linear; }
+.rf-go .rf-top .rf-media img:nth-child(4).is-on { transition: opacity 1s ease .2s, filter 1s ease .2s, scale 6s linear, translate 6s linear; }
+.rf-go .rf-top .rf-media img:nth-child(4).is-prev { transition: scale 6s linear, translate 6s linear; }
