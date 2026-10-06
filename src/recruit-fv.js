@@ -42,7 +42,12 @@
     Promise.all(imgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : null; })).then(function () {
       // ロゴの演出のあとは、最初の写真がもう見えているので現れ直させない（春がぼやけ直して見えるため）
       if (!window.LF_LOADER_RUN) { imgs[0].classList.remove('is-on'); show(0); }
-      setInterval(function () { n = (n + 1) % imgs.length; show(n); }, STAY);
+      // 季節ごとに見せる時間を変えられる（data-stays="春,夏,秋,冬" ミリ秒。冬は雪の演出のあとに現れるので長め）
+      var stays = (sec.getAttribute('data-stays') || '').split(',').map(Number);
+      var next = function () {
+        setTimeout(function () { n = (n + 1) % imgs.length; show(n); next(); }, stays[n] || STAY);
+      };
+      next();
     });
   }
 
