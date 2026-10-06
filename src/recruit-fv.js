@@ -77,7 +77,11 @@
         sec.style.setProperty('--my', (e.clientY / window.innerHeight * 2 - 1).toFixed(3));
       }, { passive: true });
     }
-    var onScroll = function () { sec.style.setProperty('--sy', Math.min(window.scrollY, window.innerHeight).toFixed(0)); };
+    var onScroll = function () {
+      sec.style.setProperty('--sy', Math.min(window.scrollY, window.innerHeight).toFixed(0));
+      // ⑥ /top-a2/：スクロールに合わせて写真をカードの形へ縮める（--shrink：0＝全面、1＝ヒーローの高さの7割スクロールしたとき）
+      sec.style.setProperty('--shrink', Math.min(1, Math.max(0, window.scrollY / (sec.offsetHeight * .7))).toFixed(3));
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     all('.rv-count', sec).forEach(function (el) {

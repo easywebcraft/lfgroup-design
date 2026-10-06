@@ -319,3 +319,9 @@ html:has(.rf-top) .ll-ring .t { stroke: rgba(255, 255, 255, .18); }
 .rf-go .rf-top .rf-media img:nth-child(3).is-on { transition: opacity .5s ease, filter 1.2s ease, scale 6s linear, translate 6s linear; }
 .rf-go .rf-top .rf-media img:nth-child(4).is-on { transition: opacity 1s ease .2s, filter 1s ease .2s, scale 6s linear, translate 6s linear; }
 .rf-go .rf-top .rf-media img:nth-child(4).is-prev { transition: scale 6s linear, translate 6s linear; }
+
+/* ⑥ /top-a2/：スクロールで写真が角の丸いカードへ縮み、下の入口へつながる（2026-10-07）。ヒーローの高さは変えない */
+.rf-top { background: #fff; }
+.rf-go .rf-top .rf-media { clip-path: inset(calc(var(--shrink, 0) * 7%) calc(var(--shrink, 0) * 6vw) calc(var(--shrink, 0) * 7%) calc(var(--shrink, 0) * 6vw) round calc(var(--shrink, 0) * 28px)); }
+.rf-go .rf-top .rc-fv-copy, .rf-go .rf-top .rv-big { opacity: calc(1 - var(--shrink, 0) * 1.4); }
+@media (max-width: 767px) { .rf-go .rf-top .rf-media { clip-path: inset(calc(var(--shrink, 0) * 6%) calc(var(--shrink, 0) * 4vw) calc(var(--shrink, 0) * 6%) calc(var(--shrink, 0) * 4vw) round calc(var(--shrink, 0) * 18px)); } }
