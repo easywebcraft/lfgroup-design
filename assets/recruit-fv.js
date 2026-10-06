@@ -16,6 +16,9 @@
     items[i].classList.add('is-on');
   };
 
+  // トップ（/top-a2-full/）では、ページを開いたときのロゴの演出（main.js）が終わるまで待ってから動かす
+  var begin = function () {
+  if (root.classList.contains('is-loading')) { setTimeout(begin, 100); return; }
   var fx = sec.getAttribute('data-fx');
 
   // 案A：4秒ごとに 朝→昼→夕方→夜。時刻と進み具合の線も合わせる
@@ -36,8 +39,8 @@
     };
     // 4枚とも先に読み込み・描画の準備（decode）を済ませてから動かす（初めて出す写真で引っかからないように）
     Promise.all(imgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : null; })).then(function () {
-      imgs[0].classList.remove('is-on');
-      show(0);
+      // ロゴの演出のあとは、最初の写真がもう見えているので現れ直させない（春がぼやけ直して見えるため）
+      if (!window.LF_LOADER_RUN) { imgs[0].classList.remove('is-on'); show(0); }
       setInterval(function () { n = (n + 1) % imgs.length; show(n); }, STAY);
     });
   }
@@ -46,7 +49,8 @@
   var vt = sec.querySelector('.rv-title');
   if (vt) {
     var k = 0;
-    all('span', vt).forEach(function (row) {
+    // ロゴの演出でキャッチコピーが見出しへ吸い込まれた場合は、見出しはそのまま見せる（1文字ずつの動きは2回目以降）
+    if (!window.LF_LOADER_RUN) all('span', vt).forEach(function (row) {
       Array.prototype.slice.call(row.childNodes).forEach(function (node) {
         var text = node.textContent, wrap = document.createDocumentFragment();
         text.split('').forEach(function (ch) {
@@ -111,4 +115,6 @@
     window.addEventListener('resize', update);
     update();
   }
+  };
+  begin();
 })();

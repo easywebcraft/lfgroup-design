@@ -1084,14 +1084,24 @@ def write_top_a2(top):
   </section>'''
     css, js = (SRC / 'recruit-fv.css').read_text(), (SRC / 'recruit-fv.js').read_text()
     v = hashlib.sha1((css + js).encode()).hexdigest()[:8]
-    html_ = top.replace(LOADER_HEAD, '', 1).replace(LOADER, '', 1)  # ロゴの演出は今の見出しへ吸い込ませる作りなので外す
-    i = html_.index('<section class="fv" id="top">')
-    j = html_.index('</section>', i) + len('</section>')
-    html_ = (html_[:i] + sec + html_[j:])
-    html_ = (html_.replace('</head>', f'<link rel="stylesheet" href="/assets/recruit-fv.css?v={v}">\n</head>', 1)
-                  .replace('</body>', f'<script src="/assets/recruit-fv.js?v={v}"></script>\n</body>', 1)
-                  .replace('リニューアルの試作です', 'リニューアルの試作です・トップのヒーローに採用FV案A2を当てた版', 1))
-    write('top-a2/index.html', html_)
+    i = top.index('<section class="fv" id="top">')
+    j = top.index('</section>', i) + len('</section>')
+    # /top-a2/ ＝ ヒーローだけの見比べ用（ロゴの演出なし）。
+    # /top-a2-full/ ＝ 本番に反映した場合の見え方（2026-10-07）。ロゴの演出を残し、キャッチコピーがこのヒーローの見出しへ
+    #   吸い込まれてつながる。演出（main.js）が .fv h1 を探すので、section に fv も付ける（.rf-top の指定で .fv の見た目は上書き）
+    plain = top.replace(LOADER_HEAD, '', 1).replace(LOADER, '', 1)
+    pi = plain.index('<section class="fv" id="top">')
+    pj = plain.index('</section>', pi) + len('</section>')
+    pages = (
+        ('top-a2/index.html', plain[:pi] + sec + plain[pj:], 'トップのヒーローに採用FV案A2を当てた版'),
+        ('top-a2-full/index.html', top[:i] + sec.replace('<section class="rf rf-a', '<section class="fv rf rf-a', 1) + top[j:],
+         '本番のトップに反映した場合の見え方（ロゴの演出つき）'),
+    )
+    for path, html_, label in pages:
+        html_ = (html_.replace('</head>', f'<link rel="stylesheet" href="/assets/recruit-fv.css?v={v}">\n</head>', 1)
+                      .replace('</body>', f'<script src="/assets/recruit-fv.js?v={v}"></script>\n</body>', 1)
+                      .replace('リニューアルの試作です', 'リニューアルの試作です・' + label, 1))
+        write(path, html_)
 
 
 def stylish_top(top):

@@ -258,3 +258,6 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 .rf-top .rf-media::after { background: linear-gradient(90deg, rgba(8, 18, 32, .4) 0%, rgba(8, 18, 32, .16) 40%, rgba(8, 18, 32, 0) 62%); }
 .rf-top .rc-fv-copy { text-shadow: 0 2px 16px rgba(8, 18, 32, .65); }
 @media (max-width: 1023px) { .rf-top .rf-media::after { background: linear-gradient(180deg, rgba(8, 18, 32, .05) 0%, rgba(8, 18, 32, .15) 40%, rgba(8, 18, 32, .5) 100%); } }
+/* /top-a2-full/：本番の .fv と、トップの動き（stylish.css）の指定を打ち消す */
+.fv.rf-top { height: auto; max-height: none; min-height: 100vh; min-height: 100svh; background: var(--navy); }
+.fv.rf-top h1 > span::after { display: none; }
