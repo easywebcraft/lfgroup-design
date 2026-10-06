@@ -216,3 +216,8 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 /* 背景に溶け込まないよう、輪郭線を太く濃くし、中にうっすら白、影を付ける（2026-10-07） */
 .rf-top .rv-big { color: rgba(255, 255, 255, .14); -webkit-text-stroke: 2px rgba(255, 255, 255, .85); filter: drop-shadow(0 4px 18px rgba(8, 18, 32, .55)); }
 @media (max-width: 767px) { .rf-top .rv-big { -webkit-text-stroke-width: 1.5px; } }
+/* /top-a2/：背景が暗いとのご指摘で、紺の重ねを薄くする（左端 90%%→55%%、右側は写真そのまま）。文字は影で読みやすさを保つ（2026-10-07） */
+.rf-top .rf-media::after { background: linear-gradient(90deg, rgba(8, 18, 32, .55) 0%%, rgba(8, 18, 32, .25) 40%%, rgba(8, 18, 32, 0) 65%%); }
+.rf-top .rc-fv-copy { text-shadow: 0 2px 14px rgba(8, 18, 32, .55); }
+@media (max-width: 1023px) { .rf-top .rf-media::after { background: linear-gradient(180deg, rgba(8, 18, 32, .1) 0%%, rgba(8, 18, 32, .25) 40%%, rgba(8, 18, 32, .65) 100%%); } }
+.rf-top .rc-fv-copy .btn { text-shadow: none; }
