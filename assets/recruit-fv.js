@@ -29,6 +29,7 @@
     var n = 0;
     var sweep = sec.querySelector('.rv-sweep');
     var show = function (i) {
+      sec.setAttribute('data-season', i);  // /top-a2/：今の季節（0春 1夏 2秋 3冬）。秋→冬の雪の演出に使う
       step(imgs, i);
       if (sweep && (i === 0 || !sec.classList.contains('rf-top'))) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }  // A2：金の光の帯（/top-a2/ は冬→春の一年が巡るときだけ）
       times.forEach(function (t, k) { t.classList.toggle('is-on', k === i); });
