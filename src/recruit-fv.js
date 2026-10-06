@@ -27,7 +27,7 @@
     var sweep = sec.querySelector('.rv-sweep');
     var show = function (i) {
       step(imgs, i);
-      if (sweep) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }  // A2：金の光の帯
+      if (sweep && (i === 0 || !sec.classList.contains('rf-top'))) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }  // A2：金の光の帯（/top-a2/ は冬→春の一年が巡るときだけ）
       times.forEach(function (t, k) { t.classList.toggle('is-on', k === i); });
       if (!bars.length) return;  // 時刻を出さない版（/top-a2/）
       bars.forEach(function (b, k) { b.classList.toggle('is-done', k < i); b.classList.remove('is-on'); });

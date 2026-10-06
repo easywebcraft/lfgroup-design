@@ -225,3 +225,32 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 .rf-top .rv-title em { color: #fff; }
 .rf-top .btn-primary { background: var(--navy); color: #fff; border: 1px solid rgba(255, 255, 255, .35); }
 .rf-top .btn-primary:hover { background: #fff; color: var(--navy); }
+
+/* ===== /top-a2/ の四季の切り替えを、季節ごとに変える（2026-10-07「切り替えが単調」）=====
+   1 春＝ぼかしから溶けるように現れ、上へ流れる（見上げる）
+   2 夏＝右から速くスライドし、道の奥へ寄っていく
+   3 秋＝夕日で白く飛んでから戻り、横へ流れる
+   4 冬＝上から幕が下り、ゆっくり引く
+   --s0/--x0/--y0 ＝ 待っているときのカメラ、--s1/--x1/--y1 ＝ 見せ終わりのカメラ。金の光は冬→春（一年が巡る）ときだけ（recruit-fv.js） */
+.rf-top .rf-media img:nth-child(1) { --s0: 1.14; --s1: 1.04; --x0: 0%; --x1: 0%; --y0: 3%; --y1: -2%; transform-origin: 50% 60%; }
+.rf-top .rf-media img:nth-child(2) { --s0: 1.02; --s1: 1.16; --x0: 0%; --x1: 0%; --y0: 0%; --y1: 0%; transform-origin: 62% 72%; }
+.rf-top .rf-media img:nth-child(3) { --s0: 1.12; --s1: 1.12; --x0: 4%; --x1: -4%; --y0: 0%; --y1: 0%; transform-origin: 50% 50%; }
+.rf-top .rf-media img:nth-child(4) { --s0: 1.2; --s1: 1.04; --x0: 0%; --x1: 0%; --y0: 0%; --y1: 0%; transform-origin: 70% 60%; }
+
+/* 待っている写真：季節ごとの「現れる前」の姿。動きはなし（一瞬で戻す） */
+.rf-go .rf-top .rf-media img { opacity: 0; clip-path: none; filter: none; z-index: 0; transition: none;
+  scale: var(--s0); translate: var(--x0) var(--y0); }
+.rf-go .rf-top .rf-media img:nth-child(1) { filter: blur(16px) brightness(1.12); }
+.rf-go .rf-top .rf-media img:nth-child(2) { opacity: 1; clip-path: inset(0 0 0 100%); }
+.rf-go .rf-top .rf-media img:nth-child(3) { filter: brightness(2.3) saturate(.5); }
+.rf-go .rf-top .rf-media img:nth-child(4) { opacity: 1; clip-path: inset(0 0 100% 0); }
+
+/* 前の写真：見せ終わりの姿のまま、下に残す */
+.rf-go .rf-top .rf-media img.is-prev { opacity: 1; clip-path: none; filter: none; z-index: 0; scale: var(--s1); translate: var(--x1) var(--y1); }
+
+/* 今の写真：季節ごとの現れ方＋カメラの動き（表示時間 3.5秒の中で動き終わる） */
+.rf-go .rf-top .rf-media img.is-on { opacity: 1; clip-path: inset(0); filter: none; z-index: 1; scale: var(--s1); translate: var(--x1) var(--y1); }
+.rf-go .rf-top .rf-media img:nth-child(1).is-on { transition: opacity 1.6s ease, filter 1.8s ease, scale 3.6s cubic-bezier(.3, .1, .3, 1), translate 3.6s cubic-bezier(.3, .1, .3, 1); }
+.rf-go .rf-top .rf-media img:nth-child(2).is-on { transition: clip-path .85s cubic-bezier(.77, 0, .18, 1), scale 3.6s cubic-bezier(.3, .1, .3, 1); }
+.rf-go .rf-top .rf-media img:nth-child(3).is-on { transition: opacity .45s ease, filter 1.9s cubic-bezier(.2, .6, .2, 1), translate 3.6s linear; }
+.rf-go .rf-top .rf-media img:nth-child(4).is-on { transition: clip-path 1.5s cubic-bezier(.65, 0, .35, 1), scale 3.6s cubic-bezier(.3, .1, .3, 1); }

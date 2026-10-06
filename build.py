@@ -1071,7 +1071,7 @@ def write_top_a2(top):
     # 写真は名古屋の街の四季（2026-10-07 松本さん作成。春＝桜とビル、夏＝入道雲と交差点、秋＝イチョウ並木と夕日、冬＝雪とイルミネーション）
     times = [(None, None, None, f) for f in ('city-spring.jpg', 'city-summer.jpg', 'city-autumn.jpg', 'city-winter.jpg')]
     imgs = ''.join(f'<img class="{"is-on" if n == 0 else ""}" src="/images/{f}" alt="" data-eager onerror="this.remove()">' for n, (_, _, _, f) in enumerate(times))
-    sec = f'''<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="2500" id="top">
+    sec = f'''<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="3500" id="top">
     <div class="rf-media">{imgs}</div>
     <p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>
     <span class="rv-sweep" aria-hidden="true"></span>
