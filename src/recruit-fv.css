@@ -200,6 +200,6 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 }
 .rv-ring text { font-size: 7.6px; letter-spacing: .08em; }
 @media (max-width: 767px) { .rf-v .rv-title { font-size: clamp(22px, 6.6vw, 28px); } }
-/* トップに当てた版（/top-a2/）：ENTRY ボタンがないので、時刻は右端に寄せる */
-.rf-top .rf-time, .rf-top .rf-bar { right: var(--gutter); }
+/* トップに当てた版（/top-a2/）：時刻と帯がないので、下の余白を戻す */
+.rf-v.rf-top { padding-bottom: 120px; }
 .rf-top .rc-links { margin-top: 32px; }

@@ -1067,12 +1067,10 @@ def write_recruit_trials():
 def write_top_a2(top):
     """トップのヒーローに、採用情報のFV案A2（名古屋の街の朝〜夜・金の光・1文字ずつ跳ねる見出し・奥行き）を
     そのまま当てた試作（/top-a2/。2026-10-07）。コピーは今のトップのまま。本番には出さない。
-    採用向けの言葉（WE ARE HIRING の帯・ENTRY ボタン）は、トップ向けの英字に置き換え／外した"""
+    右下の時刻・ヒーロー下の流れる帯・ENTRY ボタンは外した（2026-10-07 松本さん）"""
     times = [('10:00', 'START', '一日のはじまり', 'recruit-city-1000.jpg'), ('13:00', 'MEETING', 'お客様とのご相談', 'recruit-city-1300.jpg'),
              ('16:00', 'PROPOSAL', 'ご提案の準備', 'recruit-city-1600.jpg'), ('18:00', 'FINISH', '一日のおわり', 'recruit-city-1800.jpg')]
     imgs = ''.join(f'<img class="{"is-on" if n == 0 else ""}" src="/images/{f}" alt="" data-eager onerror="this.remove()">' for n, (_, _, _, f) in enumerate(times))
-    clock = ''.join(f'<p class="rf-time{" is-on" if n == 0 else ""}"><b>{t}</b><span>{en}</span><small>{ja}</small></p>' for n, (t, en, ja, _) in enumerate(times))
-    band = ''.join('<span>INSURANCE<i>―</i>LIFELINE<i>―</i>LF GROUP<i>―</i></span>' for _ in range(6))
     sec = f'''<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="2500" id="top">
     <div class="rf-media">{imgs}</div>
     <p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>
@@ -1083,9 +1081,6 @@ def write_top_a2(top):
       <p class="rc-fv-lead">保険の見直しや、電気・ガスなどの固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。</p>
       <p class="rc-links"><a class="btn btn-primary" href="/contact/">保険・お金について相談する{ARROW}</a></p>
     </div>
-    <div class="wrap rf-clock" aria-hidden="true">{clock}
-      <ol class="rf-bar">{'<li></li>' * len(times)}</ol></div>
-    <div class="rv-band" aria-hidden="true"><div class="rv-track">{band}{band}</div></div>
   </section>'''
     css, js = (SRC / 'recruit-fv.css').read_text(), (SRC / 'recruit-fv.js').read_text()
     v = hashlib.sha1((css + js).encode()).hexdigest()[:8]

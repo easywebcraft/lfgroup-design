@@ -29,6 +29,7 @@
       step(imgs, i);
       if (sweep) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }  // A2：金の光の帯
       times.forEach(function (t, k) { t.classList.toggle('is-on', k === i); });
+      if (!bars.length) return;  // 時刻を出さない版（/top-a2/）
       bars.forEach(function (b, k) { b.classList.toggle('is-done', k < i); b.classList.remove('is-on'); });
       void bars[i].offsetWidth;
       bars[i].classList.add('is-on');
