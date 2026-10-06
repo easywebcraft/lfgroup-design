@@ -93,3 +93,66 @@
   .rf-time b { font-size: 36px; }
   .rf-bar li { width: 32px; }
 }
+
+/* ===== 案A2：ベンチャー感（2026-10-07）=====
+   案A の上に重ねる。濃い背景＋明るいゴールド、極太のゴシック、大きな英字、数字、流れる帯、ENTRY ボタン */
+.rf-v { --hot: #F2B63C; padding-bottom: 150px; }
+.rf-v .rf-media::after { background: linear-gradient(90deg, rgba(8, 18, 32, .9) 0%, rgba(8, 18, 32, .62) 45%, rgba(8, 18, 32, .25) 80%); }
+/* 大きな英字：写真の上、コピーの後ろに薄く */
+.rv-big { position: absolute; left: 0; right: 0; top: calc(var(--header-h) + 20px); z-index: 1; margin: 0; padding-inline: var(--gutter);
+  font-family: var(--en); font-weight: 800; font-size: clamp(64px, 11.5vw, 176px); line-height: .9; letter-spacing: -.02em; text-align: right;
+  color: transparent; -webkit-text-stroke: 1.5px rgba(255, 255, 255, .28); pointer-events: none; }
+/* 見出し：極太のゴシック。「年収」だけ明るいゴールド */
+.rf-v .rv-title { font-family: var(--sans); font-weight: 900; font-size: clamp(36px, 5vw, 72px); line-height: 1.25; letter-spacing: .02em; }
+.rf-v .rv-title > span { display: block; }
+.rf-v .rv-title em { font-style: normal; color: var(--hot); }
+.rf-v .eyebrow::before { background: var(--hot); }
+/* 1文字ずつ勢いよく現れる（recruit-fv.js が .rv-ch に分ける） */
+.rf-go .rv-ch { display: inline-block; opacity: 0; translate: 0 .5em; rotate: 6deg; transition: opacity .35s ease, translate .6s cubic-bezier(.2, 1.4, .4, 1), rotate .6s cubic-bezier(.2, 1.4, .4, 1); }
+.rf-go .rv-title.is-go .rv-ch { opacity: 1; translate: 0 0; rotate: 0deg; }
+/* 数字 */
+.rv-nums { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px 32px; margin-top: 22px; }
+.rv-nums p { margin: 0; display: flex; align-items: baseline; gap: 6px; }
+.rv-nums small { font-size: 13px; font-weight: 700; letter-spacing: .1em; color: rgba(255, 255, 255, .8); }
+.rv-nums b { font-family: var(--en); font-weight: 800; font-size: clamp(40px, 4.4vw, 60px); line-height: 1; color: var(--hot); font-variant-numeric: tabular-nums; }
+.rv-nums span { font-size: 15px; font-weight: 700; }
+.rv-nums .rv-note { flex-basis: 100%; font-size: 11px; color: rgba(255, 255, 255, .65); }
+.rf-v .rc-fv-lead { display: none; }  /* 数字を主役にするため、説明文は FV の下の段に任せる */
+.rf-v .rc-status { margin-top: 24px; }
+.rf-v .btn-primary { background: var(--hot); color: #14202E; }
+/* 時刻もゴールドに */
+.rf-v .rf-time span { color: var(--hot); }
+.rf-v .rf-bar li::after { background: var(--hot); }
+.rf-v .rf-clock { bottom: 96px; }
+/* 流れる帯 */
+.rv-band { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; overflow: hidden; background: var(--hot); color: #14202E; }
+.rv-track { display: flex; width: max-content; padding: 12px 0; }
+.rv-track span { flex: none; padding-right: 1.2em; font-family: var(--en); font-weight: 800; font-size: 20px; letter-spacing: .12em; white-space: nowrap; }
+.rv-track i { font-style: normal; margin: 0 .8em; }
+.rf-go .rv-track { animation: rf-flow 22s linear infinite; }
+/* 画面右下の ENTRY ボタン */
+.rv-entry { position: fixed; right: 20px; bottom: 24px; z-index: 80; display: grid; place-content: center; text-align: center; width: 96px; height: 96px; border-radius: 50%;
+  background: var(--navy); color: #fff; text-decoration: none; box-shadow: 0 10px 24px rgba(8, 18, 32, .3); border: 2px solid #F2B63C; transition: transform .3s ease; }
+.rv-entry b { font-family: var(--en); font-weight: 800; font-size: 17px; letter-spacing: .1em; color: #F2B63C; }
+.rv-entry small { font-size: 10px; letter-spacing: .06em; }
+.rv-entry:hover { transform: scale(1.06); }
+.rf-go .rv-entry::before { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid #F2B63C; animation: rv-pulse 2.2s ease-out infinite; }
+@keyframes rv-pulse { from { opacity: .8; transform: scale(1); } to { opacity: 0; transform: scale(1.35); } }
+@media (max-width: 1023px) {
+  .rv-big { font-size: clamp(48px, 15vw, 96px); top: calc(var(--header-h) + 40px); }
+  .rf-v .rf-media::after { background: linear-gradient(180deg, rgba(8, 18, 32, .35) 0%, rgba(8, 18, 32, .6) 40%, rgba(8, 18, 32, .9) 100%); }
+  .rf-v.rf-a { padding-bottom: 170px; }
+  .rv-entry { width: 76px; height: 76px; right: 14px; bottom: 96px; }
+  .rv-entry b { font-size: 14px; }
+  .rv-track span { font-size: 16px; }
+}
+
+/* 案A2：時刻は右下（ENTRY ボタンの左）へ。スマホは外す */
+.rf-v .rf-clock { bottom: 74px; }
+.rf-v .rf-time { left: auto; right: 150px; }
+.rf-v .rf-bar { left: auto; right: 150px; }
+@media (max-width: 1023px) { .rf-v .rf-clock { display: none; } }
+/* 暗い FV の上にいる間は、ヘッダーの文字を白に（スクロールして白い背景が付いたら元の色） */
+html:has(.rf-v) .header:not(.is-scrolled) .logo,
+html:has(.rf-v) .header:not(.is-scrolled) .gnav a { color: #fff; }
+html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }

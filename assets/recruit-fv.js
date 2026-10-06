@@ -20,7 +20,7 @@
 
   // 案A：4秒ごとに 朝→昼→夕方→夜。時刻と進み具合の線も合わせる
   if (fx === 'a') {
-    var STAY = 4000;
+    var STAY = +(sec.getAttribute('data-stay') || 4000);  // A2 は 2.5秒
     var imgs = all('.rf-media img', sec), times = all('.rf-time', sec), bars = all('.rf-bar li', sec);
     sec.style.setProperty('--stay', STAY / 1000 + 's');
     var n = 0;
@@ -36,6 +36,37 @@
       imgs[0].classList.remove('is-on');
       show(0);
       setInterval(function () { n = (n + 1) % imgs.length; show(n); }, STAY);
+    });
+  }
+
+  // 案A2：見出しを1文字ずつ勢いよく出し、数字を 0 から増やす
+  var vt = sec.querySelector('.rv-title');
+  if (vt) {
+    var k = 0;
+    all('span', vt).forEach(function (row) {
+      Array.prototype.slice.call(row.childNodes).forEach(function (node) {
+        var text = node.textContent, wrap = document.createDocumentFragment();
+        text.split('').forEach(function (ch) {
+          var c = document.createElement('span');
+          c.className = 'rv-ch';
+          c.textContent = ch;
+          c.style.transitionDelay = (0.2 + k++ * 0.05) + 's';
+          wrap.appendChild(c);
+        });
+        if (node.nodeType === 3) row.replaceChild(wrap, node); else { node.textContent = ''; node.appendChild(wrap); }
+      });
+    });
+    requestAnimationFrame(function () { requestAnimationFrame(function () { vt.classList.add('is-go'); }); });
+    all('.rv-count', sec).forEach(function (el) {
+      var to = +el.getAttribute('data-count'), t0 = null;
+      el.textContent = '0';
+      var tick = function (t) {
+        if (t0 === null) t0 = t + 700;  // 見出しが出てから
+        var p = Math.max(0, Math.min((t - t0) / 1600, 1));
+        el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))).toLocaleString('ja-JP');
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
     });
   }
 
