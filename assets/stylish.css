@@ -1,0 +1,48 @@
+/* ===== スタイリッシュ版の試作（/stylish/・2026-10-06）=====
+   今のトップに足すだけ。本番（--release）には出さない。動きを減らす設定の人には何もしない（html.s-ready が付かない）
+   A 見出しが1行ずつ下からせり上がる（.s-lines）
+   B 入口の写真が幕を開けるように現れ、スクロールに合わせて少し奥行きが動く（.entry.is-open／--py）
+   C 大きな英字がゆっくり横に流れる帯（.s-marquee）
+   D なめらかなスクロール（Lenis。stylish.js）
+   E 入口のタイルにマウスを乗せると、写真が寄って明るくなり、矢印が伸びる */
+
+/* C 流れる英字の帯（動きを減らす設定でも、帯そのものは止まった文字として見せる） */
+.s-marquee { overflow: hidden; padding: clamp(28px, 4vw, 48px) 0; background: #fff; border-block: 1px solid var(--rule); }
+.s-track { display: flex; width: max-content; }
+.s-track span { flex: none; padding-right: .6em; font-family: var(--serif); font-weight: 500; font-size: clamp(44px, 7vw, 100px); line-height: 1.1; letter-spacing: .02em; color: transparent; -webkit-text-stroke: 1px rgba(27, 51, 80, .35); white-space: nowrap; }
+.s-track span:nth-child(odd) { color: var(--navy); -webkit-text-stroke: 0; }
+.s-track span i { display: inline-block; margin-left: .9em; font-size: .28em; font-style: normal; vertical-align: middle; color: var(--gold); -webkit-text-stroke: 0; }
+.s-ready .s-track { animation: s-flow 48s linear infinite; }
+.s-marquee.is-dark { background: var(--navy); border: 0; }
+.s-marquee.is-dark .s-track span { -webkit-text-stroke-color: rgba(255, 255, 255, .4); }
+.s-marquee.is-dark .s-track span:nth-child(odd) { color: #fff; }
+.s-ready .s-marquee.is-dark .s-track { animation-direction: reverse; animation-duration: 56s; }
+@keyframes s-flow { to { transform: translateX(-50%); } }
+
+/* A 見出しが1行ずつせり上がる */
+.s-ready .s-lines .s-row { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
+.s-ready .s-lines .s-in { display: inline-block; transform: translateY(110%); transition: transform 1.1s cubic-bezier(.19, 1, .22, 1); }
+.s-ready .s-lines.is-shown .s-in { transform: none; }
+
+/* B 入口の写真が幕を開けるように現れる。奥行き（--py）はスクロールで stylish.js が入れる */
+.s-ready .entry { clip-path: inset(0 100% 0 0); transition: clip-path 1.3s cubic-bezier(.77, 0, .18, 1); }
+.s-ready .entry.is-open { clip-path: inset(0 0 0 0); }
+.s-ready .entry img { transform: none; translate: 0 var(--py, 0px); scale: 1.22; transition: scale 1.8s cubic-bezier(.19, 1, .22, 1); will-change: translate; }
+.s-ready .entry.is-open img { scale: 1.1; }
+.s-ready .numbers-bg { top: -12%; height: 124%; translate: 0 var(--py, 0px); will-change: translate; }
+
+/* E タイルにマウスを乗せたとき */
+.entry::after { transition: opacity .6s ease; }
+.entry .link-arrow .arw { transition: transform .5s cubic-bezier(.19, 1, .22, 1); }
+@media (hover: hover) {
+  .s-ready .entry.is-open:hover img { scale: 1.16; }
+  .entry:hover::after { opacity: .55; }
+  .entry:hover .link-arrow .arw { transform: translateX(8px); }
+  .entry:hover .link-arrow::after { width: 100%; }
+}
+.entry .link-arrow::after { transition: width .5s cubic-bezier(.19, 1, .22, 1); }
+
+/* D なめらかなスクロール（Lenis が html に付けるクラス） */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }

@@ -1005,6 +1005,34 @@ def write_motion(top):
     write('motion/index.html', html_)
 
 
+def write_stylish(top):
+    """スタイリッシュ版の試作（/stylish/・2026-10-06「もっとスタイリッシュで動きのあるホームページ」）。
+    中身は今のトップと同じで、src/stylish.css・stylish.js（＋なめらかなスクロールの lenis.min.js）を足し、
+    流れる英字の帯を2本入れ、見出しを「1行ずつせり上がる」用（s-lines）にする。本番（--release）には出さない。"""
+    css, js, lenis = (SRC / 'stylish.css').read_text(), (SRC / 'stylish.js').read_text(), (SRC / 'lenis.min.js').read_text()
+    v = hashlib.sha1((css + js).encode()).hexdigest()[:8]
+    write('assets/stylish.css', css)
+    write('assets/stylish.js', js)
+    write('assets/lenis.min.js', lenis)
+    words = ['Insurance', 'Lifeline', 'Partner', 'Recruit']
+    track = lambda: ''.join(f'<span>{w}<i>✦</i></span>' for w in words * 2)
+    marquee = lambda cls='': (f'  <div class="s-marquee{cls}" aria-hidden="true"><div class="s-track">'
+                              f'{track()}{track()}</div></div>\n')
+    html_ = (top.replace('</head>', f'<link rel="stylesheet" href="/assets/stylish.css?v={v}">\n</head>', 1)
+                .replace('</body>', f'<script src="/assets/lenis.min.js?v={v}"></script>\n'
+                                    f'<script src="/assets/stylish.js?v={v}"></script>\n</body>', 1)
+                .replace('リニューアルの試作です', 'リニューアルの試作です・スタイリッシュ版', 1)
+                .replace('  <div class="entries-head" id="foryou">', marquee() + '  <div class="entries-head" id="foryou">', 1))
+    for a in ('<h2 class="fade"><span>目的に合わせて', '<h2 class="fade"><span>LFグループについて',
+              '<h2 class="fade">数字で見るLFグループ', '<h2 class="fade"><span>保険やお金について'):
+        assert a in html_, a
+        html_ = html_.replace(a, a.replace('class="fade"', 'class="s-lines"'), 1)
+    i = html_.index('id="final-cta"')
+    i = html_.rindex('<section', 0, i)
+    html_ = html_[:i] + marquee(' is-dark') + '  ' + html_[i:]
+    write('stylish/index.html', html_)
+
+
 # トップの季節の写真「人生の四季」（2026-10-05 採用。春→夏→秋→冬→三世代の春の順）：
 # 春＝新婚の二人、夏＝子育て（公園で肩車）、秋＝40歳前後の夫婦と男の子、冬＝60代前半の二人、
 # そして三世代の春＝祖父母になった二人と孫の女の子（冬のあとにもう一度春が来て、最初の新婚の春へ戻る）。
@@ -1079,6 +1107,7 @@ def main():
     write('index.html', top)
     if not RELEASE:
         write_motion(top)
+        write_stylish(top)
         write('season/index.html', SEASON_REDIRECT)
         write('life/index.html', SEASON_REDIRECT)
         write('scene/index.html', season_photos(top_base, SCENE_PHOTOS, white_wrap=False)
