@@ -26,18 +26,13 @@
 .rf-a .btn-primary, .rf-c .btn-primary { background: #fff; color: var(--navy); }
 
 /* ===== 案A：オフィスの1日 ===== */
-/* 仮の写真は1枚なので、色味で朝・昼・夕方・夜を作る（本番は生成AIで光だけ変えた4枚にする） */
-.rf-a .rf-media img.is-morning { filter: brightness(1.04) saturate(.85) hue-rotate(-8deg); }
-.rf-a .rf-media img.is-noon { filter: brightness(1.08) saturate(1.05); }
-.rf-a .rf-media img.is-evening { filter: sepia(.45) saturate(1.5) hue-rotate(-12deg) brightness(.92); }
-.rf-a .rf-media img.is-night { filter: brightness(.42) saturate(.7) hue-rotate(10deg); }
 /* 切り替え：次の写真が斜めのマスクで開く */
-.rf-go .rf-a .rf-media img { opacity: 1; clip-path: polygon(0 0, 0 0, -30% 100%, -30% 100%); z-index: 0; scale: 1.08; }
-.rf-go .rf-a .rf-media img.is-prev { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); z-index: 1; }
+.rf-go .rf-a .rf-media img { opacity: 1; clip-path: polygon(0 0, 0 0, -30% 100%, -30% 100%); z-index: 0; scale: 1.06; will-change: clip-path, scale; }
+/* 前の写真は、縮み終わった大きさ（1倍）のまま下に残す（大きさを戻すと、切り替えの瞬間にガクッと動いて見える） */
+.rf-go .rf-a .rf-media img.is-prev { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); z-index: 0; scale: 1; }
+/* 今の写真：斜めに開きながら、表示時間（4秒）の中で縮み終わる */
 .rf-go .rf-a .rf-media img.is-on { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); z-index: 1; scale: 1;
-  transition: clip-path 1.4s cubic-bezier(.77, 0, .18, 1), scale 5s linear; }
-.rf-go .rf-a .rf-media img.is-on:not(.is-first) { z-index: 1; }
-.rf-go .rf-a .rf-media img.is-prev { z-index: 0; }
+  transition: clip-path 1.4s cubic-bezier(.77, 0, .18, 1), scale 3.8s cubic-bezier(.25, .1, .25, 1); }
 /* 時刻（左下）と進み具合の線 */
 .rf-clock { position: absolute; left: 0; right: 0; bottom: 72px; z-index: 3; }
 .rf-time { position: absolute; bottom: 22px; display: flex; align-items: baseline; gap: 14px; opacity: 0; translate: 0 14px;

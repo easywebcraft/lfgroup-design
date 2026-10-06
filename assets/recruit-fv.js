@@ -31,9 +31,12 @@
       void bars[i].offsetWidth;
       bars[i].classList.add('is-on');
     };
-    imgs[0].classList.remove('is-on');
-    show(0);
-    setInterval(function () { n = (n + 1) % imgs.length; show(n); }, STAY);
+    // 4枚とも先に読み込み・描画の準備（decode）を済ませてから動かす（初めて出す写真で引っかからないように）
+    Promise.all(imgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : null; })).then(function () {
+      imgs[0].classList.remove('is-on');
+      show(0);
+      setInterval(function () { n = (n + 1) % imgs.length; show(n); }, STAY);
+    });
   }
 
   // 案B：3枚のパネルが、少しずつ時間をずらして下から切り替わる
