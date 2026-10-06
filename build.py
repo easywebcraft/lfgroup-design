@@ -308,7 +308,7 @@ def company_brief():
       <dl class="brief-list fade">
         <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
         <div><dt>所在地</dt><dd>〒{POSTAL} {ADDRESS}</dd></div>
-        <div><dt>事業内容</dt><dd>ファイナンシャルプランニング・金融コンサル・保険代理店業務</dd></div>
+        <div><dt>事業内容</dt><dd>金融コンサル・保険代理店業務</dd></div>
       </dl>
       <p class="fade"><a class="link-arrow" href="/company/">会社概要を見る{ARROW}</a></p>
     </div>
@@ -328,7 +328,7 @@ def page_about():
         ('事故に遭われたお客様に対して、', '迅速に保険金の支払いができるようアドバイスし、', '事故処理完了まで適切な対応を行います。'),
         ('お客様の立場で行動するために、', '継続的に教育を行うとともに、適切な管理体制を整備します。'),
     ]
-    # 冒頭は「何の会社か」を一言で。下の4つは本文（ライフライン・保険・FP・ライフプランの見直し）から取る
+    # 冒頭は「何の会社か」を一言で。下の言葉は本文（ライフライン・保険・固定費の見直し）から取る（FP事業はいまは行っていない）
     hero = page_hero(
         'About', '私たちについて', [('私たちについて', '/about/')],
         photo='about-hero.jpg', pos='50% 72%',
@@ -340,7 +340,7 @@ def page_about():
       <div class="about-intro-body fade">
         <p class="eyebrow">Introduction</p>
         <h2 class="about-intro-title"><span>顧客満足度を最優先に、</span><span>人々の生活を向上させます。</span></h2>
-        <p class="about-intro-text">弊社はお客様の固定費を削減することを目的に、電気やガスなどのライフラインの代行業務、保険の見直しに加え、FP資格取得者が多数在籍しており、NISAやふるさと納税をはじめとした投資や節税などを通して、お客様のライフプランの見直しを行っています。</p>
+        <p class="about-intro-text">弊社はお客様の固定費を削減することを目的に、電気やガスなどのライフラインの代行業務や、保険の見直しを行っています。</p>
       </div>
     </div>
   </section>
@@ -389,7 +389,7 @@ LIFE_SERVICES = [
 
 
 # ───── 見る人ごとのページ（2026-10-06）：個人のお客様・法人のお客様・提携企業様 ─────
-# 文言は今のサイト（保険代理店事業・ファイナンシャルプランニング事業・アライアンス事業・パートナー事業・
+# 文言は今のサイト（保険代理店事業・アライアンス事業・パートナー事業・
 # 取り扱いサービス・お客様本位の業務運営方針・勧誘方針）にあるものだけで組む
 
 def strengths(items, cols=3):
@@ -480,12 +480,12 @@ def page_personal():
         'お客さまのご意見等の収集に努め現状を把握し、また、お客さまの満足度を高めるよう努めます。',
     ]
     hero = page_hero('Personal', '個人のお客様', [('個人のお客様', '/personal/')],
-                     lead='保険、ファイナンシャルプランニング、固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。',
+                     lead='保険の見直しや、電気・ガスなどの固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。',
                      photo='service-insurance.jpg', pos='45% 50%',
                      extra=page_nav([('strengths', '強み'), ('service', 'サービス'), ('alliance-service', 'アライアンスサービス')]))
     return hero + strengths([
-        ('Professional', 'お金の専門家に<br>相談できる。', 'ファイナンシャルプランニング技能士（国家資格）を保有するスタッフが多数在籍しています。'),
-        ('Life Support', '保険だけでなく、<br>暮らし全体から考える。', '家計・保険・年金・住宅資金・教育資金・資産運用など、暮らしにかかるお金のお悩みに幅広く対応します。'),
+        ('Insurance Agency', '大手保険会社の<br>代理店。', 'SOMPOひまわり生命・日新火災海上保険を主力に、お客様のライフプランに合わせた最適な保険を提案します。'),
+        ('Long-term Support', '生涯にわたる<br>サポート。', 'ご契約のあとも、生涯を安心して過ごせるように長期的なサポートを行います。事故の際は、休日・夜間も対応します。'),
         ('One Stop', '保険から<br>ライフラインまで。', '保険に加え、電気・ガスなどのライフライン、インターネット回線、ウォーターサーバーのお手続きやご案内も行っています。'),
     ]) + f'''
   <section class="section" id="service">
@@ -501,12 +501,6 @@ def page_personal():
       {INS_PARTNERS}
       </div>
 {ins_lineup()}
-      <div class="svc-fp fade" id="financialplanning">
-        <h3 class="sub-title" style="margin-top:0"><span>ファイナンシャル</span><span>プランニング</span></h3>
-        <p class="badge"><span>国家資格</span>FP技能士在籍</p>
-        <p class="text" style="margin-top:20px">LFグループ株式会社では、ファイナンシャルプランニング技能士（国家資格）を保有するスタッフが多数在籍しています。</p>
-        <p class="text">お金の専門家であるFPがライフプラン・家計・保険・年金・住宅資金・教育資金・税金・資産運用・介護・医療費・相続・贈与などのお悩みに対して、適切なアドバイスを行い、お客様の人生がより良くなるようサポートさせて頂きます。</p>
-      </div>
     </div>
   </section>
 
@@ -543,10 +537,10 @@ def page_corporate():
                      photo='cta-final.jpg', pos='50% 62%',
                      extra=page_nav([('strengths', '強み'), ('service', 'サービス')]))
     # ★要確認：法人のお客様向けの強み・取り扱い保険は、今のサイトに個人と分けた記載がない。
-    #   今は保険代理店事業・FP・事故対応の記載から組んでいる。法人向けの内容をいただいたら差し替える
+    #   今は保険代理店事業・事故対応の記載から組んでいる。法人向けの内容をいただいたら差し替える
     return hero + strengths([
         ('Insurance Agency', '大手保険会社の<br>代理店。', 'SOMPOひまわり生命・日新火災海上保険を主力に、法人のお客様の各種保険を取り扱っています。'),
-        ('Professional', 'お金の専門家が<br>在籍。', 'ファイナンシャルプランニング技能士（国家資格）を保有するスタッフが多数在籍し、金融コンサルも行っています。'),
+        ('Long-term Support', '長期的な<br>サポート。', '保険の見直しなど、お客様の状況に合わせた最適な保険を提案するとともに、長期的なサポートを行います。'),
         ('Support', '迅速な<br>事故対応。', '事故に遭われたお客様に対して、迅速に保険金のお支払いができるようアドバイスし、事故処理完了まで適切な対応を行います。休日・夜間の事故対応も行っています。'),
     ]) + f'''
   <section class="section" id="service">
@@ -623,7 +617,7 @@ def page_company():
                      extra=(f'        <div class="co-hero fade">\n'
                             f'          <p class="co-name">{COMPANY}</p>\n'
                             f'          <p class="co-addr">〒{POSTAL}<br>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</p>\n'
-                            f'          <p class="co-biz">ファイナンシャルプランニング・金融コンサル・<br class="pc">保険代理店業務を行っています。</p>\n'
+                            f'          <p class="co-biz">金融コンサル・保険代理店業務を行っています。</p>\n'
                             f'        </div>')) + f'''
   <section class="section co-philosophy" id="philosophy">
     <div class="wrap">
@@ -660,7 +654,7 @@ def page_company():
         <div><dt>所在地</dt><dd>〒{POSTAL}<br>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</dd></div>
         <!-- ★要確認：2つの番号の用途（代表／お問い合わせ）が今のサイトに書かれていない。確認できたら「代表」などを添える -->
         <div><dt>電話番号</dt><dd><a href="{TEL_HREF}">{TEL}</a></dd></div>
-        <div><dt>事業内容</dt><dd>ファイナンシャルプランニング・金融コンサル・保険代理店業務</dd></div>
+        <div><dt>事業内容</dt><dd>金融コンサル・保険代理店業務</dd></div>
         <div><dt>適格請求書発行<br>事業者登録番号</dt><dd>T4180001157727</dd></div>
       </dl>
       <div class="map-frame fade">
@@ -1016,7 +1010,7 @@ SEASON_PHOTOS = ('life-spring.jpg', 'hero-summer.jpg', 'life-autumn.jpg', 'life-
 
 
 # 人物なしの案（/scene/ で見比べ用。2026-10-06）：事業ごとに「人の気配が感じられる暮らしの風景」。
-# 保険＝家族の靴が並ぶ玄関先、ライフライン＝朝のキッチン、FP＝コーヒーカップ2つのダイニング、法人＝開店前の小さなお店
+# 保険＝家族の靴が並ぶ玄関先、ライフライン＝朝のキッチン、暮らし＝コーヒーカップ2つのダイニング、法人＝開店前の小さなお店
 SCENE_PHOTOS = ('scene-home.jpg', 'scene-kitchen.jpg', 'scene-dining.jpg', 'scene-shop.jpg')
 
 
