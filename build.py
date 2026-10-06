@@ -710,26 +710,30 @@ def page_recruitment():
         ('郵送先・応募先', f'〒{POSTAL} {ADDRESS}'),
     ]
     dl = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)
-    # 「エントリー受付中！」はステータス表示にして、募集要項と電話（応募方法は電話）へつなぐ
-    return page_hero('Recruitment', '採用情報', [('採用情報', '/recruitment/')],
-                     photo='cta.jpg', pos='30% 50%',
-                     extra=(f'        <div class="rc-hero fade">\n'
-                            f'          <p class="rc-status"><span class="dot"></span>Entry Open<b>エントリー受付中</b></p>\n'
-                            f'          <p class="rc-lead">現在、採用エントリーを受け付けています。<br>ご応募はお電話で承ります。</p>\n'
-                            f'          <p class="rc-links"><a class="btn btn-primary" href="#requirements">募集要項を見る{ARROW}</a>'
-                            f'<a class="simple-cta-tel" href="tel:0528468224"><svg class="ico"><use href="#i-tel"/></svg>052-846-8224</a></p>\n'
-                            f'        </div>')) + f'''
-  <section class="section rc-first" id="points">
-    <div class="wrap">
-      <p class="eyebrow fade">Points</p>
-      <h2 class="fade">LFグループで働くポイント</h2>
-      <ul class="rc-points">
-        <li class="fade"><span class="rc-pt-num">01</span><p class="rc-pt-title">固定給＋成果報酬</p><p>固定給20万円に、営業成績に応じた成果報酬を加えてお支払いします。</p></li>
-        <li class="fade"><span class="rc-pt-num">02</span><p class="rc-pt-title">正社員登用制度あり</p><p>契約社員としてスタートし、正社員登用制度があります（成績基準あり）。</p></li>
-        <li class="fade"><span class="rc-pt-num">03</span><p class="rc-pt-title">学歴・性別・国籍不問</p><p>応募資格に、学歴・性別・国籍の条件はありません。</p></li>
-        <li class="fade"><span class="rc-pt-num">04</span><p class="rc-pt-title">10時～18時勤務</p><p>勤務時間は10時～18時。勤務地は愛知県名古屋市東区です。</p></li>
-      </ul>
+    # FV：求職者に「どんな仕事か」を最初に伝える。コピーは募集要項・職務内容の範囲で書く（2026-10-06）
+    # ★TODO：写真は仮。実際の社員・オフィス・相談風景の写真をいただいたら差し替え、.rc-photo-todo を消す
+    # FV のすぐ下に募集要項にある4項目の小さなカード（同じ4項目だった「働くポイント」の段はこれにまとめた）
+    facts = [
+        ('応募資格', '学歴・性別・国籍不問', ''),
+        ('勤務時間', '10:00〜18:00', ''),
+        ('給与', '固定給＋成果報酬', '固定給20万円＋成果報酬'),
+        ('雇用形態', '正社員登用制度あり', '成績基準あり'),
+    ]
+    cards = ''.join(f'<li class="fade"><p class="rc-fact-label">{k}</p><p class="rc-fact-value">{v}</p>'
+                    + (f'<p class="rc-fact-note">{n}</p>' if n else '') + '</li>' for k, v, n in facts)
+    return f'''  <section class="rc-fv">
+    <div class="rc-fv-photo fade"><img src="/images/about-hero.jpg" alt="" data-eager onerror="this.remove()"><span class="rc-photo-todo">写真は仮</span></div>
+    <div class="wrap rc-fv-copy">
+      <ol class="crumb fade" aria-label="パンくずリスト"><li><a href="/">トップ</a></li><li aria-current="page">採用情報</li></ol>
+      <p class="eyebrow fade">Recruitment<span class="rc-fv-ja">採用情報</span></p>
+      <h1 class="rc-fv-title fade"><span>人の人生に向き合いながら、</span><span>自分の未来も変えていく。</span></h1>
+      <p class="rc-fv-lead fade">生命保険・損害保険のご提案とアフターサービスを通じて、<br class="pc">お客様のこれからの暮らしを支える仕事です。</p>
+      <p class="rc-status fade"><span class="dot"></span>Entry Open<b>エントリー受付中</b></p>
+      <p class="rc-links fade"><a class="btn btn-primary" href="#requirements">募集要項を見る{ARROW}</a><a class="simple-cta-tel" href="tel:0528468224"><svg class="ico"><use href="#i-tel"/></svg>052-846-8224</a></p>
     </div>
+  </section>
+  <section class="rc-facts" aria-label="募集のポイント">
+    <div class="wrap"><ul class="rc-fact-list">{cards}</ul></div>
   </section>
 
   <section class="section bg-blue" id="work">

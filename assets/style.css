@@ -1324,6 +1324,45 @@
   .numbers::before { background: linear-gradient(180deg, rgba(44, 74, 110, .42), rgba(44, 74, 110, .58)); }
   .numbers h2, .num-card { text-shadow: 0 1px 12px rgba(20, 40, 64, .4); }
   .num-card { background: rgba(31, 54, 82, .28); border-color: rgba(255, 255, 255, .45); }
+
+  /* ===== 採用情報のFV（2026-10-06）：左にコピー、右に写真。すぐ下に募集要項の4項目の小さなカード ===== */
+  .rc-fv { position: relative; display: flex; align-items: center; min-height: min(86vh, 760px); padding: calc(var(--header-h) + 48px) 0 72px; background: var(--paper); overflow: hidden; }
+  .rc-fv-photo { position: absolute; top: 0; right: 0; bottom: 0; width: 54%; background: var(--mist); }
+  .rc-fv-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; }
+  .rc-fv-photo::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, var(--paper) 0%, rgba(255, 255, 255, 0) 28%); pointer-events: none; }
+  .rc-photo-todo { position: absolute; right: 16px; top: calc(var(--header-h) + 16px); z-index: 2; padding: 2px 10px; border-radius: 2px; background: #C0392B; font-size: 11px; letter-spacing: .1em; color: #fff; }
+  .rc-fv-copy { position: relative; z-index: 1; width: 100%; }
+  .rc-fv-copy > * { max-width: 640px; }
+  .rc-fv .crumb { margin-bottom: 40px; }
+  .rc-fv-ja { margin-left: 14px; padding-left: 14px; border-left: 1px solid currentColor; font-family: var(--sans); letter-spacing: .1em; text-transform: none; }
+  .rc-fv-title { margin-top: 20px; font-family: var(--serif); font-weight: 500; font-size: clamp(28px, 3vw, 42px); line-height: 1.6; letter-spacing: .06em; white-space: nowrap; color: var(--navy); }
+  .rc-fv-title span { display: block; }
+  .rc-fv-lead { margin-top: 28px; font-size: 16px; line-height: 2; color: var(--text); }
+  .rc-fv .rc-status { margin-top: 36px; }
+  .rc-facts { position: relative; z-index: 2; margin-top: -36px; }
+  .rc-fact-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .rc-fact-list li { padding: 22px 20px 20px; background: #fff; border: 1px solid var(--rule); border-top: 3px solid var(--gold); border-radius: var(--radius); box-shadow: 0 10px 28px rgba(27, 51, 80, .07); }
+  .rc-fact-label { font-size: 12px; letter-spacing: .14em; color: var(--text-sub); }
+  .rc-fact-value { margin-top: 8px; font-family: var(--serif); font-weight: 600; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.5; letter-spacing: .04em; color: var(--navy); }
+  .rc-fact-note { margin-top: 6px; font-size: 12px; color: var(--text-sub); }
+  .rc-facts + .section { padding-top: clamp(80px, 9vw, 120px); }
+  @media (max-width: 1023px) {
+    .rc-fv { display: block; min-height: 0; padding: var(--header-h) 0 64px; }
+    .rc-fv-photo { position: relative; width: 100%; height: 42vh; min-height: 260px; max-height: 420px; }
+    .rc-fv-photo::before { background: linear-gradient(180deg, rgba(255, 255, 255, 0) 60%, var(--paper) 100%); }
+    .rc-fv .crumb { margin: 24px 0 28px; }
+    .rc-fv-copy > * { max-width: none; }
+    .rc-fact-list { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .rc-facts { margin-top: -24px; }
+  }
+  @media (max-width: 767px) {
+    .rc-fv-title { font-size: clamp(19px, 6vw, 26px); letter-spacing: .03em; }
+    .rc-fv-lead { font-size: 14.5px; }
+    .rc-fact-list li { padding: 16px 14px 14px; }
+    .rc-fact-value { font-size: 14px; letter-spacing: 0; }
+    .rc-fact-note { font-size: 11px; }
+    .rc-fact-list li { padding: 14px 12px 12px; }
+  }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 
