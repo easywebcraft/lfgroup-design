@@ -276,12 +276,6 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 .rf-go .rf-top .rf-media img:nth-child(4).is-on { opacity: 1; filter: none; transition: opacity 1.4s ease .5s, filter 2.4s ease .5s, scale 6s linear, translate 6s linear; }
 .rf-go .rf-top .rf-media img:nth-child(3).is-prev { filter: brightness(.25); transition: filter 1.4s ease, scale 6s linear, translate 6s linear; }
 
-/* /top-a2-full/：冒頭の演出を黒い背景・白い文字に（2026-10-07。吸い込まれる先の見出しが白い文字のため）。本番のトップは白い背景のまま */
-html.is-loading:has(.rf-top) .lf-loader { background-color: #0A0D12; }
-html.is-loading:has(.rf-top) .lf-loader.is-absorb { background-color: rgba(10, 13, 18, 0); }
-html:has(.rf-top) .ll-logo, html:has(.rf-top) .ll-catch, html:has(.rf-top) .ll-catch .l1, html:has(.rf-top) .ll-catch .l2 { color: #fff; }
-html:has(.rf-top) .ll-pct, html:has(.rf-top) .ll-skip { color: rgba(255, 255, 255, .75); }
-html:has(.rf-top) .ll-ring .t { stroke: rgba(255, 255, 255, .18); }
 
 /* 秋→冬の切り替え（2026-10-07 再変更）：暗く沈む → 秋の景色が冷たい色に変わり、雪が舞い始め、その中から冬の夜景が溶けるように現れる。
    雪は .rf-media::before（大きさの違う3層の白い粒を、違う速さで下へ流す）。冬に入ったときだけ現れ、しばらく降ってから薄れる */
@@ -319,3 +313,8 @@ html:has(.rf-top) .ll-ring .t { stroke: rgba(255, 255, 255, .18); }
 .rf-go .rf-top .rf-media img:nth-child(3).is-on { transition: opacity .5s ease, filter 1.2s ease, scale 6s linear, translate 6s linear; }
 .rf-go .rf-top .rf-media img:nth-child(4).is-on { transition: opacity 1s ease .2s, filter 1s ease .2s, scale 6s linear, translate 6s linear; }
 .rf-go .rf-top .rf-media img:nth-child(4).is-prev { transition: scale 6s linear, translate 6s linear; }
+
+/* /top-a2-full/ の冒頭の演出（2026-10-07 案A）：白い背景・紺の文字で始め、キャッチコピーと社名が見出し・ヘッダーへ吸い込まれる途中で、
+   白い幕が透けるのに合わせて紺から白へなめらかに変える（着いたときには白い見出しと同じ色。黒い背景版はやめた） */
+html:has(.rf-top) .ll-logo, html:has(.rf-top) .ll-catch .l1, html:has(.rf-top) .ll-catch .l2 { transition: color 1.2s ease .15s, text-shadow 1.2s ease .6s; }
+html:has(.rf-top) .lf-loader.is-absorb .ll-logo, html:has(.rf-top) .lf-loader.is-absorb .ll-catch .l1, html:has(.rf-top) .lf-loader.is-absorb .ll-catch .l2 { color: #fff; text-shadow: 0 2px 14px rgba(8, 18, 32, .45); }
