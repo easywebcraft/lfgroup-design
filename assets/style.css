@@ -1313,6 +1313,17 @@
 
   /* 入口のタイルのすぐ下の段は、上の余白を詰める（間の段を外して白い空白が目立ったため・2026-10-06） */
   .entries + .section { padding-top: clamp(64px, 6vw, 88px); }
+
+  /* ===== 入口のタイル・数字の段を明るく（2026-10-06「全体的に暗い」）=====
+     紺は文字の後ろ（左側・下側）にだけ薄く残し、写真の明るさを活かす。文字は薄い影で読みやすさを保つ */
+  .entry::after { background: linear-gradient(90deg, rgba(27, 51, 80, .5) 0%, rgba(27, 51, 80, .22) 45%, rgba(27, 51, 80, 0) 80%); }
+  .entry-body { text-shadow: 0 1px 12px rgba(20, 40, 64, .35); }
+  @media (max-width: 767px) {
+    .entry::after { background: linear-gradient(90deg, rgba(27, 51, 80, .5) 0%, rgba(27, 51, 80, .25) 70%, rgba(27, 51, 80, .12) 100%); }
+  }
+  .numbers::before { background: linear-gradient(180deg, rgba(44, 74, 110, .42), rgba(44, 74, 110, .58)); }
+  .numbers h2, .num-card { text-shadow: 0 1px 12px rgba(20, 40, 64, .4); }
+  .num-card { background: rgba(31, 54, 82, .28); border-color: rgba(255, 255, 255, .45); }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 
