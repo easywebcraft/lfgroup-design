@@ -1236,6 +1236,27 @@
   @media (max-width: 767px) {
     .fv-photo { height: calc(56svh + var(--header-h)); min-height: calc(320px + var(--header-h)); }
   }
+
+  /* 目的から探す（4つの入口）：写真の上に文字をのせたブロックを、画面いっぱいに2段×2列で均等に並べる（2026-10-06）。
+     写真に紺のグラデーションを重ねて、白い文字を読みやすくする。スマホは1列 */
+  .entries { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #fff; }
+  .entry { position: relative; display: flex; align-items: center; min-height: clamp(360px, 46vh, 520px); padding: clamp(32px, 5vw, 88px); overflow: hidden; color: #fff; text-decoration: none; background: var(--navy); }
+  .entry img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2, .6, .2, 1); }
+  .entry::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(27, 51, 80, .74) 0%, rgba(27, 51, 80, .5) 50%, rgba(27, 51, 80, .2) 100%); transition: background-color .4s ease; }
+  .entry:hover img { transform: scale(1.04); }
+  .entry-body { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; max-width: 460px; }
+  .entry .eyebrow { margin-bottom: 18px; color: #fff; letter-spacing: .28em; }
+  .entry .eyebrow::before { background: var(--gold); opacity: 1; }
+  .entry-title { font-family: var(--serif); font-weight: 500; font-size: clamp(26px, 2.8vw, 40px); line-height: 1.5; letter-spacing: .14em; }
+  .entry-text { margin-top: 16px; font-size: 15px; line-height: 1.9; color: rgba(255, 255, 255, .9); }
+  .entry .link-arrow { margin-top: 28px; color: #fff; }
+  .entry .link-arrow::after { background: var(--gold); }
+  @media (max-width: 767px) {
+    .entries { grid-template-columns: 1fr; }
+    .entry { min-height: 260px; padding: 40px var(--gutter); }
+    .entry-text { font-size: 14px; }
+  }
+
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 

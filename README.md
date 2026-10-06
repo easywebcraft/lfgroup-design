@@ -38,6 +38,12 @@
 - 動きは `src/season.css`・`src/season.js`（`build.py` が style.css・main.js に足す）
 - /season/・/life/ は試作のときのURLで、今はトップへ移るだけのページ
 
+## トップの「目的から探す」（4つの入口）
+
+- 2026-10-06、お客さまのイメージ画像に合わせて、写真の上に文字をのせたブロックを、画面いっぱいに2段×2列で均等に並べる形に作り直した（スマホは1列）。見出し「目的から探す」は外した
+- 個人のお客様（`service-insurance.jpg`）・法人のお客様（`cta-final.jpg`）・アライアンス事業（`scene-home.jpg`）・リクルート（`cta.jpg`）。説明文は前の入口のまま
+- 書き方は `src/top.html` の `.entries`、見た目は `src/refine.css` の最後
+
 ## 人物なしの写真の試作（/scene/）
 
 - URL：https://easywebcraft.github.io/lfgroup-design/scene/ （トップページだけ。今のトップ「人生の四季」と見比べ用。本番には出さない）
