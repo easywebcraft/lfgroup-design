@@ -307,3 +307,8 @@ html:has(.rf-top) .ll-ring .t { stroke: rgba(255, 255, 255, .18); }
 /* 冬は長め（6秒）に見せるので、カメラの動きも 8秒にして、次の春へ移る最中も止まらないようにする */
 .rf-go .rf-top .rf-media img:nth-child(4).is-on { transition: opacity 2s ease .7s, filter 2.4s ease .7s, scale 8s linear, translate 8s linear; }
 .rf-go .rf-top .rf-media img:nth-child(4).is-prev { transition: scale 8s linear, translate 8s linear; }
+/* 秋→冬を速く（2026-10-07「切り替えが遅い」）：冬がはっきり見えるまで 約3.1秒 → 約1.5秒 */
+.rf-go .rf-top .rf-media img:nth-child(3).is-prev { transition: filter .8s ease, scale 6s linear, translate 6s linear; }
+.rf-go .rf-top .rf-media img:nth-child(4).is-on { transition: opacity 1s ease .25s, filter 1.3s ease .25s, scale 8s linear, translate 8s linear; }
+.rf-go .rf-top[data-season="3"] .rf-media::before { animation: rf-snow-fall 10s linear infinite, rf-snow-show 4.5s ease forwards; }
+@keyframes rf-snow-show { 0% { opacity: 0; } 10% { opacity: 1; } 60% { opacity: .9; } 100% { opacity: .35; } }
