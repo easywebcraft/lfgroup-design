@@ -485,3 +485,6 @@
     .numbers-list { grid-template-columns: 1fr; gap: 14px; }
     .num-card { padding: 26px 16px 22px; }
   }
+
+  /* 入口のタイルのすぐ下の段は、上の余白を詰める（間の段を外して白い空白が目立ったため・2026-10-06） */
+  .entries + .section { padding-top: clamp(64px, 6vw, 88px); }
