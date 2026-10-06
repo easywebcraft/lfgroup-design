@@ -1011,15 +1011,15 @@ def write_recruit_trials():
     copy = old[k:old.rindex('</div>') + len('</div>')]
     img = lambda f, cls='': f'<img class="{cls}" src="/images/{f}" alt="" data-eager onerror="this.remove()">'
     tag = '<span class="rc-photo-todo">写真は仮（生成AIの素材に差し替え）</span>'
-    times = [('10:00', 'START', '一日のはじまり', 'is-morning'), ('13:00', 'MEETING', 'お客様とのご相談', 'is-noon'),
-             ('16:00', 'PROPOSAL', 'ご提案の準備', 'is-evening'), ('18:00', 'FINISH', '一日のおわり', 'is-night')]
+    # 案A の写真は生成AIで作った「同じ相談スペースの朝・昼・夕方・夜」（2026-10-06 松本さん作成。recruit-1000〜1800.jpg）
+    times = [('10:00', 'START', '一日のはじまり', 'recruit-1000.jpg'), ('13:00', 'MEETING', 'お客様とのご相談', 'recruit-1300.jpg'),
+             ('16:00', 'PROPOSAL', 'ご提案の準備', 'recruit-1600.jpg'), ('18:00', 'FINISH', '一日のおわり', 'recruit-1800.jpg')]
     fv = {
         'a': f'''<section class="rf rf-a" data-fx="a">
-    <div class="rf-media">{''.join(img('about-hero.jpg', c + (' is-on' if n == 0 else '')) for n, (_, _, _, c) in enumerate(times))}</div>
+    <div class="rf-media">{''.join(img(f, 'is-on' if n == 0 else '') for n, (_, _, _, f) in enumerate(times))}</div>
     {copy}
     <div class="wrap rf-clock" aria-hidden="true">{''.join(f'<p class="rf-time{" is-on" if n == 0 else ""}"><b>{t}</b><span>{en}</span><small>{ja}</small></p>' for n, (t, en, ja, _) in enumerate(times))}
       <ol class="rf-bar">{'<li></li>' * len(times)}</ol></div>
-    {tag}
   </section>''',
         'b': f'''<section class="rf rf-b" data-fx="b">
     <div class="rf-panels">{''.join(f'<div class="rf-panel">{"".join(img(f, "is-on" if m == 0 else "") for m, f in enumerate(fs))}</div>' for fs in (

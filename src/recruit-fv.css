@@ -26,11 +26,6 @@
 .rf-a .btn-primary, .rf-c .btn-primary { background: #fff; color: var(--navy); }
 
 /* ===== 案A：オフィスの1日 ===== */
-/* 仮の写真は1枚なので、色味で朝・昼・夕方・夜を作る（本番は生成AIで光だけ変えた4枚にする） */
-.rf-a .rf-media img.is-morning { filter: brightness(1.04) saturate(.85) hue-rotate(-8deg); }
-.rf-a .rf-media img.is-noon { filter: brightness(1.08) saturate(1.05); }
-.rf-a .rf-media img.is-evening { filter: sepia(.45) saturate(1.5) hue-rotate(-12deg) brightness(.92); }
-.rf-a .rf-media img.is-night { filter: brightness(.42) saturate(.7) hue-rotate(10deg); }
 /* 切り替え：次の写真が斜めのマスクで開く */
 .rf-go .rf-a .rf-media img { opacity: 1; clip-path: polygon(0 0, 0 0, -30% 100%, -30% 100%); z-index: 0; scale: 1.08; }
 .rf-go .rf-a .rf-media img.is-prev { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); z-index: 1; }
