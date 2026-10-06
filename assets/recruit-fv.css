@@ -270,3 +270,8 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
 .rf-go .rf-top .rf-media img:nth-child(3).is-on { transition: opacity .45s ease, filter 1.9s cubic-bezier(.2, .6, .2, 1), scale 6s linear, translate 6s linear; }
 .rf-go .rf-top .rf-media img:nth-child(4).is-on { transition: clip-path 1.5s cubic-bezier(.65, 0, .35, 1), scale 6s linear, translate 6s linear; }
 .rf-go .rf-top .rf-media img.is-prev { transition: scale 6s linear, translate 6s linear; }
+
+/* 秋→冬の切り替え（2026-10-07 変更）：上から幕が下りる → 秋の夕景が暗く沈み、その中から冬の夜景の灯りが浮かび上がる */
+.rf-go .rf-top .rf-media img:nth-child(4) { opacity: 0; clip-path: none; filter: brightness(.15) blur(3px); }
+.rf-go .rf-top .rf-media img:nth-child(4).is-on { opacity: 1; filter: none; transition: opacity 1.4s ease .5s, filter 2.4s ease .5s, scale 6s linear, translate 6s linear; }
+.rf-go .rf-top .rf-media img:nth-child(3).is-prev { filter: brightness(.25); transition: filter 1.4s ease, scale 6s linear, translate 6s linear; }
