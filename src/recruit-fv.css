@@ -210,3 +210,9 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
   .rf-top .rv-big { width: auto; left: 0; bottom: auto; top: calc(var(--header-h) + 24px); font-size: clamp(40px, 13vw, 80px); }
 }
 @media (max-width: 767px) { .rf-top .rv-title { font-size: clamp(26px, 7.4vw, 34px); letter-spacing: .04em; } }
+/* CHANGE YOUR FUTURE をもう少し大きく（2026-10-07） */
+.rf-top .rv-big { width: 62%; bottom: 70px; font-size: clamp(60px, 8.4vw, 150px); }
+@media (max-width: 1023px) { .rf-top .rv-big { width: auto; bottom: auto; font-size: clamp(52px, 17vw, 104px); } }
+/* 背景に溶け込まないよう、輪郭線を太く濃くし、中にうっすら白、影を付ける（2026-10-07） */
+.rf-top .rv-big { color: rgba(255, 255, 255, .14); -webkit-text-stroke: 2px rgba(255, 255, 255, .85); filter: drop-shadow(0 4px 18px rgba(8, 18, 32, .55)); }
+@media (max-width: 767px) { .rf-top .rv-big { -webkit-text-stroke-width: 1.5px; } }
