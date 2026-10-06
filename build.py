@@ -1008,28 +1008,21 @@ def write_motion(top):
 def write_stylish(top):
     """スタイリッシュ版の試作（/stylish/・2026-10-06「もっとスタイリッシュで動きのあるホームページ」）。
     中身は今のトップと同じで、src/stylish.css・stylish.js（＋なめらかなスクロールの lenis.min.js）を足し、
-    流れる英字の帯を2本入れ、見出しを「1行ずつせり上がる」用（s-lines）にする。本番（--release）には出さない。"""
+    見出しを「1行ずつせり上がる」用（s-lines）にする。本番（--release）には出さない。
+    流れる英字の帯（C）は試したが外した（2026-10-06 松本さん）。"""
     css, js, lenis = (SRC / 'stylish.css').read_text(), (SRC / 'stylish.js').read_text(), (SRC / 'lenis.min.js').read_text()
     v = hashlib.sha1((css + js).encode()).hexdigest()[:8]
     write('assets/stylish.css', css)
     write('assets/stylish.js', js)
     write('assets/lenis.min.js', lenis)
-    words = ['Insurance', 'Lifeline', 'Partner', 'Recruit']
-    track = lambda: ''.join(f'<span>{w}<i>✦</i></span>' for w in words * 2)
-    marquee = lambda cls='': (f'  <div class="s-marquee{cls}" aria-hidden="true"><div class="s-track">'
-                              f'{track()}{track()}</div></div>\n')
     html_ = (top.replace('</head>', f'<link rel="stylesheet" href="/assets/stylish.css?v={v}">\n</head>', 1)
                 .replace('</body>', f'<script src="/assets/lenis.min.js?v={v}"></script>\n'
                                     f'<script src="/assets/stylish.js?v={v}"></script>\n</body>', 1)
-                .replace('リニューアルの試作です', 'リニューアルの試作です・スタイリッシュ版', 1)
-                .replace('  <div class="entries-head" id="foryou">', marquee() + '  <div class="entries-head" id="foryou">', 1))
+                .replace('リニューアルの試作です', 'リニューアルの試作です・スタイリッシュ版', 1))
     for a in ('<h2 class="fade"><span>目的に合わせて', '<h2 class="fade"><span>LFグループについて',
               '<h2 class="fade">数字で見るLFグループ', '<h2 class="fade"><span>保険やお金について'):
         assert a in html_, a
         html_ = html_.replace(a, a.replace('class="fade"', 'class="s-lines"'), 1)
-    i = html_.index('id="final-cta"')
-    i = html_.rindex('<section', 0, i)
-    html_ = html_[:i] + marquee(' is-dark') + '  ' + html_[i:]
     write('stylish/index.html', html_)
 
 

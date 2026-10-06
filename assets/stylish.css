@@ -2,22 +2,9 @@
    今のトップに足すだけ。本番（--release）には出さない。動きを減らす設定の人には何もしない（html.s-ready が付かない）
    A 見出しが1行ずつ下からせり上がる（.s-lines）
    B 入口の写真が幕を開けるように現れ、スクロールに合わせて少し奥行きが動く（.entry.is-open／--py）
-   C 大きな英字がゆっくり横に流れる帯（.s-marquee）
+   （C 大きな英字が横に流れる帯は、試して外した）
    D なめらかなスクロール（Lenis。stylish.js）
    E 入口のタイルにマウスを乗せると、写真が寄って明るくなり、矢印が伸びる */
-
-/* C 流れる英字の帯（動きを減らす設定でも、帯そのものは止まった文字として見せる） */
-.s-marquee { overflow: hidden; padding: clamp(28px, 4vw, 48px) 0; background: #fff; border-block: 1px solid var(--rule); }
-.s-track { display: flex; width: max-content; }
-.s-track span { flex: none; padding-right: .6em; font-family: var(--serif); font-weight: 500; font-size: clamp(44px, 7vw, 100px); line-height: 1.1; letter-spacing: .02em; color: transparent; -webkit-text-stroke: 1px rgba(27, 51, 80, .35); white-space: nowrap; }
-.s-track span:nth-child(odd) { color: var(--navy); -webkit-text-stroke: 0; }
-.s-track span i { display: inline-block; margin-left: .9em; font-size: .28em; font-style: normal; vertical-align: middle; color: var(--gold); -webkit-text-stroke: 0; }
-.s-ready .s-track { animation: s-flow 48s linear infinite; }
-.s-marquee.is-dark { background: var(--navy); border: 0; }
-.s-marquee.is-dark .s-track span { -webkit-text-stroke-color: rgba(255, 255, 255, .4); }
-.s-marquee.is-dark .s-track span:nth-child(odd) { color: #fff; }
-.s-ready .s-marquee.is-dark .s-track { animation-direction: reverse; animation-duration: 56s; }
-@keyframes s-flow { to { transform: translateX(-50%); } }
 
 /* A 見出しが1行ずつせり上がる */
 .s-ready .s-lines .s-row { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
