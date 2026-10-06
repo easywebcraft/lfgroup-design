@@ -1005,23 +1005,6 @@ def write_motion(top):
     write('motion/index.html', html_)
 
 
-STYLISH_FV = '''<section class="fv sf" id="top">
-    <div class="sf-sticky">
-      <div class="sf-media"><img src="/images/life-spring.jpg" alt="" fetchpriority="high" data-eager onerror="this.remove()"></div>
-      <div class="wrap sf-copy">
-        <p class="eyebrow fade">Insurance &amp; Lifeline</p>
-        <h1 class="fade" aria-label="保険・家計・暮らしを整えて 安心できる未来へ">
-          <span class="sf-l1" aria-hidden="true"><span class="sf-rot"><span class="is-on">保険</span><span>家計</span><span>暮らし</span></span>を整えて</span>
-          <span class="sf-l2" aria-hidden="true">安心できる未来へ</span>
-        </h1>
-        <p class="fv-lead fade">保険の見直しや、電気・ガスなどの固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。</p>
-        <p class="fv-cta fade"><a class="link-arrow" href="/contact/">保険・お金について相談する<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
-      </div>
-      <a class="sf-scroll" href="#foryou"><span>Scroll</span></a>
-    </div>
-  </section>'''
-
-
 def write_stylish(top):
     """スタイリッシュ版の試作（/stylish/・2026-10-06「もっとスタイリッシュで動きのあるホームページ」）。
     中身は今のトップと同じで、src/stylish.css・stylish.js（＋なめらかなスクロールの lenis.min.js）を足し、
@@ -1036,13 +1019,6 @@ def write_stylish(top):
                 .replace('</body>', f'<script src="/assets/lenis.min.js?v={v}"></script>\n'
                                     f'<script src="/assets/stylish.js?v={v}"></script>\n</body>', 1)
                 .replace('リニューアルの試作です', 'リニューアルの試作です・スタイリッシュ版', 1))
-    # FV（2026-10-06）：画面いっぱいの写真が、スクロールに合わせて角の丸いカードのように縮み、入口へつながる。
-    # 見出しの頭の言葉は「保険→家計→暮らし」と切り替わる。ロゴの演出は「保険とお金を整えて」を見出しへ
-    # 吸い込ませる作りで、切り替わる見出しとは合わないので、この試作では外す
-    html_ = html_.replace(LOADER_HEAD, '', 1).replace(LOADER, '', 1)
-    i = html_.index('<section class="fv" id="top">')
-    j = html_.index('</section>', i) + len('</section>')
-    html_ = html_[:i] + STYLISH_FV + html_[j:]
     for a in ('<h2 class="fade"><span>目的に合わせて', '<h2 class="fade"><span>LFグループについて',
               '<h2 class="fade">数字で見るLFグループ', '<h2 class="fade"><span>保険やお金について'):
         assert a in html_, a

@@ -52,37 +52,6 @@
   };
   window.addEventListener('resize', function () { vh = window.innerHeight; parallax(); });
 
-  // FV：見出しの頭の言葉を「保険→家計→暮らし」と切り替える（2.8秒ごと）。枠の幅も今の言葉に合わせる
-  var rot = document.querySelector('.sf-rot');
-  if (rot) {
-    var words = rot.children, k = 0;
-    var fit = function () { rot.style.width = words[k].offsetWidth + 'px'; };
-    fit();
-    setInterval(function () {
-      var old = words[k];
-      k = (k + 1) % words.length;
-      old.classList.remove('is-on');
-      old.classList.add('is-out');
-      words[k].classList.add('is-on');
-      fit();
-      setTimeout(function () { old.classList.remove('is-out'); }, 850);
-    }, 2800);
-    window.addEventListener('resize', fit);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);  // 書体が読み込まれると幅が変わるので測り直す
-  }
-
-  // FV：スクロールに合わせて、画面いっぱいの写真を角の丸いカードへ縮める（--p：0＝全面、1＝縮みきり）
-  var sf = document.querySelector('.fv.sf');
-  var shrink = function () {
-    if (!sf) return;
-    var r = sf.getBoundingClientRect(), run = r.height - window.innerHeight;
-    var p = run > 0 ? Math.min(Math.max(-r.top / run, 0), 1) : 0;
-    sf.style.setProperty('--p', p.toFixed(4));
-    sf.classList.toggle('is-scrolling', p > 0);
-  };
-  var parallaxOnly = parallax;
-  parallax = function () { parallaxOnly(); shrink(); };
-
   // D なめらかなスクロール。ロゴの演出中は止めておく。ページ内リンクは固定ヘッダーの分だけずらす
   if (window.Lenis) {
     var header = document.querySelector('.header');
