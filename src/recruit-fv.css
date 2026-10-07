@@ -467,3 +467,33 @@ html:has(.rf-top) .header .menu-btn span { transition-duration: .45s; }
 
 /* JSで画面上の座標へ変換するため、光の層自体は拡大・移動させない。 */
 .rf-go .rf-wipe .rv-sweep { translate: none; scale: 1; transition: none; }
+
+/* ===== 「CHANGE YOUR FUTURE」を、見出し・説明文・ボタンと重ねない（2026-10-07）=====
+   原因：トップは画面幅が狭いほど英字の左端がコピーに食い込み（1024〜1440px で説明文・ボタンと重なる）、
+   採用ページは英字が画面全幅に広がって見出しと重なっていた。
+   英字の置き場所を「コピー（左 約640px）の右の空き」に限る：幅は 画面幅 − 680px、右下に置く */
+@media (min-width: 1024px) {
+  .rf-top .rv-big, .rf-v:not(.rf-top) .rv-big { left: auto; right: 0; width: min(calc(100% - 760px), 620px); top: auto; bottom: 70px; text-align: right; }
+  .rf-top .rv-big, .rf-v:not(.rf-top) .rv-big { font-size: clamp(40px, calc((100vw - 760px) * .2), 130px); }
+  .rf-v:not(.rf-top) .rv-big { padding-inline: 0 var(--gutter); }
+}
+/* ほぼ重なる幅（1024〜1180px）は、さらに小さく */
+@media (min-width: 1024px) and (max-width: 1180px) {
+  .rf-top .rv-big, .rf-v:not(.rf-top) .rv-big { width: calc(100% - 700px); font-size: clamp(34px, calc((100vw - 700px) * .17), 60px); }
+}
+/* 採用ページのスマホ：トップと同じく、英字を縦に積み、小さくして見出しの上に置く */
+@media (max-width: 1023px) {
+  .rf-v:not(.rf-top) .rv-big { position: relative; inset: auto; width: auto; margin: 0 0 12px; padding-bottom: 0; font-size: clamp(36px, 11vw, 64px); }
+  .rf-v:not(.rf-top) { flex-direction: column; justify-content: flex-end; align-items: stretch; }
+}
+/* 採用ページ：右下の「03 TEAM」の表示（時刻・進み具合の線）と英字が重ならないよう、英字を上へ上げる */
+@media (min-width: 1024px) { .rf-v:not(.rf-top) .rv-big { bottom: 170px; } }
+/* 採用ページのスマホ：英字を3行に戻して読みやすくし、上のパンくずとの間隔を取る */
+@media (max-width: 1023px) {
+  .rf-v:not(.rf-top) .rv-big { margin: 18px 0 14px; padding-inline: 0; font-size: clamp(34px, 10vw, 56px); line-height: .92; text-align: right; }
+  .rf-v:not(.rf-top) .rv-big span { display: block; }
+}
+/* 採用ページのスマホ：英字は「CHANGE」「YOUR FUTURE」の2行のまま、画面の幅（左右の余白を除く）に収まる大きさにし、輪郭線を濃くして読みやすくする */
+@media (max-width: 1023px) {
+  .rf-v:not(.rf-top) .rv-big { font-size: clamp(30px, 9.4vw, 52px); padding-right: var(--gutter); box-sizing: border-box; color: rgba(255, 255, 255, .12); -webkit-text-stroke: 1.5px rgba(255, 255, 255, .85); filter: drop-shadow(0 3px 12px rgba(8, 18, 32, .55)); }
+}
