@@ -82,29 +82,36 @@
       };
       draw(start);
     };
-    var show = function (i) {
+    var show = function (i, initial) {
       sec.setAttribute('data-season', i);  // /top-a2/：今の季節（0春 1夏 2秋 3冬）。秋→冬の雪の演出に使う
-      if (sharedWipe) {
+      if (sharedWipe && !initial) {
         cancelAnimationFrame(wipeFrame);
         imgs.forEach(function (im) { im.style.removeProperty('clip-path'); });
       }
-      step(imgs, i);
-      if (sweep && (!sec.classList.contains('rf-top') || sec.classList.contains('rf-wipe'))) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }  // A2：金の光の帯（切り替えのたびに。/top-a2/ では外した 2026-10-07）
-      if (sharedWipe) animateWipe(imgs[i]);
+      // 初回はHTMLで表示済みの1枚目を残す。金の光は2枚目から使う。
+      if (!initial) {
+        step(imgs, i);
+        if (sweep && (!sec.classList.contains('rf-top') || sec.classList.contains('rf-wipe'))) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }
+        if (sharedWipe) animateWipe(imgs[i]);
+      }
       times.forEach(function (t, k) { t.classList.toggle('is-on', k === i); });
       if (!bars.length) return;  // 時刻を出さない版（/top-a2/）
       bars.forEach(function (b, k) { b.classList.toggle('is-done', k < i); b.classList.remove('is-on'); });
       void bars[i].offsetWidth;
       bars[i].classList.add('is-on');
     };
-    // 4枚とも先に読み込み・描画の準備（decode）を済ませてから動かす（初めて出す写真で引っかからないように）
-    Promise.all(imgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : null; })).then(function () {
-      // ロゴの演出のあとは、最初の写真がもう見えているので現れ直させない（春がぼやけ直して見えるため）
-      if (!window.LF_LOADER_RUN) { imgs[0].classList.remove('is-on'); show(0); }
+    // 最初の写真だけ準備できれば開始する。次の写真が未準備なら、今の写真を残して待つ。
+    var ready = imgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : Promise.resolve(); });
+    ready[0].then(function () {
+      if (sharedWipe) show(0, true);
+      else if (!window.LF_LOADER_RUN) { imgs[0].classList.remove('is-on'); show(0); }
       // 季節ごとに見せる時間を変えられる（data-stays="春,夏,秋,冬" ミリ秒。冬は雪の演出のあとに現れるので長め）
       var stays = (sec.getAttribute('data-stays') || '').split(',').map(Number);
       var next = function () {
-        setTimeout(function () { n = (n + 1) % imgs.length; show(n); next(); }, stays[n] || STAY);
+        setTimeout(function () {
+          var upcoming = (n + 1) % imgs.length;
+          ready[upcoming].then(function () { n = upcoming; show(n); next(); });
+        }, stays[n] || STAY);
       };
       next();
     });

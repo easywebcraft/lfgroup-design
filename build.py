@@ -1052,7 +1052,7 @@ def write_recruit_trials():
     old = base[i:j]
     k = old.index('<div class="wrap rc-fv-copy">')
     copy = old[k:old.rindex('</div>') + len('</div>')]
-    img = lambda f, cls='': f'<img class="{cls}" src="/images/{f}" alt="" data-eager onerror="this.remove()">'
+    img = lambda f, cls='': f'<img class="{cls}" src="/images/{f}" alt="" {"fetchpriority=\"high\"" if cls == "is-on" else "data-eager"} onerror="this.remove()">'
     tag = '<span class="rc-photo-todo">写真は仮（生成AIの素材に差し替え）</span>'
     # 案A の写真は生成AIで作った「同じ相談スペースの朝・昼・夕方・夜」（2026-10-06 松本さん作成。recruit-1000〜1800.jpg）
     times = [('10:00', 'START', '一日のはじまり', 'recruit-1000.jpg'), ('13:00', 'MEETING', 'お客様とのご相談', 'recruit-1300.jpg'),
@@ -1133,7 +1133,7 @@ def write_top_a2(top):
     右下の時刻・ヒーロー下の流れる帯・ENTRY ボタンは外した（2026-10-07 松本さん）"""
     # 写真は名古屋の街の四季（2026-10-07 松本さん作成。春＝桜とビル、夏＝入道雲と交差点、秋＝イチョウ並木と夕日、冬＝雪とイルミネーション）
     times = [(None, None, None, f) for f in ('city-spring.jpg', 'city-summer.jpg', 'city-autumn.jpg', 'city-winter.jpg')]
-    imgs = ''.join(f'<img class="{"is-on" if n == 0 else ""}" src="/images/{f}" alt="" data-eager onerror="this.remove()">' for n, (_, _, _, f) in enumerate(times))
+    imgs = ''.join(f'<img class="{"is-on" if n == 0 else ""}" src="/images/{f}" alt="" {"fetchpriority=\"high\"" if n == 0 else "data-eager"} onerror="this.remove()">' for n, (_, _, _, f) in enumerate(times))
     sec = f'''<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000" id="top">
     <div class="rf-media">{imgs}</div>
     <p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>
