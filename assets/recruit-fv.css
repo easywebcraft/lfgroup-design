@@ -318,3 +318,40 @@ html:has(.rf-v) .header:not(.is-scrolled) .menu-btn span { background: #fff; }
    白い幕が透けるのに合わせて紺から白へなめらかに変える（着いたときには白い見出しと同じ色。黒い背景版はやめた） */
 html:has(.rf-top) .ll-logo, html:has(.rf-top) .ll-catch .l1, html:has(.rf-top) .ll-catch .l2 { transition: color 1.2s ease .15s, text-shadow 1.2s ease .6s; }
 html:has(.rf-top) .lf-loader.is-absorb .ll-logo, html:has(.rf-top) .lf-loader.is-absorb .ll-catch .l1, html:has(.rf-top) .lf-loader.is-absorb .ll-catch .l2 { color: #fff; text-shadow: 0 2px 14px rgba(8, 18, 32, .45); }
+
+/* ===== /top-a2/：ヒーローより下の動きを足す（2026-10-07）=====
+   ① 入口のタイルの写真が、開いたあともゆっくり動き続ける（1枚ずつ向きを変える。transform で足すので、開くときの scale・奥行きの translate と重ならない）
+   ④ 数字が増え終わったら、カードの枠が一周光り、表面を斜めに光が走る（.is-shine。recruit-fv.js）
+   ⑤ 相談の案内：お問い合わせボタンがマウスに少し引き寄せられ（--bx/--by。PCのみ）、背景の色がゆっくり揺らぐ */
+html:has(.rf-top) .entry.is-open img { animation: rf-drift-a 14s ease-in-out 1.6s infinite alternate; }
+html:has(.rf-top) .entry:nth-child(2).is-open img { animation-name: rf-drift-b; animation-duration: 16s; }
+html:has(.rf-top) .entry:nth-child(3).is-open img { animation-name: rf-drift-c; animation-duration: 15s; }
+html:has(.rf-top) .entry:nth-child(4).is-open img { animation-name: rf-drift-d; animation-duration: 17s; }
+html:has(.rf-top) .entry:nth-child(5).is-open img { animation-name: rf-drift-b; animation-duration: 13s; }
+html:has(.rf-top) .entry:nth-child(6).is-open img { animation-name: rf-drift-c; animation-duration: 18s; }
+@keyframes rf-drift-a { from { transform: none; } to { transform: scale(1.08) translate(-2%, -1%); } }
+@keyframes rf-drift-b { from { transform: none; } to { transform: scale(1.06) translate(2.5%, 0); } }
+@keyframes rf-drift-c { from { transform: scale(1.07); } to { transform: scale(1) translate(0, -2%); } }
+@keyframes rf-drift-d { from { transform: none; } to { transform: scale(1.09) translate(-1%, 2%); } }
+
+html:has(.rf-top) .num-card { overflow: hidden; }
+html:has(.rf-top) .num-card::before { content: ""; position: absolute; top: -20%; bottom: -20%; left: -60%; width: 40%; transform: skewX(-20deg);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .35), rgba(255, 255, 255, 0)); opacity: 0; pointer-events: none; }
+html:has(.rf-top) .num-card::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; padding: 1.5px;
+  background: conic-gradient(from var(--ang, 0deg), rgba(242, 182, 60, 0) 0deg, rgba(242, 182, 60, .95) 40deg, rgba(242, 182, 60, 0) 90deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; }
+@property --ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+html:has(.rf-top) .num-card.is-shine::before { animation: rf-shine 1.1s cubic-bezier(.65, 0, .35, 1) forwards; }
+html:has(.rf-top) .num-card.is-shine::after { animation: rf-ring 1.4s ease-in-out forwards; }
+@keyframes rf-shine { 0% { opacity: 0; left: -60%; } 20% { opacity: 1; } 100% { opacity: 0; left: 130%; } }
+@keyframes rf-ring { 0% { opacity: 0; --ang: 0deg; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; --ang: 360deg; } }
+
+html:has(.rf-top) .contact-cta { position: relative; overflow: hidden; isolation: isolate; }
+html:has(.rf-top) .contact-cta::before { content: ""; position: absolute; inset: -30%; z-index: -1; pointer-events: none;
+  background: radial-gradient(40% 50% at 30% 40%, rgba(180, 205, 230, .55), transparent 70%), radial-gradient(35% 45% at 72% 62%, rgba(242, 214, 160, .35), transparent 70%);
+  animation: rf-glow 16s ease-in-out infinite alternate; }
+@keyframes rf-glow { to { transform: translate(6%, -4%) rotate(8deg); } }
+html:has(.rf-top) .contact-cta .btn-primary { translate: var(--bx, 0px) var(--by, 0px); transition: translate .35s cubic-bezier(.2, .8, .2, 1), background-color .3s ease; }
+@media (prefers-reduced-motion: reduce) {
+  html:has(.rf-top) .entry img, html:has(.rf-top) .contact-cta::before { animation: none !important; }
+}
