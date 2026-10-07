@@ -453,3 +453,9 @@ html:has(.rf-top) .header .menu-btn span { transition-duration: .45s; }
   100% { transform: translateX(130%); opacity: 0; }
 }
 .rf-go .rf-wipe .rv-sweep { translate: calc(var(--mx, 0) * -16px) calc(var(--my, 0) * -12px + var(--sy, 0) * .35px); scale: 1.06; transition: translate .4s ease-out; }
+
+/* /top-a2-serif/：大きな英字「CHANGE YOUR FUTURE」を、見出しと同じ系統の明朝体系（Cormorant Garamond）にする（2026-10-07）。
+   細めで大きくすると繊細に見えるので、輪郭線は細く、文字の大きさは明朝体の字面の小ささを補って少し大きくする */
+.rf-serif .rv-big { font-family: "Cormorant Garamond", "Noto Serif JP", serif; font-weight: 400; letter-spacing: .02em; line-height: .88; -webkit-text-stroke-width: 1px; font-size: clamp(64px, 9.4vw, 148px); -webkit-text-stroke-width: 1.2px; }
+.rf-serif .rv-big { color: rgba(255, 255, 255, .1); }
+@media (max-width: 767px) { .rf-serif .rv-big { font-size: clamp(48px, 15vw, 84px); } }

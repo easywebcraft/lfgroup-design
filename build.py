@@ -1100,6 +1100,11 @@ def write_top_a2(top):
         ('top-a2-wipe/index.html', top[:i] + sec.replace('<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000"',
                                                          '<section class="fv rf rf-a rf-v rf-top rf-wipe" data-fx="a" data-stay="2500"', 1) + top[j:],
          '採用ページと同じ切り替え方（斜めのマスク＋金の光）を当てた版'),
+        # /top-a2-serif/（2026-10-07）＝ 大きな英字を、見出しと同じ系統の明朝体系（Cormorant Garamond）にした見比べ用
+        ('top-a2-serif/index.html', (top[:i] + sec.replace('<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000"',
+                                                          '<section class="fv rf rf-a rf-v rf-top rf-wipe rf-serif" data-fx="a" data-stay="2500"', 1) + top[j:])
+         .replace('family=Montserrat:wght@500;600', 'family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@500;600', 1),
+         '大きな英字を明朝体系のフォントにした版'),
     )
     out = {}
     for path, html_, label in pages:
