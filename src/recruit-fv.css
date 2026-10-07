@@ -497,3 +497,16 @@ html:has(.rf-top) .header .menu-btn span { transition-duration: .45s; }
 @media (max-width: 1023px) {
   .rf-v:not(.rf-top) .rv-big { font-size: clamp(30px, 9.4vw, 52px); padding-right: var(--gutter); box-sizing: border-box; color: rgba(255, 255, 255, .12); -webkit-text-stroke: 1.5px rgba(255, 255, 255, .85); filter: drop-shadow(0 3px 12px rgba(8, 18, 32, .55)); }
 }
+
+/* ===== 採用ページ（案A2）を、本番のトップと同じ見た目に（2026-10-07 松本さん）=====
+   本番のトップ（.rf-top）専用だった見出し・強調・ボタン・英字の見た目を、案A2（.rf-serif）にも当てる */
+.rf-serif .rv-title { font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.65; letter-spacing: .08em; }
+@media (max-width: 767px) { .rf-serif .rv-title { font-size: clamp(26px, 7.4vw, 34px); letter-spacing: .04em; } }
+.rf-serif .rv-title em { color: #fff; }
+.rf-serif .btn-primary { background: var(--navy); color: #fff; border: 1px solid rgba(255, 255, 255, .35); }
+.rf-serif .btn-primary:hover { background: #fff; color: var(--navy); }
+.rf-serif .rc-links { margin-top: 32px; }
+.rf-serif .rv-big { color: rgba(255, 255, 255, .14); -webkit-text-stroke: 1.2px rgba(255, 255, 255, .9); filter: drop-shadow(0 4px 18px rgba(8, 18, 32, .55)); }
+.rf-serif .eyebrow::before { background: var(--gold); }
+.rf-serif .rc-fv-copy { text-shadow: 0 2px 16px rgba(8, 18, 32, .65); }
+.rf-serif .rc-fv-copy .btn { text-shadow: none; }

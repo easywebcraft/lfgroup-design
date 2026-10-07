@@ -1085,6 +1085,8 @@ def write_recruit_trials():
     # 「WE ARE HIRING」の流れる帯、画面右下の ENTRY ボタン。コピーは募集要項にある内容（成果報酬・年収1,000万円も可能）から
     # コピーは今の採用情報ページのまま（2026-10-07 松本さん「コピーは今まで通りで、動きをいけいけに」）。
     # 見出しを1文字ずつ出すために rv-title を付け、ほかの要素は .fade を外して recruit-fv.js で順にすべり込ませる
+    # 案A2のコピーは、採用情報ページのまま（2026-10-07 松本さん「コピーはそのまま。フォントだけ本番のトップと同じに」）。
+    # 見出しを1文字ずつ出すために rv-title を付け、他の要素の .fade は外して recruit-fv.js で順にすべり込ませる
     copy_v = (copy.replace('<h1 class="rc-fv-title fade"><span>人の人生に向き合いながら</span><span>自分の未来も変えていく</span></h1>',
                            '<h1 class="rc-fv-title rv-title"><span>人の人生に向き合いながら</span><span>自分の<em>未来</em>も変えていく</span></h1>')
                   .replace(' fade"', '"').replace('class="fade"', ''))
@@ -1102,17 +1104,21 @@ def write_recruit_trials():
                                                 f'<b>0{number}</b><span>{label}</span><small>{caption}</small>')
     fv['a2'] = (recruitment_fv
                        .replace('<section class="rf rf-a" data-fx="a">',
-                                '<section class="rf rf-a rf-v rf-wipe" data-fx="a" data-stay="2500">')
+                                '<section class="rf rf-a rf-v rf-wipe rf-serif" data-fx="a" data-stay="2500">')
                        .replace(copy, '<p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>\n    ' + GOLD_WIPE + '\n    ' + copy_v)
-                       .replace('  </section>', f'''    <small class="rf-photo-note">写真はイメージです</small>
-    <div class="rv-band" aria-hidden="true"><div class="rv-track">{hiring}{hiring}</div></div>
-  </section>
-  <a class="rv-entry" href="tel:0528468224" aria-label="電話で応募する 052-846-8224"><svg class="rv-ring" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="rvRing" d="M50,50 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs><text><textPath href="#rvRing">WE ARE HIRING ・ JOIN US ・ WE ARE HIRING ・ JOIN US ・</textPath></text></svg><b>ENTRY</b><small>電話で応募</small></a>'''))
+                       .replace('  </section>', '''    <small class="rf-photo-note">写真はイメージです</small>
+  </section>''', 1))
+    # 01〜04の表示（右下の時刻・進み具合の線）は、案A2では外す（2026-10-07 松本さん）
+    i2 = fv['a2'].index('<div class="wrap rf-clock"')
+    j2 = fv['a2'].index('</ol></div>', i2) + len('</ol></div>')
+    fv['a2'] = fv['a2'][:i2] + fv['a2'][j2:]
     for key, sec in fv.items():
         html_ = (base[:i] + sec + base[j:])
         html_ = (html_.replace('</head>', f'<link rel="stylesheet" href="/assets/recruit-fv.css?v={v}">\n</head>', 1)
                       .replace('</body>', f'<script src="/assets/recruit-fv.js?v={v}"></script>\n</body>', 1)
                       .replace('リニューアルの試作です', f'リニューアルの試作です・採用情報のFV 案{key.upper()}', 1))
+        if key == 'a2':  # 本番のトップと同じ明朝体系の英字（Cormorant Garamond）にするため、フォントを読み込む
+            html_ = html_.replace('family=Montserrat:wght@500;600', 'family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@500;600', 1)
         write(f'recruitment-{key}/index.html', html_)
 
 
