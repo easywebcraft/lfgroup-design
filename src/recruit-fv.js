@@ -31,7 +31,7 @@
     var show = function (i) {
       sec.setAttribute('data-season', i);  // /top-a2/：今の季節（0春 1夏 2秋 3冬）。秋→冬の雪の演出に使う
       step(imgs, i);
-      if (sweep && !sec.classList.contains('rf-top') && !sec.classList.contains('rf-seasons')) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }  // A2：金の光の帯（切り替えのたびに。/top-a2/ では外した 2026-10-07）
+      if (sweep && !sec.classList.contains('rf-top')) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }  // A2：金の光の帯（切り替えのたびに。/top-a2/ では外した 2026-10-07）
       times.forEach(function (t, k) { t.classList.toggle('is-on', k === i); });
       if (!bars.length) return;  // 時刻を出さない版（/top-a2/）
       bars.forEach(function (b, k) { b.classList.toggle('is-done', k < i); b.classList.remove('is-on'); });

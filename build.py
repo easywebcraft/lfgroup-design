@@ -1051,7 +1051,7 @@ def write_recruit_trials():
     # 実在のオフィスと違って見える「オフィスの写真」を避け、場所を特定しない街の写真にした
     fv['a2'] = (fv['a'].replace('/images/recruit-1', '/images/recruit-city-1')
                        .replace('<section class="rf rf-a" data-fx="a">',
-                                '<section class="rf rf-a rf-v rf-seasons" data-fx="a" data-stay="2500">')  # rf-seasons：/top-a2/ と同じ、写真ごとに違う切り替え方（2026-10-07）
+                                '<section class="rf rf-a rf-v" data-fx="a" data-stay="2500">')
                        .replace(copy, '<p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>\n    <span class="rv-sweep" aria-hidden="true"></span>\n    ' + copy_v)
                        .replace('  </section>', f'''    <div class="rv-band" aria-hidden="true"><div class="rv-track">{hiring}{hiring}</div></div>
   </section>
