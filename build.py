@@ -506,6 +506,11 @@ def page_personal():
         </div>
       {INS_PARTNERS}
       </div>
+      <div class="consult-grid service-scope">
+        <article><h3>保険の見直し</h3><p>ご自身やご家族の暮らしに合わせた保険をご提案します。</p></article>
+        <article><h3>毎月の固定費</h3><p>電気・ガスなど、暮らしにかかる固定費の見直しをお手伝いします。</p></article>
+        <article><h3>ご入居時のお手続き</h3><p>ライフラインやインターネットなどのご案内を行います。</p><a class="link-arrow" href="/partner/#for-personal">入居者向けサービスを見る{ARROW}</a></article>
+      </div>
 {ins_lineup()}
     </div>
   </section>
@@ -560,7 +565,11 @@ def page_corporate():
         </div>
       {INS_PARTNERS}
       </div>
-{ins_lineup()}
+      <div class="consult-grid service-scope">
+        <article><h3>法人の保険の見直し</h3><p>会社の状況に合わせた保険をご提案します。</p></article>
+        <article><h3>電気・ガスなどの固定費</h3><p>法人のお客様の固定費の見直しをお手伝いします。</p></article>
+        <article><h3>ご契約後のサポート</h3><p>長期的なサポートと、事故の際の対応を行います。</p></article>
+      </div>
     </div>
   </section>
 
@@ -591,6 +600,13 @@ def page_partner():
       <p class="eyebrow fade">For Partner</p>
       <h2 class="fade">提携事業者様</h2>
       <p class="text fade" style="margin-top:16px">不動産管理会社など、提携企業様・パートナー様の事業の発展をお手伝いします。</p>
+      <div class="partner-flow" aria-label="提携サービスの役割">
+        <article><p class="eyebrow">Partner</p><h3>提携企業様・パートナー様</h3><p>当社と協力し、ご入居者様へのサービス案内につなげます。</p></article>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <article><p class="eyebrow">LF Group</p><h3>LFグループ</h3><p>オペレーターが、お手続きやサービスを丁寧にご案内します。</p></article>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <article><p class="eyebrow">Resident</p><h3>ご入居者様</h3><p>ライフライン・インターネットなどのご案内を受けられます。</p></article>
+      </div>
     </div>
   </section>
 ''' + strengths([
@@ -702,26 +718,23 @@ def page_company():
 
 
 def page_contact():
-    # お問い合わせはお電話のみ（フォームは置かない、2026-10-05 決定）
-    # ★公開前に確認：受付時間は勤務時間（10時～18時）に合わせた仮の値（個人情報の窓口と同じ）
+    # 電話のみの受付。受付時間は既存の表示を維持（公開前に要確認）。
+    contacts = f'''      <div class="contact-tel contact-first">
+        <div class="tel-box tel-main">
+          <h2>保険・固定費のご相談</h2>
+          <a class="tel-number" href="{TEL_HREF}">{TEL}</a>
+          <p class="tel-hours">受付時間 10:00～18:00</p>
+          <a class="btn btn-primary" href="{TEL_HREF}">電話で相談する{ARROW}</a>
+        </div>
+        <div class="tel-box">
+          <h2>採用に関するお問い合わせ</h2>
+          <a class="tel-number" href="{RECRUIT_TEL_HREF}">{RECRUIT_TEL}</a>
+          <p class="tel-hours"><a class="link-arrow" href="/recruitment/">採用情報を見る{ARROW}</a></p>
+        </div>
+      </div>'''
     return page_hero('Contact', 'お問い合わせ', [('お問い合わせ', '/contact/')],
-                     lead='保険やお金のことで気になることがありましたら、お気軽にご相談ください。<br class="pc">ご相談・お問い合わせは、お電話で承っています。',
-                     photo='about-hero.jpg', pos='50% 72%') + f'''
-  <section class="section">
-    <div class="wrap contact-tel">
-      <div class="tel-box tel-main">
-        <p>保険・お金のご相談、お問い合わせ</p>
-        <a href="{TEL_HREF}">{TEL}</a>
-        <p class="tel-hours">受付時間 10:00～18:00</p>
-      </div>
-      <div class="tel-box">
-        <p>採用に関するお問い合わせ</p>
-        <a href="{RECRUIT_TEL_HREF}">{RECRUIT_TEL}</a>
-        <p class="tel-hours"><a class="link-arrow" href="/recruitment/">採用情報を見る{ARROW}</a></p>
-      </div>
-    </div>
-  </section>
-'''
+                     lead='保険や固定費の見直しについて、お電話でご相談を承っています。',
+                     compact=True, extra=contacts).replace('sub-hero compact', 'sub-hero compact contact-intro', 1)
 
 
 def page_recruitment():
