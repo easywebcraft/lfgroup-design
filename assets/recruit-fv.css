@@ -522,3 +522,22 @@ html:has(.rf-top) .header .menu-btn span { transition-duration: .45s; }
   .rf-v:not(.rf-top) .rv-big { font-size: clamp(22px, 6.4vw, 40px); line-height: .94; }
   .rf-v:not(.rf-top) .rc-fv-copy .rv-title { font-size: clamp(21px, 6.3vw, 30px); letter-spacing: .02em; }
 }
+
+/* ===== 採用ページ（案A2）を明るく（2026-10-07「全体的に暗い印象」）=====
+   写真に重ねていた紺を薄くする（PC：左端 90%→45%、右側は写真そのまま。スマホ：下端 90%→55%）。文字は影で読みやすさを保つ */
+.rf-serif .rf-media::after { background: linear-gradient(90deg, rgba(8, 18, 32, .45) 0%, rgba(8, 18, 32, .2) 42%, rgba(8, 18, 32, 0) 68%); }
+@media (max-width: 1023px) {
+  .rf-serif .rf-media::after { background: linear-gradient(180deg, rgba(8, 18, 32, .08) 0%, rgba(8, 18, 32, .22) 38%, rgba(8, 18, 32, .55) 100%); }
+}
+.rf-serif .rc-fv-copy { text-shadow: 0 2px 18px rgba(8, 18, 32, .7); }
+.rf-serif .rc-fv-copy .btn { text-shadow: none; }
+
+/* 明るくした分、薄い文字が読みにくくなったので手当てする（2026-10-07）：
+   写真の上部だけ薄い紺を足してヘッダーの文字を読みやすく／ヘッダー・小見出し・パンくずの文字に影／ステータスの背景を少し濃く／英字の輪郭線を太く */
+.rf-serif .rf-media::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 150px; z-index: 2; pointer-events: none;
+  background: linear-gradient(180deg, rgba(8, 18, 32, .5) 0%, rgba(8, 18, 32, 0) 100%); }
+html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .header:not(.is-scrolled) .logo { text-shadow: 0 1px 10px rgba(8, 18, 32, .75); }
+.rf-serif .rc-status { background: rgba(8, 18, 32, .45); border-color: rgba(255, 255, 255, .5); }
+.rf-serif .eyebrow, .rf-serif .crumb, .rf-serif .crumb a { text-shadow: 0 1px 10px rgba(8, 18, 32, .75); }
+.rf-serif .rv-big { -webkit-text-stroke: 1.6px rgba(255, 255, 255, .95); filter: drop-shadow(0 3px 14px rgba(8, 18, 32, .75)); }
+@media (max-width: 1023px) { .rf-serif .rv-big { -webkit-text-stroke-width: 1.4px; } }
