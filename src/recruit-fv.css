@@ -563,7 +563,7 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
   scale: var(--s0); translate: var(--x0) var(--y0); transition: none;
 }
 .rf-go .rf-top.rf-wipe.is-go .rf-media img:nth-child(1):is(.is-on, .is-prev) {
-  animation: top-spring-camera var(--stay, 4.5s) linear both;
+  animation: top-spring-camera 6s linear both;
   transition: none;
 }
 @keyframes top-spring-camera {
@@ -579,7 +579,7 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
   scale: var(--s0); translate: var(--x0) var(--y0); transition: none;
 }
 .rf-go .rf-wipe:not(.rf-top).is-go .rf-media img:nth-child(1):is(.is-on, .is-prev) {
-  animation: recruit-first-camera var(--stay, 4.5s) linear both;
+  animation: recruit-first-camera 6s linear both;
   transition: none;
 }
 @keyframes recruit-first-camera {
