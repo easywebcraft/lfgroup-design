@@ -421,3 +421,18 @@ html:has(.rf-top) .header .menu-btn span { transition-duration: .45s; }
    冬を見せるのは2.5秒と短いので、雪は0.8秒でふわっと現れ、春へ移ると0.8秒で薄れて消える */
 .rf-go .rf-wipe .rf-media::before { animation: rf-snow-fall 10s linear infinite; transition: opacity .8s ease; }
 .rf-go .rf-wipe[data-season="3"] .rf-media::before { opacity: .95; }
+
+/* ===== 雪のかくつきを直す（2026-10-07）=====
+   背景の位置（background-position）を動かすと毎回描き直しになり、かくつく。雪の層を縦に300px長くして、
+   層ごと transform で下へ300pxずらしてくり返す（描き直しが少なくなめらか）。粒の縦の間隔はどれも300の約数にして、つなぎ目を出さない */
+.rf-top .rf-media::before { inset: -300px 0 0; filter: none; will-change: transform;
+  background-size: 263px 300px, 197px 150px, 131px 100px, 347px 300px, 89px 75px, 223px 150px; }
+@keyframes rf-snow-fall {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-14px, 150px, 0); }
+  100% { transform: translate3d(0, 300px, 0); }
+}
+.rf-go .rf-wipe .rf-media::before { animation: rf-snow-fall 6s linear infinite; }
+/* /top-a2-wipe/：冬の写真が斜めに開ききってから（約0.9秒後）降り始める。秋の上に雪が出ないように */
+.rf-go .rf-wipe .rf-media::before { transition: opacity .5s ease; }
+.rf-go .rf-wipe[data-season="3"] .rf-media::before { transition: opacity .8s ease .9s; }
