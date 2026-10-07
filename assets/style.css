@@ -1398,6 +1398,15 @@
     .ph-fv .sub-hero-copy { padding-top: 24px; }
     .ph-fv .sub-hero-copy > * { max-width: none; }
   }
+
+/* 代表挨拶（2026-10-07 下書き）：今のサイトにある言葉だけで作った下書き。代表の確認が済んだら .note-draft の印を外す */
+.note-draft { display: inline-block; margin-bottom: 20px; padding: 3px 12px; border: 1px dashed #D9A35B; border-radius: 3px; background: #FFF8EE; color: #8A5A1B; font-size: 12px; letter-spacing: .08em; }
+.co-message-lead { font-family: var(--serif); font-weight: 500; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.7; letter-spacing: .08em; color: var(--navy); }
+.co-message-lead br { display: inline; }
+.co-message-body { margin-top: 28px; }
+.co-message-body p { font-size: 15px; line-height: 2.1; color: var(--text); }
+.co-message-body p + p { margin-top: 1.2em; }
+@media (max-width: 767px) { .co-message-lead { font-size: 19px; letter-spacing: .04em; } }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 
