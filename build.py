@@ -1114,14 +1114,17 @@ def write_recruit_trials():
     i2 = fv['a2'].index('<div class="wrap rf-clock"')
     j2 = fv['a2'].index('</ol></div>', i2) + len('</ol></div>')
     fv['a2'] = fv['a2'][:i2] + fv['a2'][j2:]
+    out = {}
     for key, sec in fv.items():
         html_ = (base[:i] + sec + base[j:])
         html_ = (html_.replace('</head>', f'<link rel="stylesheet" href="/assets/recruit-fv.css?v={v}">\n</head>', 1)
-                      .replace('</body>', f'<script src="/assets/recruit-fv.js?v={v}"></script>\n</body>', 1)
-                      .replace('リニューアルの試作です', f'リニューアルの試作です・採用情報のFV 案{key.upper()}', 1))
+                      .replace('</body>', f'<script src="/assets/recruit-fv.js?v={v}"></script>\n</body>', 1))
         if key == 'a2':  # 本番のトップと同じ明朝体系の英字（Cormorant Garamond）にするため、フォントを読み込む
             html_ = html_.replace('family=Montserrat:wght@500;600', 'family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@500;600', 1)
-        write(f'recruitment-{key}/index.html', html_)
+        out[key] = html_
+        if not RELEASE:
+            write(f'recruitment-{key}/index.html', html_.replace('リニューアルの試作です', f'リニューアルの試作です・採用情報のFV 案{key.upper()}', 1))
+    return out['a2']  # 2026-10-07 本番の採用情報ページに採用（松本さん）：案A2のヒーロー（写真4枚が切り替わる）
 
 
 def write_top_a2(top):
@@ -1281,7 +1284,6 @@ def main():
         write('motion/index.html', redirect('../'))
         # スタイリッシュ版の試作（/stylish/）は本流のトップに反映した（2026-10-06）。前のURLはトップへ移す
         write('stylish/index.html', redirect('../'))
-        write_recruit_trials()
         write('season/index.html', SEASON_REDIRECT)
         write('life/index.html', SEASON_REDIRECT)
         write('scene/index.html', season_photos(top_base, SCENE_PHOTOS, white_wrap=False)
@@ -1296,7 +1298,7 @@ def main():
     write('insurance/index.html', redirect('../personal/'))
     write('company/index.html', layout('会社概要', page_company(), 'company'))
     write('contact/index.html', layout('お問い合わせ', page_contact(), 'contact'))
-    write('recruitment/index.html', layout('採用情報', page_recruitment(), 'recruitment'))
+    write('recruitment/index.html', write_recruit_trials())  # 案A2のヒーロー（2026-10-07）。試作 /recruitment-a・a2・b・c は --release では書かない
     renders = {'operation': policy_operation, 'solicitation': policy_solicitation,
                'privacyprotection': policy_privacy, 'informationsecurity': policy_security}
     for key, label, _ in POLICIES:
