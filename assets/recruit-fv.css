@@ -569,3 +569,18 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
   from { scale: 1.24; translate: -2% 5%; }
   to { scale: 1.10; translate: 2% -3%; }
 }
+
+/* 採用の1枚目：初回も寄った位置からカメラを動かす（2026-10-08） */
+.rf-wipe:not(.rf-top) .rf-media img:nth-child(1) {
+  --s0: 1.18; --s1: 1.08; --x0: -1%; --x1: 1%; --y0: 3%; --y1: -2%;
+}
+.rf-go .rf-wipe:not(.rf-top):not(.is-go) .rf-media img:nth-child(1).is-on {
+  scale: var(--s0); translate: var(--x0) var(--y0); transition: none;
+}
+.rf-go .rf-wipe:not(.rf-top).is-go .rf-media img:nth-child(1).is-on {
+  animation: recruit-first-camera var(--stay, 4.5s) linear both;
+}
+@keyframes recruit-first-camera {
+  from { scale: 1.18; translate: -1% 3%; }
+  to { scale: 1.08; translate: 1% -2%; }
+}
