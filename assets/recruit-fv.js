@@ -17,8 +17,18 @@
   };
 
   // トップ（/top-a2-full/）では、ページを開いたときのロゴの演出（main.js）が終わるまで待ってから動かす
+  // /top-a2/ 系は、演出の終わり（白い幕が消えきる）まで待たず、キャッチコピーが見出しへ着いた瞬間（幕が透け始めて約0.9秒）から始める。
+  // メニュー（s-head）・小見出し・説明文・ボタン・英字を、そこから約1秒の間にテンポよく出す（2026-10-07）
+  var absorbAt = 0;
   var begin = function () {
-  if (root.classList.contains('is-loading')) { setTimeout(begin, 100); return; }
+  if (root.classList.contains('is-loading')) {
+    var L = document.getElementById('lfLoader');
+    if (sec.classList.contains('rf-top') && L && L.classList.contains('is-absorb')) {
+      if (!absorbAt) absorbAt = Date.now();
+      if (Date.now() - absorbAt < 900) { setTimeout(begin, 30); return; }
+    } else { setTimeout(begin, 50); return; }
+  }
+  if (sec.classList.contains('rf-top')) root.classList.add('s-head');
   var fx = sec.getAttribute('data-fx');
 
   // 案A：4秒ごとに 朝→昼→夕方→夜。時刻と進み具合の線も合わせる

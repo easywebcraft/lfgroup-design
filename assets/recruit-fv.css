@@ -368,3 +368,40 @@ html:has(.rf-top) .contact-cta .btn-primary { translate: var(--bx, 0px) var(--by
 /* メニューを開いている間（背景が白）は、ヘッダーの社名・メニューボタン（×）を元の紺色に戻す（2026-10-07 白で同化して見えなかった） */
 html:has(.rf-v) .is-menu-open .header .logo, html:has(.rf-v) .is-menu-open .header .gnav a { color: var(--ink, #22303C); }
 html:has(.rf-v) .is-menu-open .header .menu-btn span { background: var(--text, #22303C); }
+
+/* ===== /top-a2/ 系：演出のあとのメニュー・文字の出方を、テンポよくスタイリッシュに（2026-10-07）=====
+   キャッチコピーが見出しへ着いた瞬間から約1秒で出そろう。どれも「見えない枠の中から、すっと切り出される」動きでそろえる
+   0.00秒 メニューの文字が下から順に（0.04秒ずつ）／英字 CHANGE が右から
+   0.10秒 小見出しの金の線が伸び、文字が左から切り出される／英字 YOUR
+   0.20秒 説明文が左から切り出される／英字 FUTURE
+   0.35秒 相談ボタンが左から塗られるように現れ、0.75秒で矢印が入る */
+html:has(.rf-top) .header .gnav a { transition: translate .55s cubic-bezier(.2, .9, .25, 1) !important; }
+html:has(.rf-top) .header .gnav li:nth-child(1) a { transition-delay: 0s !important; }
+html:has(.rf-top) .header .gnav li:nth-child(2) a { transition-delay: .04s !important; }
+html:has(.rf-top) .header .gnav li:nth-child(3) a { transition-delay: .08s !important; }
+html:has(.rf-top) .header .gnav li:nth-child(4) a { transition-delay: .12s !important; }
+html:has(.rf-top) .header .gnav li:nth-child(5) a { transition-delay: .16s !important; }
+html:has(.rf-top) .header .gnav li:nth-child(6) a { transition-delay: .2s !important; }
+html:has(.rf-top) .header .btn { transition: clip-path .6s cubic-bezier(.77, 0, .18, 1) .22s !important; }
+html:has(.rf-top) .header .btn .arw { transition: opacity .3s ease .7s, translate .45s cubic-bezier(.2, .9, .25, 1) .7s !important; }
+html:has(.rf-top).s-head .header .gnav::before { animation-duration: .9s; }
+html:has(.rf-top) .header .menu-btn span { transition-duration: .45s; }
+
+/* 小見出し・説明文・ボタン：左から切り出される */
+.rf-go .rf-top .rc-fv-copy > :not(.rv-title) { opacity: 0; translate: -20px 0; clip-path: inset(0 100% -20% 0);
+  transition: clip-path .65s cubic-bezier(.77, 0, .18, 1), translate .65s cubic-bezier(.2, .9, .25, 1), opacity .25s ease; }
+.rf-go .rf-top.is-go .rc-fv-copy > :not(.rv-title) { opacity: 1; translate: 0 0; clip-path: inset(0 0 -20% 0); }
+.rf-go .rf-top.is-go .rc-fv-copy > :nth-child(1) { transition-delay: .1s; }
+.rf-go .rf-top.is-go .rc-fv-copy > :nth-child(3) { transition-delay: .2s; }
+.rf-go .rf-top.is-go .rc-fv-copy > :nth-child(4) { transition-delay: .35s; }
+.rf-go .rf-top .rc-fv-copy .eyebrow::before { transform: scaleX(0); transform-origin: left; transition: transform .5s cubic-bezier(.77, 0, .18, 1) .15s; }
+.rf-go .rf-top.is-go .rc-fv-copy .eyebrow::before { transform: none; }
+.rf-go .rf-top .rc-fv-copy .btn .arw { opacity: 0; translate: -8px 0; transition: opacity .3s ease .75s, translate .45s cubic-bezier(.2, .9, .25, 1) .75s; }
+.rf-go .rf-top.is-go .rc-fv-copy .btn .arw { opacity: 1; translate: 0 0; }
+
+/* 英字：1行ずつ右から素早くすべり込む */
+.rf-go .rf-top .rv-big span { translate: 12vw 0; transition: opacity .5s ease, translate .7s cubic-bezier(.2, .9, .25, 1); }
+.rf-go .rf-top.is-go .rv-big span:nth-child(1) { transition-delay: 0s; }
+.rf-go .rf-top.is-go .rv-big span:nth-child(2) { transition-delay: .1s; }
+.rf-go .rf-top.is-go .rv-big span:nth-child(3) { transition-delay: .2s; }
+.rf-go .rf-top.is-go .rv-big { animation-delay: 1s; }
