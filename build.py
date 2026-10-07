@@ -342,7 +342,7 @@ def page_about():
       <div class="about-intro-body fade">
         <p class="eyebrow">Introduction</p>
         <h2 class="about-intro-title no-punct"><span>顧客満足度を最優先に</span><span>人々の生活を向上させます</span></h2>
-        <p class="about-intro-text">弊社はお客様の固定費を削減することを目的に、電気やガスなどのライフラインの代行業務や、保険の見直しを行っています。</p>
+        <p class="about-intro-text">弊社は、お客様の暮らしにゆとりが生まれることを目的に、保険の見直しや、電気・ガスなどのライフラインのご案内を行っています。</p>
       </div>
     </div>
   </section>
@@ -350,9 +350,9 @@ def page_about():
   <section class="section about-mission" id="mission">
     <div class="wrap">
       <p class="eyebrow fade">Mission</p>
-      <h2 class="about-mission-msg fade"><span>固定費削減で</span><br><span>家計を見直す</span></h2>
+      <h2 class="about-mission-msg fade"><span>暮らしにゆとりを</span><br><span>お客様とともに</span></h2>
       <div class="about-mission-text fade">
-        <p>毎月かかる固定費だからこそ、<br>一度の見直しが、これからの家計につながります。</p>
+        <p>毎月の暮らしにかかるお金だからこそ、<br>一度の見直しが、これからの家計につながります。</p>
         <p>LFグループ株式会社は、<br>ゆとりある生活の実現をお手伝いします。</p>
       </div>
       <p class="about-mission-quote fade"><span>家計にゆとりが生まれることで、</span><br><span>暮らしの選択肢も広がっていく。</span></p>
@@ -566,7 +566,7 @@ def page_corporate():
 
 def page_partner():
     hero = page_hero('Partner', '提携企業様', [('提携企業様', '/partner/')],
-                     lead='マンション・アパートのご入居者様へのご案内を通じて、<br class="pc">提携企業様・パートナー様の事業繁栄をお手伝いします。',
+                     lead='ご入居者様の固定費の見直しにつながる、<br class="pc">ライフライン・インターネットなどのご案内を通じて、<br class="pc">提携企業様・パートナー様の事業繁栄をお手伝いします。',
                      photo='scene-home.jpg', pos='70% 55%',
                      extra=page_nav([('strengths', '強み'), ('service', 'サービス')]))
     return hero + strengths([
@@ -627,8 +627,8 @@ def page_company():
       <h2 class="fade">企業理念</h2>
       <p class="co-philosophy-main no-punct fade"><span>顧客満足度を最優先に</span><span>人々の生活を向上させます</span></p>
       <div class="co-philosophy-sub fade">
-        <p class="co-philosophy-head">固定費削減で家計を見直す</p>
-        <p class="text">固定費は、見直し削減することで半永久的に節約することができます。LFグループ株式会社では、ゆとりある生活の実現のためにお役立ちをさせていただきます。</p>
+        <p class="co-philosophy-head">お客様の暮らしにゆとりを</p>
+        <p class="text">LFグループ株式会社では、ゆとりある生活の実現のために、お客様に寄り添ってお役立ちをさせていただきます。</p>
         <p class="text">金銭的な余裕は、人生の幸福度を高めます。</p>
       </div>
     </div>
@@ -641,13 +641,13 @@ def page_company():
         <h2 class="fade">代表挨拶</h2>
       </div>
       <div class="fade">
-        <!-- ★公開前に必要：代表挨拶は、今のサイトにある言葉（顧客満足度を最優先に・固定費削減で家計を見直す・お客様本位の運営方針・迅速な事故対応）
+        <!-- ★公開前に必要：代表挨拶は、今のサイトにある言葉（顧客満足度を最優先に・お客様本位の運営方針・迅速な事故対応）
              だけで作った「下書き」（2026-10-07）。ご本人の言葉ではないので、代表の確認・修正をいただいたら、.note-draft の印を外す。お写真もいただいたら差し替える -->
         <p class="note-draft">下書き（代表の確認前）</p>
-        <p class="co-message-lead">お客様の毎日の暮らしを<br>保険と固定費の見直しで支えます</p>
+        <p class="co-message-lead">お客様の毎日の暮らしを<br>保険とお金の面から支えます</p>
         <div class="co-message-body">
-          <p>LFグループ株式会社は、「顧客満足度を最優先に、人々の生活を向上させます」を目指して、保険の見直しと、電気やガスなどのライフラインの見直しをお手伝いしています。</p>
-          <p>毎月かかる固定費は、一度見直すだけで、これからの家計に長く効いてきます。ゆとりある生活の実現のために、お客様一人ひとりの立場になって、誠実・公正にご提案いたします。</p>
+          <p>LFグループ株式会社は、「顧客満足度を最優先に、人々の生活を向上させます」を目指して、保険を中心に、お客様の暮らしに関わるさまざまなご案内をしています。</p>
+          <p>ゆとりある生活の実現のために、お客様一人ひとりの立場になって、誠実・公正にご提案いたします。</p>
           <p>ご契約のあとも、お客様が安心して過ごせるよう、長く寄り添います。万が一の事故のときは、休日・夜間も、保険金のお支払いまで迅速に対応いたします。</p>
           <p>これからも、お客様に信頼していただけるよう、社員一同、学び続けてまいります。保険やお金のことで気になることがあれば、どうぞお気軽にご相談ください。</p>
         </div>
@@ -1086,7 +1086,7 @@ def write_top_a2(top):
     <div class="wrap rc-fv-copy">
       <p class="eyebrow">Insurance &amp; Lifeline</p>
       <h1 class="rc-fv-title rv-title"><span>保険とお金を整えて</span><span>安心できる<em>未来</em>へ</span></h1>
-      <p class="rc-fv-lead">保険の見直しや、電気・ガスなどの固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。</p>
+      <p class="rc-fv-lead">保険とお金のことを一緒に整えて、<br class="pc">ゆとりある生活の実現をお手伝いします。</p>
       <p class="rc-links"><a class="btn btn-primary" href="/contact/">保険・お金について相談する{ARROW}</a></p>
     </div>
   </section>'''
