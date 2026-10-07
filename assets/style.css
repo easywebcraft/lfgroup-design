@@ -1425,7 +1425,8 @@
 .consult-no { color: var(--gold); font-family: var(--en); font-size: 14px; margin-bottom: 14px; }
 .consult-grid h3, .partner-flow h3 { font-family: var(--serif); font-weight: 500; font-size: 21px; line-height: 1.6; }
 .consult-grid p, .partner-flow article > p:not(.eyebrow) { margin-top: 14px; color: var(--text-sub); font-size: 14px; line-height: 1.9; }
-.consult-card .link-arrow { margin-top: auto; padding-top: 24px; font-size: 13px; }
+.consult-card .link-arrow { position: relative; align-self: flex-start; margin-top: auto; padding: 24px 0 10px; font-size: 13px; background: none; }
+.consult-card .link-arrow::after { content: ""; position: absolute; left: 0; bottom: 0; width: 32px; height: 1px; background: var(--gold); }
 .consult-business { margin-top: 24px; }
 .service-scope .link-arrow { margin-top: 16px; font-size: 13px; }
 .partner-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 16px; align-items: stretch; margin-top: 36px; }
