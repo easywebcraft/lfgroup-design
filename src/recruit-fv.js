@@ -181,20 +181,8 @@
     update();
   }
 
-  // /top-a2/：ヒーローより下の動き（④ 数字のカードに光が走る、⑤ 相談ボタンがマウスに引き寄せられる）
+  // /top-a2/：ヒーローより下の動き（相談ボタンがマウスに引き寄せられる）
   if (sec.classList.contains('rf-top')) {
-    var cards = all('.num-card');
-    if (cards.length && 'IntersectionObserver' in window) {
-      var cio = new IntersectionObserver(function (es) {
-        es.forEach(function (e) {
-          if (!e.isIntersecting) return;
-          cio.disconnect();
-          // 数字が増え終わるころ（main.js のカウントアップは約1.8秒）に、左から順に光らせる
-          cards.forEach(function (c, i) { setTimeout(function () { c.classList.add('is-shine'); }, 2000 + i * 250); });
-        });
-      }, { threshold: .6 });
-      cio.observe(cards[0]);
-    }
     var cta = document.querySelector('#final-cta .btn-primary');
     if (cta && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       var area = document.getElementById('final-cta');  // 段全体でマウスの位置を見て、ボタンから 160px 以内なら引き寄せる

@@ -158,6 +158,11 @@
         var p = Math.min((t - t0) / dur, 1);
         el.textContent = fmt(Math.round(to * (1 - Math.pow(1 - p, 3))));  // 終わりに向けてゆっくり
         if (p < 1) requestAnimationFrame(step);
+        else {
+          // この数字のカウントアップが完了したら、このタイルだけを一度光らせる。
+          var card = el.closest('.num-card');
+          if (card) card.classList.add('is-shine');
+        }
       };
       requestAnimationFrame(step);
     };
