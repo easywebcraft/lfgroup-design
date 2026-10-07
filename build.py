@@ -1115,7 +1115,8 @@ def write_top_a2(top):
             write(path, html_.replace('リニューアルの試作です', 'リニューアルの試作です・' + label, 1))
     write('assets/recruit-fv.css', css)  # 本番（--release）のトップでも使うので、ここでも書き出す
     write('assets/recruit-fv.js', js)
-    return out['top-a2-wipe/index.html']  # 2026-10-07 本番のトップに採用（松本さん）
+    # 2026-10-07 本番のトップに採用（松本さん）：/top-a2-wipe/ の形に、大きな英字を明朝体系のフォントにした /top-a2-serif/ を反映
+    return out['top-a2-serif/index.html']
 
 
 def stylish_top(top):
