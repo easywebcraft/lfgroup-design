@@ -554,3 +554,18 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
     padding-bottom: 12px;
   }
 }
+
+/* TOPの春：桜と街を大きく見せ、ゆっくり引きながら斜めに流す（2026-10-08） */
+.rf-top.rf-wipe .rf-media img:nth-child(1) {
+  --s0: 1.24; --s1: 1.10; --x0: -2%; --x1: 2%; --y0: 5%; --y1: -3%;
+}
+.rf-go .rf-top.rf-wipe:not(.is-go) .rf-media img:nth-child(1).is-on {
+  scale: var(--s0); translate: var(--x0) var(--y0); transition: none;
+}
+.rf-go .rf-top.rf-wipe.is-go .rf-media img:nth-child(1).is-on {
+  animation: top-spring-camera var(--stay, 4.5s) linear both;
+}
+@keyframes top-spring-camera {
+  from { scale: 1.24; translate: -2% 5%; }
+  to { scale: 1.10; translate: 2% -3%; }
+}
