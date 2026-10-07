@@ -541,3 +541,16 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
 .rf-serif .eyebrow, .rf-serif .crumb, .rf-serif .crumb a { text-shadow: 0 1px 10px rgba(8, 18, 32, .75); }
 .rf-serif .rv-big { -webkit-text-stroke: 1.6px rgba(255, 255, 255, .95); filter: drop-shadow(0 3px 14px rgba(8, 18, 32, .75)); }
 @media (max-width: 1023px) { .rf-serif .rv-big { -webkit-text-stroke-width: 1.4px; } }
+
+/* 主な行動は塗り、詳細は矢印リンク。写真と英字は控えめに（2026-10-08） */
+.rf-serif .rc-links .link-arrow { color: #fff; background-image: linear-gradient(var(--gold), var(--gold)); }
+.rf.rf-wipe .rf-media img { filter: saturate(.92) contrast(.98); }
+@media (max-width: 767px) {
+  .rf.rf-serif .rv-big {
+    font-size: clamp(22px, 7vw, 32px);
+    color: rgba(255, 255, 255, .06);
+    -webkit-text-stroke: .8px rgba(255, 255, 255, .45);
+    filter: none;
+    padding-bottom: 12px;
+  }
+}

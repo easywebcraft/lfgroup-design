@@ -769,7 +769,7 @@ def page_recruitment():
       <h1 class="rc-fv-title fade"><span>人の人生に向き合いながら</span><span>自分の未来も変えていく</span></h1>
       <p class="rc-fv-lead fade">生命保険・損害保険のご提案とアフターサービスを通じて、<br class="pc">お客様のこれからの暮らしを支える仕事です。</p>
       <p class="rc-status fade"><span class="dot"></span>Entry Open<b>エントリー受付中</b></p>
-      <p class="rc-links fade"><a class="btn btn-primary" href="#requirements">募集要項を見る{ARROW}</a><a class="simple-cta-tel" href="tel:0528468224"><svg class="ico"><use href="#i-tel"/></svg>052-846-8224</a></p>
+      <p class="rc-links fade"><a class="btn btn-primary" href="tel:0528468224">電話で応募・相談する{ARROW}</a><a class="link-arrow" href="#requirements">募集要項を見る{ARROW}</a></p>
     </div>
   </section>
   <section class="rc-facts" aria-label="募集のポイント">
@@ -1119,7 +1119,7 @@ def write_recruit_trials():
                                                 f'<b>0{number}</b><span>{label}</span><small>{caption}</small>')
     fv['a2'] = (recruitment_fv
                        .replace('<section class="rf rf-a" data-fx="a">',
-                                '<section class="rf rf-a rf-v rf-wipe rf-serif" data-fx="a" data-stay="2500">')
+                                '<section class="rf rf-a rf-v rf-wipe rf-serif" data-fx="a" data-stay="4500">')
                        .replace(copy, '<p class="rv-big" aria-hidden="true"><span>SUPPORT</span><span>THEIR FUTURE.</span><span>SHAPE YOUR OWN.</span></p>\n    ' + GOLD_WIPE + '\n    ' + copy_v)
                        .replace('  </section>', '''    <small class="rf-photo-note">写真はイメージです</small>
   </section>''', 1))
@@ -1172,13 +1172,13 @@ def write_top_a2(top):
         ('top-a2/index.html', plain[:pi] + sec + plain[pj:], 'トップのヒーローに採用FV案A2を当てた版'),
         ('top-a2-full/index.html', top[:i] + sec.replace('<section class="rf rf-a', '<section class="fv rf rf-a', 1) + top[j:],
          '本番のトップに反映した場合の見え方（ロゴの演出つき）'),
-        # /top-a2-wipe/（2026-10-07）＝ 採用ページ（/recruitment-a2/）と同じ切り替え方（2.5秒ごとに斜めのマスク＋金の光）を当てた見比べ用
+        # /top-a2-wipe/（2026-10-07）＝ 採用ページ（/recruitment-a2/）と同じ切り替え方（4.5秒ごとに斜めのマスク＋金の光）を当てた見比べ用
         ('top-a2-wipe/index.html', top[:i] + sec.replace('<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000"',
-                                                         '<section class="fv rf rf-a rf-v rf-top rf-wipe" data-fx="a" data-stay="2500"', 1) + top[j:],
+                                                         '<section class="fv rf rf-a rf-v rf-top rf-wipe" data-fx="a" data-stay="4500"', 1) + top[j:],
          '採用ページと同じ切り替え方（斜めのマスク＋金の光）を当てた版'),
         # /top-a2-serif/（2026-10-07）＝ 大きな英字を、見出しと同じ系統の明朝体系（Cormorant Garamond）にした見比べ用
         ('top-a2-serif/index.html', (top[:i] + sec.replace('<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000"',
-                                                          '<section class="fv rf rf-a rf-v rf-top rf-wipe rf-serif" data-fx="a" data-stay="2500"', 1) + top[j:])
+                                                          '<section class="fv rf rf-a rf-v rf-top rf-wipe rf-serif" data-fx="a" data-stay="4500"', 1) + top[j:])
          .replace('family=Montserrat:wght@500;600', 'family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@500;600', 1),
          '大きな英字を明朝体系のフォントにした版'),
     )

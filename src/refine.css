@@ -623,3 +623,32 @@
   .contact-intro .hero-lead { margin-top: 16px; }
   .contact-first { gap: 16px; }
 }
+
+/* 本文を早く読める余白・演出と、写真のトーン（2026-10-08） */
+.js main .fade { transform: translateY(8px); transition: opacity .35s ease, transform .35s ease; }
+.js main .fade.is-in { transform: none; }
+.entry img, .hero-band img, .svc-row .photo img, .panel-photo img,
+.split-photo img, .feature-photo img, .showcase-photo img {
+  filter: saturate(.92) contrast(.98) brightness(1.03);
+}
+#consult-title { scroll-margin-top: calc(var(--header-h) + 24px); }
+.rc-links .link-arrow { margin-top: 0; }
+@media (max-width: 767px) {
+  :root { --space: 64px; }
+  .page-hero.sub-hero { padding-top: calc(var(--header-h) + 32px); padding-bottom: 64px; }
+  .sub-hero.has-photo { padding-bottom: 0; }
+  .sub-hero .crumb { margin-bottom: 24px; }
+  .hero-band { margin-top: 32px; }
+  .svc-nav, .hero-biz-groups { margin-top: 32px; }
+  .biz-block, .svc-row { padding-block: 40px; }
+  .biz-block:first-child, .svc-row:first-child { padding-top: 0; }
+  .biz-block:last-child, .svc-row:last-child { padding-bottom: 0; }
+  .entries-head { padding-block: 48px 24px; }
+  .rc-facts + .section { padding-top: 64px; }
+  .contact-cta { padding-block: 80px; }
+  .contact-cta-actions { margin-top: 28px; }
+  .footer { padding-block: 48px 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js main .fade { opacity: 1; transform: none; transition: none; }
+}

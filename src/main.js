@@ -124,11 +124,11 @@
           if (!entry.isIntersecting) return;
           var el = entry.target;
           var sibs = Array.prototype.filter.call(el.parentNode.children, function (c) { return c.classList.contains('fade'); });
-          el.style.transitionDelay = Math.min(sibs.indexOf(el), 3) * 0.08 + 's';
+          el.style.transitionDelay = Math.min(sibs.indexOf(el), 3) * 0.04 + 's';
           el.classList.add('is-in');
           io.unobserve(el);
         });
-      }, { rootMargin: '0px 0px -8% 0px' });
+      }, { rootMargin: '0px 0px 0px 0px' });
       targets.forEach(function (el) { io.observe(el); });
     }
 
