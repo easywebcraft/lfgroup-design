@@ -438,3 +438,18 @@ html:has(.rf-top) .header .menu-btn span { transition-duration: .45s; }
 .rf-go .rf-wipe[data-season="3"] .rf-media::before { transition: opacity .8s ease .9s; }
 /* /top-a2-wipe/：雪は外した（2026-10-07） */
 .rf-wipe .rf-media::before { display: none !important; }
+
+/* ===== 金の光を、写真が開く斜めの境目に重ねる（2026-10-07。本番のトップ＝rf-wipe）=====
+   写真は clip-path で「上が 0→130%、下が -30%→100%」へ 1.4秒・同じ加速（cubic-bezier(.77,0,.18,1)）で開く。
+   光の帯（.rv-edge。境目の線＝上0・下-30 に沿った斜めの帯）を、同じ時間・同じ加速で横へ130%動かすと、境目とぴったり重なる。
+   写真の層（.rf-media）と同じ拡大・ずらしを当てて、位置もそろえる。帯は境目の左（開いた新しい写真の側）に光が残る */
+.rv-edge { display: none; }
+.rf-wipe .rv-sweep::before { display: none; }
+.rf-wipe .rv-edge { display: block; position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; opacity: 0; mix-blend-mode: screen; }
+.rf-wipe .rv-sweep.is-run .rv-edge { animation: rv-edge 1.4s cubic-bezier(.77, 0, .18, 1) forwards; }
+@keyframes rv-edge {
+  0% { transform: translateX(0); opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateX(130%); opacity: 0; }
+}
+.rf-go .rf-wipe .rv-sweep { translate: calc(var(--mx, 0) * -16px) calc(var(--my, 0) * -12px + var(--sy, 0) * .35px); scale: 1.06; transition: translate .4s ease-out; }
