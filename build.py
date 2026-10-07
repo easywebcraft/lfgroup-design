@@ -1032,6 +1032,9 @@ def release_files():
     write('robots.txt', robots)
 
 
+GOLD_WIPE = '<span class="rv-sweep" aria-hidden="true"><svg class="rv-edge" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><linearGradient id="rvEdgeG" gradientUnits="userSpaceOnUse" x1="-10" y1="0" x2="-0.42" y2="2.87"><stop offset="0" stop-color="#F2B63C" stop-opacity="0"/><stop offset="0" stop-color="#F2B63C" stop-opacity="0"/><stop offset="1" stop-color="#FFE6B0" stop-opacity=".6"/></linearGradient></defs><polygon points="-10,0 0,0 -30,100 -40,100" fill="url(#rvEdgeG)"/><polygon points="-0.5,0 0,0 -30,100 -30.5,100" fill="#FFF3D6"/></svg></span>'
+
+
 def write_recruit_trials():
     """採用情報のFVの試作（2026-10-06「人を写さなくても成立する採用ページ」）。/recruitment-a/・-b/・-c/ に、
     今の採用情報ページの FV だけを差し替えて書き出す。写真は生成AIの素材ができるまで、今ある人物なしの写真で仮。
@@ -1091,8 +1094,8 @@ def write_recruit_trials():
     # 実在のオフィスと違って見える「オフィスの写真」を避け、場所を特定しない街の写真にした
     fv['a2'] = (fv['a'].replace('/images/recruit-1', '/images/recruit-city-1')
                        .replace('<section class="rf rf-a" data-fx="a">',
-                                '<section class="rf rf-a rf-v" data-fx="a" data-stay="2500">')
-                       .replace(copy, '<p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>\n    <span class="rv-sweep" aria-hidden="true"></span>\n    ' + copy_v)
+                                '<section class="rf rf-a rf-v rf-wipe" data-fx="a" data-stay="2500">')
+                       .replace(copy, '<p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>\n    ' + GOLD_WIPE + '\n    ' + copy_v)
                        .replace('  </section>', f'''    <div class="rv-band" aria-hidden="true"><div class="rv-track">{hiring}{hiring}</div></div>
   </section>
   <a class="rv-entry" href="tel:0528468224" aria-label="電話で応募する 052-846-8224"><svg class="rv-ring" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="rvRing" d="M50,50 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs><text><textPath href="#rvRing">WE ARE HIRING ・ JOIN US ・ WE ARE HIRING ・ JOIN US ・</textPath></text></svg><b>ENTRY</b><small>電話で応募</small></a>'''))
@@ -1114,7 +1117,7 @@ def write_top_a2(top):
     sec = f'''<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000" id="top">
     <div class="rf-media">{imgs}</div>
     <p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>
-    <span class="rv-sweep" aria-hidden="true"><svg class="rv-edge" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><linearGradient id="rvEdgeG" gradientUnits="userSpaceOnUse" x1="-10" y1="0" x2="-0.42" y2="2.87"><stop offset="0" stop-color="#F2B63C" stop-opacity="0"/><stop offset="0" stop-color="#F2B63C" stop-opacity="0"/><stop offset="1" stop-color="#FFE6B0" stop-opacity=".6"/></linearGradient></defs><polygon points="-10,0 0,0 -30,100 -40,100" fill="url(#rvEdgeG)"/><polygon points="-0.5,0 0,0 -30,100 -30.5,100" fill="#FFF3D6"/></svg></span>
+    {GOLD_WIPE}
     <div class="wrap rc-fv-copy">
       <p class="eyebrow">Insurance &amp; Lifeline</p>
       <h1 class="rc-fv-title rv-title"><span>保険とお金を整えて</span><span>安心できる<em>未来</em>へ</span></h1>
