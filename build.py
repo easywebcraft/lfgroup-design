@@ -1098,7 +1098,7 @@ def write_top_a2(top):
     sec = f'''<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000" id="top">
     <div class="rf-media">{imgs}</div>
     <p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>
-    <span class="rv-sweep" aria-hidden="true"><svg class="rv-edge" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><linearGradient id="rvEdgeG" gradientUnits="userSpaceOnUse" x1="-10" y1="0" x2="-0.42" y2="2.87"><stop offset="0" stop-color="#F2B63C" stop-opacity="0"/><stop offset=".75" stop-color="#F2B63C" stop-opacity=".55"/><stop offset="1" stop-color="#FFE6B0" stop-opacity=".95"/></linearGradient></defs><polygon points="-10,0 0,0 -30,100 -40,100" fill="url(#rvEdgeG)"/><polygon points="-0.5,0 0,0 -30,100 -30.5,100" fill="#FFF3D6"/></svg></span>
+    <span class="rv-sweep" aria-hidden="true"><svg class="rv-edge" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><linearGradient id="rvEdgeG" gradientUnits="userSpaceOnUse" x1="-10" y1="0" x2="-0.42" y2="2.87"><stop offset="0" stop-color="#F2B63C" stop-opacity="0"/><stop offset="0" stop-color="#F2B63C" stop-opacity="0"/><stop offset="1" stop-color="#FFE6B0" stop-opacity=".6"/></linearGradient></defs><polygon points="-10,0 0,0 -30,100 -40,100" fill="url(#rvEdgeG)"/><polygon points="-0.5,0 0,0 -30,100 -30.5,100" fill="#FFF3D6"/></svg></span>
     <div class="wrap rc-fv-copy">
       <p class="eyebrow">Insurance &amp; Lifeline</p>
       <h1 class="rc-fv-title rv-title"><span>保険とお金を整えて</span><span>安心できる<em>未来</em>へ</span></h1>

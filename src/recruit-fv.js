@@ -38,6 +38,40 @@
     sec.style.setProperty('--stay', STAY / 1000 + 's');
     var n = 0;
     var sweep = sec.querySelector('.rv-sweep');
+    // 金の光を、写真が開く斜めの境目に毎フレーム合わせて置く（2026-10-07。写真は季節ごとに拡大・移動するので、
+    // 固定の位置で動かすと境目とずれる。境目の実際の画面上の位置（clip-path と画像の枠から計算）を読んで、光の線を同じ位置へ置く）
+    var edgeSvg = sweep && sweep.querySelector('.rv-edge');
+    var trackEdge = function () {
+      requestAnimationFrame(trackEdge);
+      if (!edgeSvg || !sweep.classList.contains('is-run')) return;
+      var on = sec.querySelector('.rf-media img.is-on');
+      if (!on) return;
+      var m = getComputedStyle(on).clipPath.match(/polygon\(([^)]*)\)/);
+      if (!m) return;
+      var pts = m[1].split(',').map(function (q) { return q.trim().split(' '); });
+      var r = on.getBoundingClientRect(), sr = sweep.getBoundingClientRect();
+      var num = function (v, w) { return v.indexOf('%') > 0 ? parseFloat(v) / 100 * w : parseFloat(v); };
+      // clip-path の % は、拡大前の画像の枠（offsetWidth）が基準。画像は中心を基準に scale 倍されて外接長方形 r になるので、
+      // 拡大前の枠の左端は r.left + (r.width - offsetWidth * scale) / 2、1px あたりの長さは scale 倍
+      var sc = r.width / (on.offsetWidth || r.width), ow = on.offsetWidth || r.width;
+      var left0 = r.left + (r.width - ow * sc) / 2;
+      var topX = left0 + num(pts[1][0], ow) * sc, botX = left0 + num(pts[2][0], ow) * sc;
+      // 光の層（sweep）の座標（0〜100）に直す。光の線の polygon は「上 x=0・下 x=-30」の形なので、上端の位置と傾きを合わせる
+      var W = sr.width || 1, k = 100 / W;
+      var tx = (topX - sr.left) * k, bx = (botX - sr.left) * k;
+      // 境目は毎フレーム動くので、読んだ値は次の描画では少し古い。前のフレームとの差（速度）で、1フレーム先へ進めて置く
+      if (trackEdge.px !== undefined) { tx += (tx - trackEdge.px); bx += (bx - trackEdge.pb); }
+      trackEdge.px = (topX - sr.left) * k; trackEdge.pb = (botX - sr.left) * k;
+      edgeSvg.querySelectorAll('polygon').forEach(function (poly, i) {
+        var w = i === 0 ? 6 : 0.5;   // 光の帯の幅（0〜100 の座標。にじみ6、細い白い線0.5）
+        // 細い白い線(i=1)は境目の上に、にじみ(i=0)は境目から右へ。どちらも左の辺を境目に置く
+        poly.setAttribute('points', tx + ',0 ' + (tx + w) + ',0 ' + (bx + w) + ',100 ' + bx + ',100');
+      });
+      // 光の線の向き（グラデーション）も、上端から下端へ（帯の左端→右端）
+      var g = edgeSvg.querySelector('#rvEdgeG');
+      if (g) { g.setAttribute('x1', tx + 6); g.setAttribute('x2', tx); g.setAttribute('y1', 0); g.setAttribute('y2', 0); }  // 境目に近いほど濃く、右へ薄くなる
+    };
+    if (edgeSvg) requestAnimationFrame(trackEdge);
     var show = function (i) {
       sec.setAttribute('data-season', i);  // /top-a2/：今の季節（0春 1夏 2秋 3冬）。秋→冬の雪の演出に使う
       step(imgs, i);
