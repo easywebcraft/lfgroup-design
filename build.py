@@ -1100,10 +1100,10 @@ def write_recruit_trials():
     # 見出しを1文字ずつ出すために rv-title を付け、ほかの要素は .fade を外して recruit-fv.js で順にすべり込ませる
     # 案A2のコピーは、採用情報ページのまま（2026-10-07 松本さん「コピーはそのまま。フォントだけ本番のトップと同じに」）。
     # 見出しを1文字ずつ出すために rv-title を付け、他の要素の .fade は外して recruit-fv.js で順にすべり込ませる
-    # 見出し（2026-10-07 松本さん指定）：「お客様のこれからに寄り添い、自分のこれからも描いていく」。英字は SUPPORT／THEIR FUTURE.／SHAPE YOUR OWN.
+    # 見出し（2026-10-07 松本さん指定）：「お客様のこれからに寄り添い自分のこれからも描いていく」。英字は SUPPORT／THEIR FUTURE／SHAPE YOUR OWN
     # 指定の文は読点「、」・ピリオド「.」を含むが、指定どおりそのまま入れる
     copy_v = (copy.replace('<h1 class="rc-fv-title fade"><span>人の人生に向き合いながら</span><span>自分の未来も変えていく</span></h1>',
-                           '<h1 class="rc-fv-title rv-title"><span>お客様のこれからに寄り添い、</span><span>自分のこれからも描いていく</span></h1>')
+                           '<h1 class="rc-fv-title rv-title"><span>お客様のこれからに寄り添い</span><span>自分のこれからも描いていく</span></h1>')
                   .replace(' fade"', '"').replace('class="fade"', ''))
     assert 'rv-title' in copy_v
     hiring = ''.join('<span>WE ARE HIRING<i>―</i>JOIN LF GROUP<i>―</i></span>' for _ in range(6))
@@ -1120,7 +1120,7 @@ def write_recruit_trials():
     fv['a2'] = (recruitment_fv
                        .replace('<section class="rf rf-a" data-fx="a">',
                                 '<section class="rf rf-a rf-v rf-wipe rf-serif" data-fx="a" data-stay="4500">')
-                       .replace(copy, '<p class="rv-big" aria-hidden="true"><span>SUPPORT</span><span>THEIR FUTURE.</span><span>SHAPE YOUR OWN.</span></p>\n    ' + GOLD_WIPE + '\n    ' + copy_v)
+                       .replace(copy, '<p class="rv-big" aria-hidden="true"><span>SUPPORT</span><span>THEIR FUTURE</span><span>SHAPE YOUR OWN</span></p>\n    ' + GOLD_WIPE + '\n    ' + copy_v)
                        .replace('  </section>', '''    <small class="rf-photo-note">写真はイメージです</small>
   </section>''', 1))
     # 01〜04の表示（右下の時刻・進み具合の線）は、案A2では外す（2026-10-07 松本さん）
