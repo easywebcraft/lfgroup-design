@@ -1101,11 +1101,16 @@ def write_top_a2(top):
                                                          '<section class="fv rf rf-a rf-v rf-top rf-wipe" data-fx="a" data-stay="2500"', 1) + top[j:],
          '採用ページと同じ切り替え方（斜めのマスク＋金の光）を当てた版'),
     )
+    out = {}
     for path, html_, label in pages:
         html_ = (html_.replace('</head>', f'<link rel="stylesheet" href="/assets/recruit-fv.css?v={v}">\n</head>', 1)
-                      .replace('</body>', f'<script src="/assets/recruit-fv.js?v={v}"></script>\n</body>', 1)
-                      .replace('リニューアルの試作です', 'リニューアルの試作です・' + label, 1))
-        write(path, html_)
+                      .replace('</body>', f'<script src="/assets/recruit-fv.js?v={v}"></script>\n</body>', 1))
+        out[path] = html_
+        if not RELEASE:
+            write(path, html_.replace('リニューアルの試作です', 'リニューアルの試作です・' + label, 1))
+    write('assets/recruit-fv.css', css)  # 本番（--release）のトップでも使うので、ここでも書き出す
+    write('assets/recruit-fv.js', js)
+    return out['top-a2-wipe/index.html']  # 2026-10-07 本番のトップに採用（松本さん）
 
 
 def stylish_top(top):
@@ -1203,14 +1208,14 @@ def main():
 
     top_base = layout('', TOP.replace('{{final_cta}}', final_cta()), loader=True)
     top = stylish_top(season_photos(top_base))  # 2026-10-06 スタイリッシュ版を本流に反映
-    write('index.html', top)
+    # 2026-10-07：本番のトップを /top-a2-wipe/ の形（名古屋の街の四季・斜めのマスク＋金の光・白文字のヒーロー）にした
+    write('index.html', write_top_a2(top))
     if not RELEASE:
         # 動きの試作（/motion/）は /stylish/ にまとめ、本流のトップに反映した（2026-10-06）。前のURLはトップへ移す
         write('motion/index.html', redirect('../'))
         # スタイリッシュ版の試作（/stylish/）は本流のトップに反映した（2026-10-06）。前のURLはトップへ移す
         write('stylish/index.html', redirect('../'))
         write_recruit_trials()
-        write_top_a2(top)
         write('season/index.html', SEASON_REDIRECT)
         write('life/index.html', SEASON_REDIRECT)
         write('scene/index.html', season_photos(top_base, SCENE_PHOTOS, white_wrap=False)

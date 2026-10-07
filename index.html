@@ -33,6 +33,7 @@
   })();
 </script>
 <link rel="stylesheet" href="./assets/stylish.css?v=89c0d7eb">
+<link rel="stylesheet" href="./assets/recruit-fv.css?v=932817ee">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -94,23 +95,16 @@
 <main>
   <!-- 02 HERO：大きな写真＋大きなコピー＋短い説明。CTAは1つだけ。
        ★最初の演出（main.js の runLoader）は .fv h1 と .header .logo の位置を使うので、この2つは残す -->
-  <section class="fv" id="top">
-    <div class="fv-photo" data-stay="3800" data-first="2600">
-      <img decoding="async" width="1536" height="1024" class="is-show" src="./images/life-spring.jpg?v=11091abb" alt="" fetchpriority="high" onerror="this.remove()">
-      <img loading="lazy" decoding="async" width="1536" height="1024" data-src="./images/hero-summer.jpg?v=9e2e7a62" alt="">
-      <img loading="lazy" decoding="async" width="1536" height="1024" data-src="./images/life-autumn.jpg?v=6a05a14d" alt="">
-      <img loading="lazy" decoding="async" width="1536" height="1024" data-src="./images/life-winter.jpg?v=59ed502c" alt="">
-      <img loading="lazy" decoding="async" width="1536" height="1024" data-src="./images/life-spring2.jpg?v=c811887d" alt="">
+  <section class="fv rf rf-a rf-v rf-top rf-wipe" data-fx="a" data-stay="2500" id="top">
+    <div class="rf-media"><img decoding="async" width="1536" height="1024" class="is-on" src="./images/city-spring.jpg?v=db4acc53" alt="" onerror="this.remove()"><img decoding="async" width="1536" height="1024" class="" src="./images/city-summer.jpg?v=2d0e430b" alt="" onerror="this.remove()"><img decoding="async" width="1536" height="1024" class="" src="./images/city-autumn.jpg?v=69d7eb71" alt="" onerror="this.remove()"><img decoding="async" width="1536" height="1024" class="" src="./images/city-winter.jpg?v=82ec0e7a" alt="" onerror="this.remove()"></div>
+    <p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>
+    <span class="rv-sweep" aria-hidden="true"></span>
+    <div class="wrap rc-fv-copy">
+      <p class="eyebrow">Insurance &amp; Lifeline</p>
+      <h1 class="rc-fv-title rv-title"><span>保険とお金を整えて</span><span>安心できる<em>未来</em>へ</span></h1>
+      <p class="rc-fv-lead">保険の見直しや、電気・ガスなどの固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。</p>
+      <p class="rc-links"><a class="btn btn-primary" href="./contact/">保険・お金について相談する<svg class="arw"><use href="#i-arrow"/></svg></a></p>
     </div>
-    <div class="wrap fv-inner">
-      <div class="fv-copy">
-        <p class="eyebrow fade">Insurance &amp; Lifeline</p>
-        <h1 class="fade"><span>保険とお金を整えて</span><br><span>安心できる未来へ</span></h1>
-        <p class="fv-lead fade">保険の見直しや、電気・ガスなどの固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。</p>
-        <p class="fv-cta fade"><a class="link-arrow" href="./contact/">保険・お金について相談する<svg class="arw" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
-      </div>
-    </div>
-    <a class="fv-scroll" href="#foryou"><span>Scroll</span></a>
   </section>
 
   <!-- 04 FOR YOU：見る人の目的から選べる入口。写真の上に文字をのせたブロックを、画面いっぱいに2段×2列で均等に並べる
@@ -278,5 +272,6 @@
 <script src="./assets/main.js?v=d38be48b"></script>
 <script src="./assets/lenis.min.js?v=89c0d7eb"></script>
 <script src="./assets/stylish.js?v=89c0d7eb"></script>
+<script src="./assets/recruit-fv.js?v=932817ee"></script>
 </body>
 </html>
