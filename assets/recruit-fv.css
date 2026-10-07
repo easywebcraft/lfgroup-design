@@ -510,3 +510,15 @@ html:has(.rf-top) .header .menu-btn span { transition-duration: .45s; }
 .rf-serif .eyebrow::before { background: var(--gold); }
 .rf-serif .rc-fv-copy { text-shadow: 0 2px 16px rgba(8, 18, 32, .65); }
 .rf-serif .rc-fv-copy .btn { text-shadow: none; }
+
+/* ===== 採用ページ（案A2）の英字「SUPPORT／THEIR FUTURE.／SHAPE YOUR OWN.」と見出し（2026-10-07 松本さん指定）=====
+   英字は3行のまま、折り返さない（1行ごとに1行で収める）。見出し「お客様のこれからに寄り添い、／自分のこれからも描いていく」は、画面に収まる大きさにする */
+.rf-v:not(.rf-top) .rv-big span { white-space: nowrap; }
+@media (min-width: 1024px) {
+  .rf-v:not(.rf-top) .rv-big { width: auto; left: auto; right: 0; bottom: 70px; line-height: .92; font-size: clamp(30px, calc((100vw - 760px) * .105), 62px); }
+  .rf-v:not(.rf-top) .rc-fv-copy .rv-title { font-size: clamp(30px, 3.2vw, 46px); }
+}
+@media (max-width: 1023px) {
+  .rf-v:not(.rf-top) .rv-big { font-size: clamp(22px, 6.4vw, 40px); line-height: .94; }
+  .rf-v:not(.rf-top) .rc-fv-copy .rv-title { font-size: clamp(21px, 6.3vw, 30px); letter-spacing: .02em; }
+}
