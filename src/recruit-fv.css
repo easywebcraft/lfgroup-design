@@ -405,3 +405,14 @@ html:has(.rf-top) .header .menu-btn span { transition-duration: .45s; }
 .rf-go .rf-top.is-go .rv-big span:nth-child(2) { transition-delay: .1s; }
 .rf-go .rf-top.is-go .rv-big span:nth-child(3) { transition-delay: .2s; }
 .rf-go .rf-top.is-go .rv-big { animation-delay: 1s; }
+
+/* ===== /top-a2-wipe/：切り替え方（斜めのマスク＋金の光）はそのままに、カメラの動きを /top-a2/ の季節ごとの動きにする（2026-10-07）=====
+   春＝見上げて上へ流れる、夏＝道の奥へ寄る、秋＝横へ流れる、冬＝ゆっくり引く。動きは 6秒・等速で、前の写真も止めずに次へ移る */
+.rf-wipe .rf-media img:nth-child(1) { --s0: 1.14; --s1: 1.04; --x0: 0%; --x1: 0%; --y0: 3%; --y1: -2%; transform-origin: 50% 60%; }
+.rf-wipe .rf-media img:nth-child(2) { --s0: 1.02; --s1: 1.16; --x0: 0%; --x1: 0%; --y0: 0%; --y1: 0%; transform-origin: 62% 72%; }
+.rf-wipe .rf-media img:nth-child(3) { --s0: 1.12; --s1: 1.12; --x0: 4%; --x1: -4%; --y0: 0%; --y1: 0%; transform-origin: 50% 50%; }
+.rf-wipe .rf-media img:nth-child(4) { --s0: 1.2; --s1: 1.04; --x0: 0%; --x1: 0%; --y0: 0%; --y1: 0%; transform-origin: 70% 60%; }
+.rf-go .rf-wipe .rf-media img { scale: var(--s0); translate: var(--x0) var(--y0); }
+.rf-go .rf-wipe .rf-media img.is-on { scale: var(--s1); translate: var(--x1) var(--y1);
+  transition: clip-path 1.4s cubic-bezier(.77, 0, .18, 1), scale 6s linear, translate 6s linear; }
+.rf-go .rf-wipe .rf-media img.is-prev { scale: var(--s1); translate: var(--x1) var(--y1); transition: scale 6s linear, translate 6s linear; }
