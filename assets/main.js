@@ -152,7 +152,7 @@
     var run = function (el, delay) {
       // ページを開いたときのロゴの演出中は、終わるまで待ってから増やす（演出の裏で終わってしまわないように）
       if (document.documentElement.classList.contains('is-loading')) return setTimeout(function () { run(el, delay); }, 200);
-      var to = +el.getAttribute('data-count'), dur = 1800, t0 = null;
+      var to = +el.getAttribute('data-count'), dur = 1200, t0 = null;
       var step = function (t) {
         if (t0 === null) t0 = t;
         if (t - t0 < delay) return requestAnimationFrame(step);
