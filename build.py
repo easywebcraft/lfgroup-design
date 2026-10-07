@@ -283,13 +283,16 @@ def policy_lines_html(items, fade=True):
     return '<ol class="policy-lines">' + ''.join(out) + '</ol>'
 
 
-def final_cta():
-    """ページ最下部のお問い合わせ欄（全ページ共通）。ボタンは1つ、電話は小さく添える。"""
+def final_cta(title=None, text=None):
+    """ページ最下部のお問い合わせ欄（全ページ共通）。ボタンは1つ、電話は小さく添える。
+    title・text を渡すと、そのページ向けの文にできる（アライアンス事業：2026-10-07 お客様の要望）。"""
+    title = title or '<span>保険やお金について</span><br><span>気になることから</span><span>ご相談ください</span>'
+    text = text or '保険の見直しや家計、これからのお金について、まずはお気軽にお問い合わせください。'
     return f'''  <section class="contact-cta" id="final-cta">
     <div class="wrap contact-cta-inner">
       <p class="eyebrow fade">Contact</p>
-      <h2 class="fade"><span>保険やお金について</span><br><span>気になることから</span><span>ご相談ください</span></h2>
-      <p class="text fade">保険の見直しや家計、これからのお金について、まずはお気軽にお問い合わせください。</p>
+      <h2 class="fade">{title}</h2>
+      <p class="text fade">{text}</p>
       <p class="contact-cta-actions fade">
         <a class="btn btn-primary" href="/contact/">お問い合わせ{ARROW}</a>
       </p>
@@ -617,7 +620,9 @@ def page_partner():
     </div>
   </section>
 
-''' + final_cta()
+''' + final_cta(
+        '<span class="cta-nowrap">アライアンス事業について</span><br><span>お気軽に</span><span>ご相談ください</span>',
+        '提携をご検討の企業様・パートナー様、ご入居者様へのライフライン・インターネットなどのご案内について、まずはお気軽にお問い合わせください。')
 
 
 def page_company():

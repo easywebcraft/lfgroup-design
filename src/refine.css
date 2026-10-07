@@ -587,3 +587,6 @@
 #for-partner { padding-bottom: 8px; }
 #for-partner + #strengths { padding-top: 56px; }
 #for-partner + #strengths .sec-title, #for-partner + #strengths > .wrap > .eyebrow { margin-top: 0; }
+
+/* 相談の案内の見出し：言葉の途中で改行しないよう、長い行はスマホで少し小さくする（アライアンス事業・2026-10-07） */
+@media (max-width: 767px) { .contact-cta h2 .cta-nowrap { display: inline-block; font-size: .86em; letter-spacing: .02em; white-space: nowrap; } }

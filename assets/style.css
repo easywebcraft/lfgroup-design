@@ -1412,6 +1412,9 @@
 #for-partner { padding-bottom: 8px; }
 #for-partner + #strengths { padding-top: 56px; }
 #for-partner + #strengths .sec-title, #for-partner + #strengths > .wrap > .eyebrow { margin-top: 0; }
+
+/* 相談の案内の見出し：言葉の途中で改行しないよう、長い行はスマホで少し小さくする（アライアンス事業・2026-10-07） */
+@media (max-width: 767px) { .contact-cta h2 .cta-nowrap { display: inline-block; font-size: .86em; letter-spacing: .02em; white-space: nowrap; } }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 
