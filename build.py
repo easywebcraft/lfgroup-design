@@ -535,7 +535,7 @@ def page_personal():
 
 def page_corporate():
     hero = page_hero('Corporate', '法人のお客様', [('法人のお客様', '/corporate/')],
-                     lead='大手保険会社の代理店として、<br class="pc">法人のお客様の各種保険を取り扱っています。',
+                     lead='大手保険会社の代理店として、法人のお客様の各種保険を取り扱い、<br class="pc">保険の見直しや、電気・ガスなどの固定費の見直しをお手伝いします。',  # 固定費の見直しは法人にも載せる（2026-10-07 お客様の要望）
                      photo='cta-final.jpg', pos='50% 62%',
                      extra=page_nav([('strengths', '強み'), ('service', 'サービス')]))
     # ★要確認：法人のお客様向けの強み・取り扱い保険は、今のサイトに個人と分けた記載がない。
