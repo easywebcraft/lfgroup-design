@@ -416,3 +416,8 @@ html:has(.rf-top) .header .menu-btn span { transition-duration: .45s; }
 .rf-go .rf-wipe .rf-media img.is-on { scale: var(--s1); translate: var(--x1) var(--y1);
   transition: clip-path 1.4s cubic-bezier(.77, 0, .18, 1), scale 6s linear, translate 6s linear; }
 .rf-go .rf-wipe .rf-media img.is-prev { scale: var(--s1); translate: var(--x1) var(--y1); transition: scale 6s linear, translate 6s linear; }
+
+/* /top-a2-wipe/：冬に切り替わるとき、画面に雪が舞う（2026-10-07。/top-a2-full/ と同じ雪の粒）。
+   冬を見せるのは2.5秒と短いので、雪は0.8秒でふわっと現れ、春へ移ると0.8秒で薄れて消える */
+.rf-go .rf-wipe .rf-media::before { animation: rf-snow-fall 10s linear infinite; transition: opacity .8s ease; }
+.rf-go .rf-wipe[data-season="3"] .rf-media::before { opacity: .95; }
