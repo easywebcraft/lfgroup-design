@@ -1090,13 +1090,22 @@ def write_recruit_trials():
                   .replace(' fade"', '"').replace('class="fade"', ''))
     assert 'rv-title' in copy_v
     hiring = ''.join('<span>WE ARE HIRING<i>―</i>JOIN LF GROUP<i>―</i></span>' for _ in range(6))
-    # A2 の写真は、生成AIで作った名古屋の街の朝〜夜（2026-10-07 松本さん作成。recruit-city-1000〜1800.jpg）。
-    # 実在のオフィスと違って見える「オフィスの写真」を避け、場所を特定しない街の写真にした
-    fv['a2'] = (fv['a'].replace('/images/recruit-1', '/images/recruit-city-1')
+    # A2：採用向けの仕事風景4枚（生成AIのイメージ素材。実在の社員・職場の写真ではない）。
+    recruitment_photos = ('prepare', 'consult', 'team', 'learn')
+    recruitment_fv = fv['a']
+    for (_, _, _, original), scene in zip(times, recruitment_photos):
+        recruitment_fv = recruitment_fv.replace('/images/' + original, '/images/recruit-work-' + scene + '.jpg')
+    scene_labels = (('PREPARE', '仕事の準備'), ('CONSULT', 'お客様とのご相談'),
+                    ('TEAM', 'チームでの打ち合わせ'), ('LEARN', '学びと成長'))
+    for number, ((time, english, japanese, _), (label, caption)) in enumerate(zip(times, scene_labels), 1):
+        recruitment_fv = recruitment_fv.replace(f'<b>{time}</b><span>{english}</span><small>{japanese}</small>',
+                                                f'<b>0{number}</b><span>{label}</span><small>{caption}</small>')
+    fv['a2'] = (recruitment_fv
                        .replace('<section class="rf rf-a" data-fx="a">',
                                 '<section class="rf rf-a rf-v rf-wipe" data-fx="a" data-stay="2500">')
                        .replace(copy, '<p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>\n    ' + GOLD_WIPE + '\n    ' + copy_v)
-                       .replace('  </section>', f'''    <div class="rv-band" aria-hidden="true"><div class="rv-track">{hiring}{hiring}</div></div>
+                       .replace('  </section>', f'''    <small class="rf-photo-note">写真はイメージです</small>
+    <div class="rv-band" aria-hidden="true"><div class="rv-track">{hiring}{hiring}</div></div>
   </section>
   <a class="rv-entry" href="tel:0528468224" aria-label="電話で応募する 052-846-8224"><svg class="rv-ring" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="rvRing" d="M50,50 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs><text><textPath href="#rvRing">WE ARE HIRING ・ JOIN US ・ WE ARE HIRING ・ JOIN US ・</textPath></text></svg><b>ENTRY</b><small>電話で応募</small></a>'''))
     for key, sec in fv.items():

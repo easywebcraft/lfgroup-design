@@ -125,6 +125,7 @@
 .rf-v .rf-clock { bottom: 96px; }
 /* 流れる帯 */
 .rv-band { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; overflow: hidden; background: var(--hot); color: #14202E; }
+.rf-photo-note { position: absolute; left: var(--gutter); bottom: 58px; z-index: 3; color: rgba(255, 255, 255, .75); font-size: 11px; }
 .rv-track { display: flex; width: max-content; padding: 12px 0; }
 .rv-track span { flex: none; padding-right: 1.2em; font-family: var(--en); font-weight: 800; font-size: 20px; letter-spacing: .12em; white-space: nowrap; }
 .rv-track i { font-style: normal; margin: 0 .8em; }
