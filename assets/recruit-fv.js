@@ -38,44 +38,59 @@
     sec.style.setProperty('--stay', STAY / 1000 + 's');
     var n = 0;
     var sweep = sec.querySelector('.rv-sweep');
-    // 金の光を、写真が開く斜めの境目に毎フレーム合わせて置く（2026-10-07。写真は季節ごとに拡大・移動するので、
-    // 固定の位置で動かすと境目とずれる。境目の実際の画面上の位置（clip-path と画像の枠から計算）を読んで、光の線を同じ位置へ置く）
+    // 写真のマスクと金の光を、同じフレーム・同じ進行値で描く。
+    // CSSのマスクを後追いして速度を予測すると、加速中や季節の変わり目に光だけが先に進む。
     var edgeSvg = sweep && sweep.querySelector('.rv-edge');
-    var trackEdge = function () {
-      requestAnimationFrame(trackEdge);
-      if (!edgeSvg || !sweep.classList.contains('is-run')) return;
-      var on = sec.querySelector('.rf-media img.is-on');
-      if (!on) return;
-      var m = getComputedStyle(on).clipPath.match(/polygon\(([^)]*)\)/);
-      if (!m) return;
-      var pts = m[1].split(',').map(function (q) { return q.trim().split(' '); });
-      var r = on.getBoundingClientRect(), sr = sweep.getBoundingClientRect();
-      var num = function (v, w) { return v.indexOf('%') > 0 ? parseFloat(v) / 100 * w : parseFloat(v); };
-      // clip-path の % は、拡大前の画像の枠（offsetWidth）が基準。画像は中心を基準に scale 倍されて外接長方形 r になるので、
-      // 拡大前の枠の左端は r.left + (r.width - offsetWidth * scale) / 2、1px あたりの長さは scale 倍
-      var sc = r.width / (on.offsetWidth || r.width), ow = on.offsetWidth || r.width;
-      var left0 = r.left + (r.width - ow * sc) / 2;
-      var topX = left0 + num(pts[1][0], ow) * sc, botX = left0 + num(pts[2][0], ow) * sc;
-      // 光の層（sweep）の座標（0〜100）に直す。光の線の polygon は「上 x=0・下 x=-30」の形なので、上端の位置と傾きを合わせる
-      var W = sr.width || 1, k = 100 / W;
-      var tx = (topX - sr.left) * k, bx = (botX - sr.left) * k;
-      // 境目は毎フレーム動くので、読んだ値は次の描画では少し古い。前のフレームとの差（速度）で、1フレーム先へ進めて置く
-      if (trackEdge.px !== undefined) { tx += (tx - trackEdge.px); bx += (bx - trackEdge.pb); }
-      trackEdge.px = (topX - sr.left) * k; trackEdge.pb = (botX - sr.left) * k;
-      edgeSvg.querySelectorAll('polygon').forEach(function (poly, i) {
-        var w = i === 0 ? 6 : 0.5;   // 光の帯の幅（0〜100 の座標。にじみ6、細い白い線0.5）
-        // 細い白い線(i=1)は境目の上に、にじみ(i=0)は境目から右へ。どちらも左の辺を境目に置く
-        poly.setAttribute('points', tx + ',0 ' + (tx + w) + ',0 ' + (bx + w) + ',100 ' + bx + ',100');
-      });
-      // 光の線の向き（グラデーション）も、上端から下端へ（帯の左端→右端）
-      var g = edgeSvg.querySelector('#rvEdgeG');
-      if (g) { g.setAttribute('x1', tx + 6); g.setAttribute('x2', tx); g.setAttribute('y1', 0); g.setAttribute('y2', 0); }  // 境目に近いほど濃く、右へ薄くなる
+    var sharedWipe = edgeSvg && sec.classList.contains('rf-wipe');
+    var wipeFrame = 0;
+    var easeWipe = function (x) {
+      // 既存の cubic-bezier(.77, 0, .18, 1) を維持する。
+      var lo = 0, hi = 1, t = x;
+      for (var k = 0; k < 20; k++) {
+        t = (lo + hi) / 2;
+        var u = 1 - t;
+        var bx = 3 * u * u * t * .77 + 3 * u * t * t * .18 + t * t * t;
+        if (bx < x) lo = t; else hi = t;
+      }
+      return 3 * (1 - t) * t * t + t * t * t;
     };
-    if (edgeSvg) requestAnimationFrame(trackEdge);
+    var animateWipe = function (on) {
+      var start = performance.now(), duration = 1400;
+      var draw = function (now) {
+        var time = Math.max(0, Math.min(1, (now - start) / duration));
+        var x = 130 * easeWipe(time);
+        on.style.clipPath = 'polygon(0 0, ' + x + '% 0, ' + (x - 30) + '% 100%, -30% 100%)';
+        var r = on.getBoundingClientRect(), sr = sweep.getBoundingClientRect();
+        // 拡大・移動後の写真の境目を、光の層の上端・下端まで延長して座標を変換する。
+        // 写真の上端と光の上端は一致しないため、縦方向の移動と高さの違いも含める。
+        var topX = r.left + r.width * x / 100;
+        var slope = .3 * r.width / (r.height || 1);
+        var tx = (topX - slope * (sr.top - r.top) - sr.left) * 100 / (sr.width || 1);
+        var bx = (topX - slope * (sr.bottom - r.top) - sr.left) * 100 / (sr.width || 1);
+        edgeSvg.querySelectorAll('polygon').forEach(function (poly, i) {
+          var w = i === 0 ? 6 : .5;
+          poly.setAttribute('points', tx + ',0 ' + (tx + w) + ',0 ' + (bx + w) + ',100 ' + bx + ',100');
+        });
+        var g = edgeSvg.querySelector('#rvEdgeG');
+        if (g) {
+          g.setAttribute('x1', tx + 6); g.setAttribute('x2', tx);
+          g.setAttribute('y1', 0); g.setAttribute('y2', 0);
+        }
+        edgeSvg.style.opacity = time < .8 ? '1' : String((1 - time) / .2);
+        if (time < 1) wipeFrame = requestAnimationFrame(draw);
+        else { wipeFrame = 0; sweep.classList.remove('is-run'); }
+      };
+      draw(start);
+    };
     var show = function (i) {
       sec.setAttribute('data-season', i);  // /top-a2/：今の季節（0春 1夏 2秋 3冬）。秋→冬の雪の演出に使う
+      if (sharedWipe) {
+        cancelAnimationFrame(wipeFrame);
+        imgs.forEach(function (im) { im.style.removeProperty('clip-path'); });
+      }
       step(imgs, i);
       if (sweep && (!sec.classList.contains('rf-top') || sec.classList.contains('rf-wipe'))) { sweep.classList.remove('is-run'); void sweep.offsetWidth; sweep.classList.add('is-run'); }  // A2：金の光の帯（切り替えのたびに。/top-a2/ では外した 2026-10-07）
+      if (sharedWipe) animateWipe(imgs[i]);
       times.forEach(function (t, k) { t.classList.toggle('is-on', k === i); });
       if (!bars.length) return;  // 時刻を出さない版（/top-a2/）
       bars.forEach(function (b, k) { b.classList.toggle('is-done', k < i); b.classList.remove('is-on'); });

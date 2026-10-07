@@ -414,7 +414,7 @@ html:has(.rf-top) .header .menu-btn span { transition-duration: .45s; }
 .rf-wipe .rf-media img:nth-child(4) { --s0: 1.2; --s1: 1.04; --x0: 0%; --x1: 0%; --y0: 0%; --y1: 0%; transform-origin: 70% 60%; }
 .rf-go .rf-wipe .rf-media img { scale: var(--s0); translate: var(--x0) var(--y0); }
 .rf-go .rf-wipe .rf-media img.is-on { scale: var(--s1); translate: var(--x1) var(--y1);
-  transition: clip-path 1.4s cubic-bezier(.77, 0, .18, 1), scale 6s linear, translate 6s linear; }
+  transition: scale 6s linear, translate 6s linear; }
 .rf-go .rf-wipe .rf-media img.is-prev { scale: var(--s1); translate: var(--x1) var(--y1); transition: scale 6s linear, translate 6s linear; }
 
 /* /top-a2-wipe/：冬に切り替わるとき、画面に雪が舞う（2026-10-07。/top-a2-full/ と同じ雪の粒）。
@@ -460,10 +460,9 @@ html:has(.rf-top) .header .menu-btn span { transition-duration: .45s; }
 .rf-serif .rv-big { color: rgba(255, 255, 255, .1); }
 @media (max-width: 767px) { .rf-serif .rv-big { font-size: clamp(48px, 15vw, 84px); } }
 
-/* 光の線を、JavaScript（recruit-fv.js の trackEdge）が毎フレーム境目の位置へ置くので、CSS の横移動の動きは使わず、
-   光が走る間（.is-run）だけ見せて、境目が画面を抜けたら消す（2026-10-07） */
-.rf-wipe .rv-sweep.is-run .rv-edge { animation: rv-edge-fade 1.4s linear forwards; transform: none; }
-@keyframes rv-edge-fade { 0% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+/* 写真のマスクと光の位置・透明度はJSの同じフレームで更新する。
+   光に別のCSSアニメーションや位置予測を重ねない。 */
+.rf-wipe .rv-sweep.is-run .rv-edge { animation: none; transform: none; }
 
-/* 光の層は、写真の動き（拡大・マウス・スクロールのずれ）に合わせない：JS が境目の実際の位置へ線を置くので、層は動かさない方が正確（2026-10-07） */
+/* JSで画面上の座標へ変換するため、光の層自体は拡大・移動させない。 */
 .rf-go .rf-wipe .rv-sweep { translate: none; scale: 1; transition: none; }
