@@ -41,7 +41,7 @@ NAV = [
     ('about', '私たちについて', '/about/'),
     ('personal', '個人のお客様', '/personal/'),
     ('corporate', '法人のお客様', '/corporate/'),
-    ('partner', '提携企業様', '/partner/'),
+    ('partner', 'アライアンス事業', '/partner/'),  # 2026-10-07 「提携企業様」から名前を変えた（トップのタイルと同じ名前に）
     ('company', '会社概要', '/company/'),
     ('recruitment', '採用情報', '/recruitment/'),
 ]
@@ -484,7 +484,7 @@ def page_personal():
     hero = page_hero('Personal', '個人のお客様', [('個人のお客様', '/personal/')],
                      lead='保険の見直しや、電気・ガスなどの固定費の見直しを通じて、<br class="pc">ゆとりある生活の実現をお手伝いします。',
                      photo='service-insurance.jpg', pos='45% 50%',
-                     extra=page_nav([('strengths', '強み'), ('service', 'サービス'), ('alliance-service', 'アライアンスサービス')]))
+                     extra=page_nav([('strengths', '強み'), ('service', 'サービス'), ('alliance-link', 'アライアンスサービス')]))
     return hero + strengths([
         ('Insurance Agency', '大手保険会社の<br>代理店', 'SOMPOひまわり生命・日新火災海上保険を主力に、お客様のライフプランに合わせた最適な保険を提案します。'),
         ('Long-term Support', '生涯にわたる<br>サポート', 'ご契約のあとも、生涯を安心して過ごせるように長期的なサポートを行います。事故の際は、休日・夜間も対応します。'),
@@ -507,13 +507,12 @@ def page_personal():
   </section>
 
 ''' + INS_SUPPORT + f'''
-  <section class="section bg-blue svc-life" id="alliance-service">
+  <section class="section bg-blue" id="alliance-link">
     <div class="wrap">
       <p class="eyebrow fade">Alliance Service</p>
       <h2 class="fade">アライアンスサービス</h2>
       <p class="text fade" style="margin-top:16px">マンションやアパートのご入居者様へ、ガスや電気などのライフライン、インターネット回線、ウォーターサーバーなどのお手続きやご案内を行います。<br class="pc">経験豊富なオペレーターが、丁寧にご案内します。</p>
-      <div class="svc-grid svc-sub-grid">{life_cards()}
-      </div>
+      <p class="fade" style="margin-top:28px"><a class="link-arrow" href="/partner/#for-personal">アライアンスサービスを見る{ARROW}</a></p>
     </div>
   </section>
 
@@ -565,11 +564,32 @@ def page_corporate():
 
 
 def page_partner():
-    hero = page_hero('Partner', '提携企業様', [('提携企業様', '/partner/')],
-                     lead='ご入居者様の固定費の見直しにつながる、<br class="pc">ライフライン・インターネットなどのご案内を通じて、<br class="pc">提携企業様・パートナー様の事業繁栄をお手伝いします。',
+    """アライアンス事業。2段落：個人のお客様（アライアンスサービス）／提携事業者様（強み・サービス）。2026-10-07 お客様の要望"""
+    hero = page_hero('Alliance', 'アライアンス事業', [('アライアンス事業', '/partner/')],
+                     lead='マンション・アパートのご入居者様へのご案内を通じて、<br class="pc">ご入居者様の固定費の見直しと、<br class="pc">提携企業様・パートナー様の事業繁栄をお手伝いします。',
                      photo='scene-home.jpg', pos='70% 55%',
-                     extra=page_nav([('strengths', '強み'), ('service', 'サービス')]))
-    return hero + strengths([
+                     extra=page_nav([('for-personal', '個人のお客様'), ('for-partner', '提携事業者様')]))
+    return hero + f'''
+  <section class="section" id="for-personal">
+    <div class="wrap">
+      <p class="eyebrow fade">For Personal</p>
+      <h2 class="fade">個人のお客様</h2>
+      <p class="text fade" style="margin-top:16px">マンションやアパートのご入居者様へ、ガスや電気などのライフライン、インターネット回線、ウォーターサーバーなどのお手続きやご案内を行います。<br class="pc">経験豊富なオペレーターが、丁寧にご案内します。</p>
+      <p class="eyebrow fade" style="margin-top:56px">Alliance Service</p>
+      <h3 class="sub-title fade" style="margin-top:12px">アライアンスサービス</h3>
+      <div class="svc-grid svc-sub-grid">{life_cards()}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-blue" id="for-partner">
+    <div class="wrap">
+      <p class="eyebrow fade">For Partner</p>
+      <h2 class="fade">提携事業者様</h2>
+      <p class="text fade" style="margin-top:16px">不動産管理会社など、提携企業様・パートナー様の事業繁栄をお手伝いします。</p>
+    </div>
+  </section>
+''' + strengths([
         ('Operator', '経験豊富な<br>オペレーター', '経験豊富なオペレーターが、ご入居者様へ丁寧にご案内します。'),
         ('Lineup', '選りすぐりの<br>商材', 'ライフライン・インターネット回線・ウォーターサーバーなど、選りすぐりの商材を取り揃えています。'),
         ('Check', '厳格なチェック体制と<br>管理', 'アライアンス事業で培ったノウハウを活かし、厳格なチェック体制と管理の下で、ミスなくきめ細やかな対応を行います。'),
@@ -593,15 +613,6 @@ def page_partner():
           <p class="text">アライアンス事業で培ったノウハウを活かして、お客様に本当に必要なものを丁寧にご提案するとともに、厳格なチェック体制と管理の下でミスなくきめ細やかな対応を行うことができます。</p>
           <p class="biz-note">提携企業様・パートナー様募集中</p>
         </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section bg-blue svc-life">
-    <div class="wrap">
-      <p class="eyebrow fade">Lineup</p>
-      <h2 class="fade">取り扱い商材</h2>
-      <div class="svc-grid svc-sub-grid">{life_cards()}
       </div>
     </div>
   </section>
@@ -1237,7 +1248,7 @@ def main():
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
     write('personal/index.html', layout('個人のお客様', page_personal(), 'personal'))
     write('corporate/index.html', layout('法人のお客様', page_corporate(), 'corporate'))
-    write('partner/index.html', layout('提携企業様', page_partner(), 'partner'))
+    write('partner/index.html', layout('アライアンス事業', page_partner(), 'partner'))
     # 事業内容・取り扱いサービス・保険は、中身を上の3ページに分けた（2026-10-06）。前のURLは近いページへ移す
     write('business/index.html', redirect('../about/'))
     write('service/index.html', redirect('../personal/'))

@@ -582,3 +582,8 @@
 .co-message-body p { font-size: 15px; line-height: 2.1; color: var(--text); }
 .co-message-body p + p { margin-top: 1.2em; }
 @media (max-width: 767px) { .co-message-lead { font-size: 19px; letter-spacing: .04em; } }
+
+/* アライアンス事業ページ（2026-10-07）：「提携事業者様」の見出しの段と、続く強みの段の間の余白を詰める */
+#for-partner { padding-bottom: 8px; }
+#for-partner + #strengths { padding-top: 56px; }
+#for-partner + #strengths .sec-title, #for-partner + #strengths > .wrap > .eyebrow { margin-top: 0; }
