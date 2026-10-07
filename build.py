@@ -1096,6 +1096,10 @@ def write_top_a2(top):
         ('top-a2/index.html', plain[:pi] + sec + plain[pj:], 'トップのヒーローに採用FV案A2を当てた版'),
         ('top-a2-full/index.html', top[:i] + sec.replace('<section class="rf rf-a', '<section class="fv rf rf-a', 1) + top[j:],
          '本番のトップに反映した場合の見え方（ロゴの演出つき）'),
+        # /top-a2-wipe/（2026-10-07）＝ 採用ページ（/recruitment-a2/）と同じ切り替え方（2.5秒ごとに斜めのマスク＋金の光）を当てた見比べ用
+        ('top-a2-wipe/index.html', top[:i] + sec.replace('<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000"',
+                                                         '<section class="fv rf rf-a rf-v rf-top rf-wipe" data-fx="a" data-stay="2500"', 1) + top[j:],
+         '採用ページと同じ切り替え方（斜めのマスク＋金の光）を当てた版'),
     )
     for path, html_, label in pages:
         html_ = (html_.replace('</head>', f'<link rel="stylesheet" href="/assets/recruit-fv.css?v={v}">\n</head>', 1)
