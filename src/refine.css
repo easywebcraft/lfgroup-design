@@ -990,3 +990,10 @@ br.sp { display: none; }
 .mini-entry:hover .arw { transform: translateX(4px); }
 .ab-culture .mini-entries { justify-content: center; }
 @media (max-width: 767px) { .mini-entries { grid-template-columns: 1fr; } .ab-culture .mini-entries { justify-content: stretch; } }
+/* 採用情報の冒頭（2026-10-08 ほかのページと同じ動きを当てた .rf-recruit）：英字・見出しが長いので、画面からはみ出さない大きさに */
+@media (min-width: 1024px) { html .rf-recruit.rf-top.rf-serif .rv-big { font-size: clamp(28px, calc((100vw - 760px) * .09), 60px); } }
+@media (max-width: 1023px) { html .rf-recruit.rf-top.rf-serif .rv-big { font-size: clamp(22px, 7.4vw, 56px); } }
+@media (max-width: 767px) {
+  html .rf-recruit .rv-title { font-size: clamp(19px, 5.6vw, 28px); letter-spacing: .02em; }
+  html .rf-recruit .rc-fv-lead { font-size: clamp(11px, 3.2vw, 15px); }
+}

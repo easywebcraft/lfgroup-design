@@ -1437,7 +1437,7 @@ def write_recruit_trials():
                                                 f'<b>0{number}</b><span>{label}</span><small>{caption}</small>')
     fv['a2'] = (recruitment_fv
                        .replace('<section class="rf rf-a" data-fx="a">',
-                                '<section class="rf rf-a rf-v rf-wipe rf-serif" data-fx="a" data-stay="4500">')
+                                '<section class="rf rf-a rf-v rf-top rf-wipe rf-serif rf-sub rf-recruit" data-fx="a" data-stay="4500">')
                        .replace(copy, '<p class="rv-big" aria-hidden="true"><span>SUPPORT</span><span>THEIR FUTURE</span><span>SHAPE YOUR OWN</span></p>\n    ' + GOLD_WIPE + '\n    ' + copy_v)
                        .replace('  </section>', '''    <small class="rf-photo-note">写真はイメージです</small>
   </section>''', 1))
