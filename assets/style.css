@@ -1599,6 +1599,54 @@ br.sp { display: none; }
 .ps-faq-a p { font-size: 15px; line-height: 2; color: var(--sub); }
 @media (max-width: 1023px) { .ps-faq { grid-template-columns: 1fr; gap: 32px; } }
 @media (max-width: 767px) { .ps-faq-item summary { padding: 22px 0; gap: 14px; } .ps-faq-a { padding: 0 0 24px; gap: 14px; } .ps-faq-q { font-size: 15px; } }
+
+/* ===== 法人のお客様（2026-10-08 お客様の構成案で作り直し）=====
+   お悩み・選ばれる理由・流れ・よくあるご質問は個人のお客様と同じ部品（ps-）。法人だけの段は co- で始める。
+   構成案の「個人向けよりも落ち着いた色調と余白の多いレイアウト」に合わせ、経営ステージ別の段は紺の地に金の差し色 */
+
+/* 法人向けサービス：分類ごとに、左に写真と分類名、右に相談領域の一覧（13項目を同じ大きさのカードにすると長くなるため） */
+.co-svc-group { display: grid; grid-template-columns: 360px 1fr; gap: 64px; margin-top: clamp(56px, 7vw, 96px); padding-top: clamp(40px, 5vw, 64px); border-top: 1px solid var(--navy); }
+.co-svc-head { align-self: start; position: sticky; top: calc(var(--header-h) + 24px); }
+.co-svc-photo { aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius); background: var(--mist); }
+.co-svc-photo img { width: 100%; height: 100%; object-fit: cover; }
+.co-svc-en { display: flex; align-items: baseline; gap: 12px; margin-top: 24px; font-family: var(--en); font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+.co-svc-en b { font-size: 30px; font-weight: 500; letter-spacing: 0; line-height: 1; color: var(--gold); }
+.co-svc-head h3 { margin-top: 12px; font-family: var(--serif); font-weight: 500; font-size: clamp(21px, 2vw, 26px); line-height: 1.6; letter-spacing: .06em; }
+.co-svc-list li { display: grid; grid-template-columns: 48px 1fr; gap: 8px; padding: 28px 0; border-bottom: 1px solid var(--rule); }
+.co-svc-list li:first-child { padding-top: 4px; }
+.co-svc-num { font-family: var(--en); font-size: 18px; font-weight: 500; line-height: 1.6; color: var(--accent); }
+.co-svc-list h4 { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.6; letter-spacing: .06em; color: var(--navy); }
+.co-svc-list h4 + p { margin: 6px 0 0; font-size: 14px; line-height: 1.95; color: var(--sub); }
+.co-svc-note { margin-top: 40px; font-size: 12px; line-height: 1.8; color: var(--sub); }
+@media (max-width: 1023px) {
+  .co-svc-group { grid-template-columns: 1fr; gap: 24px; }
+  .co-svc-head { position: static; display: grid; grid-template-columns: 200px 1fr; gap: 0 24px; align-items: end; }
+  .co-svc-photo { grid-row: span 2; }
+  .co-svc-en { margin-top: 0; }
+}
+@media (max-width: 767px) {
+  .co-svc-head { grid-template-columns: 1fr; }
+  .co-svc-photo { grid-row: auto; aspect-ratio: 16 / 9; }
+  .co-svc-en { margin-top: 20px; }
+  .co-svc-list li { grid-template-columns: 36px 1fr; padding: 22px 0; }
+  .co-svc-list h4 { font-size: 16px; }
+}
+
+/* 経営ステージ別のご提案：紺の地に4枚のカード（PCは4列・タブレット2列・スマホ1列） */
+.co-stages { background: var(--navy); }
+.co-stages .eyebrow { color: rgba(255, 255, 255, .7); }
+.co-stages h2 { color: #fff; }
+.co-stages .text { color: rgba(255, 255, 255, .78); max-width: 720px; }
+.co-stage-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 48px; }
+.co-stage { display: flex; flex-direction: column; padding: 32px 28px; border: 1px solid rgba(255, 255, 255, .16); border-top: 2px solid var(--gold); border-radius: var(--radius); background: rgba(255, 255, 255, .04); }
+.co-stage-en { font-family: var(--en); font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: #D9B56E; }
+.co-stage h3 { margin-top: 12px; font-family: var(--serif); font-weight: 500; font-size: 24px; letter-spacing: .08em; color: #fff; }
+.co-stage-text { margin-top: 14px; font-size: 14px; line-height: 1.95; color: rgba(255, 255, 255, .8); }
+.co-stage dl { margin-top: auto; padding-top: 20px; }
+.co-stage dt { padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, .16); font-size: 11px; letter-spacing: .12em; color: rgba(255, 255, 255, .6); }
+.co-stage dd { margin: 6px 0 0; word-break: auto-phrase; font-size: 14px; font-weight: 500; line-height: 1.8; color: #fff; }
+@media (max-width: 1023px) { .co-stage-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 767px) { .co-stage-list { grid-template-columns: 1fr; gap: 12px; margin-top: 32px; } .co-stage { padding: 26px 22px; } }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 

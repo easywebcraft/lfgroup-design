@@ -283,14 +283,14 @@ def policy_lines_html(items, fade=True):
     return '<ol class="policy-lines">' + ''.join(out) + '</ol>'
 
 
-def final_cta(title=None, text=None, button='お問い合わせ'):
+def final_cta(title=None, text=None, button='お問い合わせ', eyebrow='Contact'):
     """ページ最下部のお問い合わせ欄（全ページ共通）。ボタンは1つ、電話は小さく添える。
     title・text を渡すと、そのページ向けの文にできる（アライアンス事業：2026-10-07 お客様の要望）。"""
     title = title or '<span>保険やお金について</span><br><span>気になることから</span><span>ご相談ください</span>'
     text = text or '保険の見直しや家計、これからのお金について、まずはお気軽にお問い合わせください。'
     return f'''  <section class="contact-cta" id="final-cta">
     <div class="wrap contact-cta-inner">
-      <p class="eyebrow fade">Contact</p>
+      <p class="eyebrow fade">{eyebrow}</p>
       <h2 class="fade">{title}</h2>
       <p class="text fade">{text}</p>
       <p class="contact-cta-actions fade">
@@ -382,8 +382,6 @@ def tags(items):
     return '<ul class="svc-items">' + ''.join(f'<li>{t}</li>' for t in items) + '</ul>'
 
 
-LIFE_INS = ['医療保険', 'がん保険', '終身保険', '変額保険', '収入保障保険', '定期保険', 'こども保険', '学資保険']
-NONLIFE_INS = ['自動車保険', '火災保険', '損害保険', '賠償責任保険', '労災保険']
 
 
 LIFE_SERVICES = [
@@ -410,48 +408,6 @@ def strengths(items, cols=3):
       <p class="eyebrow fade">Strengths</p>
       <h2 class="fade">強み</h2>
       <div class="str-list" style="--cols:{cols}">{cards}
-      </div>
-    </div>
-  </section>
-'''
-
-
-def ins_lineup(title='取り扱い保険'):
-    tiles = lambda items: ''.join(f'<li>{t}</li>' for t in items) + '<li class="etc">ほか</li>'
-    return f'''      <h3 class="sub-title fade">{title}</h3>
-      <div class="ins-lineup">
-        <article class="ins-cat fade">
-          <h3>生命保険<span>Life Insurance</span></h3>
-          <ul class="ins-tiles">{tiles(LIFE_INS)}</ul>
-        </article>
-        <article class="ins-cat fade">
-          <h3>損害保険<span>Non-Life Insurance</span></h3>
-          <ul class="ins-tiles">{tiles(NONLIFE_INS)}</ul>
-        </article>
-      </div>'''
-
-
-INS_PARTNERS = '''<aside class="ins-partners fade" aria-label="主力会社">
-        <p class="ins-partners-head">主力会社</p>
-        <ul>
-          <li><span class="kind">生命保険</span>SOMPOひまわり生命</li>
-          <li><span class="kind">損害保険</span>日新火災海上保険</li>
-        </ul>
-      </aside>'''
-
-INS_SUPPORT = f'''  <section class="section">
-    <div class="wrap ins-support">
-      <div>
-        <p class="eyebrow fade">Support</p>
-        <h2 class="fade">事故対応</h2>
-      </div>
-      <div class="fade">
-        <p class="ins-lead">事故に遭われたお客様に対して、迅速に保険金のお支払いができるようアドバイスし、事故処理完了まで適切な対応を行います。</p>
-        <ul class="ins-checks">
-          <li>事故に遭われたお客様への連絡頻度を高めています。</li>
-          <li>休日・夜間も事故に対応します。</li>
-        </ul>
-        <p style="margin-top:24px"><a class="link-arrow" href="/operation/">お客様本位の業務運営方針を見る{ARROW}</a></p>
       </div>
     </div>
   </section>
@@ -492,6 +448,12 @@ PS_ICONS = {
     'wallet': '<path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v3"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-3"/><path d="M21 11h-4a2 2 0 0 0 0 4h4z"/>',
     'talk': '<path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/>',
     'balance': '<path d="M12 3v18"/><path d="M7 21h10"/><path d="M3 7h18"/><path d="M6 7l-3 7a3 3 0 0 0 6 0z"/><path d="M18 7l-3 7a3 3 0 0 0 6 0z"/>',
+    'person': '<circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/>',
+    'helmet': '<path d="M2 18h20"/><path d="M4 18v-2a8 8 0 0 1 16 0v2"/><path d="M10 9V5h4v4"/>',
+    'factory': '<path d="M2 21h20"/><path d="M3 21V10l6 4v-4l6 4V4h6v17"/><path d="M8 18h1M13 18h1"/>',
+    'alert': '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/>',
+    'shield': '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+    'chart': '<path d="M3 3v18h18"/><path d="M8 17v-4"/><path d="M13 17V9"/><path d="M18 17V5"/>',
     'partner': '<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>',
 }
 
@@ -547,13 +509,88 @@ PS_FAQ = [
 ]
 
 
+def ps_hero_cta(label):
+    return f'      <p class="ps-hero-cta fade"><a class="btn btn-primary" href="/contact/">{label}{ARROW}</a></p>'
+
+
+def ps_worries(title, items, answer, bg='bg-blue'):
+    """お悩みの段（個人・法人で共通）。items は (アイコン, 一文)"""
+    lis = ''.join(f'''
+          <li class="fade">{ps_icon(k)}<p>{t}</p></li>''' for k, t in items)
+    return f'''
+  <section class="section {bg} ps-worries" id="worries">
+    <div class="wrap">
+      <p class="eyebrow fade">Worries</p>
+      <h2 class="fade">{title}</h2>
+      <ul class="ps-worry-list">{lis}
+      </ul>
+      <p class="ps-worries-answer fade">{answer}</p>
+    </div>
+  </section>
+'''
+
+
+def ps_values(eyebrow, title, items, bg='bg-blue'):
+    """大切にしていること・選ばれる理由（3つのカード）。items は (アイコン, 見出し, 本文)"""
+    cards = ''.join(f'''
+        <article class="ps-value fade">
+          <p class="ps-value-head">{ps_icon(k)}<span>{i + 1:02d}</span></p>
+          <h3>{t}</h3>
+          <p>{x}</p>
+        </article>''' for i, (k, t, x) in enumerate(items))
+    return f'''
+  <section class="section {bg}" id="values">
+    <div class="wrap">
+      <p class="eyebrow fade">{eyebrow}</p>
+      <h2 class="fade">{title}</h2>
+      <div class="ps-value-list">{cards}
+      </div>
+    </div>
+  </section>
+'''
+
+
+def ps_flow(items, bg=''):
+    steps = ''.join(f'''
+        <li class="fade"><p class="ps-step">STEP<b>{i + 1:02d}</b></p><h3>{t}</h3><p>{x}</p></li>''' for i, (t, x) in enumerate(items))
+    return f'''
+  <section class="section {bg}" id="flow">
+    <div class="wrap">
+      <p class="eyebrow fade">Flow</p>
+      <h2 class="fade">ご相談の流れ</h2>
+      <ol class="ps-flow">{steps}
+      </ol>
+    </div>
+  </section>
+'''
+
+
+def ps_faq(items, bg='bg-blue'):
+    """よくあるご質問（開け閉めできる）。回答は下書きなので .note-draft の印を付ける"""
+    qa = ''.join(f'''
+        <details class="ps-faq-item fade">
+          <summary><span class="ps-q">Q</span><span class="ps-faq-q">{q}</span><span class="ps-faq-mark" aria-hidden="true"></span></summary>
+          <div class="ps-faq-a"><span class="ps-a">A</span><p>{a}</p></div>
+        </details>''' for q, a in items)
+    return f'''
+  <section class="section {bg}" id="faq">
+    <div class="wrap ps-faq">
+      <div class="ps-faq-head">
+        <p class="eyebrow fade">FAQ</p>
+        <h2 class="fade">よくあるご質問</h2>
+      </div>
+      <div class="ps-faq-list">
+        <p class="note-draft fade">回答は下書きです（ご確認ください）</p>{qa}
+      </div>
+    </div>
+  </section>
+'''
+
+
 def page_personal():
     hero = page_hero('Personal Financial Consulting', 'これからの人生に、<br>お金の安心を。', [('個人のお客様', '/personal/')],
                      lead='保険の見直しから、<br class="sp">資産形成、教育資金、相続まで。<br>一人ひとりのライフプランに合わせて、<br>将来のお金について一緒に考えます。',
-                     photo='hero.jpg', pos='72% 40%',
-                     extra=f'      <p class="ps-hero-cta fade"><a class="btn btn-primary" href="/contact/">無料相談はこちら{ARROW}</a></p>')
-    worries = ''.join(f'''
-          <li class="fade">{ps_icon(k)}<p>{t}</p></li>''' for k, t in PS_WORRIES)
+                     photo='hero.jpg', pos='72% 40%', extra=ps_hero_cta('無料相談はこちら'))
     menus = ''.join(f'''
         <article class="ps-menu fade">
           <div class="ps-menu-photo"><img src="/images/{img}" alt="" style="object-position:{pos}" onerror="this.remove()"></div>
@@ -561,30 +598,10 @@ def page_personal():
           <h3>{title}</h3>
           <p>{text}</p>
         </article>''' for i, (en, title, text, img, pos) in enumerate(PS_MENUS))
-    values = ''.join(f'''
-        <article class="ps-value fade">
-          <p class="ps-value-head">{ps_icon(k)}<span>{i + 1:02d}</span></p>
-          <h3>{title}</h3>
-          <p>{text}</p>
-        </article>''' for i, (k, title, text) in enumerate(PS_VALUES))
-    flow = ''.join(f'''
-        <li class="fade"><p class="ps-step">STEP<b>{i + 1:02d}</b></p><h3>{title}</h3><p>{text}</p></li>''' for i, (title, text) in enumerate(PS_FLOW))
-    faq = ''.join(f'''
-        <details class="ps-faq-item fade">
-          <summary><span class="ps-q">Q</span><span class="ps-faq-q">{q}</span><span class="ps-faq-mark" aria-hidden="true"></span></summary>
-          <div class="ps-faq-a"><span class="ps-a">A</span><p>{a}</p></div>
-        </details>''' for q, a in PS_FAQ)
-    return hero + f'''
-  <section class="section bg-blue ps-worries" id="worries">
-    <div class="wrap">
-      <p class="eyebrow fade">Worries</p>
-      <h2 class="fade"><span>お金や将来のこと、</span><br><span>こんな不安は</span><span>ありませんか？</span></h2>
-      <ul class="ps-worry-list">{worries}
-      </ul>
-      <p class="ps-worries-answer fade">そんなお悩みを、<br class="sp">LFグループが一緒に整理します。</p>
-    </div>
-  </section>
-
+    return (hero
+            + ps_worries('<span>お金や将来のこと、</span><br><span>こんな不安は</span><span>ありませんか？</span>', PS_WORRIES,
+                         'そんなお悩みを、<br class="sp">LFグループが一緒に整理します。')
+            + f'''
   <section class="section" id="menu">
     <div class="wrap">
       <p class="eyebrow fade">Consultation Menu</p>
@@ -593,75 +610,147 @@ def page_personal():
       </div>
     </div>
   </section>
+'''
+            + ps_values('Our Approach', 'LFグループが<br class="sp">大切にしていること', PS_VALUES)
+            + ps_flow(PS_FLOW) + ps_faq(PS_FAQ) + '\n'
+            + final_cta(title='<span>お金の不安を、</span><br><span>未来の安心へ。</span>',
+                        text='保険のことも、将来のお金のことも。<br>まずはお気軽にご相談ください。',
+                        button='無料相談を予約する'))
 
-  <section class="section bg-blue" id="values">
-    <div class="wrap">
-      <p class="eyebrow fade">Our Approach</p>
-      <h2 class="fade">LFグループが<br class="sp">大切にしていること</h2>
-      <div class="ps-value-list">{values}
-      </div>
-    </div>
-  </section>
 
-  <section class="section" id="flow">
-    <div class="wrap">
-      <p class="eyebrow fade">Flow</p>
-      <h2 class="fade">ご相談の流れ</h2>
-      <ol class="ps-flow">{flow}
-      </ol>
-    </div>
-  </section>
+# ───── 法人のお客様（2026-10-08 お客様の構成案で作り直し） ─────
+# お客様の「法人のお客様も同様に構成の見直しをして、文章は作り直してオッケー」から。文言は構成案をもとにした。
+# ①ファーストビュー ②経営者のお悩み ③法人向けサービス（3つの分類・13項目）④選ばれる理由 ⑤経営ステージ別のご提案
+# ⑥ご相談の流れ ⑦よくあるご質問 ⑧最後の問い合わせ。
+# 構成案の「保険代理店として注意したい表現」に合わせ、節税をうたわない・採用や定着が上がると断定しない・
+# 「すべてのリスクをカバー」と書かない。公開前に、保険会社の募集文書のルールで確認していただく
+CO_WORRIES = [
+    ('person', '経営者に万が一のことがあった場合、事業を継続できるか不安'),
+    ('wallet', '役員退職金や従業員の退職金を計画的に準備したい'),
+    ('family', '福利厚生を充実させ、人材の採用・定着につなげたい'),
+    ('partner', '後継者への事業承継や相続対策を考えたい'),
+    ('balance', '事故やトラブルによる高額な損害賠償に備えたい'),
+    ('helmet', '従業員の労災事故や雇用トラブルに備えたい'),
+    ('factory', '火災・自然災害で事業が止まるリスクを減らしたい'),
+    ('alert', 'サイバー攻撃や情報漏えいへの対策が心配'),
+]
 
-  <section class="section bg-blue" id="faq">
-    <div class="wrap ps-faq">
-      <div class="ps-faq-head">
-        <p class="eyebrow fade">FAQ</p>
-        <h2 class="fade">よくあるご質問</h2>
-      </div>
-      <div class="ps-faq-list">
-        <p class="note-draft fade">回答は下書きです（ご確認ください）</p>{faq}
-      </div>
-    </div>
-  </section>
+# 3つの分類と13の相談領域。写真は分類ごとに1枚（今ある生成AIの写真。いただいたら差し替える）
+CO_SERVICES = [
+    ('A', 'Protect the Future', '経営者・企業の未来を守る', 'recruit-work-consult.jpg', '50% 55%', [
+        ('経営者の死亡保障', '経営者に万が一のことがあった際の運転資金や借入金の返済など、事業の継続に必要な資金への備えを考えます。'),
+        ('経営者・役員の医療保障', '病気やケガによる入院・治療に備え、経営者や役員の健康リスクを踏まえた保障を検討します。'),
+        ('役員退職金・退職慰労金の準備', '将来の役員退職金に向けた、計画的な資金準備をサポートします。資金が必要になる時期や、保険商品の特性を踏まえて検討します。'),
+        ('事業承継・相続対策', '後継者への円滑な事業承継に向けて、納税資金や株式の承継に伴う資金需要への備えを考えます。'),
+    ]),
+    ('B', 'Protect the Team', '従業員と組織を守る', 'recruit-work-team.jpg', '50% 50%', [
+        ('福利厚生制度の充実', '従業員の医療保障や万が一への備えなど、安心して働ける環境づくりを支援します。'),
+        ('従業員退職金の積立・準備', '従業員の将来を支える退職金制度について、企業の財務状況や制度設計に合わせた準備の方法を検討します。'),
+        ('労働災害への備え', '業務中の事故や従業員のケガなどに備え、政府労災保険を補完する民間の保険を検討します。'),
+        ('雇用関連賠償責任', 'ハラスメントや不当解雇など、雇用に関するトラブルによって企業が負う賠償責任への備えを検討します。'),
+    ]),
+    ('C', 'Protect the Business', '事業活動のリスクを守る', 'scene-shop.jpg', '60% 50%', [
+        ('損害賠償責任への備え', '施設内の事故、業務上の過失、製造物による事故など、第三者への賠償リスクに備えます。'),
+        ('火災・自然災害への備え', '建物や設備、商品などの財産を、火災・風災・水災などのリスクから守るための対策を考えます。'),
+        ('休業損失・事業中断への備え', '事故や災害によって事業が止まった場合の利益の減少や、その間も発生する費用への備えを検討します。'),
+        ('サイバーリスク・情報漏えい対策', 'サイバー攻撃や個人情報の漏えいによる賠償責任、事故対応の費用などへの備えを検討します。'),
+        ('社用車・営業車両の自動車保険', '社用車や営業車両の事故に備え、台数や使い方に合わせた自動車保険をご提案します。'),
+    ]),
+]
 
-''' + final_cta(title='<span>お金の不安を、</span><br><span>未来の安心へ。</span>',
-                text='保険のことも、将来のお金のことも。<br>まずはお気軽にご相談ください。',
-                button='無料相談を予約する')
+CO_REASONS = [
+    ('shield', '<span>生命保険・損害保険の</span><span>両面からサポート</span>', '経営者の万が一への備えから、従業員の福利厚生、事業活動に伴う賠償リスクまで。企業を取り巻くさまざまなリスクを幅広く検討します。'),
+    ('chart', '<span>企業の成長段階に</span><span>合わせた保障設計</span>', '創業期、成長期、成熟期、事業承継期。企業の成長とともに変化するリスクや資金需要を踏まえ、適切な備えを一緒に考えます。'),
+    ('partner', '<span>長期的な</span><span>経営パートナーとして</span>', '保険の加入時だけでなく、事業環境や組織体制の変化に応じた保障の見直しをサポートします。企業の未来を見据えた関係づくりを大切にします。'),
+]
+
+CO_STAGES = [
+    ('Startup', '創業期', '限られた資金の中で、経営上の重大なリスクに優先順位をつける。', '経営者の死亡保障・賠償責任・事業用の火災保険'),
+    ('Growth', '成長期', '事業の拡大や従業員の増加に伴うリスクに備える。', '福利厚生・労働災害・雇用関連賠償・休業損失'),
+    ('Stability', '成熟期', '経営基盤の安定と、将来に向けた資金準備を進める。', '役員退職金・従業員退職金・保障全体の見直し'),
+    ('Succession', '事業承継期', '次の世代への円滑な引き継ぎと、必要な資金の確保を考える。', '事業承継・相続・死亡保障・退職慰労金'),
+]
+
+CO_FLOW = [
+    ('お問い合わせ', '経営上のお悩みや、見直したい保険について、お気軽にご相談ください。'),
+    ('経営課題・リスクのヒアリング', '業種、事業の規模、従業員数、加入中の保険などを確認します。'),
+    ('リスク分析・保障のご提案', '今の備えを整理し、優先順位を踏まえた対策をご案内します。'),
+    ('ご契約・継続的なサポート', 'ご契約後も、事業環境の変化に応じて、保障内容の確認や見直しを行います。'),
+]
+
+# ★要確認：質問は構成案のまま。回答は構成案になかったので、こちらで書いた下書き
+CO_FAQ = [
+    ('現在加入している法人保険の見直しだけでも相談できますか？',
+     'はい、見直しだけのご相談も承ります。今ご加入の保険の内容を一緒に確認し、今の事業の状況に合っているかを整理します。'),
+    ('生命保険と損害保険をまとめて相談できますか？',
+     'はい、まとめてご相談いただけます。経営者や従業員の保障から、事業活動に伴う賠償や財産のリスクまで、全体を見渡して整理します。'),
+    ('法人保険を活用した退職金準備はできますか？',
+     'はい、ご相談いただけます。資金が必要になる時期や保険商品の特性を踏まえて、準備の方法を一緒に検討します。税務上の取り扱いは契約内容などによって異なるため、必要に応じて税理士などの専門家にご確認ください。'),
+    ('小規模な会社でも相談できますか？',
+     'はい、会社の規模にかかわらずご相談いただけます。業種や従業員数に合わせて、優先して備えたいリスクから一緒に考えます。'),
+    ('相談すると必ず保険に加入しなければいけませんか？',
+     'いいえ、ご相談だけでも大丈夫です。お話を伺ったうえで、必要な場合にだけご提案します。無理にご契約をおすすめすることはありません。'),
+]
 
 
 def page_corporate():
-    hero = page_hero('Corporate', '法人のお客様', [('法人のお客様', '/corporate/')],
-                     lead='法人のお客様の保険や、電気・ガスなどの固定費の見直しをお手伝いします。<br class="pc">大手保険会社の代理店として、各種保険を取り扱っています。',  # 固定費の見直しは法人にも載せる（2026-10-07 お客様の要望）
-                     photo='cta-final.jpg', pos='50% 62%',
-                     extra=page_nav([('strengths', '強み'), ('service', 'サービス')]))
-    # ★要確認：法人のお客様向けの強み・取り扱い保険は、今のサイトに個人と分けた記載がない。
-    #   今は保険代理店事業・事故対応の記載から組んでいる。法人向けの内容をいただいたら差し替える
-    return hero + strengths([
-        ('Insurance Agency', '大手保険会社の<br>代理店', 'SOMPOひまわり生命・日新火災海上保険を主力に、法人のお客様の各種保険を取り扱っています。'),
-        ('Long-term Support', '長期的な<br>サポート', '保険の見直しなど、お客様の状況に合わせた最適な保険をご提案します。ご契約後も、長期的にサポートします。'),
-        ('Support', '迅速な<br>事故対応', '事故に遭われたお客様に対して、迅速に保険金のお支払いができるようアドバイスし、事故処理完了まで適切な対応を行います。休日・夜間の事故対応も行っています。'),
-    ]) + f'''
+    hero = page_hero('Corporate Risk &amp; Financial Solutions', '企業の未来を守り、<br>挑戦を支える。', [('法人のお客様', '/corporate/')],
+                     lead='経営者の保障から、従業員の福利厚生、<br>事業リスクへの備え、円滑な事業承継まで。<br>生命保険と損害保険の両面から、<br>企業の持続的な成長をサポートします。',
+                     photo='cta-final.jpg', pos='62% 50%', extra=ps_hero_cta('法人保険について相談する'))
+    n = 0
+    groups = []
+    for key, en, title, img, pos, items in CO_SERVICES:
+        rows = ''
+        for t, x in items:
+            n += 1
+            rows += f'''
+            <li class="fade"><p class="co-svc-num">{n:02d}</p><div><h4>{t}</h4><p>{x}</p></div></li>'''
+        groups.append(f'''
+      <div class="co-svc-group">
+        <div class="co-svc-head fade">
+          <div class="co-svc-photo"><img src="/images/{img}" alt="" style="object-position:{pos}" onerror="this.remove()"></div>
+          <p class="co-svc-en"><b>{key}</b>{en}</p>
+          <h3>{title}</h3>
+        </div>
+        <ol class="co-svc-list">{rows}
+        </ol>
+      </div>''')
+    stages = ''.join(f'''
+        <article class="co-stage fade">
+          <p class="co-stage-en">{en}</p>
+          <h3>{t}</h3>
+          <p class="co-stage-text">{x}</p>
+          <dl><dt>主なご相談</dt><dd>{c}</dd></dl>
+        </article>''' for en, t, x, c in CO_STAGES)
+    return (hero
+            + ps_worries('<span>企業経営に潜むリスク、</span><br><span>その備えは</span><span>万全ですか？</span>', CO_WORRIES,
+                         '当てはまる課題から、<br class="sp">LFグループが一緒に整理します。')
+            + f'''
   <section class="section" id="service">
     <div class="wrap">
       <p class="eyebrow fade">Service</p>
-      <h2 class="fade">サービス</h2>
-      <div class="ins-intro" style="margin-top:48px">
-        <div>
-          <h3 class="sub-title fade" style="margin-top:0">法人のお客様の保険</h3>
-          <p class="text fade" style="margin-top:20px">LFグループ株式会社では、大手保険会社の代理店として、法人のお客様の各種保険を取り扱っています。</p>
-          <p class="text fade">保険の見直しなど、お気軽にご相談ください。お客様の状況に合わせた最適な保険をご提案します。ご契約後も、長期的にサポートします。</p>
-        </div>
-      {INS_PARTNERS}
-      </div>
-      <div class="consult-grid service-scope">
-        <article><h3>法人の保険の見直し</h3><p>会社の状況に合わせた保険をご提案します。</p></article>
-        <article><h3>電気・ガスなどの固定費</h3><p>法人のお客様の固定費の見直しをお手伝いします。</p></article>
-        <article><h3>ご契約後のサポート</h3><p>長期的なサポートと、事故の際の対応を行います。</p></article>
+      <h2 class="fade">法人向けサービス</h2>
+      <p class="text fade" style="margin-top:16px">生命保険と損害保険の両面から、経営者・従業員・事業活動の3つの視点で、企業のリスクへの備えを考えます。</p>{''.join(groups)}
+      <p class="co-svc-note fade">※補償・保障の内容や保険金のお支払いの対象は、保険の種類や契約の条件によって異なります。</p>
+    </div>
+  </section>
+'''
+            + ps_values('Why LF Group', 'LFグループが<br class="sp">選ばれる理由', CO_REASONS)
+            + f'''
+  <section class="section co-stages" id="stage">
+    <div class="wrap">
+      <p class="eyebrow fade">Business Stage</p>
+      <h2 class="fade">経営ステージ別のご提案</h2>
+      <p class="text fade" style="margin-top:16px">企業の成長とともに、備えるべきリスクや必要な資金は変わります。<br class="pc">今の経営ステージに合わせて、優先したい備えをご提案します。</p>
+      <div class="co-stage-list">{stages}
       </div>
     </div>
   </section>
-
-''' + INS_SUPPORT + final_cta(text='法人の保険や、電気・ガスなどの固定費の見直しについて、お気軽にご相談ください。')
+'''
+            + ps_flow(CO_FLOW) + ps_faq(CO_FAQ) + '\n'
+            + final_cta(title='<span>企業の未来に、</span><br><span>確かな備えを。</span>',
+                        text='経営者の保障、従業員の福利厚生、<br>事業活動に伴うさまざまなリスクまで。<br>企業の状況に合わせた対策を一緒に考えます。',
+                        button='法人保険の相談を申し込む', eyebrow='Your Business, Our Commitment.'))
 
 
 def page_partner():
