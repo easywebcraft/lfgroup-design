@@ -126,7 +126,8 @@
     // 見出しを分けるのと同じ時点で呼ぶ：光の周期（CSS の animation-delay）が、分けた時点から数え始めるので、見出しとずれない
     var splitBig = function () {
       var big = sec.querySelector('.rv-big');
-      if (!big || big.querySelector('.rb-ch')) return;
+      // トップだけ（採用ページには付けない：採用ページの英字は span を縦に積む指定があり、1文字ずつに分けると縦書きのように並んでしまう）
+      if (!big || !sec.classList.contains('rf-top') || big.querySelector('.rb-ch')) return;
       // 光る順番（--n）は行ごとに数える：日本語の見出しと同じく、2行が同時に左から光り始める（2026-10-08 松本さん）
       all('span', big).forEach(function (row) {
         var n = 0;
