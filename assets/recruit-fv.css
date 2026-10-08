@@ -595,3 +595,22 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
 @media (max-width: 1023px) {
   .rf-v.rf-serif:not(.rf-top) .rf-media::after { background: linear-gradient(180deg, rgba(8, 18, 32, .04) 0%, rgba(8, 18, 32, .14) 38%, rgba(8, 18, 32, .38) 100%); }
 }
+
+/* ===== トップの見出しの演出（2026-10-08 松本さん「このコピーの演出だけ本番に」。試作 /top-flashy/ から見出し分だけ）=====
+   金の光が1文字ずつ左から順に走る（5秒ごと）。「未来」は金色で脈打つように光る。トップだけ（採用ページには付けない）。
+   ※文字の形で切り抜く方式（background-clip:text）は、1文字ずつ動く文字と相性が悪く文字が消えるので使わない */
+.rf-top.rf-serif .rc-fv-title .rv-ch { animation: ff-char 5s ease-in-out infinite; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(1) { animation-delay: 2.2s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(2) { animation-delay: 2.28s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(3) { animation-delay: 2.36s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(4) { animation-delay: 2.44s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(5) { animation-delay: 2.52s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(6) { animation-delay: 2.6s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(7) { animation-delay: 2.68s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(8) { animation-delay: 2.76s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(9) { animation-delay: 2.84s; }
+@keyframes ff-char { 0%, 14%, 100% { text-shadow: 0 2px 18px rgba(8, 18, 32, .7); } 6% { text-shadow: 0 0 14px rgba(255, 214, 140, 1), 0 0 30px rgba(255, 190, 90, .9), 0 2px 18px rgba(8, 18, 32, .7); } }
+.rf-top.rf-serif .rc-fv-title em, .rf-top.rf-serif .rc-fv-title em .rv-ch { color: #f2b63c; -webkit-text-fill-color: #f2b63c; }
+.rf-top.rf-serif .rc-fv-title em .rv-ch { animation: ff-gold 2.4s ease-in-out infinite; }
+@keyframes ff-gold { 0%, 100% { text-shadow: 0 0 6px rgba(255, 214, 140, .5), 0 2px 18px rgba(8, 18, 32, .7); } 50% { text-shadow: 0 0 20px rgba(255, 226, 160, 1), 0 0 36px rgba(242, 182, 60, .8), 0 2px 18px rgba(8, 18, 32, .7); } }
+@media (prefers-reduced-motion: reduce) { .rf-top.rf-serif .rc-fv-title .rv-ch, .rf-top.rf-serif .rc-fv-title em .rv-ch { animation: none; } }
