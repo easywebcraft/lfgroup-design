@@ -1721,6 +1721,10 @@ br.sp { display: none; }
 .sec-c > .wrap > h2 + .text { max-width: 880px; word-break: auto-phrase; }
 /* フッターの余白も詰める */
 .footer { padding-block: 48px 28px; }
+/* アライアンス事業「個人のお客様」の段の小見出し（アライアンスサービス）も中央に（2026-10-08 説明文を外したため） */
+#for-personal .sub-title { text-align: center; font-size: clamp(18px, 1.8vw, 22px); }
+#for-personal .sub-title + .svc-grid { margin-top: 28px; }
+#for-personal > .wrap > .eyebrow + .sub-title { margin-top: 6px !important; }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 

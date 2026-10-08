@@ -773,7 +773,7 @@ def page_corporate():
     <div class="wrap">
       <p class="eyebrow fade">Service</p>
       <h2 class="fade">法人向けサービス</h2>
-      <p class="text fade" style="margin-top:16px">生命保険と損害保険の両面から、経営者・従業員・事業活動の3つの視点で、企業のリスクへの備えを考えます。</p>{''.join(groups)}
+      {''.join(groups)}
       <p class="co-svc-note fade">※補償・保障の内容や保険金のお支払いの対象は、保険の種類や契約の条件によって異なります。</p>
     </div>
   </section>
@@ -784,7 +784,6 @@ def page_corporate():
     <div class="wrap">
       <p class="eyebrow fade">Business Stage</p>
       <h2 class="fade">経営ステージ別のご提案</h2>
-      <p class="text fade" style="margin-top:16px">企業の成長とともに、備えるべきリスクや必要な資金は変わります。<br class="pc">今の経営ステージに合わせて、優先したい備えをご提案します。</p>
       <div class="co-stage-list">{stages}
       </div>
     </div>
@@ -807,8 +806,7 @@ def page_partner():
     <div class="wrap">
       <p class="eyebrow fade">For Personal</p>
       <h2 class="fade">個人のお客様</h2>
-      <p class="text fade" style="margin-top:16px">マンションやアパートのご入居者様へ、ガスや電気などのライフライン、インターネット回線、ウォーターサーバーなどのお手続きやご案内を行います。<br class="pc">経験豊富なオペレーターが、丁寧にご案内します。</p>
-      <p class="eyebrow fade" style="margin-top:56px">Alliance Service</p>
+      <p class="eyebrow fade" style="margin-top:28px;justify-content:center">Alliance Service</p>
       <h3 class="sub-title fade" style="margin-top:12px">アライアンスサービス</h3>
       <div class="svc-grid svc-sub-grid">{life_cards()}
       </div>
@@ -819,7 +817,6 @@ def page_partner():
     <div class="wrap">
       <p class="eyebrow fade">For Partner</p>
       <h2 class="fade">提携事業者様</h2>
-      <p class="text fade" style="margin-top:16px">不動産管理会社など、提携企業様・パートナー様の事業の発展をお手伝いします。</p>
       <div class="partner-flow" aria-label="提携サービスの役割">
         <article><p class="eyebrow">Partner</p><h3>提携企業様・パートナー様</h3><p>当社と協力し、ご入居者様へのサービス案内につなげます。</p></article>
         <span class="flow-arrow" aria-hidden="true">→</span>
