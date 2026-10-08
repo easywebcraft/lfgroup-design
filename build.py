@@ -283,7 +283,7 @@ def policy_lines_html(items, fade=True):
     return '<ol class="policy-lines">' + ''.join(out) + '</ol>'
 
 
-def final_cta(title=None, text=None):
+def final_cta(title=None, text=None, button='お問い合わせ'):
     """ページ最下部のお問い合わせ欄（全ページ共通）。ボタンは1つ、電話は小さく添える。
     title・text を渡すと、そのページ向けの文にできる（アライアンス事業：2026-10-07 お客様の要望）。"""
     title = title or '<span>保険やお金について</span><br><span>気になることから</span><span>ご相談ください</span>'
@@ -294,7 +294,7 @@ def final_cta(title=None, text=None):
       <h2 class="fade">{title}</h2>
       <p class="text fade">{text}</p>
       <p class="contact-cta-actions fade">
-        <a class="btn btn-primary" href="/contact/">お問い合わせ{ARROW}</a>
+        <a class="btn btn-primary" href="/contact/">{button}{ARROW}</a>
       </p>
       <p class="contact-cta-tel fade">お電話でのお問い合わせ<a href="{TEL_HREF}">{TEL}</a></p>
     </div>
@@ -477,68 +477,156 @@ def page_nav(items):
     return f'        <nav class="svc-nav fade" aria-label="このページの内容">{links}</nav>'
 
 
+# ───── 個人のお客様（2026-10-08 お客様の構成案に合わせて作り直し） ─────
+# お客様の「個人用のページをこんな構成にしたい、今の文は捨てても問題ない」から。文言はお客様の構成案のまま。
+# ①ファーストビュー ②こんなお悩み ③6つの相談メニュー ④大切にしていること ⑤ご相談の流れ ⑥よくあるご質問 ⑦最後の問い合わせ
+# それまでの「強み・サービス（取り扱い保険）・事故対応・アライアンスサービス・勧誘方針」は外した（勧誘方針はフッターから見られる）
+
+# 線のアイコン（24×24。色は文字色に合わせる）
+PS_ICONS = {
+    'medical': '<path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/><path d="M3.5 12H9l1.5-2.5 2 4.5 1.5-2H20.5"/>',
+    'family': '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    'growth': '<path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/>',
+    'education': '<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/><path d="M22 10v6"/>',
+    'home': '<path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
+    'wallet': '<path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v3"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-3"/><path d="M21 11h-4a2 2 0 0 0 0 4h4z"/>',
+    'talk': '<path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/>',
+    'balance': '<path d="M12 3v18"/><path d="M7 21h10"/><path d="M3 7h18"/><path d="M6 7l-3 7a3 3 0 0 0 6 0z"/><path d="M18 7l-3 7a3 3 0 0 0 6 0z"/>',
+    'partner': '<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>',
+}
+
+
+def ps_icon(key):
+    return (f'<svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" '
+            f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{PS_ICONS[key]}</svg>')
+
+
+PS_WORRIES = [
+    ('medical', '今の医療保険で十分なのか分からない'),
+    ('family', '万が一のとき、家族の生活が心配'),
+    ('growth', '将来のために資産形成を始めたい'),
+    ('education', '子どもの教育費を準備したい'),
+    ('home', '相続について何から始めればいいか分からない'),
+    ('wallet', '毎月の固定費や保険料を見直したい'),
+]
+
+# 写真は仮（2026-10-08）：お客様の構成案の写真は手元にないので、今ある生成AIの写真から近いものを当てている。
+# 写真をいただいたら images/ に置いてここを差し替える
+PS_MENUS = [
+    ('Medical', '医療・がんへの備え', '病気やケガによる入院・治療費など、もしもの医療費に備えるためのご相談。', 'scene-kitchen.jpg', '50% 50%'),
+    ('Family', '死亡保障・家族への備え', '大切な家族の暮らしを守るために、必要な保障を一緒に考えます。', 'service-insurance.jpg', '50% 60%'),
+    ('Asset', '資産形成・老後資金', '将来の生活や老後に向けた資金準備について、目的に合った方法を考えます。', 'life-winter.jpg', '62% 35%'),
+    ('Inheritance', '相続・資産承継', '大切な財産と想いを次の世代へ。相続に向けた備えをサポートします。', 'life-spring2.jpg', '70% 45%'),
+    ('Education', '教育資金の準備', '進学や将来の教育費に向けて、無理のない資金準備を考えます。', 'life-autumn.jpg', '62% 50%'),
+    ('Household', '家計診断・保険の見直し', '収入・支出・保障内容を整理して、家計に合った備え方を見つけます。', 'scene-dining.jpg', '60% 60%'),
+]
+
+PS_VALUES = [
+    ('talk', '<span>まずはお話を</span><span>聞くことから</span>', 'お客様のライフスタイルや将来の希望を丁寧にお伺いし、今必要な備えを一緒に考えます。'),
+    ('balance', '<span>必要なものを、</span><span>必要な分だけ</span>', '現在の保障や公的制度も踏まえ、過不足のない保障設計を目指します。'),
+    ('partner', '<span>契約後も続く</span><span>パートナーシップ</span>', '結婚・出産・住宅購入など、ライフステージの変化に応じた見直しをサポートします。'),
+]
+
+PS_FLOW = [
+    ('お問い合わせ・ご予約', 'WEBフォームなどから、ご希望の相談内容をお知らせください。'),
+    ('ヒアリング・現状確認', '家計や保険の加入状況、将来の希望などを整理します。'),
+    ('プランのご提案', '必要に応じて保障や資金準備の方法をご案内します。'),
+    ('アフターフォロー', 'ご契約後も状況の変化に合わせてサポートします。'),
+]
+
+# ★要確認：質問はお客様の構成案のまま。回答は構成案になかったので、こちらで書いた下書き（.note-draft の印付き）
+PS_FAQ = [
+    ('相談だけでも大丈夫ですか？',
+     'はい、ご相談だけでも大丈夫です。お話を伺ったうえで、必要な場合にだけご提案します。無理にご契約をおすすめすることはありません。'),
+    ('すでに加入している保険の見直しもできますか？',
+     'はい、できます。今ご加入の保険の内容を一緒に確認し、今の暮らしやご家族の状況に合っているかを整理します。'),
+    ('資産形成についても相談できますか？',
+     'はい、ご相談いただけます。将来の生活や老後に向けた資金準備について、目的に合った方法を一緒に考えます。'),
+    ('相談には何を用意すればいいですか？',
+     '特別なご用意は必要ありません。保険の見直しをご希望の場合は、今ご加入の保険証券などをお持ちいただくと、スムーズにご案内できます。'),
+]
+
+
 def page_personal():
-    sol = [
-        '金融商品の販売等に際して、各種法令等を遵守し、適正な販売等に努めます。',
-        '金融商品に関するお客さまの知識・経験、契約目的、財産の状況等を総合的に勘案し、お客さまの意向と実情に応じた金融商品の販売等に努めます。',
-        'お客さまへの商品説明等については、販売・勧誘形態に応じて、お客さま本位の方法等の創意工夫に努めます。',
-        'お客さまのご意見等の収集に努め、現状を把握し、また、お客さまの満足度を高めるよう努めます。',
-    ]
-    hero = page_hero('Personal', '個人のお客様', [('個人のお客様', '/personal/')],
-                     lead='保険や、電気・ガスなどの固定費を見直し、<br class="pc">ゆとりある生活の実現をお手伝いします。',
-                     photo='service-insurance.jpg', pos='45% 50%',
-                     extra=page_nav([('strengths', '強み'), ('service', 'サービス'), ('alliance-link', 'アライアンスサービス')]))
-    return hero + strengths([
-        ('Insurance Agency', '大手保険会社の<br>代理店', 'SOMPOひまわり生命・日新火災海上保険を主力に、お客様のライフプランに合わせた最適な保険をご提案します。'),
-        ('Long-term Support', '生涯にわたる<br>サポート', 'ご契約後も、生涯を安心して過ごせるよう、長期的にサポートします。事故の際は、休日・夜間も対応します。'),
-        ('One Stop', '保険から<br>ライフラインまで', '保険に加え、電気・ガスなどのライフライン、インターネット回線、ウォーターサーバーのお手続きやご案内も行っています。'),
-    ]) + f'''
-  <section class="section" id="service">
+    hero = page_hero('Personal Financial Consulting', 'これからの人生に、<br>お金の安心を。', [('個人のお客様', '/personal/')],
+                     lead='保険の見直しから、<br class="sp">資産形成、教育資金、相続まで。<br>一人ひとりのライフプランに合わせて、<br>将来のお金について一緒に考えます。',
+                     photo='hero.jpg', pos='72% 40%',
+                     extra=f'      <p class="ps-hero-cta fade"><a class="btn btn-primary" href="/contact/">無料相談はこちら{ARROW}</a></p>')
+    worries = ''.join(f'''
+          <li class="fade">{ps_icon(k)}<p>{t}</p></li>''' for k, t in PS_WORRIES)
+    menus = ''.join(f'''
+        <article class="ps-menu fade">
+          <div class="ps-menu-photo"><img src="/images/{img}" alt="" style="object-position:{pos}" onerror="this.remove()"></div>
+          <p class="ps-menu-num">{i + 1:02d}<span>{en}</span></p>
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </article>''' for i, (en, title, text, img, pos) in enumerate(PS_MENUS))
+    values = ''.join(f'''
+        <article class="ps-value fade">
+          <p class="ps-value-head">{ps_icon(k)}<span>{i + 1:02d}</span></p>
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </article>''' for i, (k, title, text) in enumerate(PS_VALUES))
+    flow = ''.join(f'''
+        <li class="fade"><p class="ps-step">STEP<b>{i + 1:02d}</b></p><h3>{title}</h3><p>{text}</p></li>''' for i, (title, text) in enumerate(PS_FLOW))
+    faq = ''.join(f'''
+        <details class="ps-faq-item fade">
+          <summary><span class="ps-q">Q</span><span class="ps-faq-q">{q}</span><span class="ps-faq-mark" aria-hidden="true"></span></summary>
+          <div class="ps-faq-a"><span class="ps-a">A</span><p>{a}</p></div>
+        </details>''' for q, a in PS_FAQ)
+    return hero + f'''
+  <section class="section bg-blue ps-worries" id="worries">
     <div class="wrap">
-      <p class="eyebrow fade">Service</p>
-      <h2 class="fade">サービス</h2>
-      <div class="ins-intro" style="margin-top:48px">
-        <div>
-          <h3 class="sub-title fade" style="margin-top:0">保険</h3>
-          <p class="text fade" style="margin-top:20px">LFグループ株式会社では、大手保険会社の代理店として、個人のお客様の各種保険を取り扱っています。</p>
-          <p class="text fade">自動車・バイク・病気・ケガ・旅行・趣味・こども・生命保険など、幅広い保険を取り扱っています。</p>
-          <p class="text fade">お客様のライフプランに合わせた最適な保険をご提案します。ご契約後も、生涯を安心して過ごせるよう、長期的にサポートします。</p>
-        </div>
-      {INS_PARTNERS}
-      </div>
-      <div class="consult-grid service-scope">
-        <article><h3>保険の見直し</h3><p>ご自身やご家族の暮らしに合わせた保険をご提案します。</p></article>
-        <article><h3>毎月の固定費</h3><p>電気・ガスなど、暮らしにかかる固定費の見直しをお手伝いします。</p></article>
-        <article><h3>ご入居時のお手続き</h3><p>ライフラインやインターネットなどのご案内を行います。</p><a class="link-arrow" href="/partner/#for-personal">入居者向けサービスを見る{ARROW}</a></article>
-      </div>
-{ins_lineup()}
+      <p class="eyebrow fade">Worries</p>
+      <h2 class="fade"><span>お金や将来のこと、</span><br><span>こんな不安は</span><span>ありませんか？</span></h2>
+      <ul class="ps-worry-list">{worries}
+      </ul>
+      <p class="ps-worries-answer fade">そんなお悩みを、<br class="sp">LFグループが一緒に整理します。</p>
     </div>
   </section>
 
-''' + INS_SUPPORT + f'''
-  <section class="section bg-blue" id="alliance-link">
+  <section class="section" id="menu">
     <div class="wrap">
-      <p class="eyebrow fade">Alliance Service</p>
-      <h2 class="fade">アライアンスサービス</h2>
-      <p class="text fade" style="margin-top:16px">マンションやアパートのご入居者様へ、ガスや電気などのライフライン、インターネット回線、ウォーターサーバーなどのお手続きやご案内を行います。<br class="pc">経験豊富なオペレーターが、丁寧にご案内します。</p>
-      <p class="fade" style="margin-top:28px"><a class="link-arrow" href="/partner/#for-personal">アライアンスサービスを見る{ARROW}</a></p>
-    </div>
-  </section>
-
-  <section class="section about-policy">
-    <div class="wrap">
-      <div class="about-policy-grid">
-        <div class="about-policy-head">
-          <p class="eyebrow fade">Policy</p>
-          <h2 class="fade">勧誘方針</h2>
-          <p class="fade" style="margin-top:32px"><a class="link-arrow" href="/solicitation/">勧誘方針の全文を見る{ARROW}</a></p>
-        </div>
-        {policy_lines_html(sol)}
+      <p class="eyebrow fade">Consultation Menu</p>
+      <h2 class="fade">6つの相談メニュー</h2>
+      <div class="ps-menu-list">{menus}
       </div>
     </div>
   </section>
 
-''' + final_cta()
+  <section class="section bg-blue" id="values">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Approach</p>
+      <h2 class="fade">LFグループが<br class="sp">大切にしていること</h2>
+      <div class="ps-value-list">{values}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="flow">
+    <div class="wrap">
+      <p class="eyebrow fade">Flow</p>
+      <h2 class="fade">ご相談の流れ</h2>
+      <ol class="ps-flow">{flow}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section bg-blue" id="faq">
+    <div class="wrap ps-faq">
+      <div class="ps-faq-head">
+        <p class="eyebrow fade">FAQ</p>
+        <h2 class="fade">よくあるご質問</h2>
+      </div>
+      <div class="ps-faq-list">
+        <p class="note-draft fade">回答は下書きです（ご確認ください）</p>{faq}
+      </div>
+    </div>
+  </section>
+
+''' + final_cta(title='<span>お金の不安を、</span><br><span>未来の安心へ。</span>',
+                text='保険のことも、将来のお金のことも。<br>まずはお気軽にご相談ください。',
+                button='無料相談を予約する')
 
 
 def page_corporate():

@@ -1517,6 +1517,88 @@ html:has(.rf-top) .entries-head .eyebrow { color: rgba(255, 255, 255, .85); }
 .entries-head { padding: clamp(22px, 2.4vw, 32px) 0; }
 .entries-head .eyebrow { font-size: 13px; margin: 0; }
 @media (max-width: 767px) { .entries-head { padding: 20px 0; } }
+
+/* ===== 個人のお客様（2026-10-08 お客様の構成案で作り直し）=====
+   ファーストビュー → こんなお悩み → 6つの相談メニュー → 大切にしていること → ご相談の流れ → よくあるご質問 → 最後の問い合わせ。
+   書き方は build.py の page_personal()。クラスは ps- で始める */
+br.sp { display: none; }
+@media (max-width: 767px) { br.sp { display: inline; } }
+.ps-icon { width: 24px; height: 24px; flex: none; color: var(--accent); }
+.ps-hero-cta { margin-top: 40px; }
+.sub-hero.has-photo .sub-hero-copy > .ps-hero-cta { margin-bottom: clamp(56px, 7vw, 96px); }  /* 写真の下端にボタンが付かないよう余白を取る */
+.ps-hero-cta .btn { min-width: 260px; justify-content: space-between; }
+@media (max-width: 767px) { .ps-hero-cta .btn { width: 100%; } }
+
+/* こんなお悩み：アイコン＋一文を2列×3段（お客様の構成案のまま。スマホは1列） */
+.ps-worry-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 48px; }
+.ps-worry-list li { display: flex; align-items: center; gap: 16px; padding: 24px; background: #fff; border-radius: var(--radius); }
+.ps-worry-list p { font-size: 15px; font-weight: 500; line-height: 1.7; color: var(--navy); word-break: auto-phrase; }  /* auto-phrase：文節で折り返す（Chrome系） */
+.ps-worries-answer { margin-top: 56px; text-align: center; font-family: var(--serif); font-weight: 500; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.7; letter-spacing: .06em; color: var(--navy); }
+@media (max-width: 767px) {
+  .ps-worry-list { grid-template-columns: 1fr; gap: 10px; margin-top: 32px; }
+  .ps-worry-list li { gap: 14px; padding: 18px 18px; }
+  .ps-worry-list p { font-size: 14px; letter-spacing: .02em; }
+  .ps-worries-answer { margin-top: 40px; text-align: left; }
+}
+
+/* 6つの相談メニュー：写真のカードを3列×2段（タブレット2列・スマホ1列） */
+.ps-menu-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px 32px; margin-top: 56px; }
+.ps-menu-photo { aspect-ratio: 3 / 2; overflow: hidden; border-radius: var(--radius); background: var(--mist); }
+.ps-menu-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease; }
+.ps-menu:hover .ps-menu-photo img { transform: scale(1.04); }
+.ps-menu-num { display: flex; align-items: baseline; gap: 12px; margin-top: 24px; font-family: var(--en); font-size: 22px; font-weight: 500; line-height: 1; color: var(--accent); }
+.ps-menu-num span { font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
+.ps-menu h3 { margin-top: 12px; font-family: var(--serif); font-weight: 500; font-size: clamp(19px, 1.7vw, 22px); line-height: 1.6; letter-spacing: .06em; }
+.ps-menu h3 + p { margin-top: 10px; font-size: 14px; line-height: 1.95; color: var(--sub); }
+@media (max-width: 1023px) { .ps-menu-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 24px; } }
+@media (max-width: 767px) { .ps-menu-list { grid-template-columns: 1fr; gap: 44px; margin-top: 40px; } }
+
+/* 大切にしていること：3つを横並びのカード */
+.ps-value-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 48px; }
+.ps-value { padding: 40px 36px; background: #fff; border-radius: var(--radius); }
+.ps-value-head { display: flex; align-items: center; justify-content: space-between; }
+.ps-value-head .ps-icon { width: 36px; height: 36px; color: var(--navy); }
+.ps-value-head span { font-family: var(--en); font-size: 30px; font-weight: 500; line-height: 1; color: var(--accent); }
+.ps-value h3 { margin: 28px 0 14px; font-family: var(--serif); font-weight: 500; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.6; letter-spacing: .04em; }
+.ps-value h3 span { display: inline-block; }  /* 言葉の途中で折れないよう、区切りごとにまとめる */
+.ps-value h3 + p { font-size: 14px; line-height: 2; color: var(--sub); }
+@media (max-width: 1023px) { .ps-value-list { grid-template-columns: 1fr; gap: 16px; } .ps-value { padding: 32px 24px; } }
+
+/* ご相談の流れ：PCは4つ横並びで線でつなぐ、タブレット・スマホは縦に並べて左の線でつなぐ */
+.ps-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; margin-top: 56px; }
+.ps-flow li { position: relative; padding-top: 28px; border-top: 1px solid var(--navy); }
+.ps-flow li::before { content: ""; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--navy); }
+.ps-step { display: flex; align-items: baseline; gap: 10px; font-family: var(--en); font-size: 11px; font-weight: 600; letter-spacing: .2em; color: var(--accent); }
+.ps-step b { font-size: 30px; font-weight: 500; letter-spacing: .02em; line-height: 1; }
+.ps-flow h3 { margin-top: 18px; font-size: 17px; font-weight: 600; line-height: 1.6; letter-spacing: .06em; }
+.ps-flow h3 + p { margin-top: 10px; font-size: 14px; line-height: 1.95; color: var(--sub); }
+@media (max-width: 1023px) {
+  .ps-flow { grid-template-columns: 1fr; gap: 0; margin-top: 40px; }
+  .ps-flow li { padding: 0 0 36px 32px; border-top: 0; border-left: 1px solid var(--navy); }
+  .ps-flow li:last-child { padding-bottom: 0; border-left-color: transparent; }
+  .ps-flow li::before { top: 2px; left: -5px; }
+  .ps-flow h3 { margin-top: 10px; }
+}
+
+/* よくあるご質問：左に見出し、右に開け閉めできる質問（タブレット・スマホは縦に並べる） */
+.ps-faq { display: grid; grid-template-columns: 320px 1fr; gap: 64px; align-items: start; }
+.ps-faq-head h2 { white-space: nowrap; }
+.ps-faq-list { border-top: 1px solid var(--navy); }
+.ps-faq-list .note-draft { margin: 20px 0 4px; }
+.ps-faq-item { border-bottom: 1px solid var(--rule); }
+.ps-faq-item summary { display: flex; align-items: center; gap: 18px; padding: 26px 4px; cursor: pointer; list-style: none; }
+.ps-faq-item summary::-webkit-details-marker { display: none; }
+.ps-q, .ps-a { flex: none; font-family: var(--en); font-size: 20px; font-weight: 500; line-height: 1.4; color: var(--accent); }
+.ps-a { color: var(--navy); }
+.ps-faq-q { flex: 1; word-break: auto-phrase; font-size: 16px; font-weight: 500; line-height: 1.7; color: var(--navy); }
+.ps-faq-mark { position: relative; flex: none; width: 14px; height: 14px; }
+.ps-faq-mark::before, .ps-faq-mark::after { content: ""; position: absolute; top: 50%; left: 0; width: 14px; height: 1px; background: var(--navy); transition: transform .3s ease; }
+.ps-faq-mark::after { transform: rotate(90deg); }
+.ps-faq-item[open] .ps-faq-mark::after { transform: rotate(0); }
+.ps-faq-a { display: flex; gap: 18px; padding: 0 4px 28px; }
+.ps-faq-a p { font-size: 15px; line-height: 2; color: var(--sub); }
+@media (max-width: 1023px) { .ps-faq { grid-template-columns: 1fr; gap: 32px; } }
+@media (max-width: 767px) { .ps-faq-item summary { padding: 22px 0; gap: 14px; } .ps-faq-a { padding: 0 0 24px; gap: 14px; } .ps-faq-q { font-size: 15px; } }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 
