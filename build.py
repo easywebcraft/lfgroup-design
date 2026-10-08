@@ -485,7 +485,7 @@ PS_MENUS = [
 
 PS_VALUES = [
     ('talk', '<span>まずはお話を</span><span>聞くことから</span>', 'お客様のライフスタイルや将来の希望を丁寧にお伺いし、今必要な備えを一緒に考えます。'),
-    ('balance', '<span>必要なものを、</span><span>必要な分だけ</span>', '現在の保障や公的制度も踏まえ、過不足のない保障設計を目指します。'),
+    ('balance', '<span>必要なものを</span><span>　必要な分だけ</span>', '現在の保障や公的制度も踏まえ、過不足のない保障設計を目指します。'),
     ('partner', '<span>契約後も続く</span><span>パートナーシップ</span>', '結婚・出産・住宅購入など、ライフステージの変化に応じた見直しをサポートします。'),
 ]
 
@@ -509,8 +509,36 @@ PS_FAQ = [
 ]
 
 
-def ps_hero_cta(label):
-    return f'      <p class="ps-hero-cta fade"><a class="btn btn-primary" href="/contact/">{label}{ARROW}</a></p>'
+def rf_hero(crumb, eyebrow, title, lead, button, photos, big):
+    """個人・法人のお客様の冒頭（2026-10-08 松本さん「TOPページのFVの見せ方を取り入れて」）。
+    トップと同じ部品（src/recruit-fv.css・recruit-fv.js）：写真が4.5秒ごとに斜めのマスクで切り替わり金の光が走る、
+    大きな英字（明朝体系）、1文字ずつ出る白い明朝の見出し、マウスとスクロールで奥行き。
+    トップ専用の指定（ページ全体を紺にする等）は .rf-sub で外す。title・lead は2行（(1行目, 2行目)）"""
+    imgs = ''.join('<img class="%s" src="/images/%s" alt="" style="object-position:%s" %s onerror="this.remove()">'
+                   % ('is-on' if n == 0 else '', f, pos, 'fetchpriority="high"' if n == 0 else 'data-eager') for n, (f, pos) in enumerate(photos))
+    words = ''.join(f'<span>{w}</span>' for w in big)
+    return f'''  <section class="rf rf-a rf-v rf-top rf-wipe rf-serif rf-sub" data-fx="a" data-stay="4500">
+    <div class="rf-media">{imgs}</div>
+    <p class="rv-big" aria-hidden="true">{words}</p>
+    {GOLD_WIPE}
+    <div class="wrap rc-fv-copy">
+      <ol class="crumb" aria-label="パンくずリスト"><li><a href="/">トップ</a></li><li aria-current="page">{crumb}</li></ol>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1 class="rc-fv-title rv-title"><span>{title[0]}</span><span>{title[1]}</span></h1>
+      <p class="rc-fv-lead">{lead[0]}<br>{lead[1]}</p>
+      <p class="rc-links"><a class="btn btn-primary" href="/contact/">{button}{ARROW}</a></p>
+    </div>
+    <small class="rf-photo-note">写真はイメージです</small>
+  </section>
+'''
+
+
+def with_rf(html_):
+    """トップのFVの部品（CSS・JS・英字のフォント）を読み込ませる"""
+    v = hashlib.sha1(((SRC / 'recruit-fv.css').read_text() + (SRC / 'recruit-fv.js').read_text()).encode()).hexdigest()[:8]
+    return (html_.replace('</head>', f'<link rel="stylesheet" href="/assets/recruit-fv.css?v={v}">\n</head>', 1)
+                 .replace('</body>', f'<script src="/assets/recruit-fv.js?v={v}"></script>\n</body>', 1)
+                 .replace('family=Montserrat:wght@500;600', 'family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@500;600', 1))
 
 
 def ps_worries(title, items, answer, bg='bg-blue'):
@@ -588,9 +616,11 @@ def ps_faq(items, bg='bg-blue'):
 
 
 def page_personal():
-    hero = page_hero('Personal Financial Consulting', 'これからの人生に、<br>お金の安心を。', [('個人のお客様', '/personal/')],
-                     lead='保険の見直しから、<br class="sp">資産形成、教育資金、相続まで。<br>一人ひとりのライフプランに合わせて、<br>将来のお金について一緒に考えます。',
-                     photo='hero.jpg', pos='72% 40%', extra=ps_hero_cta('無料相談はこちら'))
+    hero = rf_hero('個人のお客様', 'Personal Financial Consulting', ('これからの人生に', 'お金の安心を'),
+                   ('保険の見直しから資産形成・教育資金・相続まで', '一人ひとりのライフプランに合わせて一緒に考えます'),
+                   '無料相談はこちら', (('hero.jpg', '72% 40%'), ('service-insurance.jpg', '50% 60%'),
+                                       ('life-autumn.jpg', '62% 45%'), ('life-spring2.jpg', '70% 45%')),
+                   ('PEACE', 'OF MIND', 'FOR LIFE.'))
     menus = ''.join(f'''
         <article class="ps-menu fade">
           <div class="ps-menu-photo"><img src="/images/{img}" alt="" style="object-position:{pos}" onerror="this.remove()"></div>
@@ -599,8 +629,8 @@ def page_personal():
           <p>{text}</p>
         </article>''' for i, (en, title, text, img, pos) in enumerate(PS_MENUS))
     return (hero
-            + ps_worries('<span>お金や将来のこと、</span><br><span>こんな不安は</span><span>ありませんか？</span>', PS_WORRIES,
-                         'そんなお悩みを、<br class="sp">LFグループが一緒に整理します。')
+            + ps_worries('<span>お金や将来のこと</span><br><span>こんな不安は</span><span>ありませんか？</span>', PS_WORRIES,
+                         'そんなお悩みを<span class="pc">　</span><br class="sp">LFグループが一緒に整理します')
             + f'''
   <section class="section" id="menu">
     <div class="wrap">
@@ -613,7 +643,7 @@ def page_personal():
 '''
             + ps_values('Our Approach', 'LFグループが<br class="sp">大切にしていること', PS_VALUES)
             + ps_flow(PS_FLOW) + ps_faq(PS_FAQ) + '\n'
-            + final_cta(title='<span>お金の不安を、</span><br><span>未来の安心へ。</span>',
+            + final_cta(title='<span>お金の不安を</span><br><span>未来の安心へ</span>',
                         text='保険のことも、将来のお金のことも。<br>まずはお気軽にご相談ください。',
                         button='無料相談を予約する'))
 
@@ -694,9 +724,11 @@ CO_FAQ = [
 
 
 def page_corporate():
-    hero = page_hero('Corporate Risk &amp; Financial Solutions', '企業の未来を守り、<br>挑戦を支える。', [('法人のお客様', '/corporate/')],
-                     lead='経営者の保障から、従業員の福利厚生、<br>事業リスクへの備え、円滑な事業承継まで。<br>生命保険と損害保険の両面から、<br>企業の持続的な成長をサポートします。',
-                     photo='cta-final.jpg', pos='62% 50%', extra=ps_hero_cta('法人保険について相談する'))
+    hero = rf_hero('法人のお客様', 'Corporate Risk &amp; Financial Solutions', ('企業の未来を守り', '挑戦を支える'),
+                   ('経営者の保障から福利厚生・事業リスク・事業承継まで', '生命保険と損害保険の両面から企業の成長を支えます'),
+                   '法人保険について相談する', (('cta-final.jpg', '62% 50%'), ('cta.jpg', '50% 50%'),
+                                               ('mission-2.jpg', '50% 50%'), ('recruit-work-team.jpg', '60% 50%')),
+                   ('PROTECT', 'YOUR', 'BUSINESS.'))
     n = 0
     groups = []
     for key, en, title, img, pos, items in CO_SERVICES:
@@ -723,8 +755,8 @@ def page_corporate():
           <dl><dt>主なご相談</dt><dd>{c}</dd></dl>
         </article>''' for en, t, x, c in CO_STAGES)
     return (hero
-            + ps_worries('<span>企業経営に潜むリスク、</span><br><span>その備えは</span><span>万全ですか？</span>', CO_WORRIES,
-                         '当てはまる課題から、<br class="sp">LFグループが一緒に整理します。')
+            + ps_worries('<span>企業経営に潜むリスク</span><br><span>その備えは</span><span>万全ですか？</span>', CO_WORRIES,
+                         '当てはまる課題から<span class="pc">　</span><br class="sp">LFグループが一緒に整理します')
             + f'''
   <section class="section" id="service">
     <div class="wrap">
@@ -748,7 +780,7 @@ def page_corporate():
   </section>
 '''
             + ps_flow(CO_FLOW) + ps_faq(CO_FAQ) + '\n'
-            + final_cta(title='<span>企業の未来に、</span><br><span>確かな備えを。</span>',
+            + final_cta(title='<span>企業の未来に</span><br><span>確かな備えを</span>',
                         text='経営者の保障、従業員の福利厚生、<br>事業活動に伴うさまざまなリスクまで。<br>企業の状況に合わせた対策を一緒に考えます。',
                         button='法人保険の相談を申し込む', eyebrow='Your Business, Our Commitment.'))
 
@@ -1489,8 +1521,8 @@ def main():
         write('scene/index.html', season_photos(top_base, SCENE_PHOTOS, white_wrap=False)
               .replace('リニューアルの試作です', 'リニューアルの試作です・人物なしの写真の試作版', 1))
     write('about/index.html', layout('私たちについて', page_about(), 'about'))
-    write('personal/index.html', layout('個人のお客様', page_personal(), 'personal'))
-    write('corporate/index.html', layout('法人のお客様', page_corporate(), 'corporate'))
+    write('personal/index.html', with_rf(layout('個人のお客様', page_personal(), 'personal')))
+    write('corporate/index.html', with_rf(layout('法人のお客様', page_corporate(), 'corporate')))
     write('partner/index.html', layout('アライアンス事業', page_partner(), 'partner'))
     # 事業内容・取り扱いサービス・保険は、中身を上の3ページに分けた（2026-10-06）。前のURLは近いページへ移す
     write('business/index.html', redirect('../about/'))
