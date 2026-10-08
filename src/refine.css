@@ -997,3 +997,46 @@ br.sp { display: none; }
   html .rf-recruit .rv-title { font-size: clamp(19px, 5.6vw, 28px); letter-spacing: .02em; }
   html .rf-recruit .rc-fv-lead { font-size: clamp(11px, 3.2vw, 15px); }
 }
+
+/* ===== アライアンス事業（2026-10-08 お客様の構成案で作り直し）。書き方は build.py の page_partner()、クラスは al- =====
+   お悩み・メリット（ps-menu）・流れ・よくあるご質問は個人・法人と同じ部品。実績の段は法人の経営ステージと同じ紺の地（co-stages） */
+/* 取扱サービス：5つを横並び（タブレット3列・スマホ2列） */
+.al-svc-list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.al-svc-list li { padding: 28px 22px; background: #fff; border-radius: var(--radius); }
+.al-svc-list .ps-icon { width: 30px; height: 30px; color: var(--navy); }
+.al-svc-en { margin-top: 16px; font-family: var(--en); font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+.al-svc-list h3 { margin-top: 4px; font-family: var(--serif); font-weight: 500; font-size: 18px; letter-spacing: .06em; }
+.al-svc-list h3 + p { margin-top: 8px; font-size: 13px; line-height: 1.85; color: var(--sub); word-break: auto-phrase; }
+@media (max-width: 1023px) { .al-svc-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 767px) {
+  .al-svc-list { grid-template-columns: 1fr; gap: 8px; }
+  .al-svc-list li { display: grid; grid-template-columns: 32px 1fr; column-gap: 16px; align-items: start; padding: 18px 20px; }
+  .al-svc-list .ps-icon { grid-row: span 3; margin-top: 4px; }
+  .al-svc-en { margin-top: 0; }
+}
+
+/* サービス提供の仕組み：PCは3つを横並びで矢印でつなぐ、スマホは縦に並べる。中央の LF GROUP は紺 */
+.al-how { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 48px; align-items: stretch; }
+.al-how li { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 24px; border: 1px solid var(--rule); border-radius: var(--radius); background: #fff; text-align: center; }
+.al-how li + li::before { content: "→"; position: absolute; left: -36px; top: 50%; translate: 0 -50%; font-size: 20px; color: var(--gold); }
+.al-how .ps-icon { width: 30px; height: 30px; color: var(--navy); }
+.al-how h3 { margin-top: 12px; font-family: var(--serif); font-weight: 500; font-size: 19px; letter-spacing: .08em; }
+.al-how h3 + p { margin-top: 8px; font-size: 13px; line-height: 1.85; color: var(--sub); word-break: auto-phrase; }
+.al-how .al-how-lf { border-color: var(--navy); background: var(--navy); }
+.al-how-lf h3 { margin-top: 6px; font-family: var(--en); font-size: 22px; letter-spacing: .16em; color: #fff; }
+.al-how-lf h3 + p { color: rgba(255, 255, 255, .82); }
+.al-how-en { font-family: var(--en); font-size: 10px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #D9B56E; }
+@media (max-width: 1023px) {
+  .al-how { grid-template-columns: 1fr; gap: 36px; }
+  .al-how li + li::before { content: "↓"; left: 50%; top: -30px; translate: -50% 0; }
+}
+
+/* 実績：紺の地に4枚の数字カード */
+.al-num-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.al-num-list li { padding: 28px 20px; border: 1px solid rgba(255, 255, 255, .16); border-top: 2px solid var(--gold); border-radius: var(--radius); background: rgba(255, 255, 255, .04); text-align: center; }
+.al-num-label { font-size: 13px; letter-spacing: .08em; color: rgba(255, 255, 255, .78); }
+.al-num-value { margin-top: 10px; font-family: var(--en); font-size: clamp(30px, 3vw, 40px); font-weight: 500; line-height: 1.2; color: #fff; }
+.al-num-value small { margin-left: 6px; font-family: var(--sans); font-size: 13px; letter-spacing: .04em; }
+.al-num-note { margin-top: 20px; text-align: center; }
+.al-num-note .note-draft { margin: 0; }
+@media (max-width: 1023px) { .al-num-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }

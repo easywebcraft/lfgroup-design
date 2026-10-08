@@ -467,61 +467,6 @@ def page_about():
 ''' + final_cta()
 
 
-def tags(items):
-    return '<ul class="svc-items">' + ''.join(f'<li>{t}</li>' for t in items) + '</ul>'
-
-
-
-
-LIFE_SERVICES = [
-    ('ライフライン', 'Lifeline', 'service-lifeline.jpg', 'IMAGE：暮らしのあかり', ['電気', 'ガス', '水道']),
-    ('インターネット', 'Internet', 'service-internet.jpg', 'IMAGE：住まいとネット', ['フレッツ光', '光コラボレーション', 'ダークファイバー系光回線', '電力系光回線']),
-    ('ウォーターサーバー', 'Water Server', 'service-water.jpg', 'IMAGE：水・キッチン', ['浄水器型ウォーターサーバー']),
-]
-
-
-# ───── 見る人ごとのページ（2026-10-06）：個人のお客様・法人のお客様・提携企業様 ─────
-# 文言は今のサイト（保険代理店事業・アライアンス事業・パートナー事業・
-# 取り扱いサービス・お客様本位の業務運営方針・勧誘方針）にあるものだけで組む
-
-def strengths(items, cols=3):
-    """強みのカード。items は (英字, 見出し, 本文)。見出しは <br> で改行位置を決められる"""
-    cards = ''.join(f'''
-        <article class="str-item fade">
-          <p class="str-num">{i + 1:02d}<span>{en}</span></p>
-          <h3>{title}</h3>
-          <p class="text">{text}</p>
-        </article>''' for i, (en, title, text) in enumerate(items))
-    return f'''  <section class="section bg-blue" id="strengths">
-    <div class="wrap">
-      <p class="eyebrow fade">Strengths</p>
-      <h2 class="fade">強み</h2>
-      <div class="str-list" style="--cols:{cols}">{cards}
-      </div>
-    </div>
-  </section>
-'''
-
-
-def life_cards():
-    """ライフライン・インターネット・ウォーターサーバーのカード（取り扱いサービスのページと同じ形）"""
-    return ''.join(f'''
-        <article class="svc fade">
-          <div class="photo"><span class="ph">{ph}</span><img src="/images/{img}" alt="" onerror="this.remove()"></div>
-          <div class="svc-body">
-            <h3>{name}<small>{en}</small></h3>
-            {tags(items)}
-          </div>
-        </article>''' for (name, en, img, ph, items) in LIFE_SERVICES)
-
-
-def page_nav(items):
-    """冒頭に置くページ内の目次（強み・サービスなどへ移動）"""
-    links = ''.join(f'<a class="svc-nav-item" href="#{k}"><b>{i + 1:02d}</b><span class="sn-name">{n}</span>{ARROW}</a>'
-                    for i, (k, n) in enumerate(items))
-    return f'        <nav class="svc-nav fade" aria-label="このページの内容">{links}</nav>'
-
-
 # ───── 個人のお客様（2026-10-08 お客様の構成案に合わせて作り直し） ─────
 # お客様の「個人用のページをこんな構成にしたい、今の文は捨てても問題ない」から。文言はお客様の構成案のまま。
 # ①ファーストビュー ②こんなお悩み ③6つの相談メニュー ④大切にしていること ⑤ご相談の流れ ⑥よくあるご質問 ⑦最後の問い合わせ
@@ -545,6 +490,16 @@ PS_ICONS = {
     'chart': '<path d="M3 3v18h18"/><path d="M8 17v-4"/><path d="M13 17V9"/><path d="M18 17V5"/>',
     'network': '<circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M12 7.5v4M12 11.5 6.5 16M12 11.5l5.5 4.5"/>',
     'rocket': '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',
+    'clock': '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    'phone': '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>',
+    'yen': '<circle cx="12" cy="12" r="9"/><path d="m8.5 7 3.5 5 3.5-5M12 12v6M9 13h6M9 16h6"/>',
+    'smile': '<circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/>',
+    'bolt': '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+    'flame': '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3.2.3 1.6 1.4 2.7 2.5 2.7z"/>',
+    'drop': '<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5.5 12 3c-.5 2.5-2 4.9-4 6.5S5 13 5 15a7 7 0 0 0 7 7z"/>',
+    'wifi': '<path d="M5 12.6a10 10 0 0 1 14 0"/><path d="M8.5 16.1a5 5 0 0 1 7 0"/><path d="M2 8.8a15 15 0 0 1 20 0"/><path d="M12 20h.01"/>',
+    'glass': '<path d="M6 3h12l-1.5 17a2 2 0 0 1-2 1.8h-5a2 2 0 0 1-2-1.8z"/><path d="M6.5 9h11"/>',
+    'building': '<path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v16"/><path d="M16 9h3a1 1 0 0 1 1 1v11"/><path d="M9 7h3M9 11h3M9 15h3"/>',
     'partner': '<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>',
 }
 
@@ -632,7 +587,7 @@ def with_rf(html_):
                  .replace('family=Montserrat:wght@500;600', 'family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@500;600', 1))
 
 
-def ps_worries(title, items, answer, bg='bg-blue', band=False):
+def ps_worries(title, items, answer, bg='bg-blue', band=False, eyebrow='Worries'):
     """お悩みの段（個人・法人で共通）。items は (アイコン, 一文)。
     band=True：段の頭を、トップの「FIND YOUR PAGE」のような狭い見出しの帯にする（2026-10-08 松本さん「TOPのような狭めに」「色はそのままでOK」。個人・法人のお客様）。
     問いかけの見出しは帯の中に残す"""
@@ -641,7 +596,7 @@ def ps_worries(title, items, answer, bg='bg-blue', band=False):
     if band:
         head = f'''  <div class="ps-band" id="worries">
     <div class="wrap">
-      <p class="eyebrow">Worries</p>
+      <p class="eyebrow">{eyebrow}</p>
       <h2>{title}</h2>
     </div>
   </div>
@@ -650,7 +605,7 @@ def ps_worries(title, items, answer, bg='bg-blue', band=False):
     else:
         head = f'''  <section class="section {bg} ps-worries" id="worries">
     <div class="wrap">
-      <p class="eyebrow fade">Worries</p>
+      <p class="eyebrow fade">{eyebrow}</p>
       <h2 class="fade">{title}</h2>'''
     return f'''
 {head}
@@ -682,14 +637,14 @@ def ps_values(eyebrow, title, items, bg='bg-blue'):
 '''
 
 
-def ps_flow(items, bg=''):
+def ps_flow(items, bg='', eyebrow='Flow', title='ご相談の流れ'):
     steps = ''.join(f'''
         <li class="fade"><p class="ps-step">STEP<b>{i + 1:02d}</b></p><h3>{t}</h3><p>{x}</p></li>''' for i, (t, x) in enumerate(items))
     return f'''
   <section class="section {bg}" id="flow">
     <div class="wrap">
-      <p class="eyebrow fade">Flow</p>
-      <h2 class="fade">ご相談の流れ</h2>
+      <p class="eyebrow fade">{eyebrow}</p>
+      <h2 class="fade">{title}</h2>
       <ol class="ps-flow">{steps}
       </ol>
     </div>
@@ -886,68 +841,145 @@ def page_corporate():
                         button='法人保険の相談を申し込む', eyebrow='Your Business, Our Commitment.'))
 
 
+# ───── アライアンス事業（2026-10-08 お客様の構成案で作り直し） ─────
+# 不動産会社の経営者・店舗責任者に「提携してみたい」と感じてもらう営業ページ。
+# ①ファーストビュー ②アライアンス事業について ③不動産会社のお悩み ④提携による3つのメリット ⑤取扱サービス
+# ⑥サービス提供の仕組み ⑦実績 ⑧提携開始までの流れ ⑨よくあるご質問 ⑩提携のお問い合わせ。
+# 見出しに「。」「、」を入れない。段の見出しのすぐ下に説明文を置かない（2026-10-08 松本さん）
+AL_WORRIES = [
+    ('clock', 'ライフラインの案内に時間がかかっている'),
+    ('family', '契約業務に集中できる環境をつくりたい'),
+    ('phone', '入居者からの問い合わせ対応を減らしたい'),
+    ('yen', '仲介業務以外の収益機会を増やしたい'),
+    ('smile', '入居者へのサービスを充実させたい'),
+    ('partner', '安心して紹介できる提携先を探している'),
+]
+
+# 写真は仮（構成案の人物写真は手元にないので、今ある生成AIの写真から近いもの）
+AL_MERITS = [
+    ('Merit', '業務負担の軽減', '入居者へのライフライン案内をLFグループがサポート。不動産会社のスタッフが本来の仲介業務に集中しやすい環境づくりに貢献します。', 'recruit-work-prepare.jpg', '50% 50%'),
+    ('Merit', '顧客満足度の向上', '新生活に必要なサービスをまとめてご案内。入居者が複数の事業者へ個別に問い合わせる手間を減らし、スムーズな新生活のスタートを支援します。', 'scene-kitchen.jpg', '50% 50%'),
+    ('Merit', '新たな収益機会の創出', 'ライフラインサービスの紹介を通じて、仲介業務以外の収益機会を創出。提携条件に応じた紹介手数料など、新しい収益モデルの構築をサポートします。', 'recruit-work-learn.jpg', '50% 50%'),
+]
+
+AL_SERVICES = [
+    ('bolt', 'Electricity', '電気', '新居での電気利用に関するご案内'),
+    ('flame', 'Gas', 'ガス', 'ガスの利用開始に関するご案内'),
+    ('drop', 'Water', '水道', '水道の利用開始手続きのご案内'),
+    ('wifi', 'Internet', 'インターネット', '住環境に合わせた通信サービスのご案内'),
+    ('glass', 'Water Server', 'ウォーターサーバー', '暮らしをより快適にするサービスのご案内'),
+]
+
+# ★要確認：数字は構成案でも「○○」。実績値と集計基準日をいただいたら差し替え、.note-draft を外す
+AL_NUMBERS = [('提携店舗数', '店舗'), ('累計ご案内件数', '件'), ('月間ご案内件数', '件'), ('前年比取扱件数成長率', '%')]
+
+AL_FLOW = [
+    ('お問い合わせ', '事業提携に関するご相談を、お電話またはお問い合わせページからお寄せください。'),
+    ('サービス・提携条件のご説明', 'サービス内容や紹介方法、提携条件などをご説明します。'),
+    ('提携契約・運用方法の確認', '契約内容やお客様へのご案内方法、情報連携の流れなどを確認します。'),
+    ('サービス提供開始', '提携開始後も、運用上のご相談や改善に向けたサポートを行います。'),
+]
+
+# ★要確認：質問は構成案のまま。回答は構成案になかったので、こちらで書いた下書き
+AL_FAQ = [
+    ('提携にあたって初期費用は必要ですか？',
+     '提携の条件によって異なります。サービス内容や紹介方法とあわせてご説明しますので、まずはお気軽にお問い合わせください。'),
+    ('小規模な不動産会社でも提携できますか？',
+     'はい、店舗の規模にかかわらずご相談いただけます。ご案内の件数や運用方法に合わせて、無理のない形を一緒に考えます。'),
+    ('お客様への案内はどこまで対応してもらえますか？',
+     'サービスのご案内から、ご希望の確認、各サービスのお申し込みのサポートまでをLFグループが行います。店舗の皆様にお願いする作業は、提携の際にご説明します。'),
+    ('既に他社のライフライン紹介サービスを利用していますが、相談できますか？',
+     'はい、ご相談いただけます。今の運用を伺ったうえで、併用や切り替えの方法を一緒に検討します。'),
+    ('提携後のサポートはありますか？',
+     'はい。提携開始後も、運用上のご相談や改善に向けたサポートを継続して行います。'),
+]
+
+
 def page_partner():
-    """アライアンス事業。2段落：個人のお客様（アライアンスサービス）／提携事業者様（強み・サービス）。2026-10-07 お客様の要望"""
-    hero = page_hero('Alliance', 'アライアンス事業', [('アライアンス事業', '/partner/')],
-                     lead='マンション・アパートのご入居者様へのご案内を通じて、<br class="pc">ご入居者様の固定費の見直しと、<br class="pc">提携企業様・パートナー様の事業の発展をお手伝いします。',
-                     photo='scene-home.jpg', pos='70% 55%',
-                     extra=page_nav([('for-personal', '個人のお客様'), ('for-partner', '提携事業者様')]))
-    return hero + f'''
-  <section class="section" id="for-personal">
+    hero = rf_hero('アライアンス事業', 'Alliance Business', ('企業のつながりを', '新たな価値へ'),
+                   ('不動産会社とともに新生活をもっと快適に', 'ライフラインのご案内で新たな価値創出を支えます'),
+                   '事業提携について相談する', (('scene-home.jpg', '60% 55%'), ('service-lifeline.jpg', '50% 50%'),
+                                               ('service-internet.jpg', '50% 40%'), ('mission-2.jpg', '50% 50%')),
+                   ('CONNECT', 'FOR NEW', 'VALUE.'))
+    merits = ''.join(f'''
+        <article class="ps-menu fade">
+          <div class="ps-menu-photo"><img src="/images/{img}" alt="" style="object-position:{pos}" onerror="this.remove()"></div>
+          <p class="ps-menu-num">{i + 1:02d}<span>{en}</span></p>
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </article>''' for i, (en, title, text, img, pos) in enumerate(AL_MERITS))
+    services = ''.join(f'''
+        <li class="fade">{ps_icon(k)}<p class="al-svc-en">{en}</p><h3>{ja}</h3><p>{x}</p></li>''' for k, en, ja, x in AL_SERVICES)
+    numbers = ''.join(f'''
+        <li class="fade"><p class="al-num-label">{label}</p><p class="al-num-value">—<small>{unit}</small></p></li>''' for label, unit in AL_NUMBERS)
+    return (hero + f'''
+  <section class="section" id="about-alliance">
     <div class="wrap">
-      <p class="eyebrow fade">For Personal</p>
-      <h2 class="fade">個人のお客様</h2>
-      <p class="eyebrow fade" style="margin-top:28px;justify-content:center">Alliance Service</p>
-      <h3 class="sub-title fade" style="margin-top:12px">アライアンスサービス</h3>
-      <div class="svc-grid svc-sub-grid">{life_cards()}
-      </div>
-    </div>
-  </section>
-
-  <section class="section bg-blue" id="for-partner">
-    <div class="wrap">
-      <p class="eyebrow fade">For Partner</p>
-      <h2 class="fade">提携事業者様</h2>
-      <div class="partner-flow" aria-label="提携サービスの役割">
-        <article><p class="eyebrow">Partner</p><h3>提携企業様・パートナー様</h3><p>当社と協力し、ご入居者様へのサービス案内につなげます。</p></article>
-        <span class="flow-arrow" aria-hidden="true">→</span>
-        <article><p class="eyebrow">LF Group</p><h3>LFグループ</h3><p>オペレーターが、お手続きやサービスを丁寧にご案内します。</p></article>
-        <span class="flow-arrow" aria-hidden="true">→</span>
-        <article><p class="eyebrow">Resident</p><h3>ご入居者様</h3><p>ライフライン・インターネットなどのご案内を受けられます。</p></article>
-      </div>
-    </div>
-  </section>
-''' + strengths([
-        ('Operator', '経験豊富な<br>オペレーター', '経験豊富なオペレーターが、ご入居者様へ丁寧にご案内します。'),
-        ('Lineup', '厳選した<br>商品・サービス', 'ライフライン・インターネット回線・ウォーターサーバーなど、厳選した商品・サービスを取り揃えています。'),
-        ('Check', '厳格なチェック体制と<br>管理', 'アライアンス事業で培ったノウハウを活かし、厳格なチェック体制のもと、ミスなく、きめ細やかに対応します。'),
-        ('Partnership', '長期的な<br>パートナーとして', '提携企業様・パートナー様の事業の発展を支え、双方にとっての利益と価値を、長期的に生み出すことを目指します。'),
-    ], cols=2) + f'''
-  <section class="section" id="service">
-    <div class="wrap">
-      <p class="eyebrow fade">Service</p>
-      <h2 class="fade">サービス</h2>
-      <div class="ins-for-grid" style="margin-top:48px">
-        <article class="ins-for-item fade" id="alliance">
-          <p class="eyebrow">Alliance</p>
-          <h2>アライアンス事業</h2>
-          <p class="text">マンションやアパートのご入居者様に、ライフライン・インターネット回線・ウォーターサーバーなどのお手続きやサービスをご案内します。</p>
-          <p class="text">経験豊富なオペレーターが、厳選した商品・サービスを丁寧にご案内します。提携企業様とサービスをご利用のお客様に、安心・確実なサポートをご提供します。</p>
-        </article>
-        <article class="ins-for-item fade" id="partner">
-          <p class="eyebrow">Partner</p>
-          <h2>パートナー事業</h2>
-          <p class="text">提携企業様・パートナー様と協力し、当社が取り扱う商品・サービスをお客様にご提供しています。</p>
-          <p class="text">アライアンス事業で培ったノウハウを活かし、お客様に本当に必要なものを丁寧にご提案します。厳格なチェック体制のもと、ミスなく、きめ細やかに対応します。</p>
-          <p class="biz-note">提携企業様・パートナー様募集中</p>
+      <p class="eyebrow fade">About Alliance</p>
+      <h2 class="fade">アライアンス事業について</h2>
+      <div class="ab-biz-list">
+        <article class="ab-biz fade">
+          <div class="ab-biz-photo"><img src="/images/scene-dining.jpg" alt="" style="object-position:60% 55%" onerror="this.remove()"></div>
+          <div class="ab-biz-body">
+            <p class="ab-biz-en">About Our Business</p>
+            <h3><span>新生活のスタートを</span><br><span>もっとスムーズに</span></h3>
+            <p>LFグループのアライアンス事業は、不動産会社との提携を通じて、新生活を迎えるお客様に必要なライフラインサービスをご案内する事業です。</p>
+            <p>電気・ガス・水道・インターネットなど、引越しに伴うさまざまな手続きをサポート。</p>
+            <p>不動産会社の業務効率化と、お客様の利便性向上を両立するサービスを提供します。</p>
+          </div>
         </article>
       </div>
     </div>
   </section>
+'''
+            + ps_worries('<span>入居者対応に関する</span><br><span>こんな課題を</span><span>感じていませんか？</span>', AL_WORRIES,
+                         'その課題を<span class="pc">　</span><br class="sp">LFグループとの提携で一緒に解決します', band=True, eyebrow='Your Challenges')
+            + f'''
+  <section class="section" id="merit">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Solutions</p>
+      <h2 class="fade">提携による3つのメリット</h2>
+      <div class="ps-menu-list al-merits">{merits}
+      </div>
+    </div>
+  </section>
 
-''' + final_cta(
-        '<span class="cta-nowrap">アライアンス事業について</span><br><span>お気軽に</span><span>ご相談ください</span>',
-        '提携をご検討の企業様・パートナー様、ご入居者様へのライフライン・インターネットなどのご案内について、まずはお気軽にお問い合わせください。')
+  <section class="section bg-blue" id="services">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Services</p>
+      <h2 class="fade"><span>新生活に必要なサービスを</span><br class="sp"><span>ワンストップで</span></h2>
+      <ul class="al-svc-list">{services}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="how-it-works">
+    <div class="wrap">
+      <p class="eyebrow fade">How It Works</p>
+      <h2 class="fade">サービス提供の仕組み</h2>
+      <ol class="al-how fade">
+        <li>{ps_icon('building')}<h3>不動産会社</h3><p>新生活を迎えるお客様へサービスをご紹介</p></li>
+        <li class="al-how-lf"><p class="al-how-en">Alliance Partner</p><h3>LF GROUP</h3><p>お客様へのご案内・ご希望の確認・各サービスへのお申し込みサポート</p></li>
+        <li>{ps_icon('home')}<h3>新生活を迎えるお客様</h3><p>必要なライフラインサービスをまとめて検討・お申し込み</p></li>
+      </ol>
+      <p class="co-svc-note fade">※お客様の同意の取得、情報共有の方法、各サービスのお申し込み手続きについては、提携の際にご説明します。</p>
+    </div>
+  </section>
+
+  <section class="section co-stages al-perf" id="performance">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Performance</p>
+      <h2 class="fade">信頼と実績を数字で</h2>
+      <ul class="al-num-list">{numbers}
+      </ul>
+      <p class="al-num-note fade"><span class="note-draft">数字は確定後に記載します（実績値と集計基準日）</span></p>
+    </div>
+  </section>
+'''
+            + ps_flow(AL_FLOW, eyebrow='Partnership Flow', title='提携開始までの流れ') + ps_faq(AL_FAQ) + '\n'
+            + final_cta(title='<span>新しい価値を</span><br><span>ともに創る</span>',
+                        text='不動産会社の皆様へ<br>ライフラインサービスを通じた新たな価値創出を<br>LFグループとともに始めませんか',
+                        button='事業提携について問い合わせる', eyebrow='Become Our Partner'))
 
 
 def page_company():
@@ -1632,7 +1664,7 @@ def main():
     write('about/index.html', with_rf(layout('私たちについて', page_about(), 'about')))
     write('personal/index.html', with_rf(layout('個人のお客様', page_personal(), 'personal')))
     write('corporate/index.html', with_rf(layout('法人のお客様', page_corporate(), 'corporate')))
-    write('partner/index.html', layout('アライアンス事業', page_partner(), 'partner'))
+    write('partner/index.html', with_rf(layout('アライアンス事業', page_partner(), 'partner')))
     # 事業内容・取り扱いサービス・保険は、中身を上の3ページに分けた（2026-10-06）。前のURLは近いページへ移す
     write('business/index.html', redirect('../about/'))
     write('service/index.html', redirect('../personal/'))
