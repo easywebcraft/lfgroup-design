@@ -1078,8 +1078,8 @@ def page_contact():
 
 
 # ───── 採用情報（2026-10-08 お客様の構成案で作り直し） ─────
-# ①採用メッセージ（冒頭。写真4枚と動きはそのまま）②LFグループについて ③働く環境 ④成長と評価 ⑤募集職種 ⑥社員紹介
-# ⑦働き方（数字）⑧キャリアステップ ⑨募集要項・選考フロー ⑩よくあるご質問 ⑪応募。
+# ①採用メッセージ（冒頭。写真4枚と動きはそのまま）②LFグループについて ③働く環境 ④成長と評価 ⑤募集職種
+# ⑥働き方（数字）（構成案の社員紹介は 2026-10-08 松本さんの指示で外した）⑧キャリアステップ ⑨募集要項・選考フロー ⑩よくあるご質問 ⑪応募。
 # 見出しに「。」「、」を入れない。段の見出しのすぐ下に説明文を置かない（2026-10-08 松本さん）
 # ★要確認：一般事務・営業サポートの募集、完全週休2日制・年間休日120日は構成案にあるが今のサイトにない。印（.note-draft）を付けている
 RC_CULTURE = [
@@ -1097,11 +1097,6 @@ RC_JOBS = [
      ['保険事業やアライアンス事業を支える事務業務を担当します。',
       '書類作成やデータ管理、お客様対応などを通じて、会社の円滑な運営をサポートします。'],
      ['働きやすい環境', '事務スキルの向上', '組織への貢献'], True),
-]
-
-RC_PEOPLE = [
-    ('Sales Staff', '保険営業スタッフ', '仕事のやりがい、営業スタイル、成果を出すための取り組みなどを紹介します。'),
-    ('Office Staff', '事務スタッフ', '日々の仕事内容、職場の雰囲気、仕事とプライベートの両立などを紹介します。'),
 ]
 
 RC_NUMBERS = [('休日制度', '完全週休', '2日制'), ('年間休日', '120', '日'), ('勤務時間', '10–18', '時'), ('評価制度', '成果', 'を評価')]
@@ -1164,13 +1159,6 @@ def page_recruitment():
             {'<p class="note-draft">募集の有無・条件は確認中です</p>' if draft else f'<p><a class="link-arrow" href="#requirements">募集要項を見る{ARROW}</a></p>'}
           </div>
         </article>''' for en, t, c, img, texts, points, draft in RC_JOBS)
-    people = ''.join(f'''
-        <article class="rc-person fade">
-          <span class="rc-person-icon">{ps_icon('person')}</span>
-          <p class="ab-value-en">{en}</p>
-          <h3>{t}</h3>
-          <p>{x}</p>
-        </article>''' for en, t, x in RC_PEOPLE)
     numbers = ''.join(f'''
         <li class="fade"><p class="al-num-label">{label}</p><p class="al-num-value">{value}<small>{unit}</small></p></li>''' for label, value, unit in RC_NUMBERS)
     select = ''.join(f'''
@@ -1242,16 +1230,6 @@ def page_recruitment():
       <h2 class="fade">募集職種</h2>
       <div class="rc-job-list">{jobs}
       </div>
-    </div>
-  </section>
-
-  <section class="section" id="people">
-    <div class="wrap">
-      <p class="eyebrow fade">People</p>
-      <h2 class="fade">社員紹介</h2>
-      <div class="rc-people">{people}
-      </div>
-      <p class="rc-people-note fade"><span class="note-draft">社員の写真とインタビューは取材後に掲載します</span></p>
     </div>
   </section>
 

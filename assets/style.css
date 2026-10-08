@@ -1895,17 +1895,6 @@ br.sp { display: none; }
 @media (max-width: 1023px) { .rc-job-list { grid-template-columns: 1fr; } }
 @media (max-width: 767px) { .rc-job-body { padding: 22px 20px 26px; } }
 
-/* 社員紹介：取材までは写真なしのカード */
-.rc-people { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 960px; margin-inline: auto; }
-.rc-person { padding: 32px; border: 1px solid var(--rule); border-radius: var(--radius); }
-.rc-person-icon { display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: 16px; border-radius: 50%; background: var(--bg-blue); }
-.rc-person-icon .ps-icon { color: var(--navy); }
-.rc-person h3 { margin-top: 4px; font-family: var(--serif); font-weight: 500; font-size: 20px; letter-spacing: .08em; }
-.rc-person h3 + p { margin-top: 8px; font-size: 14px; line-height: 1.95; color: var(--sub); }
-.rc-people-note { margin-top: 20px; text-align: center; }
-.rc-people-note .note-draft { margin: 0; }
-@media (max-width: 767px) { .rc-people { grid-template-columns: 1fr; } .rc-person { padding: 24px 22px; } }
-
 /* 募集要項・選考フロー */
 .rc-req-job { margin-bottom: 14px; font-family: var(--serif); font-weight: 500; font-size: 18px; letter-spacing: .08em; color: var(--navy); }
 .rc-select-title { margin-top: 40px; font-family: var(--serif); font-weight: 500; font-size: 20px; letter-spacing: .08em; text-align: center; }
