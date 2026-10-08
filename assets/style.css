@@ -1488,14 +1488,18 @@
 /* ===== トップ全体に背景を敷く（2026-10-08 松本さん「白の余白が見えないように」）=====
    画面に固定した夕暮れの街（city-autumn.jpg）に濃い紺を重ねた背景を、トップ全体の後ろに敷く。写真タイルや数字の段の隙間・帯の余白が白く抜けない。
    見出しの帯の文字は白に切り替える。トップだけ（.rf-top があるページ） */
-html:has(.rf-top) { background: #0f1f33; }
-html:has(.rf-top) body { background: transparent; }
-html:has(.rf-top) body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background: linear-gradient(180deg, rgba(10, 22, 38, .86), rgba(10, 22, 38, .92)), url("../images/city-autumn.jpg") center / cover no-repeat; }
+/* 2026-10-08 松本さん「背景色はフッターと同じ色に」：写真は使わず、フッターと同じ紺（--navy）の単色にした */
+html:has(.rf-top) { background: var(--navy); }
+html:has(.rf-top) body { background: var(--navy); }
 html:has(.rf-top) .entries-head h2 { color: #fff; text-shadow: 0 2px 18px rgba(8, 18, 32, .5); }
 /* 小見出し（Find Your Page／About Us）は戻した（2026-10-08 松本さん）。濃い背景で読めるよう明るい色にする */
 html:has(.rf-top) .entries-head .eyebrow { color: rgba(255, 255, 255, .85); }
 .entries-head h2 { margin-top: 10px; }
+/* 帯は小見出し（Find Your Page／About Us）だけにして、さらに狭める（2026-10-08 松本さん）。日本語の見出しは画面から外し、読み上げ用にだけ残す */
+.entries-head h2 { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.entries-head { padding: clamp(22px, 2.4vw, 32px) 0; }
+.entries-head .eyebrow { font-size: 13px; margin: 0; }
+@media (max-width: 767px) { .entries-head { padding: 20px 0; } }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 
