@@ -1153,8 +1153,8 @@ def write_top_a2(top):
     {GOLD_WIPE}
     <div class="wrap rc-fv-copy">
       <p class="eyebrow">LF Group — Corporate Philosophy</p>
-      <h1 class="rc-fv-title rv-title"><span>人と企業の可能性を、</span><span>その<em>先</em>へ。</span></h1>
-      <p class="rc-fv-lead">一人ひとりの暮らしに安心を。<br>企業の挑戦に、新たな価値を。</p>
+      <h1 class="rc-fv-title rv-title"><span>人と企業の可能性を</span><span>その<em>先</em>へ</span></h1>
+      <p class="rc-fv-lead">一人ひとりの暮らしに安心を<br>企業の挑戦に　新たな価値を</p>
       <p class="rc-links"><a class="btn btn-primary" href="/contact/">保険・お金について相談する{ARROW}</a></p>
     </div>
   </section>'''
