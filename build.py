@@ -355,13 +355,13 @@ def mini_tiles(hrefs):
 
 def page_about():
     # 冒頭（2026-10-08 松本さん「トップと同じなので変えて。JSはそのままで写真とコピーだけ」）：
-    # 動きは個人・法人と同じ rf_hero。コピーは3つの価値観（信頼・挑戦・共創）から、英字も価値観の名前。
+    # 動きは個人・法人と同じ rf_hero。コピー・英字は松本さん指定（見出しの「、」は外した）。
     # 写真はトップ（街の四季）・個人・法人の冒頭と重ならないもの：空と海・相談の席・家族・お店の店先
-    hero = rf_hero('私たちについて', 'Our Philosophy', ('信頼でつなぎ', '挑戦で未来をひらく'),
-                   ('価値あるサービスを提供し', '人と企業のこれからを支えます'),
+    hero = rf_hero('私たちについて', 'Our Philosophy', ('信頼を重ね', '挑戦から新たな価値を'),
+                   ('一人ひとり、一社一社に向き合い', '期待のその先につながるサービスを届けます'),
                    'お問い合わせ', (('mission-1.jpg', '50% 60%'), ('about-hero.jpg', '50% 70%'),
                                    ('hero-summer.jpg', '60% 35%'), ('scene-shop.jpg', '60% 50%')),
-                   ('TRUST', 'CHALLENGE', 'CO-CREATION'))
+                   ('TRUST', 'CHALLENGE', 'VALUE'))
     values = ''.join(f'''
         <li class="ab-value fade">
           <span class="ab-value-icon">{ps_icon(k)}</span>
