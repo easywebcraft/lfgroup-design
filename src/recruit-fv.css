@@ -603,8 +603,8 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
      今は文字そのものは動かさず、光だけを別の層（同じ文字の金色のにじみ＝::after。data-c に文字を入れる）にして、透明度だけで出し入れする */
 .rf-top.rf-serif .rc-fv-title .rv-ch { position: relative; }
 .rf-top.rf-serif .rc-fv-title .rv-ch::after { content: attr(data-c); position: absolute; left: 0; top: 0; pointer-events: none; opacity: 0; will-change: opacity;
-  color: #fff3d0; text-shadow: 0 0 10px #fff, 0 0 24px rgba(255, 200, 90, 1), 0 0 46px rgba(255, 160, 40, .95); animation: ff-char 5s ease-in-out infinite; }
-@keyframes ff-char { 0%, 30%, 100% { opacity: 0; } 12% { opacity: 1; } }
+  color: #fff3d0; text-shadow: 0 0 10px #fff, 0 0 24px rgba(255, 200, 90, 1), 0 0 46px rgba(255, 160, 40, .95); animation: ff-char 8s ease-in-out infinite; }
+@keyframes ff-char { 0%, 19%, 100% { opacity: 0; } 7.5% { opacity: 1; } }
 .rf-top.rf-serif .rc-fv-title em, .rf-top.rf-serif .rc-fv-title em .rv-ch { color: #f2b63c; -webkit-text-fill-color: #f2b63c; }
 .rf-top.rf-serif .rc-fv-title em .rv-ch::after { color: #ffe9b0; -webkit-text-fill-color: #ffe9b0; text-shadow: 0 0 10px #fff3d0, 0 0 26px rgba(255, 214, 140, 1), 0 0 52px rgba(242, 182, 60, 1); animation: ff-gold 2.4s ease-in-out infinite; }
 @keyframes ff-gold { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
@@ -634,3 +634,12 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
   .rf-top .eyebrow { letter-spacing: .1em; font-size: 10.5px; white-space: nowrap; }
   .rf-top .rc-fv-lead br { display: block; }
 }
+
+/* ===== 見出しの光のあとに、大きな英字「BEYOND／POSSIBILITIES.」の文字が左から順に光る（2026-10-08 松本さん）=====
+   光の周期は見出しと同じ8秒。見出しは 2.2秒〜3.3秒に走り、英字は 3.6秒から0.09秒ずつ（BEYOND → POSSIBILITIES.）。
+   見出しと同じく文字そのものは動かさず、光の層（::after）の透明度だけを変える（プルプルしない） */
+.rf-top.rf-serif .rv-big .rb-ch { display: inline-block; position: relative; }
+.rf-top.rf-serif .rv-big .rb-ch::after { content: attr(data-c); position: absolute; left: 0; top: 0; pointer-events: none; opacity: 0; will-change: opacity;
+  color: rgba(255, 233, 176, .55); -webkit-text-stroke: 1.6px #ffe9b0; text-shadow: 0 0 12px rgba(255, 214, 140, 1), 0 0 30px rgba(255, 180, 70, .9);
+  animation: ff-char 8s ease-in-out infinite; animation-delay: calc(3.6s + var(--n, 0) * .09s); }
+@media (prefers-reduced-motion: reduce) { .rf-top.rf-serif .rv-big .rb-ch::after { animation: none; opacity: 0; } }

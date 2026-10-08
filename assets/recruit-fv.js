@@ -122,7 +122,28 @@
   if (vt) {
     var k = 0;
     // 見出しを1文字ずつに分ける。still=true のときは、動かさずそのまま見せる（見た目は変えない）
+    // 大きな英字（BEYOND／POSSIBILITIES.）も1文字ずつに分ける。見出しの光のあとに、左の文字から順に光らせるため（動かさない）。
+    // 見出しを分けるのと同じ時点で呼ぶ：光の周期（CSS の animation-delay）が、分けた時点から数え始めるので、見出しとずれない
+    var splitBig = function () {
+      var big = sec.querySelector('.rv-big');
+      if (!big || big.querySelector('.rb-ch')) return;
+      var n = 0;
+      all('span', big).forEach(function (row) {
+        var text = row.textContent, wrap = document.createDocumentFragment();
+        text.split('').forEach(function (ch) {
+          var c = document.createElement('span');
+          c.className = 'rb-ch';
+          c.textContent = ch;
+          c.setAttribute('data-c', ch);
+          c.style.setProperty('--n', n++);
+          wrap.appendChild(c);
+        });
+        row.textContent = '';
+        row.appendChild(wrap);
+      });
+    };
     var split = function (still) {
+      splitBig();
       all('span', vt).forEach(function (row) {
         Array.prototype.slice.call(row.childNodes).forEach(function (node) {
           var text = node.textContent, wrap = document.createDocumentFragment();
