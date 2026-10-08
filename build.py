@@ -1149,12 +1149,12 @@ def write_top_a2(top):
     imgs = ''.join('<img class="%s" src="/images/%s" alt="" %s onerror="this.remove()">' % ('is-on' if n == 0 else '', f, 'fetchpriority="high"' if n == 0 else 'data-eager') for n, (_, _, _, f) in enumerate(times))
     sec = f'''<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000" id="top">
     <div class="rf-media">{imgs}</div>
-    <p class="rv-big" aria-hidden="true"><span>CHANGE</span><span>YOUR FUTURE</span></p>
+    <p class="rv-big" aria-hidden="true"><span>BEYOND</span><span>POSSIBILITIES.</span></p>
     {GOLD_WIPE}
     <div class="wrap rc-fv-copy">
-      <p class="eyebrow">Insurance &amp; Lifeline</p>
-      <h1 class="rc-fv-title rv-title"><span>保険とお金を整えて</span><span>安心できる<em>未来</em>へ</span></h1>
-      <p class="rc-fv-lead">保険や暮らしにかかるお金を一緒に見直し、<br class="pc">ゆとりある生活の実現をお手伝いします。</p>
+      <p class="eyebrow">LF Group — Corporate Philosophy</p>
+      <h1 class="rc-fv-title rv-title"><span>人と企業の可能性を、</span><span>その<em>先</em>へ。</span></h1>
+      <p class="rc-fv-lead">一人ひとりの暮らしに安心を。<br>企業の挑戦に、新たな価値を。</p>
       <p class="rc-links"><a class="btn btn-primary" href="/contact/">保険・お金について相談する{ARROW}</a></p>
     </div>
   </section>'''

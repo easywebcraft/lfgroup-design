@@ -615,3 +615,18 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
 @keyframes ff-gold { 0%, 100% { text-shadow: 0 0 8px rgba(255, 214, 140, .6), 0 2px 18px rgba(8, 18, 32, .7); } 50% { text-shadow: 0 0 10px #fff3d0, 0 0 26px rgba(255, 214, 140, 1), 0 0 52px rgba(242, 182, 60, 1), 0 2px 18px rgba(8, 18, 32, .7); } }
 @media (prefers-reduced-motion: reduce) { .rf-top.rf-serif .rc-fv-title .rv-ch, .rf-top.rf-serif .rc-fv-title em .rv-ch { animation: none; } }
 .rf-go .rv-ch.is-still { opacity: 1; translate: 0 0; rotate: 0deg; transition: none; }
+/* 見出しが11文字になったので、光の走る順番を10・11文字目まで延ばす（2026-10-08 トップの見出しを理念のコピーに変更） */
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(10) { animation-delay: 3.30s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(11) { animation-delay: 3.41s; }
+
+/* ===== トップの大きな英字を「BEYOND／POSSIBILITIES.」に（2026-10-08）：長い単語（14字）なので、枠の幅に収まる大きさにして折り返さない =====
+   「POSSIBILITIES.」は幅が文字の高さの約7.3倍。枠の幅 ÷ 7.3 を文字の大きさにする */
+.rf-top.rf-serif .rv-big span { white-space: nowrap; }
+@media (min-width: 1024px) { .rf-top.rf-serif .rv-big { font-size: clamp(34px, calc((100vw - 760px) * .13), 82px); } }
+@media (min-width: 1024px) and (max-width: 1180px) { .rf-top.rf-serif .rv-big { font-size: clamp(30px, calc((100vw - 700px) * .125), 56px); } }
+@media (max-width: 1023px) { .rf-top.rf-serif .rv-big { font-size: clamp(28px, 10.4vw, 80px); } }
+/* スマホ：小見出し「LF GROUP — CORPORATE PHILOSOPHY」を1行に収め、説明文は2行（理念の2文）のまま改行する */
+@media (max-width: 767px) {
+  .rf-top .eyebrow { letter-spacing: .1em; font-size: 10.5px; white-space: nowrap; }
+  .rf-top .rc-fv-lead br { display: block; }
+}
