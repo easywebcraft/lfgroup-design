@@ -1149,7 +1149,7 @@ def write_top_a2(top):
     imgs = ''.join('<img class="%s" src="/images/%s" alt="" %s onerror="this.remove()">' % ('is-on' if n == 0 else '', f, 'fetchpriority="high"' if n == 0 else 'data-eager') for n, (_, _, _, f) in enumerate(times))
     sec = f'''<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000" id="top">
     <div class="rf-media">{imgs}</div>
-    <p class="rv-big" aria-hidden="true"><span>BEYOND</span><span>POSSIBILITIES.</span></p>
+    <p class="rv-big" aria-hidden="true"><span>BEYOND</span><span>THE</span><span>POSSIBILITIES.</span></p>
     {GOLD_WIPE}
     <div class="wrap rc-fv-copy">
       <p class="eyebrow">LF Group — Corporate Philosophy</p>
