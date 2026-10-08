@@ -109,11 +109,34 @@
       var stays = (sec.getAttribute('data-stays') || '').split(',').map(Number);
       var next = function () {
         setTimeout(function () {
+          // 別のタブを見ている間は切り替えない（その間ブラウザは描画を止めるので、切り替えだけ進むと状態がずれる）
+          if (document.hidden) { next(); return; }
           var upcoming = (n + 1) % imgs.length;
           ready[upcoming].then(function () { n = upcoming; show(n); next(); });
         }, stays[n] || STAY);
       };
       next();
+
+      // 安全装置（2026-10-08「トップの写真が消えて紺一色になる」再発防止）：
+      // 切り替えの最中でないのに「今の写真が1枚でない／今の写真が違う／途中のクリップが残っている」状態を見つけたら、今の写真だけが見える状態に戻す。
+      // 写真が1枚も見えない状態が起きても、2秒以内に自動で直る。別のタブから戻ったときにも直す
+      if (sharedWipe) {
+        var heal = function () {
+          if (wipeFrame || document.hidden) return;
+          var shown = imgs.filter(function (im) { return im.classList.contains('is-on'); });
+          if (shown.length !== 1 || shown[0] !== imgs[n]) {
+            imgs.forEach(function (im) { im.classList.remove('is-on', 'is-prev'); im.style.removeProperty('clip-path'); });
+            imgs[n].classList.add('is-on');
+          }
+          imgs.forEach(function (im) { if (!im.classList.contains('is-on') || !wipeFrame) im.style.removeProperty('clip-path'); });
+        };
+        setInterval(heal, 2000);
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) return;
+          if (wipeFrame) { cancelAnimationFrame(wipeFrame); wipeFrame = 0; if (sweep) sweep.classList.remove('is-run'); }
+          heal();
+        });
+      }
     });
   }
 

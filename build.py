@@ -236,7 +236,7 @@ LOADER = """
   </div>
   <div class="ll-p2">
     <p class="ll-logo"><img class="logo-mark" src="/images/logo.png" alt="" width="360" height="360" data-eager>LFグループ株式会社</p>
-    <p class="ll-catch"><span class="l1">保険とお金を整えて</span><br><span class="l2">安心できる未来へ</span></p>
+    <p class="ll-catch"><span class="l1">人と企業の可能性を</span><br><span class="l2">その先へ</span></p>
   </div>
   <span class="ll-skip">タップでスキップ</span>
 </div>"""

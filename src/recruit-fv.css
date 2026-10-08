@@ -629,6 +629,10 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
 @media (min-width: 1024px) { .rf-top.rf-serif .rv-big { font-size: clamp(34px, calc((100vw - 760px) * .13), 82px); } }
 @media (min-width: 1024px) and (max-width: 1180px) { .rf-top.rf-serif .rv-big { font-size: clamp(30px, calc((100vw - 700px) * .125), 56px); } }
 @media (max-width: 1023px) { .rf-top.rf-serif .rv-big { font-size: clamp(28px, 10.4vw, 80px); } }
+/* 安心のための下敷き（2026-10-08「トップの写真が消えて紺一色になる」再発防止）：
+   写真の下は紺の無地だったので、何かの拍子に写真が1枚も見えない状態になると、画面が紺一色になった。下敷きを春の写真にして、最悪でも写真が見えるようにする */
+.rf-top .rf-media { background: var(--navy) url("../images/city-spring.jpg") center / cover no-repeat; }
+
 /* スマホ：小見出し「LF GROUP — CORPORATE PHILOSOPHY」を1行に収め、説明文は2行（理念の2文）のまま改行する */
 @media (max-width: 767px) {
   .rf-top .eyebrow { letter-spacing: .1em; font-size: 10.5px; white-space: nowrap; }
