@@ -614,3 +614,4 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
 .rf-top.rf-serif .rc-fv-title em .rv-ch { animation: ff-gold 2.4s ease-in-out infinite; }
 @keyframes ff-gold { 0%, 100% { text-shadow: 0 0 6px rgba(255, 214, 140, .5), 0 2px 18px rgba(8, 18, 32, .7); } 50% { text-shadow: 0 0 20px rgba(255, 226, 160, 1), 0 0 36px rgba(242, 182, 60, .8), 0 2px 18px rgba(8, 18, 32, .7); } }
 @media (prefers-reduced-motion: reduce) { .rf-top.rf-serif .rc-fv-title .rv-ch, .rf-top.rf-serif .rc-fv-title em .rv-ch { animation: none; } }
+.rf-go .rv-ch.is-still { opacity: 1; translate: 0 0; rotate: 0deg; transition: none; }

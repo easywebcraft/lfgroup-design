@@ -121,20 +121,26 @@
   var vt = sec.querySelector('.rv-title');
   if (vt) {
     var k = 0;
-    // ロゴの演出でキャッチコピーが見出しへ吸い込まれた場合は、見出しはそのまま見せる（1文字ずつの動きは2回目以降）
-    if (!window.LF_LOADER_RUN) all('span', vt).forEach(function (row) {
-      Array.prototype.slice.call(row.childNodes).forEach(function (node) {
-        var text = node.textContent, wrap = document.createDocumentFragment();
-        text.split('').forEach(function (ch) {
-          var c = document.createElement('span');
-          c.className = 'rv-ch';
-          c.textContent = ch;
-          c.style.transitionDelay = (0.2 + k++ * 0.05) + 's';
-          wrap.appendChild(c);
+    // 見出しを1文字ずつに分ける。still=true のときは、動かさずそのまま見せる（見た目は変えない）
+    var split = function (still) {
+      all('span', vt).forEach(function (row) {
+        Array.prototype.slice.call(row.childNodes).forEach(function (node) {
+          var text = node.textContent, wrap = document.createDocumentFragment();
+          text.split('').forEach(function (ch) {
+            var c = document.createElement('span');
+            c.className = still ? 'rv-ch is-still' : 'rv-ch';
+            c.textContent = ch;
+            if (!still) c.style.transitionDelay = (0.2 + k++ * 0.05) + 's';
+            wrap.appendChild(c);
+          });
+          if (node.nodeType === 3) row.replaceChild(wrap, node); else { node.textContent = ''; node.appendChild(wrap); }
         });
-        if (node.nodeType === 3) row.replaceChild(wrap, node); else { node.textContent = ''; node.appendChild(wrap); }
       });
-    });
+    };
+    // ロゴの演出でキャッチコピーが見出しへ吸い込まれた場合は、見出しはそのまま見せる（1文字ずつの入場の動きは2回目以降）。
+    // ただし金の光が走る演出（1文字ずつ）のため、吸い込みが終わった後に、動かさずに1文字ずつへ分ける（初回も同じ演出になるように）
+    if (!window.LF_LOADER_RUN) split(false);
+    else setTimeout(function () { split(true); }, 3200);
     requestAnimationFrame(function () { requestAnimationFrame(function () { vt.classList.add('is-go'); sec.classList.add('is-go'); }); });
     // マウスの位置（PCだけ）とスクロールの量を渡す。写真・大きな英字・コピーが別々の量でずれて、奥行きが出る
     if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
