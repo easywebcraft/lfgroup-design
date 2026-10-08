@@ -870,8 +870,8 @@ AL_SERVICES = [
     ('glass', 'Water Server', 'ウォーターサーバー', '暮らしをより快適にするサービスのご案内'),
 ]
 
-# ★要確認：数字は構成案でも「○○」。実績値と集計基準日をいただいたら差し替え、.note-draft を外す
-AL_NUMBERS = [('提携店舗数', '店舗'), ('累計ご案内件数', '件'), ('月間ご案内件数', '件'), ('前年比取扱件数成長率', '%')]
+# 実績（2026-10-08 松本さんからいただいた数字）。集計基準日は未定
+AL_NUMBERS = [('提携店舗数', '126', '店舗'), ('累計ご案内件数', '6,230', '件'), ('月間ご案内件数', '260', '件'), ('前年比取扱件数', '133', '%')]
 
 AL_FLOW = [
     ('お問い合わせ', '事業提携に関するご相談を、お電話またはお問い合わせページからお寄せください。'),
@@ -911,7 +911,7 @@ def page_partner():
     services = ''.join(f'''
         <li class="fade">{ps_icon(k)}<p class="al-svc-en">{en}</p><h3>{ja}</h3><p>{x}</p></li>''' for k, en, ja, x in AL_SERVICES)
     numbers = ''.join(f'''
-        <li class="fade"><p class="al-num-label">{label}</p><p class="al-num-value">—<small>{unit}</small></p></li>''' for label, unit in AL_NUMBERS)
+        <li class="fade"><p class="al-num-label">{label}</p><p class="al-num-value">{value}<small>{unit}</small></p></li>''' for label, value, unit in AL_NUMBERS)
     return (hero + f'''
   <section class="section" id="about-alliance">
     <div class="wrap">
@@ -972,7 +972,6 @@ def page_partner():
       <h2 class="fade">信頼と実績を数字で</h2>
       <ul class="al-num-list">{numbers}
       </ul>
-      <p class="al-num-note fade"><span class="note-draft">数字は確定後に記載します（実績値と集計基準日）</span></p>
     </div>
   </section>
 '''
