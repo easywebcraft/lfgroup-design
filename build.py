@@ -541,15 +541,28 @@ def with_rf(html_):
                  .replace('family=Montserrat:wght@500;600', 'family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@500;600', 1))
 
 
-def ps_worries(title, items, answer, bg='bg-blue'):
-    """お悩みの段（個人・法人で共通）。items は (アイコン, 一文)"""
+def ps_worries(title, items, answer, bg='bg-blue', band=False):
+    """お悩みの段（個人・法人で共通）。items は (アイコン, 一文)。
+    band=True：段の頭を、トップの「FIND YOUR PAGE」のような狭い見出しの帯にする（2026-10-08 松本さん「TOPのような狭めに」「色はそのままでOK」。個人のお客様）。
+    問いかけの見出しは帯の中に残す"""
     lis = ''.join(f'''
           <li class="fade">{ps_icon(k)}<p>{t}</p></li>''' for k, t in items)
-    return f'''
-  <section class="section {bg} ps-worries" id="worries">
+    if band:
+        head = f'''  <div class="ps-band" id="worries">
+    <div class="wrap">
+      <p class="eyebrow">Worries</p>
+      <h2>{title}</h2>
+    </div>
+  </div>
+  <section class="section {bg} ps-worries ps-worries-banded">
+    <div class="wrap">'''
+    else:
+        head = f'''  <section class="section {bg} ps-worries" id="worries">
     <div class="wrap">
       <p class="eyebrow fade">Worries</p>
-      <h2 class="fade">{title}</h2>
+      <h2 class="fade">{title}</h2>'''
+    return f'''
+{head}
       <ul class="ps-worry-list">{lis}
       </ul>
       <p class="ps-worries-answer fade">{answer}</p>
@@ -630,7 +643,7 @@ def page_personal():
         </article>''' for i, (en, title, text, img, pos) in enumerate(PS_MENUS))
     return (hero
             + ps_worries('<span>お金や将来のこと</span><br><span>こんな不安は</span><span>ありませんか？</span>', PS_WORRIES,
-                         'そんなお悩みを<span class="pc">　</span><br class="sp">LFグループが一緒に整理します')
+                         'そんなお悩みを<span class="pc">　</span><br class="sp">LFグループが一緒に整理します', band=True)
             + f'''
   <section class="section" id="menu">
     <div class="wrap">
