@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="../images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/style.css?v=d1820eab">
+<link rel="stylesheet" href="../assets/style.css?v=8d42638f">
 <script>
   // 表示前に「フェード待ち」の状態にする（本文の最後で付けると、文字が一度見えてから消えてフェードする）。
   // main.js が読み込めなかったときに文字が隠れたままにならないよう、3秒で解除する。
@@ -84,10 +84,14 @@
     <small class="rf-photo-note">写真はイメージです</small>
   </section>
 
-  <section class="section bg-blue ps-worries" id="worries">
+  <div class="ps-band" id="worries">
     <div class="wrap">
-      <p class="eyebrow fade">Worries</p>
-      <h2 class="fade"><span>企業経営に潜むリスク</span><br><span>その備えは</span><span>万全ですか？</span></h2>
+      <p class="eyebrow">Worries</p>
+      <h2><span>企業経営に潜むリスク</span><br><span>その備えは</span><span>万全ですか？</span></h2>
+    </div>
+  </div>
+  <section class="section bg-blue ps-worries ps-worries-banded">
+    <div class="wrap">
       <ul class="ps-worry-list">
           <li class="fade"><svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg><p>経営者に万が一のことがあった場合、事業を継続できるか不安</p></li>
           <li class="fade"><svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v3"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-3"/><path d="M21 11h-4a2 2 0 0 0 0 4h4z"/></svg><p>役員退職金や従業員の退職金を計画的に準備したい</p></li>
@@ -102,7 +106,7 @@
     </div>
   </section>
 
-  <section class="section" id="service">
+  <section class="section sec-c" id="service">
     <div class="wrap">
       <p class="eyebrow fade">Service</p>
       <h2 class="fade">法人向けサービス</h2>
@@ -151,7 +155,7 @@
     </div>
   </section>
 
-  <section class="section bg-blue" id="values">
+  <section class="section bg-blue sec-c" id="values">
     <div class="wrap">
       <p class="eyebrow fade">Why LF Group</p>
       <h2 class="fade">LFグループが<br class="sp">選ばれる理由</h2>
@@ -175,7 +179,7 @@
     </div>
   </section>
 
-  <section class="section co-stages" id="stage">
+  <section class="section co-stages sec-c" id="stage">
     <div class="wrap">
       <p class="eyebrow fade">Business Stage</p>
       <h2 class="fade">経営ステージ別のご提案</h2>
@@ -209,7 +213,7 @@
     </div>
   </section>
 
-  <section class="section " id="flow">
+  <section class="section sec-c" id="flow">
     <div class="wrap">
       <p class="eyebrow fade">Flow</p>
       <h2 class="fade">ご相談の流れ</h2>
@@ -222,12 +226,10 @@
     </div>
   </section>
 
-  <section class="section bg-blue" id="faq">
-    <div class="wrap ps-faq">
-      <div class="ps-faq-head">
-        <p class="eyebrow fade">FAQ</p>
-        <h2 class="fade">よくあるご質問</h2>
-      </div>
+  <section class="section bg-blue sec-c" id="faq">
+    <div class="wrap">
+      <p class="eyebrow fade">FAQ</p>
+      <h2 class="fade">よくあるご質問</h2>
       <div class="ps-faq-list">
         <p class="note-draft fade">回答は下書きです（ご確認ください）</p>
         <details class="ps-faq-item fade">
@@ -302,7 +304,7 @@
   <a class="t" href="tel:0528462135"><svg><use href="#i-tel"/></svg>電話する</a>
 </div>
 
-<script src="../assets/main.js?v=d1820eab"></script>
+<script src="../assets/main.js?v=8d42638f"></script>
 <script src="../assets/recruit-fv.js?v=9ea6db3e"></script>
 </body>
 </html>

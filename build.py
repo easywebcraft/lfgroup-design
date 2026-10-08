@@ -543,7 +543,7 @@ def with_rf(html_):
 
 def ps_worries(title, items, answer, bg='bg-blue', band=False):
     """お悩みの段（個人・法人で共通）。items は (アイコン, 一文)。
-    band=True：段の頭を、トップの「FIND YOUR PAGE」のような狭い見出しの帯にする（2026-10-08 松本さん「TOPのような狭めに」「色はそのままでOK」。個人のお客様）。
+    band=True：段の頭を、トップの「FIND YOUR PAGE」のような狭い見出しの帯にする（2026-10-08 松本さん「TOPのような狭めに」「色はそのままでOK」。個人・法人のお客様）。
     問いかけの見出しは帯の中に残す"""
     lis = ''.join(f'''
           <li class="fade">{ps_icon(k)}<p>{t}</p></li>''' for k, t in items)
@@ -615,11 +615,9 @@ def ps_faq(items, bg='bg-blue'):
         </details>''' for q, a in items)
     return f'''
   <section class="section {bg}" id="faq">
-    <div class="wrap ps-faq">
-      <div class="ps-faq-head">
-        <p class="eyebrow fade">FAQ</p>
-        <h2 class="fade">よくあるご質問</h2>
-      </div>
+    <div class="wrap">
+      <p class="eyebrow fade">FAQ</p>
+      <h2 class="fade">よくあるご質問</h2>
       <div class="ps-faq-list">
         <p class="note-draft fade">回答は下書きです（ご確認ください）</p>{qa}
       </div>
@@ -769,7 +767,7 @@ def page_corporate():
         </article>''' for en, t, x, c in CO_STAGES)
     return (hero
             + ps_worries('<span>企業経営に潜むリスク</span><br><span>その備えは</span><span>万全ですか？</span>', CO_WORRIES,
-                         '当てはまる課題から<span class="pc">　</span><br class="sp">LFグループが一緒に整理します')
+                         '当てはまる課題から<span class="pc">　</span><br class="sp">LFグループが一緒に整理します', band=True)
             + f'''
   <section class="section" id="service">
     <div class="wrap">
@@ -1227,10 +1225,20 @@ def image_attrs(content):
     return re.sub(r'<img [^>]*src="/images/([^"?]+)"[^>]*>', add, content)
 
 
+SEC_HEAD = re.compile(r'<section class="(section[^"]*)"((?:(?!>).)*)>(\s*<div class="wrap[^"]*">\s*<p class="eyebrow)', re.S)
+
+
+def compact_heads(html_):
+    """段の頭（英字の小見出し＋見出し）を、トップの「FIND YOUR PAGE」の帯のように中央にまとめて狭くする印 sec-c を付ける
+    （2026-10-08 松本さん「他のメニューも同じ方式で。余白はなるべく消したい」）。見た目は src/refine.css の .sec-c"""
+    return SEC_HEAD.sub(lambda m: f'<section class="{m.group(1).strip()} sec-c"{m.group(2)}>{m.group(3)}', html_)
+
+
 def write(path, content):
     if path.endswith('.html'):
         page = path.removesuffix('index.html')
         content = image_version(image_attrs(content)).replace('__URL_META__\n', url_meta(page))
+        content = compact_heads(content)
         if RELEASE:
             # 内部向けのメモ（★公開前… など）を本番のソースに残さない
             content = re.sub(r'\n?[ \t]*<!--[\s\S]*?-->', '', content)

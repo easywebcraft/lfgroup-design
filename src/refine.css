@@ -847,3 +847,52 @@ br.sp { display: none; }
   .ps-band h2 span:first-child { margin-right: 0; }
   .section.ps-worries-banded { padding-block: 24px 64px; }
 }
+
+/* ===== 段の頭をトップの帯のように狭く中央に・余白を詰める（2026-10-08 松本さん「他のメニューも同じ方式で。余白はなるべく消したい」）=====
+   build.py の compact_heads() が「英字の小見出し＋見出し」で始まる段に .sec-c を付ける。
+   頭は個人のお客様のお悩みの帯（.ps-band）と同じ大きさ：中央に英字の小見出し（13px）、その下に見出し（20〜26px）。色は元のまま */
+.section { padding-block: clamp(48px, 5vw, 72px); }
+.sec-c > .wrap > .eyebrow { justify-content: center; margin: 0; font-size: 13px; }
+.sec-c > .wrap > h2 { margin-top: 10px; text-align: center; font-size: clamp(20px, 2vw, 26px); line-height: 1.6; letter-spacing: .1em; }
+.sec-c > .wrap > h2 br:not(.sp) { display: none; }
+.sec-c > .wrap > h2 + * { margin-top: 28px !important; }
+.sec-c > .wrap > h2 + .text { margin-inline: auto; max-width: 760px; text-align: center; }
+.sec-c > .wrap > h2 + .text br.pc { display: inline; }
+@media (max-width: 767px) {
+  .sec-c > .wrap > h2 { font-size: 18px; letter-spacing: .06em; }
+  .sec-c > .wrap > h2 + * { margin-top: 20px !important; }
+  .sec-c > .wrap > h2 + .text { text-align: left; }
+}
+/* お悩みの帯（個人・法人）も同じ間隔に */
+.ps-band { padding-top: clamp(40px, 4vw, 56px); }
+.section.ps-worries-banded { padding-block: 28px clamp(48px, 5vw, 72px); }
+.ps-worries-answer { margin-top: 40px; }
+/* 段の中の、頭のあとの大きな空き */
+.co-svc-group { margin-top: 36px; padding-top: 32px; }
+.co-svc-group:first-of-type { margin-top: 0; }
+.sec-c > .wrap > .text + .co-svc-group { margin-top: 32px; }
+.co-svc-note { margin-top: 28px; }
+.ps-faq-list { max-width: 880px; margin-inline: auto; }
+/* 最後の問い合わせ */
+.contact-cta { padding-block: clamp(56px, 6vw, 88px); }
+.contact-cta .text { margin-top: 18px; }
+.contact-cta-actions { margin-top: 28px; }
+.contact-cta-tel { margin-top: 20px; }
+/* 見出しが左の列にあった段（方針・会社情報・代表挨拶・仕事内容）も、見出しを上の中央に置いて同じ頭にそろえる */
+.about-policy-grid, .company-brief-inner, .co-message, .rc-work { grid-template-columns: 1fr; gap: 28px; }
+.company-brief-inner > p { grid-column: 1; }
+.about-policy-head, .company-brief-inner > div:first-child, .co-message > div:first-child, .rc-work > div:first-child { position: static; text-align: center; }
+:is(.about-policy-head, .company-brief-inner > div:first-child, .co-message > div:first-child, .rc-work > div:first-child) > .eyebrow { justify-content: center; margin: 0; font-size: 13px; }
+:is(.about-policy-head, .company-brief-inner > div:first-child, .co-message > div:first-child, .rc-work > div:first-child) > h2 { margin-top: 10px; font-size: clamp(20px, 2vw, 26px); line-height: 1.6; letter-spacing: .1em; }
+.about-policy-head h2 br { display: none; }
+.about-policy-head > p[style] { margin-top: 12px !important; }
+.about-policy-head > p .link-arrow { margin-top: 0; }
+@media (max-width: 767px) {
+  :is(.about-policy-head, .company-brief-inner > div:first-child, .co-message > div:first-child, .rc-work > div:first-child) > h2 { font-size: 18px; letter-spacing: .06em; }
+  .about-policy-grid, .company-brief-inner, .co-message, .rc-work { gap: 20px; }
+}
+/* 中央の頭の下の中身（採用の電話番号・法人サービスの説明文） */
+.sec-c .recruit-tel { justify-content: center; }
+.sec-c > .wrap > h2 + .text { max-width: 880px; word-break: auto-phrase; }
+/* フッターの余白も詰める */
+.footer { padding-block: 48px 28px; }
