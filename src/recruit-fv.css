@@ -598,26 +598,30 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
 
 /* ===== トップの見出しの演出（2026-10-08 松本さん「このコピーの演出だけ本番に」。試作 /top-flashy/ から見出し分だけ）=====
    金の光が1文字ずつ左から順に走る（5秒ごと）。「未来」は金色で脈打つように光る。トップだけ（採用ページには付けない）。
-   ※文字の形で切り抜く方式（background-clip:text）は、1文字ずつ動く文字と相性が悪く文字が消えるので使わない */
-.rf-top.rf-serif .rc-fv-title .rv-ch { animation: ff-char 5s ease-in-out infinite; }
-.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(1) { animation-delay: 2.20s; }
-.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(2) { animation-delay: 2.31s; }
-.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(3) { animation-delay: 2.42s; }
-.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(4) { animation-delay: 2.53s; }
-.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(5) { animation-delay: 2.64s; }
-.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(6) { animation-delay: 2.75s; }
-.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(7) { animation-delay: 2.86s; }
-.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(8) { animation-delay: 2.97s; }
-.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(9) { animation-delay: 3.08s; }
-@keyframes ff-char { 0%, 30%, 100% { color: inherit; scale: 1; text-shadow: 0 2px 18px rgba(8, 18, 32, .7); } 12% { color: #fff3d0; scale: 1.18; text-shadow: 0 0 8px #fff, 0 0 22px rgba(255, 200, 90, 1), 0 0 46px rgba(255, 160, 40, .95), 0 2px 18px rgba(8, 18, 32, .7); } }
+   ※文字の形で切り抜く方式（background-clip:text）は、1文字ずつ動く文字と相性が悪く文字が消えるので使わない。
+   ※「プルプルする」不具合（2026-10-08）：文字を拡大縮小（scale）し、影の色を毎フレーム書き換えていたため、文字の描き直しでふちがゆれて見えた。
+     今は文字そのものは動かさず、光だけを別の層（同じ文字の金色のにじみ＝::after。data-c に文字を入れる）にして、透明度だけで出し入れする */
+.rf-top.rf-serif .rc-fv-title .rv-ch { position: relative; }
+.rf-top.rf-serif .rc-fv-title .rv-ch::after { content: attr(data-c); position: absolute; left: 0; top: 0; pointer-events: none; opacity: 0; will-change: opacity;
+  color: #fff3d0; text-shadow: 0 0 10px #fff, 0 0 24px rgba(255, 200, 90, 1), 0 0 46px rgba(255, 160, 40, .95); animation: ff-char 5s ease-in-out infinite; }
+@keyframes ff-char { 0%, 30%, 100% { opacity: 0; } 12% { opacity: 1; } }
 .rf-top.rf-serif .rc-fv-title em, .rf-top.rf-serif .rc-fv-title em .rv-ch { color: #f2b63c; -webkit-text-fill-color: #f2b63c; }
-.rf-top.rf-serif .rc-fv-title em .rv-ch { animation: ff-gold 2.4s ease-in-out infinite; }
-@keyframes ff-gold { 0%, 100% { text-shadow: 0 0 8px rgba(255, 214, 140, .6), 0 2px 18px rgba(8, 18, 32, .7); } 50% { text-shadow: 0 0 10px #fff3d0, 0 0 26px rgba(255, 214, 140, 1), 0 0 52px rgba(242, 182, 60, 1), 0 2px 18px rgba(8, 18, 32, .7); } }
-@media (prefers-reduced-motion: reduce) { .rf-top.rf-serif .rc-fv-title .rv-ch, .rf-top.rf-serif .rc-fv-title em .rv-ch { animation: none; } }
+.rf-top.rf-serif .rc-fv-title em .rv-ch::after { color: #ffe9b0; -webkit-text-fill-color: #ffe9b0; text-shadow: 0 0 10px #fff3d0, 0 0 26px rgba(255, 214, 140, 1), 0 0 52px rgba(242, 182, 60, 1); animation: ff-gold 2.4s ease-in-out infinite; }
+@keyframes ff-gold { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .rf-top.rf-serif .rc-fv-title .rv-ch::after { animation: none; opacity: 0; } }
 .rf-go .rv-ch.is-still { opacity: 1; translate: 0 0; rotate: 0deg; transition: none; }
-/* 見出しが11文字になったので、光の走る順番を10・11文字目まで延ばす（2026-10-08 トップの見出しを理念のコピーに変更） */
-.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(10) { animation-delay: 3.30s; }
-.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(11) { animation-delay: 3.41s; }
+/* 光の走る順番（左の文字から0.11秒ずつ。見出しは最長11文字） */
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(1)::after { animation-delay: 2.20s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(2)::after { animation-delay: 2.31s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(3)::after { animation-delay: 2.42s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(4)::after { animation-delay: 2.53s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(5)::after { animation-delay: 2.64s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(6)::after { animation-delay: 2.75s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(7)::after { animation-delay: 2.86s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(8)::after { animation-delay: 2.97s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(9)::after { animation-delay: 3.08s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(10)::after { animation-delay: 3.19s; }
+.rf-top.rf-serif .rc-fv-title .rv-ch:nth-child(11)::after { animation-delay: 3.30s; }
 
 /* ===== トップの大きな英字を「BEYOND／POSSIBILITIES.」に（2026-10-08）：長い単語（14字）なので、枠の幅に収まる大きさにして折り返さない =====
    「POSSIBILITIES.」は幅が文字の高さの約7.3倍。枠の幅 ÷ 7.3 を文字の大きさにする */

@@ -130,6 +130,7 @@
             var c = document.createElement('span');
             c.className = still ? 'rv-ch is-still' : 'rv-ch';
             c.textContent = ch;
+            c.setAttribute('data-c', ch);
             if (!still) c.style.transitionDelay = (0.2 + k++ * 0.05) + 's';
             wrap.appendChild(c);
           });
