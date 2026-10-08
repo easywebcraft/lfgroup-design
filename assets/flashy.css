@@ -26,14 +26,22 @@
 /* 3) 金の粒（canvas）が舞い上がる */
 .rf-flashy .ff-sparks { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: screen; }
 
-/* 4) 見出し：金のきらめきが定期的に文字の上を走る。「未来」は金に輝く */
-.rf-flashy .rc-fv-title { background: linear-gradient(105deg, #fff 0%, #fff 42%, #ffe2a0 50%, #fff 58%, #fff 100%); background-size: 260% 100%; background-position: 130% 0;
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: ff-shine 5s ease-in-out 2.2s infinite; filter: drop-shadow(0 2px 14px rgba(8, 18, 32, .55)); }
-.rf-flashy .rc-fv-title .rv-ch, .rf-flashy .rc-fv-title span { -webkit-text-fill-color: inherit; }
-@keyframes ff-shine { 0%, 55% { background-position: 130% 0; } 85%, 100% { background-position: -30% 0; } }
-.rf-flashy .rc-fv-title em { background: linear-gradient(100deg, #f2b63c, #fff1c8 45%, #f2b63c 70%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; animation: ff-gold 3s linear infinite; }
-@keyframes ff-gold { to { background-position: -200% 0; } }
+/* 4) 見出し：金の光が1文字ずつ左から順に走る（文字は白のまま、光だけが走る）。「未来」は金色で脈打つように光る
+   ※文字の形で切り抜く方式（background-clip:text）は、1文字ずつ動く文字と相性が悪く文字が消えたので使わない */
+.rf-flashy .rc-fv-title .rv-ch { animation: ff-char 5s ease-in-out infinite; }
+.rf-flashy .rc-fv-title .rv-ch:nth-child(1) { animation-delay: 2.2s; }
+.rf-flashy .rc-fv-title .rv-ch:nth-child(2) { animation-delay: 2.28s; }
+.rf-flashy .rc-fv-title .rv-ch:nth-child(3) { animation-delay: 2.36s; }
+.rf-flashy .rc-fv-title .rv-ch:nth-child(4) { animation-delay: 2.44s; }
+.rf-flashy .rc-fv-title .rv-ch:nth-child(5) { animation-delay: 2.52s; }
+.rf-flashy .rc-fv-title .rv-ch:nth-child(6) { animation-delay: 2.6s; }
+.rf-flashy .rc-fv-title .rv-ch:nth-child(7) { animation-delay: 2.68s; }
+.rf-flashy .rc-fv-title .rv-ch:nth-child(8) { animation-delay: 2.76s; }
+.rf-flashy .rc-fv-title .rv-ch:nth-child(9) { animation-delay: 2.84s; }
+@keyframes ff-char { 0%, 14%, 100% { text-shadow: 0 2px 18px rgba(8, 18, 32, .7); } 6% { text-shadow: 0 0 14px rgba(255, 214, 140, 1), 0 0 30px rgba(255, 190, 90, .9), 0 2px 18px rgba(8, 18, 32, .7); } }
+.rf-flashy .rc-fv-title em { color: #f2b63c; }
+.rf-flashy .rc-fv-title em .rv-ch { animation: ff-gold 2.4s ease-in-out infinite; }
+@keyframes ff-gold { 0%, 100% { text-shadow: 0 0 6px rgba(255, 214, 140, .5), 0 2px 18px rgba(8, 18, 32, .7); } 50% { text-shadow: 0 0 20px rgba(255, 226, 160, 1), 0 0 36px rgba(242, 182, 60, .8), 0 2px 18px rgba(8, 18, 32, .7); } }
 
 /* 5) 大きな英字：金の輪郭が呼吸するように光る */
 .rf-flashy .rv-big { animation: ff-glow 3.2s ease-in-out infinite; }
@@ -61,5 +69,5 @@
 }
 
 /* 調整：見出しは文字の影を消して filter の影だけにする（透けて暗く見えるため）／波紋は明るい金で細く */
-.rf-flashy .rc-fv-title { text-shadow: none; }
 @keyframes ff-ring { 0% { box-shadow: 0 0 0 0 rgba(255, 214, 140, .95); } 80%, 100% { box-shadow: 0 0 0 16px rgba(255, 214, 140, 0); } }
+.rf-flashy .rc-fv-title em, .rf-flashy .rc-fv-title em .rv-ch { color: #f2b63c; -webkit-text-fill-color: #f2b63c; }
