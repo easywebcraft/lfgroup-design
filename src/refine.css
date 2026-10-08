@@ -654,3 +654,17 @@
 @media (prefers-reduced-motion: reduce) {
   .js main .fade { opacity: 1; transform: none; transition: none; }
 }
+
+/* ===== トップの2つの帯（目的に合わせて／LFグループについて）を見出しだけにして、余白を詰める（2026-10-08 松本さん「余白が気になる」）=====
+   小見出し（Find Your Page／About Us）と説明文を外した。上下の余白は約半分 */
+.entries-head { padding: clamp(36px, 4vw, 56px) 0 clamp(22px, 2.4vw, 34px); }
+@media (max-width: 767px) { .entries-head { padding: 32px 0 20px; } }
+
+/* ===== トップ全体に背景を敷く（2026-10-08 松本さん「白の余白が見えないように」）=====
+   画面に固定した夕暮れの街（city-autumn.jpg）に濃い紺を重ねた背景を、トップ全体の後ろに敷く。写真タイルや数字の段の隙間・帯の余白が白く抜けない。
+   見出しの帯の文字は白に切り替える。トップだけ（.rf-top があるページ） */
+html:has(.rf-top) { background: #0f1f33; }
+html:has(.rf-top) body { background: transparent; }
+html:has(.rf-top) body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 22, 38, .86), rgba(10, 22, 38, .92)), url("../images/city-autumn.jpg") center / cover no-repeat; }
+html:has(.rf-top) .entries-head h2 { color: #fff; text-shadow: 0 2px 18px rgba(8, 18, 32, .5); }
