@@ -1795,6 +1795,10 @@ br.sp { display: none; }
 .ab-culture p:not(.ab-culture-catch) { margin-top: 14px; font-size: 15px; line-height: 2; color: var(--sub); }
 .ab-culture .link-arrow { margin-top: 4px; }
 @media (max-width: 767px) { .ab-culture { text-align: left; } }
+/* 私たちについての冒頭：英字（TRUST／CHALLENGE／CO-CREATION）は長いので少し小さく、右端からはみ出さないようにする */
+/* トップ用の .rf-top.rf-serif .rv-big（recruit-fv.css）より強くするため html から指定する。PC はトップの約8割 */
+@media (min-width: 1024px) { html:has(.ab-mission) .rf-top.rf-serif .rv-big { font-size: clamp(30px, calc((100vw - 760px) * .105), 68px); } }
+@media (max-width: 1023px) { html:has(.ab-mission) .rf-top.rf-serif .rv-big { font-size: clamp(26px, 9.4vw, 70px); } }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 

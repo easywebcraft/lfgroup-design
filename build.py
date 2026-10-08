@@ -337,11 +337,14 @@ AB_STRENGTHS = [
 
 
 def page_about():
-    hero = rf_hero('私たちについて', 'Our Philosophy', ('人と企業の可能性を', 'その先へ'),
-                   ('一人ひとりの暮らしに安心を', '企業の挑戦に　新たな可能性を'),
-                   'お問い合わせ', (('city-summer.jpg', '50% 50%'), ('city-autumn.jpg', '50% 50%'),
-                                   ('city-winter.jpg', '50% 50%'), ('city-spring.jpg', '50% 50%')),
-                   ('BEYOND', 'POSSIBILITIES.'))
+    # 冒頭（2026-10-08 松本さん「トップと同じなので変えて。JSはそのままで写真とコピーだけ」）：
+    # 動きは個人・法人と同じ rf_hero。コピーは3つの価値観（信頼・挑戦・共創）から、英字も価値観の名前。
+    # 写真はトップ（街の四季）・個人・法人の冒頭と重ならないもの：空と海・相談の席・家族・お店の店先
+    hero = rf_hero('私たちについて', 'Our Philosophy', ('信頼でつなぎ', '挑戦で未来をひらく'),
+                   ('保険とアライアンスの2つの事業で', '人と企業のこれからを支えます'),
+                   'お問い合わせ', (('mission-1.jpg', '50% 60%'), ('about-hero.jpg', '50% 70%'),
+                                   ('hero-summer.jpg', '60% 35%'), ('scene-shop.jpg', '60% 50%')),
+                   ('TRUST', 'CHALLENGE', 'CO-CREATION'))
     values = ''.join(f'''
         <li class="ab-value fade">
           <span class="ab-value-icon">{ps_icon(k)}</span>
