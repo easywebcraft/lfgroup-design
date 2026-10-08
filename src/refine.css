@@ -935,9 +935,8 @@ br.sp { display: none; }
 .ab-biz-en { display: flex; align-items: center; gap: 14px; font-family: var(--en); font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
 .ab-biz-en span { font-family: var(--sans); font-size: 12px; letter-spacing: .1em; text-transform: none; color: var(--sub); }
 .ab-biz h3 { margin: 12px 0 18px; font-family: var(--serif); font-weight: 500; font-size: clamp(22px, 2.2vw, 30px); line-height: 1.6; letter-spacing: .08em; }
-.ab-biz-body > p:not(.ab-biz-en):not(.ab-biz-links) { font-size: 15px; line-height: 2; color: var(--sub); }
-.ab-biz-body > p + p:not(.ab-biz-links) { margin-top: .7em; }
-.ab-biz-links { display: flex; flex-wrap: wrap; gap: 0 32px; margin-top: 16px; }
+.ab-biz-body > p:not(.ab-biz-en) { font-size: 15px; line-height: 2; color: var(--sub); }
+.ab-biz-body > p + p { margin-top: .7em; }
 @media (max-width: 1023px) { .ab-biz { grid-template-columns: 1fr; gap: 24px; } .ab-biz:nth-child(2) .ab-biz-photo { order: 0; } .ab-biz-list { gap: 48px; } }
 
 /* 強み：4つを横並び（タブレット2列・スマホ1列） */
@@ -974,3 +973,20 @@ br.sp { display: none; }
 /* トップ用の .rf-top.rf-serif .rv-big（recruit-fv.css）より強くするため html から指定する。PC はトップの約8割 */
 @media (min-width: 1024px) { html:has(.ab-mission) .rf-top.rf-serif .rv-big { font-size: clamp(30px, calc((100vw - 760px) * .105), 68px); } }
 @media (max-width: 1023px) { html:has(.ab-mission) .rf-top.rf-serif .rv-big { font-size: clamp(26px, 9.4vw, 70px); } }
+
+/* 小さな入口タイル（トップの .entry を小さくしたもの。2026-10-08 松本さん「TOPページと同じタイルを小さめに、あまり強調しない程度に」）
+   写真に紺を重ね、英字の小見出し＋白い明朝の名前＋矢印。build.py の mini_tiles() */
+.mini-entries { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 260px)); gap: 12px; margin-top: 24px; }
+.mini-entry { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; min-height: 104px; padding: 16px 18px; overflow: hidden; border-radius: var(--radius); color: #fff; text-decoration: none; background: var(--navy); }
+.mini-entry img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1s cubic-bezier(.2, .6, .2, 1); }
+.mini-entry::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(27, 51, 80, .78) 0%, rgba(27, 51, 80, .5) 60%, rgba(27, 51, 80, .3) 100%); }
+.mini-entry:hover img { transform: scale(1.05); }
+.mini-entry-body, .mini-entry .arw { position: relative; z-index: 1; }
+.mini-entry-body { display: flex; flex-direction: column; }
+.mini-entry .eyebrow { margin: 0 0 4px; gap: 8px; font-size: 9.5px; letter-spacing: .24em; color: rgba(255, 255, 255, .85); }
+.mini-entry .eyebrow::before { width: 14px; background: var(--gold); opacity: 1; }
+.mini-entry-title { font-family: var(--serif); font-weight: 500; font-size: 16px; letter-spacing: .1em; }
+.mini-entry .arw { width: 14px; height: 14px; flex: none; margin-bottom: 4px; transition: transform .4s ease; }
+.mini-entry:hover .arw { transform: translateX(4px); }
+.ab-culture .mini-entries { justify-content: center; }
+@media (max-width: 767px) { .mini-entries { grid-template-columns: 1fr; } .ab-culture .mini-entries { justify-content: stretch; } }

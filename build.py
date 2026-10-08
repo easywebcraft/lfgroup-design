@@ -336,6 +336,23 @@ AB_STRENGTHS = [
 ]
 
 
+# トップの入口タイル（.entry）を小さくしたもの（2026-10-08 松本さん「ここにTOPページと同じタイルを小さめに。あまり強調しない程度に」）
+# 写真はトップのタイルと同じ。見た目は src/refine.css の .mini-entry
+MINI_TILES = {
+    '/personal/': ('Personal', '個人のお客様', 'service-insurance.jpg'),
+    '/corporate/': ('Corporate', '法人のお客様', 'cta-final.jpg'),
+    '/partner/': ('Alliance', 'アライアンス事業', 'scene-home.jpg'),
+    '/recruitment/': ('Recruit', '採用情報', 'cta.jpg'),
+}
+
+
+def mini_tiles(hrefs):
+    tiles = ''.join(f'<a class="mini-entry" href="{h}"><img src="/images/{MINI_TILES[h][2]}" alt="" onerror="this.remove()">'
+                    f'<span class="mini-entry-body"><span class="eyebrow">{MINI_TILES[h][0]}</span>'
+                    f'<span class="mini-entry-title">{MINI_TILES[h][1]}</span></span>{ARROW}</a>' for h in hrefs)
+    return f'<div class="mini-entries">{tiles}</div>'
+
+
 def page_about():
     # 冒頭（2026-10-08 松本さん「トップと同じなので変えて。JSはそのままで写真とコピーだけ」）：
     # 動きは個人・法人と同じ rf_hero。コピーは3つの価値観（信頼・挑戦・共創）から、英字も価値観の名前。
@@ -361,7 +378,7 @@ def page_about():
             <p class="ab-biz-en">{en}<span>{ja}</span></p>
             <h3><span>{title[0]}</span><br><span>{title[1]}</span></h3>
             {''.join(f'<p>{t}</p>' for t in texts)}
-            <p class="ab-biz-links">{''.join(f'<a class="link-arrow" href="{href}">{name}{ARROW}</a>' for name, href in links)}</p>
+            {mini_tiles([href for _, href in links])}
           </div>
         </article>''' for en, ja, title, img, pos, texts, links in AB_BUSINESS)
     strengths = ''.join(f'''
@@ -442,7 +459,7 @@ def page_about():
       <div class="ab-culture fade">
         <p class="ab-culture-catch">一人ひとりが自分らしく働き<br>挑戦できる環境を</p>
         <p>私たちは、個性と自主性を尊重し、仲間とともに成長できる組織を目指しています。</p>
-        <p><a class="link-arrow" href="/recruitment/">採用情報を見る{ARROW}</a></p>
+        {mini_tiles(['/recruitment/'])}
       </div>
     </div>
   </section>
