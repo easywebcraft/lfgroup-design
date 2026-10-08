@@ -127,8 +127,9 @@
     var splitBig = function () {
       var big = sec.querySelector('.rv-big');
       if (!big || big.querySelector('.rb-ch')) return;
-      var n = 0;
+      // 光る順番（--n）は行ごとに数える：日本語の見出しと同じく、2行が同時に左から光り始める（2026-10-08 松本さん）
       all('span', big).forEach(function (row) {
+        var n = 0;
         var text = row.textContent, wrap = document.createDocumentFragment();
         text.split('').forEach(function (ch) {
           var c = document.createElement('span');

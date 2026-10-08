@@ -636,7 +636,7 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
 }
 
 /* ===== 見出しの光のあとに、大きな英字「BEYOND／POSSIBILITIES.」の文字が左から順に光る（2026-10-08 松本さん）=====
-   光の周期は見出しと同じ8秒。見出しは 2.2秒〜3.3秒に走り、英字は 3.6秒から0.09秒ずつ（BEYOND → POSSIBILITIES.）。
+   光の周期は見出しと同じ8秒。見出しは 2.2秒〜3.3秒に走り、英字は 3.6秒から0.09秒ずつ（日本語の見出しと同じく、BEYOND と POSSIBILITIES. の2行が同時に左から光り始める）。
    見出しと同じく文字そのものは動かさず、光の層（::after）の透明度だけを変える（プルプルしない） */
 .rf-top.rf-serif .rv-big .rb-ch { display: inline-block; position: relative; }
 .rf-top.rf-serif .rv-big .rb-ch::after { content: attr(data-c); position: absolute; left: 0; top: 0; pointer-events: none; opacity: 0; will-change: opacity;
