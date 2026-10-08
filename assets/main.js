@@ -152,7 +152,7 @@
     var run = function (el, delay) {
       // ページを開いたときのロゴの演出中は、終わるまで待ってから増やす（演出の裏で終わってしまわないように）
       if (document.documentElement.classList.contains('is-loading')) return setTimeout(function () { run(el, delay); }, 200);
-      var to = +el.getAttribute('data-count'), dur = 1200, t0 = null;
+      var to = +el.getAttribute('data-count'), dur = 800, t0 = null;
       var step = function (t) {
         if (t0 === null) t0 = t;
         if (t - t0 < delay) return requestAnimationFrame(step);
@@ -168,16 +168,16 @@
       requestAnimationFrame(step);
     };
     var io = new IntersectionObserver(function (entries) {
-      // 同時に画面に入った数字を、左上から120msずつ開始をずらし、数字が完成した順に光らせる。
+      // 同時に画面に入った数字を、左上から50msずつ開始をずらし、数字が完成した順に光らせる。
       // （6項目になって全体が長く感じたので、350ms→120ms に短縮。2026-10-08 松本さん。
       //   スマホは段ごとに画面へ入るので、全体の何番目かではなく「同時に入ったうちの何番目か」で数える）
       var k = 0;
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         io.unobserve(entry.target);
-        run(entry.target, k++ * 120);
+        run(entry.target, k++ * 50);
       });
-    }, { threshold: 0.6 });
+    }, { threshold: 0.3 });
     Array.prototype.forEach.call(nums, function (el) { el.textContent = '0'; io.observe(el); });
   })();
   // トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（見た目は season.css。トップ以外では何もしない）
