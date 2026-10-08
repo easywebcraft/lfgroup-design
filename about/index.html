@@ -12,16 +12,17 @@
 <meta property="og:description" content="顧客満足度を最優先に人々の生活を向上させます。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="../images/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/style.css?v=ddc18c34">
+<link rel="stylesheet" href="../assets/style.css?v=d8c457fb">
 <script>
   // 表示前に「フェード待ち」の状態にする（本文の最後で付けると、文字が一度見えてから消えてフェードする）。
   // main.js が読み込めなかったときに文字が隠れたままにならないよう、3秒で解除する。
   document.documentElement.classList.add('js');
   setTimeout(function () { if (!window.LF_READY) document.documentElement.classList.remove('js'); }, 3000);
 </script>
+<link rel="stylesheet" href="../assets/recruit-fv.css?v=9ea6db3e">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -69,66 +70,146 @@
 </div>
 
 <main>
-  <section class="page-hero sub-hero has-photo ph-fv">
-    <figure class="ph-photo fade"><img decoding="async" width="1024" height="1536" src="../images/about-hero.jpg?v=0ad758a8" alt="" style="object-position:50% 72%" onerror="this.remove()"></figure>
-    <div class="wrap sub-hero-copy">
-      <ol class="crumb fade" aria-label="パンくずリスト"><li><a href="../">トップ</a></li><li aria-current="page">私たちについて</li></ol>
-      <p class="eyebrow fade">About</p>
-      <h1 class="fade">私たちについて</h1>
-      <ul class="hero-chips fade"><li>保険</li><li>家計</li><li>ライフライン</li><li>ライフプラン</li></ul>
-        <p class="about-message fade"><span>暮らしにかかるお金を、</span><br><span>一緒に見直す会社です。</span></p>
+  <section class="rf rf-a rf-v rf-top rf-wipe rf-serif rf-sub" data-fx="a" data-stay="4500">
+    <div class="rf-media"><img decoding="async" width="1536" height="1024" class="is-on" src="../images/city-summer.jpg?v=2d0e430b" alt="" style="object-position:50% 50%" fetchpriority="high" onerror="this.remove()"><img decoding="async" width="1536" height="1024" class="" src="../images/city-autumn.jpg?v=69d7eb71" alt="" style="object-position:50% 50%" onerror="this.remove()"><img decoding="async" width="1536" height="1024" class="" src="../images/city-winter.jpg?v=82ec0e7a" alt="" style="object-position:50% 50%" onerror="this.remove()"><img decoding="async" width="1536" height="1024" class="" src="../images/city-spring.jpg?v=db4acc53" alt="" style="object-position:50% 50%" onerror="this.remove()"></div>
+    <p class="rv-big" aria-hidden="true"><span>BEYOND</span><span>POSSIBILITIES.</span></p>
+    <span class="rv-sweep" aria-hidden="true"><svg class="rv-edge" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><linearGradient id="rvEdgeG" gradientUnits="userSpaceOnUse" x1="-10" y1="0" x2="-0.42" y2="2.87"><stop offset="0" stop-color="#F2B63C" stop-opacity="0"/><stop offset="0" stop-color="#F2B63C" stop-opacity="0"/><stop offset="1" stop-color="#FFE6B0" stop-opacity=".6"/></linearGradient></defs><polygon points="-10,0 0,0 -30,100 -40,100" fill="url(#rvEdgeG)"/><polygon points="-0.5,0 0,0 -30,100 -30.5,100" fill="#FFF3D6"/></svg></span>
+    <div class="wrap rc-fv-copy">
+      <ol class="crumb" aria-label="パンくずリスト"><li><a href="../">トップ</a></li><li aria-current="page">私たちについて</li></ol>
+      <p class="eyebrow">Our Philosophy</p>
+      <h1 class="rc-fv-title rv-title"><span>人と企業の可能性を</span><span>その先へ</span></h1>
+      <p class="rc-fv-lead">一人ひとりの暮らしに安心を<br>企業の挑戦に　新たな可能性を</p>
+      <p class="rc-links"><a class="btn btn-primary" href="../contact/">お問い合わせ<svg class="arw"><use href="#i-arrow"/></svg></a></p>
     </div>
+    <small class="rf-photo-note">写真はイメージです</small>
   </section>
 
-  <section class="section about-intro">
+  <section class="section ab-mission sec-c" id="mission">
     <div class="wrap">
-      <div class="about-intro-body fade">
-        <p class="eyebrow">Introduction</p>
-        <h2 class="about-intro-title no-punct"><span>顧客満足度を最優先に</span><span>人々の生活を向上させます</span></h2>
-        <p class="about-intro-text">お客様の暮らしにゆとりが生まれるよう、保険の見直しや、電気・ガスなどのライフラインをご案内しています。</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section about-mission sec-c" id="mission">
-    <div class="wrap">
-      <p class="eyebrow fade">Mission</p>
-      <h2 class="about-mission-msg fade"><span>暮らしにゆとりを</span><br><span>お客様とともに</span></h2>
-      <div class="about-mission-text fade">
-        <p>毎月の暮らしにかかるお金だからこそ、<br>一度の見直しが、これからの家計につながります。</p>
-        <p>LFグループ株式会社は、<br>ゆとりある生活の実現をお手伝いします。</p>
-      </div>
-      <p class="about-mission-quote fade"><span>家計にゆとりが生まれることで、</span><br><span>暮らしの選択肢も広がっていく。</span></p>
-    </div>
-  </section>
-
-  <section class="section about-policy">
-    <div class="wrap">
-      <div class="about-policy-grid">
-        <div class="about-policy-head">
-          <p class="eyebrow fade">Policy</p>
-          <h2 class="fade">お客様本位の<br>業務運営方針</h2>
-          <p class="fade" style="margin-top:32px"><a class="link-arrow" href="../operation/">主な取組内容を見る<svg class="arw"><use href="#i-arrow"/></svg></a></p>
+      <p class="eyebrow fade">Our Mission</p>
+      <h2 class="fade">私たちの使命</h2>
+      <div class="ab-mission-grid">
+        <p class="ab-mission-words fade"><span>安心を届ける</span><span>つながりを生み出す</span><span>未来を支える</span></p>
+        <div class="ab-mission-body fade">
+          <p>私たちLFグループは、保険とライフラインという、暮らしや企業活動に欠かせない分野で事業を展開しています。</p>
+          <p>保険事業では、一人ひとりの人生や企業経営に寄り添い、将来への不安やリスクに備えるお手伝いを。</p>
+          <p>アライアンス事業では、企業同士のつながりを生かし、新生活を迎えるお客様に必要なサービスを届けています。</p>
+          <p>異なる事業に見えても、根底にある想いは同じです。</p>
+          <p class="ab-mission-quote">人と企業が<br class="sp">より安心して未来に向かえる環境をつくること</p>
+          <p>私たちは、その実現に向けて価値を提供し続けます。</p>
         </div>
-        <ol class="policy-lines"><li class="fade"><p class="pl-num">01</p><p class="pl-text"><span>保険・固定費削減のプロフェッショナルとして、</span><span>お客様の立場になって、誠実・公正に業務を行います。</span></p></li><li class="fade"><p class="pl-num">02</p><p class="pl-text"><span>お客様のニーズを把握し、</span><span>お客様にふさわしい商品とサービスを提供し続けます。</span></p></li><li class="fade"><p class="pl-num">03</p><p class="pl-text"><span>お客様が納得してご契約できるよう、</span><span>商品とサービスの説明を丁寧かつわかりやすく行います。</span></p></li><li class="fade"><p class="pl-num">04</p><p class="pl-text"><span>事故に遭われたお客様に対して、</span><span>迅速に保険金の支払いができるようアドバイスし、</span><span>事故処理完了まで適切な対応を行います。</span></p></li><li class="fade"><p class="pl-num">05</p><p class="pl-text"><span>お客様の立場で行動するために、</span><span>継続的に教育を行うとともに、適切な管理体制を整備します。</span></p></li></ol>
       </div>
     </div>
   </section>
 
-  <section class="section company-brief">
-    <div class="wrap company-brief-inner">
-      <div>
-        <p class="eyebrow fade">Company</p>
-        <h2 class="fade">会社情報</h2>
-      </div>
-      <dl class="brief-list fade">
-        <div><dt>会社名</dt><dd>LFグループ株式会社</dd></div>
-        <div><dt>所在地</dt><dd>〒461-0004 愛知県名古屋市東区葵3丁目14-5 リッチコーポ2階</dd></div>
-        <div><dt>事業内容</dt><dd>金融コンサル・保険代理店業務</dd></div>
-      </dl>
-      <p class="fade"><a class="link-arrow" href="../company/">会社概要を見る<svg class="arw"><use href="#i-arrow"/></svg></a></p>
+  <section class="section bg-blue sec-c" id="values">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Value</p>
+      <h2 class="fade">大切にしている3つの価値観</h2>
+      <ol class="ab-value-list">
+        <li class="ab-value fade">
+          <span class="ab-value-icon"><svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg></span>
+          <div>
+            <p class="ab-value-en">Value 01 — Trust</p>
+            <h3>信頼<span>誠実であること</span></h3>
+            <p>お客様やパートナー企業との信頼関係を何よりも大切に。一つひとつの約束と期待に誠実に向き合い、長く選ばれ続ける企業を目指します。</p>
+          </div>
+        </li>
+        <li class="ab-value fade">
+          <span class="ab-value-icon"><svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span>
+          <div>
+            <p class="ab-value-en">Value 02 — Challenge</p>
+            <h3>挑戦<span>変化を恐れないこと</span></h3>
+            <p>既存の枠組みにとらわれず、新しいサービスや事業の可能性を追求。時代とともに変化するニーズに応え、成長し続ける企業を目指します。</p>
+          </div>
+        </li>
+        <li class="ab-value fade">
+          <span class="ab-value-icon"><svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M12 7.5v4M12 11.5 6.5 16M12 11.5l5.5 4.5"/></svg></span>
+          <div>
+            <p class="ab-value-en">Value 03 — Co-Creation</p>
+            <h3>共創<span>つながりを価値に変えること</span></h3>
+            <p>人と人、企業と企業。それぞれの強みをつなぎ、新たな価値を生み出す。一社だけでは実現できない可能性を広げていきます。</p>
+          </div>
+        </li>
+      </ol>
     </div>
   </section>
+
+  <section class="section sec-c" id="business">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Business</p>
+      <h2 class="fade">事業を通じた価値創造</h2>
+      <div class="ab-biz-list">
+        <article class="ab-biz fade">
+          <div class="ab-biz-photo"><img loading="lazy" decoding="async" width="1672" height="941" src="../images/recruit-work-consult.jpg?v=2469bf61" alt="" style="object-position:50% 55%" onerror="this.remove()"></div>
+          <div class="ab-biz-body">
+            <p class="ab-biz-en">Insurance Business<span>保険事業</span></p>
+            <h3><span>人生と経営に</span><br><span>確かな安心を</span></h3>
+            <p>保険は、単に万が一に備えるためのものではありません。</p><p>人生のさまざまな転機や企業の成長に寄り添い、安心して未来を描くための大切な選択肢の一つです。</p><p>私たちは生命保険・損害保険を通じて、お客様一人ひとりの状況に合わせた保障とリスク対策を考えます。</p>
+            <p class="ab-biz-links"><a class="link-arrow" href="../personal/">個人のお客様<svg class="arw"><use href="#i-arrow"/></svg></a><a class="link-arrow" href="../corporate/">法人のお客様<svg class="arw"><use href="#i-arrow"/></svg></a></p>
+          </div>
+        </article>
+        <article class="ab-biz fade">
+          <div class="ab-biz-photo"><img loading="lazy" decoding="async" width="1280" height="853" src="../images/scene-home.jpg?v=5eedcb7c" alt="" style="object-position:50% 60%" onerror="this.remove()"></div>
+          <div class="ab-biz-body">
+            <p class="ab-biz-en">Alliance Business<span>アライアンス事業</span></p>
+            <h3><span>企業のつながりから</span><br><span>暮らしに新しい価値を</span></h3>
+            <p>アライアンス事業では、不動産会社をはじめとするパートナー企業との連携を通じて、新生活に必要なライフラインサービスをご案内しています。</p><p>お客様の利便性を高めるとともに、パートナー企業のサービス価値の向上にも貢献します。</p><p>企業同士のつながりから、より良いサービスを生み出していきます。</p>
+            <p class="ab-biz-links"><a class="link-arrow" href="../partner/">アライアンス事業<svg class="arw"><use href="#i-arrow"/></svg></a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-blue sec-c" id="strength">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Strength</p>
+      <h2 class="fade">LFグループの強み</h2>
+      <ul class="ab-strength-list">
+        <li class="fade"><svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg><h3>総合的な提案力</h3><p>生命保険・損害保険を通じて、個人と法人の多様なリスクに対応します。</p></li>
+        <li class="fade"><svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M12 7.5v4M12 11.5 6.5 16M12 11.5l5.5 4.5"/></svg><h3>企業間ネットワーク</h3><p>不動産関連企業との提携を生かし、サービスを必要とするお客様へ届けます。</p></li>
+        <li class="fade"><svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><h3>お客様に寄り添う姿勢</h3><p>一人ひとりの状況を丁寧に理解し、必要な選択肢を一緒に考えます。</p></li>
+        <li class="fade"><svg class="ps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg><h3>新しい価値への挑戦</h3><p>既存事業の枠を超え、暮らしや企業活動を支える新たな領域へ挑戦します。</p></li>
+      </ul>
+      <p class="ab-strength-link fade"><a class="link-arrow" href="../#numbers">数字で見るLFグループ<svg class="arw"><use href="#i-arrow"/></svg></a></p>
+    </div>
+  </section>
+
+  <section class="section ab-vision sec-c" id="vision">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Vision</p>
+      <h2 class="fade">私たちが目指す未来</h2>
+      <div class="ab-vision-grid">
+        <div class="ab-vision-photo fade"><img loading="lazy" decoding="async" width="1536" height="1024" src="../images/city-autumn.jpg?v=69d7eb71" alt="" onerror="this.remove()"></div>
+        <div class="ab-vision-body fade">
+          <h3><span>新しい挑戦が</span><br><span>新しい未来をつくる</span></h3>
+          <p>社会の変化とともに、人々の暮らしや企業が抱える課題も変わり続けています。</p>
+          <p>私たちは、保険事業とアライアンス事業で培う経験やつながりを基盤に、さらなる価値の創造に挑戦していきます。</p>
+          <ul class="ab-vision-for">
+            <li>お客様にとって<b>より身近で頼れる存在へ</b></li>
+            <li>パートナー企業にとって<b>ともに成長できる存在へ</b></li>
+            <li>働く仲間にとって<b>一人ひとりの可能性を発揮できる場所へ</b></li>
+          </ul>
+          <p class="ab-vision-catch">人と企業の可能性を<br class="sp">その先へ</p>
+          <p>LFグループは、これからも挑戦を続けます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-blue sec-c" id="culture">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Culture</p>
+      <h2 class="fade">働く仲間を大切にする企業文化</h2>
+      <div class="ab-culture fade">
+        <p class="ab-culture-catch">一人ひとりが自分らしく働き<br>挑戦できる環境を</p>
+        <p>私たちは、個性と自主性を尊重し、仲間とともに成長できる組織を目指しています。</p>
+        <p><a class="link-arrow" href="../recruitment/">採用情報を見る<svg class="arw"><use href="#i-arrow"/></svg></a></p>
+      </div>
+    </div>
+  </section>
+
   <section class="contact-cta" id="final-cta">
     <div class="wrap contact-cta-inner">
       <p class="eyebrow fade">Contact</p>
@@ -177,6 +258,7 @@
   <a class="t" href="tel:0528462135"><svg><use href="#i-tel"/></svg>電話する</a>
 </div>
 
-<script src="../assets/main.js?v=ddc18c34"></script>
+<script src="../assets/main.js?v=d8c457fb"></script>
+<script src="../assets/recruit-fv.js?v=9ea6db3e"></script>
 </body>
 </html>

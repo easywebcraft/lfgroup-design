@@ -302,80 +302,149 @@ def final_cta(title=None, text=None, button='お問い合わせ', eyebrow='Conta
 '''
 
 
-def company_brief():
-    """会社名・所在地・事業内容だけの短い会社案内（トップと同じ形）。"""
-    return f'''  <section class="section company-brief">
-    <div class="wrap company-brief-inner">
-      <div>
-        <p class="eyebrow fade">Company</p>
-        <h2 class="fade">会社情報</h2>
-      </div>
-      <dl class="brief-list fade">
-        <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
-        <div><dt>所在地</dt><dd>〒{POSTAL} {ADDRESS}</dd></div>
-        <div><dt>事業内容</dt><dd>金融コンサル・保険代理店業務</dd></div>
-      </dl>
-      <p class="fade"><a class="link-arrow" href="/company/">会社概要を見る{ARROW}</a></p>
-    </div>
-  </section>
-'''
-
-
 # ───────────────────────── 各ページ ─────────────────────────
 
+# ───── 私たちについて（2026-10-08 お客様の構成案で作り直し） ─────
+# ①理念（冒頭。トップと同じキャッチ）②使命 ③3つの価値観 ④事業を通じた価値創造 ⑤強み ⑥目指す未来 ⑦企業文化（構成案の「必要に応じて」）。
+# 「今後の事業展開」は構成案の「まだ始めていない事業は載せない」に合わせて入れていない。
+# 見出しには「。」「、」を入れない。段の見出しのすぐ下に説明文を置かない（2026-10-08 松本さん）
+AB_VALUES = [
+    ('partner', 'Trust', '信頼', '誠実であること', 'お客様やパートナー企業との信頼関係を何よりも大切に。一つひとつの約束と期待に誠実に向き合い、長く選ばれ続ける企業を目指します。'),
+    ('growth', 'Challenge', '挑戦', '変化を恐れないこと', '既存の枠組みにとらわれず、新しいサービスや事業の可能性を追求。時代とともに変化するニーズに応え、成長し続ける企業を目指します。'),
+    ('network', 'Co-Creation', '共創', 'つながりを価値に変えること', '人と人、企業と企業。それぞれの強みをつなぎ、新たな価値を生み出す。一社だけでは実現できない可能性を広げていきます。'),
+]
+
+# 写真は仮（構成案の写真は手元にないので、今ある生成AIの写真から近いもの）
+AB_BUSINESS = [
+    ('Insurance Business', '保険事業', ('人生と経営に', '確かな安心を'), 'recruit-work-consult.jpg', '50% 55%', [
+        '保険は、単に万が一に備えるためのものではありません。',
+        '人生のさまざまな転機や企業の成長に寄り添い、安心して未来を描くための大切な選択肢の一つです。',
+        '私たちは生命保険・損害保険を通じて、お客様一人ひとりの状況に合わせた保障とリスク対策を考えます。',
+    ], [('個人のお客様', '/personal/'), ('法人のお客様', '/corporate/')]),
+    ('Alliance Business', 'アライアンス事業', ('企業のつながりから', '暮らしに新しい価値を'), 'scene-home.jpg', '50% 60%', [
+        'アライアンス事業では、不動産会社をはじめとするパートナー企業との連携を通じて、新生活に必要なライフラインサービスをご案内しています。',
+        'お客様の利便性を高めるとともに、パートナー企業のサービス価値の向上にも貢献します。',
+        '企業同士のつながりから、より良いサービスを生み出していきます。',
+    ], [('アライアンス事業', '/partner/')]),
+]
+
+AB_STRENGTHS = [
+    ('shield', '総合的な提案力', '生命保険・損害保険を通じて、個人と法人の多様なリスクに対応します。'),
+    ('network', '企業間ネットワーク', '不動産関連企業との提携を生かし、サービスを必要とするお客様へ届けます。'),
+    ('family', 'お客様に寄り添う姿勢', '一人ひとりの状況を丁寧に理解し、必要な選択肢を一緒に考えます。'),
+    ('rocket', '新しい価値への挑戦', '既存事業の枠を超え、暮らしや企業活動を支える新たな領域へ挑戦します。'),
+]
+
+
 def page_about():
-    """トップが「写真＋親しみ」なので、こちらは文字・余白・線・濃紺で企業の姿勢を見せる。
-    主役は「お客様本位の業務運営方針」。MISSION はトップと別の、文字だけの見せ方にする。"""
-    fd = [
-        ('保険・固定費削減のプロフェッショナルとして、', 'お客様の立場になって、誠実・公正に業務を行います。'),
-        ('お客様のニーズを把握し、', 'お客様にふさわしい商品とサービスを提供し続けます。'),
-        ('お客様が納得してご契約できるよう、', '商品とサービスの説明を丁寧かつわかりやすく行います。'),
-        ('事故に遭われたお客様に対して、', '迅速に保険金の支払いができるようアドバイスし、', '事故処理完了まで適切な対応を行います。'),
-        ('お客様の立場で行動するために、', '継続的に教育を行うとともに、適切な管理体制を整備します。'),
-    ]
-    # 冒頭は「何の会社か」を一言で。下の言葉は本文（ライフライン・保険・固定費の見直し）から取る（FP事業はいまは行っていない）
-    hero = page_hero(
-        'About', '私たちについて', [('私たちについて', '/about/')],
-        photo='about-hero.jpg', pos='50% 72%',
-        extra='        <p class="about-message fade"><span>暮らしにかかるお金を、</span><br><span>一緒に見直す会社です。</span></p>',
-        chips=('保険', '家計', 'ライフライン', 'ライフプラン'))
+    hero = rf_hero('私たちについて', 'Our Philosophy', ('人と企業の可能性を', 'その先へ'),
+                   ('一人ひとりの暮らしに安心を', '企業の挑戦に　新たな可能性を'),
+                   'お問い合わせ', (('city-summer.jpg', '50% 50%'), ('city-autumn.jpg', '50% 50%'),
+                                   ('city-winter.jpg', '50% 50%'), ('city-spring.jpg', '50% 50%')),
+                   ('BEYOND', 'POSSIBILITIES.'))
+    values = ''.join(f'''
+        <li class="ab-value fade">
+          <span class="ab-value-icon">{ps_icon(k)}</span>
+          <div>
+            <p class="ab-value-en">Value {i + 1:02d} — {en}</p>
+            <h3>{ja}<span>{sub}</span></h3>
+            <p>{text}</p>
+          </div>
+        </li>''' for i, (k, en, ja, sub, text) in enumerate(AB_VALUES))
+    business = ''.join(f'''
+        <article class="ab-biz fade">
+          <div class="ab-biz-photo"><img src="/images/{img}" alt="" style="object-position:{pos}" onerror="this.remove()"></div>
+          <div class="ab-biz-body">
+            <p class="ab-biz-en">{en}<span>{ja}</span></p>
+            <h3><span>{title[0]}</span><br><span>{title[1]}</span></h3>
+            {''.join(f'<p>{t}</p>' for t in texts)}
+            <p class="ab-biz-links">{''.join(f'<a class="link-arrow" href="{href}">{name}{ARROW}</a>' for name, href in links)}</p>
+          </div>
+        </article>''' for en, ja, title, img, pos, texts, links in AB_BUSINESS)
+    strengths = ''.join(f'''
+        <li class="fade">{ps_icon(k)}<h3>{t}</h3><p>{x}</p></li>''' for k, t, x in AB_STRENGTHS)
     return hero + f'''
-  <section class="section about-intro">
+  <section class="section ab-mission" id="mission">
     <div class="wrap">
-      <div class="about-intro-body fade">
-        <p class="eyebrow">Introduction</p>
-        <h2 class="about-intro-title no-punct"><span>顧客満足度を最優先に</span><span>人々の生活を向上させます</span></h2>
-        <p class="about-intro-text">お客様の暮らしにゆとりが生まれるよう、保険の見直しや、電気・ガスなどのライフラインをご案内しています。</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section about-mission" id="mission">
-    <div class="wrap">
-      <p class="eyebrow fade">Mission</p>
-      <h2 class="about-mission-msg fade"><span>暮らしにゆとりを</span><br><span>お客様とともに</span></h2>
-      <div class="about-mission-text fade">
-        <p>毎月の暮らしにかかるお金だからこそ、<br>一度の見直しが、これからの家計につながります。</p>
-        <p>LFグループ株式会社は、<br>ゆとりある生活の実現をお手伝いします。</p>
-      </div>
-      <p class="about-mission-quote fade"><span>家計にゆとりが生まれることで、</span><br><span>暮らしの選択肢も広がっていく。</span></p>
-    </div>
-  </section>
-
-  <section class="section about-policy">
-    <div class="wrap">
-      <div class="about-policy-grid">
-        <div class="about-policy-head">
-          <p class="eyebrow fade">Policy</p>
-          <h2 class="fade">お客様本位の<br>業務運営方針</h2>
-          <p class="fade" style="margin-top:32px"><a class="link-arrow" href="/operation/">主な取組内容を見る{ARROW}</a></p>
+      <p class="eyebrow fade">Our Mission</p>
+      <h2 class="fade">私たちの使命</h2>
+      <div class="ab-mission-grid">
+        <p class="ab-mission-words fade"><span>安心を届ける</span><span>つながりを生み出す</span><span>未来を支える</span></p>
+        <div class="ab-mission-body fade">
+          <p>私たちLFグループは、保険とライフラインという、暮らしや企業活動に欠かせない分野で事業を展開しています。</p>
+          <p>保険事業では、一人ひとりの人生や企業経営に寄り添い、将来への不安やリスクに備えるお手伝いを。</p>
+          <p>アライアンス事業では、企業同士のつながりを生かし、新生活を迎えるお客様に必要なサービスを届けています。</p>
+          <p>異なる事業に見えても、根底にある想いは同じです。</p>
+          <p class="ab-mission-quote">人と企業が<br class="sp">より安心して未来に向かえる環境をつくること</p>
+          <p>私たちは、その実現に向けて価値を提供し続けます。</p>
         </div>
-        {policy_lines_html(fd)}
       </div>
     </div>
   </section>
 
-''' + company_brief() + final_cta()
+  <section class="section bg-blue" id="values">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Value</p>
+      <h2 class="fade">大切にしている3つの価値観</h2>
+      <ol class="ab-value-list">{values}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="business">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Business</p>
+      <h2 class="fade">事業を通じた価値創造</h2>
+      <div class="ab-biz-list">{business}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-blue" id="strength">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Strength</p>
+      <h2 class="fade">LFグループの強み</h2>
+      <ul class="ab-strength-list">{strengths}
+      </ul>
+      <p class="ab-strength-link fade"><a class="link-arrow" href="/#numbers">数字で見るLFグループ{ARROW}</a></p>
+    </div>
+  </section>
+
+  <section class="section ab-vision" id="vision">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Vision</p>
+      <h2 class="fade">私たちが目指す未来</h2>
+      <div class="ab-vision-grid">
+        <div class="ab-vision-photo fade"><img src="/images/city-autumn.jpg" alt="" onerror="this.remove()"></div>
+        <div class="ab-vision-body fade">
+          <h3><span>新しい挑戦が</span><br><span>新しい未来をつくる</span></h3>
+          <p>社会の変化とともに、人々の暮らしや企業が抱える課題も変わり続けています。</p>
+          <p>私たちは、保険事業とアライアンス事業で培う経験やつながりを基盤に、さらなる価値の創造に挑戦していきます。</p>
+          <ul class="ab-vision-for">
+            <li>お客様にとって<b>より身近で頼れる存在へ</b></li>
+            <li>パートナー企業にとって<b>ともに成長できる存在へ</b></li>
+            <li>働く仲間にとって<b>一人ひとりの可能性を発揮できる場所へ</b></li>
+          </ul>
+          <p class="ab-vision-catch">人と企業の可能性を<br class="sp">その先へ</p>
+          <p>LFグループは、これからも挑戦を続けます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-blue" id="culture">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Culture</p>
+      <h2 class="fade">働く仲間を大切にする企業文化</h2>
+      <div class="ab-culture fade">
+        <p class="ab-culture-catch">一人ひとりが自分らしく働き<br>挑戦できる環境を</p>
+        <p>私たちは、個性と自主性を尊重し、仲間とともに成長できる組織を目指しています。</p>
+        <p><a class="link-arrow" href="/recruitment/">採用情報を見る{ARROW}</a></p>
+      </div>
+    </div>
+  </section>
+
+''' + final_cta()
 
 
 def tags(items):
@@ -454,6 +523,8 @@ PS_ICONS = {
     'alert': '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/>',
     'shield': '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
     'chart': '<path d="M3 3v18h18"/><path d="M8 17v-4"/><path d="M13 17V9"/><path d="M18 17V5"/>',
+    'network': '<circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M12 7.5v4M12 11.5 6.5 16M12 11.5l5.5 4.5"/>',
+    'rocket': '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',
     'partner': '<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>',
 }
 
@@ -1538,7 +1609,7 @@ def main():
         write('life/index.html', SEASON_REDIRECT)
         write('scene/index.html', season_photos(top_base, SCENE_PHOTOS, white_wrap=False)
               .replace('リニューアルの試作です', 'リニューアルの試作です・人物なしの写真の試作版', 1))
-    write('about/index.html', layout('私たちについて', page_about(), 'about'))
+    write('about/index.html', with_rf(layout('私たちについて', page_about(), 'about')))
     write('personal/index.html', with_rf(layout('個人のお客様', page_personal(), 'personal')))
     write('corporate/index.html', with_rf(layout('法人のお客様', page_corporate(), 'corporate')))
     write('partner/index.html', layout('アライアンス事業', page_partner(), 'partner'))
