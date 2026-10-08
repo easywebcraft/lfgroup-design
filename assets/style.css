@@ -1819,7 +1819,6 @@ br.sp { display: none; }
 @media (min-width: 1024px) { html .rf-recruit.rf-top.rf-serif .rv-big { font-size: clamp(28px, calc((100vw - 760px) * .09), 60px); } }
 @media (max-width: 1023px) { html .rf-recruit.rf-top.rf-serif .rv-big { font-size: clamp(22px, 7.4vw, 56px); } }
 @media (max-width: 767px) {
-  html .rf-recruit .rv-title { font-size: clamp(19px, 5.6vw, 28px); letter-spacing: .02em; }
   html .rf-recruit .rc-fv-lead { font-size: clamp(11px, 3.2vw, 15px); }
 }
 
@@ -1865,6 +1864,58 @@ br.sp { display: none; }
 .al-num-note { margin-top: 20px; text-align: center; }
 .al-num-note .note-draft { margin: 0; }
 @media (max-width: 1023px) { .al-num-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+
+/* ===== 採用情報（2026-10-08 お客様の構成案で作り直し）。書き方は build.py の page_recruitment()、クラスは rc- =====
+   働く環境（ps-menu）・成長と評価（ab-mission）・数字（al-num）・キャリアステップ（ps-flow）・よくあるご質問は、ほかのページと同じ部品 */
+.ps-flow:has(> li:nth-child(3):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1023px) { .ps-flow:has(> li:nth-child(3):last-child) { grid-template-columns: 1fr; } }
+
+/* 成長と評価：本文の下に2つの小さな項目 */
+.rc-reward { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+.rc-reward li { display: flex; gap: 14px; padding: 20px; border: 1px solid var(--rule); border-radius: var(--radius); }
+.rc-reward .ps-icon { margin-top: 2px; color: var(--navy); }
+.rc-reward h3 { font-size: 15px; font-weight: 600; letter-spacing: .06em; color: var(--navy); }
+.ab-mission-body .rc-reward p { margin-top: 4px; font-size: 13px; line-height: 1.8; }
+@media (max-width: 767px) { .rc-reward { grid-template-columns: 1fr; } }
+
+/* 募集職種：2つのカード（写真＋本文） */
+.rc-job-list { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.rc-job { overflow: hidden; border-radius: var(--radius); background: #fff; }
+.rc-job-photo { aspect-ratio: 16 / 9; overflow: hidden; background: var(--mist); }
+.rc-job-photo img { width: 100%; height: 100%; object-fit: cover; }
+.rc-job-body { padding: 28px 32px 32px; }
+.rc-job h3 { margin-top: 8px; font-family: var(--serif); font-weight: 500; font-size: clamp(20px, 1.9vw, 24px); letter-spacing: .08em; }
+.rc-job-catch { margin: 6px 0 14px; font-weight: 600; font-size: 15px; letter-spacing: .06em; color: var(--accent); }
+.rc-job-body > p:not(.ab-biz-en):not(.rc-job-catch):not(.note-draft) { font-size: 14px; line-height: 1.95; color: var(--sub); }
+.rc-job-body > p + p { margin-top: .5em; }
+.rc-job-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 8px; }
+.rc-job-tags li { padding: 3px 10px; border-radius: 2px; background: var(--bg-blue); font-size: 12px; letter-spacing: .04em; color: var(--navy); }
+.rc-job .link-arrow { margin-top: 4px; }
+.rc-job .note-draft { margin: 12px 0 0; }
+@media (max-width: 1023px) { .rc-job-list { grid-template-columns: 1fr; } }
+@media (max-width: 767px) { .rc-job-body { padding: 22px 20px 26px; } }
+
+/* 社員紹介：取材までは写真なしのカード */
+.rc-people { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 960px; margin-inline: auto; }
+.rc-person { padding: 32px; border: 1px solid var(--rule); border-radius: var(--radius); }
+.rc-person-icon { display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: 16px; border-radius: 50%; background: var(--bg-blue); }
+.rc-person-icon .ps-icon { color: var(--navy); }
+.rc-person h3 { margin-top: 4px; font-family: var(--serif); font-weight: 500; font-size: 20px; letter-spacing: .08em; }
+.rc-person h3 + p { margin-top: 8px; font-size: 14px; line-height: 1.95; color: var(--sub); }
+.rc-people-note { margin-top: 20px; text-align: center; }
+.rc-people-note .note-draft { margin: 0; }
+@media (max-width: 767px) { .rc-people { grid-template-columns: 1fr; } .rc-person { padding: 24px 22px; } }
+
+/* 募集要項・選考フロー */
+.rc-req-job { margin-bottom: 14px; font-family: var(--serif); font-weight: 500; font-size: 18px; letter-spacing: .08em; color: var(--navy); }
+.rc-select-title { margin-top: 40px; font-family: var(--serif); font-weight: 500; font-size: 20px; letter-spacing: .08em; text-align: center; }
+.rc-select { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.rc-select li { padding: 22px 20px; border-radius: var(--radius); background: #fff; }
+.rc-select b { font-family: var(--en); font-size: 22px; font-weight: 500; color: var(--accent); }
+.rc-select h4 { margin-top: 6px; font-size: 15px; font-weight: 600; letter-spacing: .06em; color: var(--navy); }
+.rc-select h4 + p { margin-top: 6px; font-size: 13px; line-height: 1.85; color: var(--sub); }
+@media (max-width: 1023px) { .rc-select { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 767px) { .rc-select { grid-template-columns: 1fr; } }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 

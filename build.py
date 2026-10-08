@@ -343,6 +343,7 @@ MINI_TILES = {
     '/corporate/': ('Corporate', '法人のお客様', 'cta-final.jpg'),
     '/partner/': ('Alliance', 'アライアンス事業', 'scene-home.jpg'),
     '/recruitment/': ('Recruit', '採用情報', 'cta.jpg'),
+    '/about/': ('About Us', '私たちについて', 'mission-1.jpg'),
 }
 
 
@@ -1076,6 +1077,61 @@ def page_contact():
                      compact=True, extra=contacts).replace('sub-hero compact', 'sub-hero compact contact-intro', 1)
 
 
+# ───── 採用情報（2026-10-08 お客様の構成案で作り直し） ─────
+# ①採用メッセージ（冒頭。写真4枚と動きはそのまま）②LFグループについて ③働く環境 ④成長と評価 ⑤募集職種 ⑥社員紹介
+# ⑦働き方（数字）⑧キャリアステップ ⑨募集要項・選考フロー ⑩よくあるご質問 ⑪応募。
+# 見出しに「。」「、」を入れない。段の見出しのすぐ下に説明文を置かない（2026-10-08 松本さん）
+# ★要確認：一般事務・営業サポートの募集、完全週休2日制・年間休日120日は構成案にあるが今のサイトにない。印（.note-draft）を付けている
+RC_CULTURE = [
+    ('Culture', '自分らしく働ける環境', '一人ひとりの個性や考え方を尊重し、自主性を大切にする組織を目指しています。必要以上の制約にとらわれず、自分の強みを発揮できる環境づくりを大切にしています。', 'about-hero.jpg', '50% 65%'),
+    ('Culture', '互いを尊重する組織', '立場や役職に関係なく、意見を交わしながらより良い仕事を目指す。一人ひとりが安心して働ける、風通しの良い組織づくりに取り組んでいます。', 'recruit-work-team.jpg', '50% 50%'),
+    ('Culture', '挑戦を後押しする文化', '年齢や経験だけにとらわれず、新しいアイデアや挑戦を歓迎。会社の成長とともに、自分自身の可能性も広げていける環境を目指しています。', 'mission-2.jpg', '50% 50%'),
+]
+
+RC_JOBS = [
+    ('Insurance Sales', '保険コンサルティング営業', '成果が自分の可能性を広げる', 'recruit-work-consult.jpg',
+     ['個人・法人のお客様に対して、生命保険・損害保険を活用した保障やリスク対策をご提案します。',
+      '法人マーケットへの営業活動や、既存のお客様との関係づくりを通じて、専門性と営業力を磨ける仕事です。'],
+     ['成果連動型報酬', '法人営業', '専門知識の習得', '成長機会'], False),
+    ('Office Administration', '一般事務・営業サポート', '働きやすさもやりがいも', 'recruit-work-prepare.jpg',
+     ['保険事業やアライアンス事業を支える事務業務を担当します。',
+      '書類作成やデータ管理、お客様対応などを通じて、会社の円滑な運営をサポートします。'],
+     ['働きやすい環境', '事務スキルの向上', '組織への貢献'], True),
+]
+
+RC_PEOPLE = [
+    ('Sales Staff', '保険営業スタッフ', '仕事のやりがい、営業スタイル、成果を出すための取り組みなどを紹介します。'),
+    ('Office Staff', '事務スタッフ', '日々の仕事内容、職場の雰囲気、仕事とプライベートの両立などを紹介します。'),
+]
+
+RC_NUMBERS = [('休日制度', '完全週休', '2日制'), ('年間休日', '120', '日'), ('勤務時間', '10–18', '時'), ('評価制度', '成果', 'を評価')]
+
+RC_STEPS = [
+    ('基礎を身につける', '商品知識・業務知識・仕事の進め方を学びます。'),
+    ('専門性を高める', '経験を積み、自分の強みや得意分野を伸ばします。'),
+    ('新しい役割に挑戦する', '後輩の育成やチーム運営、新しい業務への挑戦など。'),
+]
+
+RC_SELECT = [
+    ('お電話でのご応募', '052-846-8224 までお電話ください。'),
+    ('書類選考', 'ご経験やご希望の条件を確認します。'),
+    ('面接（1〜2回）', '仕事内容や働き方について、お互いに理解を深めます。'),
+    ('内定・入社', '条件を確認し、入社の手続きを進めます。'),
+]
+
+# ★要確認：質問は構成案のまま。回答は構成案になかったので、今の募集要項の範囲でこちらで書いた下書き
+RC_FAQ = [
+    ('保険業界が未経験でも応募できますか？',
+     '応募資格は学歴・性別・国籍不問です。これまでのご経験については、お電話で気軽にご相談ください。'),
+    ('営業職の給与はどのように決まりますか？',
+     '固定給20万円に、営業成績に応じた成果報酬を加えた成果連動型です。詳しい仕組みは面接でご説明します。'),
+    ('どのような人物を求めていますか？',
+     'お客様一人ひとりに誠実に向き合える方、自ら考えて行動し、新しいことに挑戦したい方を歓迎します。'),
+    ('事務職でも成果が評価されますか？',
+     '日々の業務への取り組みや、組織への貢献を大切に評価します。詳しくは面接でご説明します。'),
+]
+
+
 def page_recruitment():
     rows = [
         ('職務内容', '生命保険・損害保険などの金融商品のご提案・販売と、ご契約後のアフターサービス'),
@@ -1089,64 +1145,143 @@ def page_recruitment():
         ('郵送先・応募先', f'〒{POSTAL} {ADDRESS}'),
     ]
     dl = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)
-    # FV：求職者に「どんな仕事か」を最初に伝える。コピーは募集要項・職務内容の範囲で書く（2026-10-06）
-    # ★TODO：写真は仮。実際の社員・オフィス・相談風景の写真をいただいたら差し替え、.rc-photo-todo を消す
-    # FV のすぐ下に募集要項にある4項目の小さなカード（同じ4項目だった「働くポイント」の段はこれにまとめた）
-    facts = [
-        ('応募資格', '学歴・性別・国籍不問', ''),
-        ('勤務時間', '10:00〜18:00', ''),
-        ('給与', '固定給＋成果報酬', '固定給20万円＋成果報酬'),
-        ('雇用形態', '契約社員', '正社員登用制度あり（成績基準あり）'),
-    ]
-    cards = ''.join(f'<li class="fade"><p class="rc-fact-label">{k}</p><p class="rc-fact-value">{v}</p>'
-                    + (f'<p class="rc-fact-note">{n}</p>' if n else '') + '</li>' for k, v, n in facts)
+    culture = ''.join(f'''
+        <article class="ps-menu fade">
+          <div class="ps-menu-photo"><img src="/images/{img}" alt="" style="object-position:{pos}" onerror="this.remove()"></div>
+          <p class="ps-menu-num">{i + 1:02d}<span>{en}</span></p>
+          <h3>{t}</h3>
+          <p>{x}</p>
+        </article>''' for i, (en, t, x, img, pos) in enumerate(RC_CULTURE))
+    jobs = ''.join(f'''
+        <article class="rc-job fade">
+          <div class="rc-job-photo"><img src="/images/{img}" alt="" onerror="this.remove()"></div>
+          <div class="rc-job-body">
+            <p class="ab-biz-en">{en}</p>
+            <h3>{t}</h3>
+            <p class="rc-job-catch">{c}</p>
+            {''.join(f'<p>{x}</p>' for x in texts)}
+            <ul class="rc-job-tags">{''.join(f'<li>{p}</li>' for p in points)}</ul>
+            {'<p class="note-draft">募集の有無・条件は確認中です</p>' if draft else f'<p><a class="link-arrow" href="#requirements">募集要項を見る{ARROW}</a></p>'}
+          </div>
+        </article>''' for en, t, c, img, texts, points, draft in RC_JOBS)
+    people = ''.join(f'''
+        <article class="rc-person fade">
+          <span class="rc-person-icon">{ps_icon('person')}</span>
+          <p class="ab-value-en">{en}</p>
+          <h3>{t}</h3>
+          <p>{x}</p>
+        </article>''' for en, t, x in RC_PEOPLE)
+    numbers = ''.join(f'''
+        <li class="fade"><p class="al-num-label">{label}</p><p class="al-num-value">{value}<small>{unit}</small></p></li>''' for label, value, unit in RC_NUMBERS)
+    select = ''.join(f'''
+          <li><b>{i + 1:02d}</b><h4>{t}</h4><p>{x}</p></li>''' for i, (t, x) in enumerate(RC_SELECT))
+    # FV（冒頭）は write_recruit_trials() がトップと同じ動きの形に差し替える。ここはその元になる見出し・説明文・ボタン
     return f'''  <section class="rc-fv">
     <div class="rc-fv-photo fade"><img src="/images/about-hero.jpg" alt="" data-eager onerror="this.remove()"><span class="rc-photo-todo">写真は仮</span></div>
     <div class="wrap rc-fv-copy">
       <ol class="crumb fade" aria-label="パンくずリスト"><li><a href="/">トップ</a></li><li aria-current="page">採用情報</li></ol>
       <p class="eyebrow fade">Recruitment<span class="rc-fv-ja">採用情報</span></p>
       <h1 class="rc-fv-title fade"><span>人の人生に向き合いながら</span><span>自分の未来も変えていく</span></h1>
-      <p class="rc-fv-lead fade">生命保険・損害保険のご提案とアフターサービスを通じて、<br class="pc">お客様のこれからの暮らしを支える仕事です。</p>
+      <p class="rc-fv-lead fade">決められた道を歩むだけではなく<br>自分の可能性を自分の手で広げていく</p>
       <p class="rc-status fade"><span class="dot"></span>Entry Open<b>エントリー受付中</b></p>
-      <p class="rc-links fade"><a class="btn btn-primary" href="tel:0528468224">電話で応募・相談する{ARROW}</a><a class="link-arrow" href="#requirements">募集要項を見る{ARROW}</a></p>
-    </div>
-  </section>
-  <section class="rc-facts" aria-label="募集のポイント">
-    <div class="wrap"><ul class="rc-fact-list">{cards}</ul></div>
-  </section>
-
-  <section class="section bg-blue" id="work">
-    <div class="wrap rc-work">
-      <div>
-        <p class="eyebrow fade">Work</p>
-        <h2 class="fade">仕事内容</h2>
-      </div>
-      <div class="fade">
-        <p class="rc-work-lead">生命保険・損害保険などの金融商品のご提案・販売と、ご契約後のアフターサービス</p>
-        <p class="text">LFグループ株式会社は、大手保険会社の代理店として各種保険を取り扱っています。お客様のライフプランに合わせた最適な保険をご提案します。ご契約後も、生涯を安心して過ごせるよう、長期的にサポートします。</p>
-        <p style="margin-top:24px"><a class="link-arrow" href="/personal/#service">保険について見る{ARROW}</a></p>
-      </div>
+      <p class="rc-links fade"><a class="btn btn-primary" href="#jobs">募集職種を見る{ARROW}</a><a class="link-arrow" href="tel:{RECRUIT_TEL_HREF[4:]}">電話で応募・相談する{ARROW}</a></p>
     </div>
   </section>
 
-  <section class="section" id="requirements">
+  <section class="section" id="about-us">
     <div class="wrap">
-      <p class="eyebrow fade">Requirements</p>
-      <h2 class="fade" style="margin-bottom:40px">募集要項</h2>
-      <dl class="company-list full">{dl}</dl>
-    </div>
-  </section>
-
-  <section class="section bg-blue">
-    <div class="wrap narrow">
-      <p class="eyebrow fade">Entry</p>
-      <h2 class="fade">ご応募・採用に関するお問い合わせ</h2>
-      <div class="recruit-tel fade">
-        <a href="tel:0528468224">052-846-8224</a>
+      <p class="eyebrow fade">About Us</p>
+      <h2 class="fade">LFグループについて</h2>
+      <div class="ab-biz-list">
+        <article class="ab-biz fade">
+          <div class="ab-biz-photo"><img src="/images/cta.jpg" alt="" style="object-position:50% 50%" onerror="this.remove()"></div>
+          <div class="ab-biz-body">
+            <p class="ab-biz-en">Who We Are</p>
+            <h3><span>一人ひとりの可能性が</span><br><span>会社の未来をつくる</span></h3>
+            <p>LFグループは、保険事業とアライアンス事業を中心に、人々の暮らしと企業活動を支えるサービスを展開しています。</p>
+            <p>私たちが目指すのは、会社の成長だけではありません。働く一人ひとりが自分の強みを生かし、仕事にやりがいを感じながら成長できる組織です。</p>
+            <p>決められたことをこなすだけではなく、自ら考え、行動し、新しい価値を生み出していく。そんな仲間とともに、LFグループの未来をつくっていきたいと考えています。</p>
+            {mini_tiles(['/about/'])}
+          </div>
+        </article>
       </div>
     </div>
   </section>
-'''
+
+  <section class="section bg-blue" id="culture">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Culture</p>
+      <h2 class="fade">LFグループの働く環境</h2>
+      <div class="ps-menu-list">{culture}
+      </div>
+    </div>
+  </section>
+
+  <section class="section ab-mission" id="career">
+    <div class="wrap">
+      <p class="eyebrow fade">Career &amp; Reward</p>
+      <h2 class="fade">成長と評価の仕組み</h2>
+      <div class="ab-mission-grid">
+        <p class="ab-mission-words fade"><span>努力と成果が</span><span>正当に評価される</span><span>環境へ</span></p>
+        <div class="ab-mission-body fade">
+          <p>LFグループでは、役割や仕事内容に応じた評価を大切にしています。</p>
+          <p>営業職では、成果に応じた報酬制度を設け、一人ひとりの頑張りを収入に反映します。</p>
+          <p>事務職では、日々の業務への取り組みや組織への貢献を大切にしながら、安心して長く働ける環境づくりを目指します。</p>
+          <ul class="rc-reward">
+            <li>{ps_icon('chart')}<div><h3>成果に応じた報酬</h3><p>営業職は、実績を報酬に反映する仕組みです。</p></div></li>
+            <li>{ps_icon('growth')}<div><h3>成長を支える環境</h3><p>経験やスキルに応じて、新しい役割や仕事に挑戦できます。</p></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-blue" id="jobs">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Work</p>
+      <h2 class="fade">募集職種</h2>
+      <div class="rc-job-list">{jobs}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="people">
+    <div class="wrap">
+      <p class="eyebrow fade">People</p>
+      <h2 class="fade">社員紹介</h2>
+      <div class="rc-people">{people}
+      </div>
+      <p class="rc-people-note fade"><span class="note-draft">社員の写真とインタビューは取材後に掲載します</span></p>
+    </div>
+  </section>
+
+  <section class="section co-stages al-perf" id="work-style">
+    <div class="wrap">
+      <p class="eyebrow fade">Work Style in Numbers</p>
+      <h2 class="fade">働く環境を数字で</h2>
+      <ul class="al-num-list">{numbers}
+      </ul>
+      <p class="al-num-note fade"><span class="note-draft">休日は確認中です（職種によって異なる場合があります）</span></p>
+    </div>
+  </section>
+''' + ps_flow(RC_STEPS, eyebrow='Career Path', title='キャリアステップ') + f'''
+  <section class="section bg-blue" id="requirements">
+    <div class="wrap">
+      <p class="eyebrow fade">Recruitment</p>
+      <h2 class="fade">募集要項</h2>
+      <p class="rc-req-job fade">保険コンサルティング営業</p>
+      <dl class="company-list full fade">{dl}</dl>
+      <h3 class="rc-select-title fade">選考フロー</h3>
+      <ol class="rc-select fade">{select}
+      </ol>
+    </div>
+  </section>
+''' + ps_faq(RC_FAQ, bg='') + '\n' + final_cta(
+        title='<span>あなたの可能性を</span><br><span>LFグループで</span>',
+        text='新しい挑戦も、自分らしい働き方も。<br>一人ひとりの可能性を大切にする場所で、<br>次の一歩を踏み出しませんか。',
+        button='電話で応募・相談する', eyebrow='Your Future Starts Here.'
+    ).replace('href="/contact/"', f'href="{RECRUIT_TEL_HREF}"', 1).replace(
+        f'お電話でのお問い合わせ<a href="{TEL_HREF}">{TEL}</a>', f'採用に関するお電話<a href="{RECRUIT_TEL_HREF}">{RECRUIT_TEL}</a>', 1)
 
 
 # ───────────── 方針ページ：保存した本文を見出し・箇条書きに組み直す ─────────────
@@ -1449,10 +1584,10 @@ def write_recruit_trials():
     # 見出しを1文字ずつ出すために rv-title を付け、ほかの要素は .fade を外して recruit-fv.js で順にすべり込ませる
     # 案A2のコピーは、採用情報ページのまま（2026-10-07 松本さん「コピーはそのまま。フォントだけ本番のトップと同じに」）。
     # 見出しを1文字ずつ出すために rv-title を付け、他の要素の .fade は外して recruit-fv.js で順にすべり込ませる
-    # 見出し（2026-10-07 松本さん指定）：「お客様のこれからに寄り添い自分のこれからも描いていく」。英字は SUPPORT／THEIR FUTURE／SHAPE YOUR OWN
+    # 見出し（2026-10-08 構成案のおすすめ）：「自分らしく働く／可能性を広げる」。英字は WORK／YOUR WAY.／GROW BEYOND.（それまでは「お客様のこれからに寄り添い…」・SUPPORT…）
     # 指定の文は読点「、」・ピリオド「.」を含むが、指定どおりそのまま入れる
     copy_v = (copy.replace('<h1 class="rc-fv-title fade"><span>人の人生に向き合いながら</span><span>自分の未来も変えていく</span></h1>',
-                           '<h1 class="rc-fv-title rv-title"><span>お客様のこれからに寄り添い</span><span>自分のこれからも描いていく</span></h1>')
+                           '<h1 class="rc-fv-title rv-title"><span>自分らしく働く</span><span>可能性を広げる</span></h1>')
                   .replace(' fade"', '"').replace('class="fade"', ''))
     assert 'rv-title' in copy_v
     hiring = ''.join('<span>WE ARE HIRING<i>―</i>JOIN LF GROUP<i>―</i></span>' for _ in range(6))
@@ -1469,7 +1604,7 @@ def write_recruit_trials():
     fv['a2'] = (recruitment_fv
                        .replace('<section class="rf rf-a" data-fx="a">',
                                 '<section class="rf rf-a rf-v rf-top rf-wipe rf-serif rf-sub rf-recruit" data-fx="a" data-stay="4500">')
-                       .replace(copy, '<p class="rv-big" aria-hidden="true"><span>SUPPORT</span><span>THEIR FUTURE</span><span>SHAPE YOUR OWN</span></p>\n    ' + GOLD_WIPE + '\n    ' + copy_v)
+                       .replace(copy, '<p class="rv-big" aria-hidden="true"><span>WORK</span><span>YOUR WAY.</span><span>GROW BEYOND.</span></p>\n    ' + GOLD_WIPE + '\n    ' + copy_v)
                        .replace('  </section>', '''    <small class="rf-photo-note">写真はイメージです</small>
   </section>''', 1))
     # 01〜04の表示（右下の時刻・進み具合の線）は、案A2では外す（2026-10-07 松本さん）
