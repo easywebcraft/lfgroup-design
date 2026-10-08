@@ -668,3 +668,6 @@ html:has(.rf-top) body { background: transparent; }
 html:has(.rf-top) body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background: linear-gradient(180deg, rgba(10, 22, 38, .86), rgba(10, 22, 38, .92)), url("../images/city-autumn.jpg") center / cover no-repeat; }
 html:has(.rf-top) .entries-head h2 { color: #fff; text-shadow: 0 2px 18px rgba(8, 18, 32, .5); }
+/* 小見出し（Find Your Page／About Us）は戻した（2026-10-08 松本さん）。濃い背景で読めるよう明るい色にする */
+html:has(.rf-top) .entries-head .eyebrow { color: rgba(255, 255, 255, .85); }
+.entries-head h2 { margin-top: 10px; }
