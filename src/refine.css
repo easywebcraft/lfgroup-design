@@ -655,6 +655,23 @@
   .js main .fade { opacity: 1; transform: none; transition: none; }
 }
 
+/* ===== 数字で見るLFグループを6項目（PC 3列×2段／スマホ 2列×3段）に（2026-10-08 松本さん）=====
+   段が2つになるので、カードの上下の余白と数字の大きさを少し小さくする。「+」は数字と同じ大きさで少し細く */
+.numbers-list { gap: 20px; }
+.num-card { padding: 30px 16px 26px; }
+.num { font-size: clamp(44px, 4.8vw, 64px); }
+.num-plus { margin-right: 2px; font-family: var(--en); font-size: clamp(36px, 4vw, 54px); font-weight: 500; }
+@media (max-width: 767px) {
+  .numbers-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .num-card { padding: 22px 8px 18px; }
+  .num-label { font-size: 12px; letter-spacing: .04em; }
+  .num { font-size: clamp(30px, 9.2vw, 40px); }
+  .num-plus { font-size: clamp(24px, 7.4vw, 32px); }
+  .num-value small { margin-left: 3px; font-size: 13px; letter-spacing: 0; }
+  .num-note { font-size: 11px; letter-spacing: .04em; }
+  .num-todo { top: 6px; right: 6px; font-size: 10px; padding: 0 6px; }
+}
+
 /* ===== トップの2つの帯（目的に合わせて／LFグループについて）を見出しだけにして、余白を詰める（2026-10-08 松本さん「余白が気になる」）=====
    小見出し（Find Your Page／About Us）と説明文を外した。上下の余白は約半分 */
 .entries-head { padding: clamp(36px, 4vw, 56px) 0 clamp(22px, 2.4vw, 34px); }
