@@ -1181,7 +1181,17 @@ def write_top_a2(top):
                                                           '<section class="fv rf rf-a rf-v rf-top rf-wipe rf-serif" data-fx="a" data-stay="4500"', 1) + top[j:])
          .replace('family=Montserrat:wght@500;600', 'family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@500;600', 1),
          '大きな英字を明朝体系のフォントにした版'),
+        # /top-flashy/（2026-10-08）＝ 今のトップ（/top-a2-serif/）に、派手な演出（src/flashy.css・flashy.js）を足した見比べ用。本番には出さない
+        ('top-flashy/index.html', (top[:i] + sec.replace('<section class="rf rf-a rf-v rf-top" data-fx="a" data-stay="4000"',
+                                                        '<section class="fv rf rf-a rf-v rf-top rf-wipe rf-serif rf-flashy" data-fx="a" data-stay="4500"', 1) + top[j:])
+         .replace('family=Montserrat:wght@500;600', 'family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@500;600', 1)
+         .replace('</head>', '<link rel="stylesheet" href="/assets/flashy.css?v=%s">\n</head>' % hashlib.sha1((SRC / 'flashy.css').read_bytes()).hexdigest()[:8], 1)
+         .replace('</body>', '<script src="/assets/flashy.js?v=%s"></script>\n</body>' % hashlib.sha1((SRC / 'flashy.js').read_bytes()).hexdigest()[:8], 1),
+         '今のトップに派手な演出（フラッシュ・金の粒・光の筋・きらめき）を足した版'),
     )
+    if not RELEASE:
+        write('assets/flashy.css', (SRC / 'flashy.css').read_text())
+        write('assets/flashy.js', (SRC / 'flashy.js').read_text())
     out = {}
     for path, html_, label in pages:
         html_ = (html_.replace('</head>', f'<link rel="stylesheet" href="/assets/recruit-fv.css?v={v}">\n</head>', 1)

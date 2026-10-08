@@ -1,0 +1,65 @@
+/* ===== トップのヒーローを派手にする追加分（試作 /top-flashy/。2026-10-08 松本さん「ベースは今のままで、もう少し派手に」）=====
+   ベース（recruit-fv.css / .js）はそのまま。切り替えの衝撃・金の粒・見出しの金のきらめき・光の筋・ボタンの脈打ちを足すだけ */
+
+/* 1) 切り替えの瞬間：白金のフラッシュ＋写真がドンと一瞬拡大して戻る */
+.rf-flashy .rf-media { overflow: hidden; }
+.rf-flashy .ff-flash { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; mix-blend-mode: screen;
+  background: radial-gradient(ellipse at 62% 50%, rgba(255, 238, 200, .95) 0%, rgba(255, 214, 140, .55) 35%, rgba(255, 214, 140, 0) 70%); }
+.rf-flashy .ff-flash.is-hit { animation: ff-flash .9s ease-out; }
+@keyframes ff-flash { 0% { opacity: 0; } 12% { opacity: .85; } 100% { opacity: 0; } }
+.rf-flashy .rf-media.is-hit { animation: ff-punch .9s cubic-bezier(.2, .8, .2, 1); }
+@keyframes ff-punch { 0% { transform: scale(1); } 14% { transform: scale(1.035); } 100% { transform: scale(1); } }
+
+/* 2) 切り替え時に、金の細い光の筋が何本も斜めに走る */
+.rf-flashy .ff-streaks { position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; mix-blend-mode: screen; }
+.rf-flashy .ff-streaks i { position: absolute; top: -10%; bottom: -10%; width: 2px; left: -10%; opacity: 0; transform: skewX(-18deg);
+  background: linear-gradient(180deg, rgba(255, 230, 176, 0), rgba(255, 230, 176, .95), rgba(255, 230, 176, 0)); box-shadow: 0 0 18px 4px rgba(255, 214, 140, .5); }
+.rf-flashy .ff-streaks.is-hit i { animation: ff-streak 1.3s cubic-bezier(.77, 0, .18, 1) both; }
+.rf-flashy .ff-streaks i:nth-child(1) { --d: 0s; width: 3px; }
+.rf-flashy .ff-streaks i:nth-child(2) { --d: .07s; width: 1px; }
+.rf-flashy .ff-streaks i:nth-child(3) { --d: .14s; width: 5px; opacity: .6; }
+.rf-flashy .ff-streaks i:nth-child(4) { --d: .21s; width: 1px; }
+.rf-flashy .ff-streaks i:nth-child(5) { --d: .28s; width: 2px; }
+.rf-flashy .ff-streaks.is-hit i { animation-delay: var(--d); }
+@keyframes ff-streak { 0% { opacity: 0; transform: skewX(-18deg) translateX(0); } 12% { opacity: 1; } 100% { opacity: 0; transform: skewX(-18deg) translateX(1500%); } }
+
+/* 3) 金の粒（canvas）が舞い上がる */
+.rf-flashy .ff-sparks { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: screen; }
+
+/* 4) 見出し：金のきらめきが定期的に文字の上を走る。「未来」は金に輝く */
+.rf-flashy .rc-fv-title { background: linear-gradient(105deg, #fff 0%, #fff 42%, #ffe2a0 50%, #fff 58%, #fff 100%); background-size: 260% 100%; background-position: 130% 0;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: ff-shine 5s ease-in-out 2.2s infinite; filter: drop-shadow(0 2px 14px rgba(8, 18, 32, .55)); }
+.rf-flashy .rc-fv-title .rv-ch, .rf-flashy .rc-fv-title span { -webkit-text-fill-color: inherit; }
+@keyframes ff-shine { 0%, 55% { background-position: 130% 0; } 85%, 100% { background-position: -30% 0; } }
+.rf-flashy .rc-fv-title em { background: linear-gradient(100deg, #f2b63c, #fff1c8 45%, #f2b63c 70%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; animation: ff-gold 3s linear infinite; }
+@keyframes ff-gold { to { background-position: -200% 0; } }
+
+/* 5) 大きな英字：金の輪郭が呼吸するように光る */
+.rf-flashy .rv-big { animation: ff-glow 3.2s ease-in-out infinite; }
+@keyframes ff-glow { 0%, 100% { filter: drop-shadow(0 3px 14px rgba(8, 18, 32, .75)); } 50% { filter: drop-shadow(0 0 16px rgba(255, 214, 140, .85)) drop-shadow(0 3px 14px rgba(8, 18, 32, .6)); } }
+
+/* 6) 相談ボタン：金の波紋が広がり続ける */
+.rf-flashy .rc-links .btn-primary { position: relative; overflow: visible; }
+.rf-flashy .rc-links .btn-primary::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: 0 0 0 0 rgba(242, 182, 60, .7); animation: ff-ring 2.2s ease-out infinite; }
+@keyframes ff-ring { 0% { box-shadow: 0 0 0 0 rgba(242, 182, 60, .7); } 80%, 100% { box-shadow: 0 0 0 22px rgba(242, 182, 60, 0); } }
+
+/* 7) マウスの位置に金のスポットライト（PCのみ） */
+.rf-flashy .ff-spot { position: absolute; inset: 0; z-index: 2; pointer-events: none; mix-blend-mode: soft-light; opacity: 0; transition: opacity .5s;
+  background: radial-gradient(circle 260px at var(--sx, 50%) var(--sy, 50%), rgba(255, 226, 160, .9), rgba(255, 226, 160, 0) 70%); }
+.rf-flashy.is-hover .ff-spot { opacity: 1; }
+
+/* 8) 下へのスクロールの合図 */
+.rf-flashy .ff-scroll { position: absolute; left: 50%; bottom: 18px; z-index: 4; width: 1px; height: 54px; background: rgba(255, 255, 255, .35); overflow: hidden; }
+.rf-flashy .ff-scroll::after { content: ""; position: absolute; left: 0; top: -100%; width: 100%; height: 100%; background: #f2b63c; animation: ff-drop 1.8s cubic-bezier(.65, 0, .35, 1) infinite; }
+@keyframes ff-drop { 0% { top: -100%; } 70%, 100% { top: 100%; } }
+
+@media (max-width: 1023px) { .rf-flashy .ff-spot, .rf-flashy .ff-scroll { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .rf-flashy .ff-flash, .rf-flashy .ff-streaks, .rf-flashy .ff-sparks, .rf-flashy .ff-spot, .rf-flashy .ff-scroll { display: none; }
+  .rf-flashy .rc-fv-title, .rf-flashy .rc-fv-title em, .rf-flashy .rv-big, .rf-flashy .rc-links .btn-primary::after { animation: none; }
+}
+
+/* 調整：見出しは文字の影を消して filter の影だけにする（透けて暗く見えるため）／波紋は明るい金で細く */
+.rf-flashy .rc-fv-title { text-shadow: none; }
+@keyframes ff-ring { 0% { box-shadow: 0 0 0 0 rgba(255, 214, 140, .95); } 80%, 100% { box-shadow: 0 0 0 16px rgba(255, 214, 140, 0); } }
