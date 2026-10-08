@@ -168,11 +168,14 @@
       requestAnimationFrame(step);
     };
     var io = new IntersectionObserver(function (entries) {
+      // 同時に画面に入った数字を、左上から120msずつ開始をずらし、数字が完成した順に光らせる。
+      // （6項目になって全体が長く感じたので、350ms→120ms に短縮。2026-10-08 松本さん。
+      //   スマホは段ごとに画面へ入るので、全体の何番目かではなく「同時に入ったうちの何番目か」で数える）
+      var k = 0;
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         io.unobserve(entry.target);
-        // 左から350msずつ開始をずらし、数字が完成した順に光らせる。
-        run(entry.target, Array.prototype.indexOf.call(nums, entry.target) * 350);
+        run(entry.target, k++ * 120);
       });
     }, { threshold: 0.6 });
     Array.prototype.forEach.call(nums, function (el) { el.textContent = '0'; io.observe(el); });
