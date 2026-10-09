@@ -116,8 +116,57 @@ def url_meta(page_path):
             '<meta name="twitter:card" content="summary_large_image">\n')
 
 
+# 検索結果に出る題名と説明文（<title>・description・og）。キーは layout の current（トップだけ 'top'）。
+# 2026-10-09：それまでは全ページ同じ説明文で、トップの題名は会社名だけだった。今のSTUDIOのサイトの検索実績は、会社名での検索（「LFグループ株式会社」「LFグループ」）がほとんどで、
+# 採用情報は表示166回・クリック0だった。地域（名古屋市東区）・事業・求人の言葉を入れて、何のページかが検索結果で分かるようにする。文言はお客様の確認待ち
+PAGE_META = {
+    'top': ('LFグループ株式会社｜名古屋の保険代理店・法人保険・ライフラインサービス',
+            '名古屋市東区の保険代理店 LFグループ株式会社。個人の保険の見直し・資産形成から、法人保険・企業のリスク対策、不動産会社様向けのライフラインサービスまで、お気軽にご相談ください。'),
+    'about': ('私たちについて｜LFグループ株式会社',
+              'LFグループが大切にしている理念・使命・価値観と、保険事業・アライアンス事業を通じた価値創造、強み、目指す未来をご紹介します。'),
+    'personal': ('個人のお客様｜保険の見直し・資産形成のご相談｜LFグループ株式会社',
+                 '医療・死亡保障、資産形成、相続、教育資金、家計の見直しまで、保険とお金のご相談を名古屋市東区のLFグループが承ります。無料相談はお問い合わせからどうぞ。'),
+    'corporate': ('法人のお客様｜法人保険・経営者保障・福利厚生｜LFグループ株式会社',
+                  '経営者の保障、従業員の福利厚生、事業活動のリスク対策まで。企業の状況に合わせた法人向けの保険を、名古屋市東区のLFグループ株式会社がご提案します。'),
+    'partner': ('アライアンス事業｜不動産会社様向けライフラインサービス｜LFグループ株式会社',
+                '不動産会社様との提携で、新生活に必要なライフラインサービスをご案内します。入居者様の利便性向上と、パートナー企業様の業務効率化・新たな価値創出を支援します。'),
+    'company': ('会社概要｜LFグループ株式会社（名古屋市東区）',
+                'LFグループ株式会社の会社概要。所在地は愛知県名古屋市東区葵（最寄り駅：千種駅）、電話は052-846-2135。事業内容・アクセスをご案内します。'),
+    'recruitment': ('採用情報｜保険コンサルティング営業の求人｜LFグループ株式会社（名古屋）',
+                    '名古屋市東区のLFグループ株式会社の採用情報。保険コンサルティング営業・一般事務・営業サポートの募集要項、完全週休2日制・年間休日120日以上、成果報酬。応募はお問い合わせから。'),
+    'contact': ('お問い合わせ｜LFグループ株式会社',
+                '保険・固定費のご相談、アライアンス事業、採用に関するお問い合わせは、お電話（052-846-2135）、メール、フォームから。受付時間は10:00～19:00です。'),
+}
+
+
+def org_jsonld(current):
+    """検索エンジンに会社情報を伝える構造化データ（schema.org の InsuranceAgency）。トップと会社概要だけ。
+    絶対URLが要るので、本番の書き出し（--site-url あり）のときだけ入れる。営業日は聞いていないので openingHours は入れない"""
+    if not SITE_URL or current not in ('', 'company'):
+        return ''
+    import json
+    data = {
+        '@context': 'https://schema.org',
+        '@type': 'InsuranceAgency',
+        'name': COMPANY,
+        'alternateName': ['LFグループ', 'LF Group'],
+        'url': SITE_URL + '/',
+        'logo': SITE_URL + '/images/logo.png',
+        'image': SITE_URL + '/images/ogp.jpg',
+        'telephone': '+81-52-846-2135',
+        'email': MAIL,
+        'address': {'@type': 'PostalAddress', 'postalCode': POSTAL, 'addressCountry': 'JP', 'addressRegion': '愛知県',
+                    'addressLocality': '名古屋市東区', 'streetAddress': '葵3-14-5 2F'},
+        'founder': {'@type': 'Person', 'name': '遠藤 昇平'},
+    }
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + '</script>'
+
+
 def layout(page_title, body, current='', description='顧客満足度を最優先に人々の生活を向上させます。', loader=False):
     title = COMPANY if not page_title else f'{page_title}｜{COMPANY}'
+    meta = PAGE_META.get(current if current else ('top' if not page_title else ''))
+    if meta:
+        title, description = meta
     # 試作は検索に載せない。本番（--release）では外す
     robots = '' if RELEASE else '<meta name="robots" content="noindex,nofollow">\n'
     return f'''<!doctype html>
@@ -132,6 +181,7 @@ def layout(page_title, body, current='', description='顧客満足度を最優�
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{html.escape(description)}">
 __URL_META__
+{org_jsonld(current)}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
@@ -1904,7 +1954,8 @@ def main():
     renders = {'operation': policy_operation, 'solicitation': policy_solicitation,
                'privacyprotection': policy_privacy, 'informationsecurity': policy_security}
     for key, label, _ in POLICIES:
-        write(f'{key}/index.html', layout(label, page_policy(key, label, renders[key])))
+        write(f'{key}/index.html', layout(label, page_policy(key, label, renders[key]),
+                                          description=f'LFグループ株式会社の「{label}」です。お客様に安心してご相談いただくための、当社の考え方と取り組みをご案内します。'))
     if RELEASE:
         write('404.html', layout('ページが見つかりません', page_404()).replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"', 1))
         # 公開前の確認：下書き・確認中の印（.note-draft）が残っているページを知らせる
