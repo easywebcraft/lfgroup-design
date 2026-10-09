@@ -395,8 +395,6 @@
 .tel-mails .mail-list dt { font-size: 13px; font-weight: 500; color: var(--text-sub); }
 .tel-mails .mail-list dd { margin: 4px 0 0; }
 .tel-mails .mail-list dd > a:first-child { margin-top: 0; font-family: var(--en); font-size: 20px; font-weight: 500; letter-spacing: .02em; word-break: break-all; }
-.tel-mails .mail-list .mail-link { display: block; margin-top: 6px; }
-.tel-mails .mail-list .mail-link a { margin-top: 0; font-family: inherit; font-size: 13px; letter-spacing: 0; }
 
 
   /* ===== 2026-10-03 見直し：保険・FPの会社としての信頼感を足す =====

@@ -1136,7 +1136,7 @@ def page_contact():
         <div class="tel-box tel-main">
           <h2>お電話でのお問い合わせ</h2>
           <a class="tel-number" href="{TEL_HREF}">{TEL}</a>
-          <p class="tel-hours">受付時間 10:00～18:00</p>
+          <p class="tel-hours">受付時間 10:00～19:00</p>
           <a class="btn btn-primary" href="{TEL_HREF}">電話で相談する{ARROW}</a>
         </div>
         <div class="tel-box tel-mails">
@@ -1144,7 +1144,7 @@ def page_contact():
           <dl class="mail-list">
             <div><dt>保険・固定費のご相談</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></div>
             <div><dt>アライアンス事業のご相談</dt><dd><a href="mailto:{ALLIANCE_MAIL}">{ALLIANCE_MAIL}</a></dd></div>
-            <div><dt>採用関連のお問い合わせ</dt><dd><a href="mailto:{RECRUIT_MAIL}">{RECRUIT_MAIL}</a><span class="mail-link"><a class="link-arrow" href="/recruitment/">採用情報を見る{ARROW}</a></span></dd></div>
+            <div><dt>採用関連のお問い合わせ</dt><dd><a href="mailto:{RECRUIT_MAIL}">{RECRUIT_MAIL}</a></dd></div>
           </dl>
         </div>
       </div>
@@ -1469,7 +1469,7 @@ def policy_privacy():
     <div><dt>所在地</dt><dd>〒{POSTAL} {ADDRESS}</dd></div>
     <div><dt>電話番号</dt><dd><a href="{TEL_HREF}">{TEL}</a></dd></div>
     <div><dt>メールアドレス</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></div>
-    <div><dt>受付時間</dt><dd>10:00～18:00</dd></div>
+    <div><dt>受付時間</dt><dd>10:00～19:00</dd></div>
   </dl>
 </div>'''
     return body
