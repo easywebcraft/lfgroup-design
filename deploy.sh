@@ -32,7 +32,16 @@ if [ -n "${LF_SSH_KEY:-}" ]; then SSH_CMD="${SSH_CMD} -i ${LF_SSH_KEY/#\~/$HOME}
 # 公開しないものが前に上がっていた場合に、反映のついでに消す（1行に1つ。public_html からの相対パス）
 REMOVE_FILES=("images/recruit-work-prompts.md")
 
-echo "== 本番用の書き出し（${SITE_URL}）"
+# 反映は、git（origin/main）と同じ内容のときだけ。未コミット・未pushの変更が、gitに残らないまま本番に出るのを防ぐ（2026-10-09）
+GIT_SHA="$(git rev-parse --short HEAD)"
+GIT_MSG="$(git log -1 --format=%s)"
+if [ "${1:-}" = "--go" ]; then
+  git fetch -q origin
+  if [ -n "$(git status --porcelain)" ]; then echo "未コミットの変更があるので止めます（先にコミットして push してください）"; git status --short | head; exit 1; fi
+  if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then echo "今のコミット（${GIT_SHA}）が origin/main と違うので止めます（push または pull してください）"; exit 1; fi
+fi
+
+echo "== 本番用の書き出し（${SITE_URL}）  git: ${GIT_SHA} ${GIT_MSG}"
 python3 build.py --release --site-url "${SITE_URL}" | grep -E "⚠|※" || true
 test -f dist/index.html || { echo "dist/index.html がありません"; exit 1; }
 test -f dist/google169aca25f9cbbfb6.html || { echo "Search Console の確認ファイルがありません"; exit 1; }
@@ -51,10 +60,15 @@ if [ "${1:-}" = "--go" ]; then
   echo "== 本番へ反映します（${TARGET}:${REMOTE_DIR}）"
   rsync -rlvzc --itemize-changes -e "${SSH_CMD}" dist/ "${TARGET}:${REMOTE_DIR}"
   for f in "${REMOVE_FILES[@]}"; do ${SSH_CMD} "${TARGET}" "rm -f ${REMOTE_DIR}${f}"; done
+  # 反映の記録（日時・gitのコミット）。public_html の外なので、外からは見えない。「本番は、どのコミットか」を後から調べられる
+  echo "$(date '+%F %T') ${GIT_SHA} ${GIT_MSG}" | ${SSH_CMD} "${TARGET}" "cat >> ${REMOTE_ROOT}/_deploy_log.txt"
   echo "== 反映しました。外から確認：${SITE_URL}/"
   echo "   戻す：  ssh ${TARGET} \"rsync -a ${REMOTE_ROOT}/_backup_${STAMP}/ ${REMOTE_DIR}\""
 else
   echo "== 確認のみ（反映しません）。内容が変わるファイル："
   rsync -rlnvzc --itemize-changes -e "${SSH_CMD}" dist/ "${TARGET}:${REMOTE_DIR}" | grep -E "^<|^\*|^>" || echo "   （変わるファイルはありません）"
+  echo "== サーバーだけにあるファイル（消しません。手で置いたものがないかの確認）："
+  rsync -rlnc --delete --itemize-changes -e "${SSH_CMD}" dist/ "${TARGET}:${REMOTE_DIR}" | grep -E "^\*deleting" | sed 's/^\*deleting /   /' || true
+  echo "   （default_page.png と .user.ini は、Xserver が最初から置いたもの）"
   echo "== 問題なければ  ./deploy.sh --go  で反映します"
 fi

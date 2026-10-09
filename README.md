@@ -280,7 +280,7 @@ GitHub Pages は `easywebcraft.github.io/lfgroup-design/` の下で配信する�
 - lfgroup.jp は **Xserver**（ネームサーバー・サーバーとも。メールも同じドメインで動いている）。2026-10-09 時点では Xserver の初期ページで、https は未設定。**DNS（ネームサーバー・MX）は変えない**（メールが止まる）。本番用ファイルをサーバーの公開フォルダ（public_html）へ置くだけにする
 - 書き出し：`python3 build.py --release --site-url https://lfgroup.jp` → `dist/`（試作の帯・noindex・コメントを外し、canonical・og:url・sitemap.xml・robots.txt・404.html・`.htaccess` を入れる。試作ページは入らない）。`dist/` は git に入れない。書き出しの最後に、**下書き・確認中の印（`.note-draft`）が残っているページ**が警告で出る
 - `.htaccess` は http→https と www なしへの統一（1回の転送）・404ページの指定・圧縮と画像などの保存期間（Xserver用。`build.py` の `HTACCESS`）
-- **1コマンドで反映（2026-10-09）**：`./deploy.sh`（確認のみ。内容が変わるファイルだけ表示）→ `./deploy.sh --go`（サーバー側にバックアップを残してから反映）。書き出し・下書きの印と旧番号の確認・rsync まで行う。Xserver の SSH を使う（鍵 `~/.ssh/lfgroup_deploy` を2026-10-09に登録済み。接続は `~/.ssh/config` の別名 lfgroup-xserver、または環境変数 `LF_SSH_TARGET`・`LF_SSH_KEY`。手順は `deploy.sh` の冒頭）。バックアップは `lfgroup.jp/_backup_日時/`（最新5つ）。パスワード・鍵はリポジトリに書かない。お客様の本番なので、反映は「公開して」の指示があったときだけ。`images/*.md`（内部メモ）は公開しない
+- **1コマンドで反映（2026-10-09）**：`./deploy.sh`（確認のみ。内容が変わるファイルだけ表示）→ `./deploy.sh --go`（サーバー側にバックアップを残してから反映）。書き出し・下書きの印と旧番号の確認・rsync まで行う。Xserver の SSH を使う（鍵 `~/.ssh/lfgroup_deploy` を2026-10-09に登録済み。接続は `~/.ssh/config` の別名 lfgroup-xserver、または環境変数 `LF_SSH_TARGET`・`LF_SSH_KEY`。手順は `deploy.sh` の冒頭）。バックアップは `lfgroup.jp/_backup_日時/`（最新5つ）。**`--go` は、未コミットの変更がある・origin/main と違うコミットのときは止まる**（gitに残らない変更が本番に出ないように）。反映の記録（日時・コミット）は、サーバーの `lfgroup.jp/_deploy_log.txt`（public_html の外）に残る。確認のみのときは、サーバーだけにあるファイルも表示するパスワード・鍵はリポジトリに書かない。お客様の本番なので、反映は「公開して」の指示があったときだけ。`images/*.md`（内部メモ）は公開しない
 - アップロード：`dist/` の**中身**（`.htaccess` を含む）を public_html に置く。先に今の public_html の中身を退避する。SSL（無料独自SSL）はサーバーパネルで先に有効にする
 - 公開前に必要な確認（2026-10-09 お客様の回答を反映済み：よくあるご質問の回答は今のまま本採用で、下書きの印を外した／一般事務・営業サポートは今の内容のまま、「確認中」の印を外した／「成長と評価の仕組み」の段はこのまま／最寄り駅は千種駅を載せた。資本金・取引先・提携先は「なし」で載せず、設立年月日は未回答／「写真はイメージです」の表記は外した／保険の掲載内容・各種方針は、保険会社に確認するが**一旦公開でOK**）。**残り**：①住所「葵3-14-5 2F」と登記・適格請求書の一致（未回答）②代表の写真が実在のご本人か③Googleフォームの同意の説明のURLを本番のURLに・通知先・「採用について」の種類④info@・alliance@・recruit@ が Xserver で受信できること⑤Xserver に入れる人（SSLの有効化・アップロード）⑥公開後、保険会社の確認で直しが出たら反映
 - Search Console（2026-10-09）：`https://lfgroup.jp/` を「URLプレフィックス」で登録。所有権の確認は HTMLファイル `google169aca25f9cbbfb6.html`（public_html の直下。**消さない**。`build.py --release` が書き出しに入れる）。今のSTUDIOのサイト（gray345542.studio.site）にも別のプロパティがあり、新旧で題名・説明文が同じなので、新しいサイトの題名・説明文を直し、新しいサイトが検索に出てから、STUDIOを案内ページ（または転送）にする
@@ -301,4 +301,12 @@ GitHub Pages は `easywebcraft.github.io/lfgroup-design/` の下で配信する�
 - 段の見出しと中身の間は 28px → 20px（スマホ16px）、英字と見出しの間は 10px → 8px。事業の行の間・相談メニューのカードの行の間は 28px
 - 効果（ページ全体の高さ、変更前 → 後）：1280px … トップ 4001→3798／私たちについて 7569→6906／個人 4901→4389／法人 6578→5968／アライアンス 6092→5367／会社概要 5573→5096／採用 7376→6656（約5〜12%減）。390px … 4496〜10429（約4〜6%減）
 - これ以上詰めるなら `--sec-pad` を `clamp(18px, 2vw, 24px)` に。ただし、見出しと前の段の中身の間が約48px以下になり、窮屈さが出る。それ以上は、中身（写真・文章）の量を見直す
+
+## gitと本番のずれ・PCが壊れたとき（2026-10-09）
+
+- **本番（lfgroup.jp）は、gitの `main` から `./deploy.sh --go` で作ったもの。** 2026-10-09 時点で、git（`main`）から作り直した本番用ファイルと、本番のファイルは**完全に同じ**（内容比較。サーバーだけにあるのは Xserver が最初に置いた `default_page.png` と `.user.ini` のみ）。GitHub だけから取得して書き出しても、同じ68ファイルになることを確認した（約3秒）
+- ずれが出るのは次のとき：①gitに入れていない変更を反映した（今は `deploy.sh` が止める）②サーバーのファイルを手で直した・置いた（確認のみで「サーバーだけにあるファイル」に出る。Search Console の確認ファイル `google169aca25f9cbbfb6.html` は dist に入るので問題ない）③試作（github.io）は push のたびに自動で変わるが、本番は `deploy.sh --go` のときだけ変わる（意図した時間差）
+- **GitHub に入っていないもの（PCが壊れると失われる）**：デプロイ用のSSH鍵（`~/.ssh/lfgroup_deploy`）、`raw/`（元のSTUDIOのサイトの取得データ。本文は `text/` に入っている）、`_shots/`（確認用の画面。作り直せる）、使っていない画像4枚（`images/hero-*-2.png`・`hero_summer.png`）、お客様からもらった写真・サインの元データ（ダウンロードフォルダ。サイト用に縮めたものは `images/ceo-*` に入っている）
+- **PCが壊れたときの復旧（約30分）**：①新しいPCに `git` と `python3` を入れる（外部ライブラリは不要）②`git clone https://github.com/easywebcraft/lfgroup-design`（公開なのでログイン不要）③`python3 build.py --release --site-url https://lfgroup.jp` で `dist/` を作る④Xserver のサーバーパネルのファイルマネージャで、`dist/` の中身を zip にして `public_html` へ置く（鍵は要らない）。または、新しいSSH鍵を作って Xserver の「SSH設定」に登録し、`./deploy.sh --go` ⑤サイトは、PCが壊れても止まらない（サーバー上にある）
+- **別のところに控えておくもの**：Xserver のアカウント（サーバーパネルに入れること）、GitHub（easywebcraft の管理者）、Google（Search Console・フォーム・ビジネスプロフィール）、STUDIO、ドメイン（Xserver で管理）の各ログイン情報。パスワード管理アプリなどに入れて、PCだけに置かない
 
