@@ -281,6 +281,6 @@ GitHub Pages は `easywebcraft.github.io/lfgroup-design/` の下で配信する�
 - 書き出し：`python3 build.py --release --site-url https://lfgroup.jp` → `dist/`（試作の帯・noindex・コメントを外し、canonical・og:url・sitemap.xml・robots.txt・404.html・`.htaccess` を入れる。試作ページは入らない）。`dist/` は git に入れない。書き出しの最後に、**下書き・確認中の印（`.note-draft`）が残っているページ**が警告で出る
 - `.htaccess` は http→https と www なしへの統一（1回の転送）・404ページの指定・圧縮と画像などの保存期間（Xserver用。`build.py` の `HTACCESS`）
 - アップロード：`dist/` の**中身**（`.htaccess` を含む）を public_html に置く。先に今の public_html の中身を退避する。SSL（無料独自SSL）はサーバーパネルで先に有効にする
-- 公開前に必要な確認：①下書きの印（よくあるご質問の回答・一般事務／営業サポートの募集条件）②採用情報「成長と評価の仕組み」の段③会社情報の設立・資本金・取引先・最寄り駅④保険の掲載内容・各種方針の最終確認⑤住所と登記の一致⑥写真（生成AI・代表）⑦Googleフォームの同意の説明のURLを本番のURLに・通知先・「採用について」の種類⑧info@・alliance@・recruit@ が Xserver で受信できること
+- 公開前に必要な確認（2026-10-09 お客様の回答を反映済み：よくあるご質問の回答は今のまま本採用で、下書きの印を外した／一般事務・営業サポートは今の内容のまま、「確認中」の印を外した／「成長と評価の仕組み」の段はこのまま／最寄り駅は千種駅を載せた。資本金・取引先・提携先は「なし」で載せず、設立年月日は未回答／「写真はイメージです」の表記は外した／保険の掲載内容・各種方針は、保険会社に確認するが**一旦公開でOK**）。**残り**：①住所「葵3-14-5 2F」と登記・適格請求書の一致（未回答）②代表の写真が実在のご本人か③Googleフォームの同意の説明のURLを本番のURLに・通知先・「採用について」の種類④info@・alliance@・recruit@ が Xserver で受信できること⑤Xserver に入れる人（SSLの有効化・アップロード）⑥公開後、保険会社の確認で直しが出たら反映
 - 公開後：全ページ・リンク・フォーム送信・電話・スマホの確認、Search Console に登録して sitemap.xml を送る。試作（github.io）は noindex のまま
 

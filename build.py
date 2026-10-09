@@ -585,7 +585,6 @@ def rf_hero(crumb, eyebrow, title, lead, button, photos, big, still=False):
       <p class="rc-fv-lead">{lead[0]}<br>{lead[1]}</p>
       <p class="rc-links"><a class="btn btn-primary" href="/contact/">{button}{ARROW}</a></p>
     </div>
-    <small class="rf-photo-note">写真はイメージです</small>
   </section>
 '''
 
@@ -664,7 +663,7 @@ def ps_flow(items, bg='', eyebrow='Flow', title='ご相談の流れ'):
 
 
 def ps_faq(items, bg='bg-blue'):
-    """よくあるご質問（開け閉めできる）。回答は下書きなので .note-draft の印を付ける"""
+    """よくあるご質問（開け閉めできる）。回答は 2026-10-09 にお客様が「今の内容のまま本採用」と確認した（それまでは .note-draft の印を付けていた）"""
     qa = ''.join(f'''
         <details class="ps-faq-item fade">
           <summary><span class="ps-q">Q</span><span class="ps-faq-q">{q}</span><span class="ps-faq-mark" aria-hidden="true"></span></summary>
@@ -676,7 +675,7 @@ def ps_faq(items, bg='bg-blue'):
       <p class="eyebrow fade">FAQ</p>
       <h2 class="fade">よくあるご質問</h2>
       <div class="ps-faq-list">
-        <p class="note-draft fade">回答は下書きです（ご確認ください）</p>{qa}
+        {qa}
       </div>
     </div>
   </section>
@@ -1051,11 +1050,12 @@ def page_company():
     <div class="wrap">
       <p class="eyebrow fade">Company Information</p>
       <h2 class="fade">会社情報</h2>
-      <!-- ★要確認：構成案にある 設立・資本金・取引先／提携先 は、今のサイトに記載がないため載せていない。確認できたら下の表に足す -->
+      <!-- 2026-10-09 お客様：最寄り駅は千種駅。資本金・取引先・提携先は「なし」なので載せない（あとで載せるかも）。設立年月日は未回答なので載せていない。足すときは下の表に -->
       <dl class="company-list full fade" style="margin-top:40px">
         <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
         <div><dt>代表者</dt><dd>遠藤 昇平</dd></div>
         <div><dt>所在地</dt><dd>〒{POSTAL}<br>{ADDRESS}</dd></div>
+        <div><dt>最寄り駅</dt><dd>千種駅</dd></div>
         <!-- ★要確認：2つの番号の用途（代表／お問い合わせ）が今のサイトに書かれていない。確認できたら「代表」などを添える -->
         <div><dt>電話番号</dt><dd><a href="{TEL_HREF}">{TEL}</a></dd></div>
         <div><dt>メールアドレス</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></div>
@@ -1094,10 +1094,11 @@ def page_company():
     <div class="wrap">
       <p class="eyebrow fade">Access</p>
       <h2 class="fade">アクセス</h2>
-      <!-- ★要確認：構成案の「最寄り駅・徒歩所要時間」は未確認のため載せていない。確認できたら下の住所の下に足す -->
+      <!-- 最寄り駅は千種駅（2026-10-09 お客様）。徒歩の所要時間は未確認なので載せていない -->
       <div class="co-access fade">
         <p class="co-access-name">{COMPANY}</p>
         <p class="co-access-addr">〒{POSTAL}<br>{ADDRESS}</p>
+        <p class="co-access-addr">最寄り駅：千種駅</p>
       </div>
       <div class="map-frame fade">
         <iframe src="{q}" title="LFグループ株式会社の地図" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -1162,7 +1163,7 @@ def page_contact():
 # ①採用メッセージ（冒頭。写真4枚と動きはそのまま）②LFグループについて ③働く環境 ④成長と評価 ⑤募集職種
 # ⑥働き方（数字）（構成案の社員紹介は 2026-10-08 松本さんの指示で外した）⑧キャリアステップ ⑨募集要項・選考フロー ⑩よくあるご質問 ⑪応募。
 # 見出しに「。」「、」を入れない。段の見出しのすぐ下に説明文を置かない（2026-10-08 松本さん）
-# ★要確認：一般事務・営業サポートの募集、完全週休2日制・年間休日120日は構成案にあるが今のサイトにない。印（.note-draft）を付けている
+# 一般事務・営業サポートの募集は、今のサイトにないが、2026-10-09 にお客様が「今の内容のまま」と確認（「確認中」の印は外した。募集要項の表は営業職のもの）
 RC_CULTURE = [
     ('Culture', '自分らしく働ける環境', '一人ひとりの個性や考え方を尊重し、自主性を大切にする組織を目指しています。必要以上の制約にとらわれず、自分の強みを発揮できる環境づくりを大切にしています。', 'about-hero.jpg', '50% 65%'),
     ('Culture', '互いを尊重する組織', '立場や役職に関係なく、意見を交わしながらより良い仕事を目指す。一人ひとりが安心して働ける、風通しの良い組織づくりに取り組んでいます。', 'recruit-work-team.jpg', '50% 50%'),
@@ -1238,7 +1239,7 @@ def page_recruitment():
             <p class="rc-job-catch">{c}</p>
             {''.join(f'<p>{x}</p>' for x in texts)}
             <ul class="rc-job-tags">{''.join(f'<li>{p}</li>' for p in points)}</ul>
-            {'<p class="note-draft">募集の有無・条件は確認中です</p>' if draft else f'<p><a class="link-arrow" href="#requirements">募集要項を見る{ARROW}</a></p>'}
+            {'' if draft else f'<p><a class="link-arrow" href="#requirements">募集要項を見る{ARROW}</a></p>'}
           </div>
         </article>''' for en, t, c, img, texts, points, draft in RC_JOBS)
     numbers = ''.join(f'''
@@ -1697,9 +1698,7 @@ def write_recruit_trials():
     fv['a2'] = (recruitment_fv
                        .replace('<section class="rf rf-a" data-fx="a">',
                                 '<section class="rf rf-a rf-v rf-top rf-wipe rf-serif rf-sub rf-recruit" data-fx="a" data-stay="4500">')
-                       .replace(copy, '<p class="rv-big" aria-hidden="true"><span>WORK</span><span>YOUR WAY.</span><span>GROW BEYOND.</span></p>\n    ' + GOLD_WIPE + '\n    ' + copy_v)
-                       .replace('  </section>', '''    <small class="rf-photo-note">写真はイメージです</small>
-  </section>''', 1))
+                       .replace(copy, '<p class="rv-big" aria-hidden="true"><span>WORK</span><span>YOUR WAY.</span><span>GROW BEYOND.</span></p>\n    ' + GOLD_WIPE + '\n    ' + copy_v))
     # 01〜04の表示（右下の時刻・進み具合の線）は、案A2では外す（2026-10-07 松本さん）
     i2 = fv['a2'].index('<div class="wrap rf-clock"')
     j2 = fv['a2'].index('</ol></div>', i2) + len('</ol></div>')
