@@ -245,6 +245,7 @@ GitHub Pages は `easywebcraft.github.io/lfgroup-design/` の下で配信する�
 
 - ロゴ：`images/logo.png` は顧客からもらった正式ロゴ（元ファイル `images/logo/source-client.png`）の、金の輪の外側を透明にしたもの。ファビコンは `favicon.png`・`apple-touch-icon.png`
 - 郵便番号：461-0004（2026-10-05 クライアントに確認済み。`build.py` の `POSTAL`）
+- 直筆サイン（`images/ceo-sign.png`）は、白い背景を消した透明PNG（2026-10-09）。以前は白を消すのに `mix-blend-mode`・`filter` を使っていたが、カーソルを合わせると白く点滅したため、画像そのものを透明にして外した
 - 代表挨拶：2026-10-09 にお客様からいただいた**正式な文章**に差し替え済み（「私たちについて」の末尾 `/about/#message`。`build.py` の `ceo_message_block()`）。見出しは文中の言葉「人と企業の可能性を、その先へ。」。写真・直筆サインも入っている。下書きの印は外した
 - 法人のお客様向けの強み・取り扱い保険（今は個人と共通の記載から組んでいる）
 - 採用情報のFVの写真：今は仮（`about-hero.jpg`・赤い「写真は仮」の印）。実際の社員・オフィス・相談風景の写真をいただいたら差し替える
