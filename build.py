@@ -1028,7 +1028,7 @@ def page_company():
     # 冒頭は個人・法人・私たちについてと同じ rf_hero（トップのFVの見せ方。2026-10-09 松本さん「会社概要のTOPページの見せ方も他のページと同様に」）
     hero = rf_hero('会社概要', 'Company Profile', ('信頼を礎に', '新たな価値を創造する'),
                    ('LFグループ株式会社の', '企業情報をご紹介します'),
-                   'お問い合わせ', (('cta-final.jpg', '50% 62%'),),  # 写真の切り替えはなし（2026-10-09 松本さん）。今までの会社概要の写真のまま
+                   'お問い合わせ', (('recruit-city-1000.jpg', '60% 50%'),),  # 写真の切り替えはなし（2026-10-09 松本さん）。cta-final.jpg は横1280pxで粗く見えたので、横1536pxのこの写真に替えた（採用情報と同じ写真）
                    ('OUR', 'COMPANY', 'PROFILE.'), still=True)
     return hero + f'''
   <section class="section" id="profile">
