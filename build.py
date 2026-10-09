@@ -1585,6 +1585,41 @@ def release_files():
     else:
         print('   ※ --site-url がないため sitemap.xml・canonical・og:image は出していません')
     write('robots.txt', robots)
+    if SITE_URL:
+        host = SITE_URL.split('//', 1)[-1]
+        write('.htaccess', HTACCESS.replace('{host}', host).replace('{host_re}', host.replace('.', '\\.')))
+    else:
+        print('   ※ --site-url がないため .htaccess は出していません')
+
+
+# 本番（Xserver）用の .htaccess（2026-10-09）。http→https と www なしへの統一を1回の転送で行い、404ページを指定する。
+# {host} は --site-url から入れる。Xserver は https の判定が %{HTTPS} !on でよい
+HTACCESS = """# LFグループ株式会社（本番・Xserver）
+AddDefaultCharset UTF-8
+Options -Indexes
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+# http→https と www なしへの統一（1回の転送で）
+RewriteCond %{HTTP_HOST} ^www\\.{host_re}$ [NC,OR]
+RewriteCond %{HTTPS} !on
+RewriteRule ^(.*)$ https://{host}/$1 [R=301,L]
+</IfModule>
+
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+</IfModule>
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/jpeg "access plus 1 month"
+ExpiresByType image/png "access plus 1 month"
+ExpiresByType image/svg+xml "access plus 1 month"
+ExpiresByType text/css "access plus 1 month"
+ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+"""
 
 
 GOLD_WIPE = '<span class="rv-sweep" aria-hidden="true"><svg class="rv-edge" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><linearGradient id="rvEdgeG" gradientUnits="userSpaceOnUse" x1="-10" y1="0" x2="-0.42" y2="2.87"><stop offset="0" stop-color="#F2B63C" stop-opacity="0"/><stop offset="0" stop-color="#F2B63C" stop-opacity="0"/><stop offset="1" stop-color="#FFE6B0" stop-opacity=".6"/></linearGradient></defs><polygon points="-10,0 0,0 -30,100 -40,100" fill="url(#rvEdgeG)"/><polygon points="-0.5,0 0,0 -30,100 -30.5,100" fill="#FFF3D6"/></svg></span>'
@@ -1870,6 +1905,10 @@ def main():
         write(f'{key}/index.html', layout(label, page_policy(key, label, renders[key])))
     if RELEASE:
         write('404.html', layout('ページが見つかりません', page_404()).replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"', 1))
+        # 公開前の確認：下書き・確認中の印（.note-draft）が残っているページを知らせる
+        drafts = sorted(str(f.relative_to(SITE)) for f in SITE.rglob('*.html') if 'note-draft' in f.read_text())
+        if drafts:
+            print('   ⚠ 下書き・確認中の印が残っています（公開前に確認）： ' + '、'.join(drafts))
 
 
 if __name__ == '__main__':
