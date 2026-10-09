@@ -1155,7 +1155,6 @@ def page_contact():
         <p class="contact-form-note">フォームが表示されない場合は、<a href="{FORM_URL}" target="_blank" rel="noopener">こちらから開いてください</a>。</p>
       </div>'''
     return page_hero('Contact', 'お問い合わせ', [('お問い合わせ', '/contact/')],
-                     lead='保険や固定費の見直しについて、お電話・メールでご相談を承っています。',
                      compact=True, extra=contacts).replace('sub-hero compact', 'sub-hero compact contact-intro', 1)
 
 
