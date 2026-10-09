@@ -36,7 +36,7 @@ MAIL = 'info@lfgroup.jp'
 RECRUIT_MAIL = 'recruit@lfgroup.jp'
 # お問い合わせフォーム（Googleフォーム。info@lfgroup.jp に通知。2026-10-09）
 FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd5O9G8vna7SE2T7kWOxYvuTFFN2HupM-mXSf5bzZB0Vasmaw/viewform'
-ADDRESS = '愛知県名古屋市東区葵3丁目14-5 リッチコーポ2階'
+ADDRESS = '愛知県名古屋市東区葵3-14-5 2F'  # 2026-10-09 松本さん「リッチコーポは外して 3-14-5 2F に」。元のサイトは「葵3丁目14-5 リッチコーポ2階」
 POSTAL = '461-0004'  # 今のサイトに記載がなく、2026-10-05 にクライアントに確認
 COMPANY = 'LFグループ株式会社'
 
@@ -1053,7 +1053,7 @@ def page_company():
       <dl class="company-list full fade" style="margin-top:40px">
         <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
         <div><dt>代表者</dt><dd>遠藤 昇平</dd></div>
-        <div><dt>所在地</dt><dd>〒{POSTAL}<br>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</dd></div>
+        <div><dt>所在地</dt><dd>〒{POSTAL}<br>{ADDRESS}</dd></div>
         <!-- ★要確認：2つの番号の用途（代表／お問い合わせ）が今のサイトに書かれていない。確認できたら「代表」などを添える -->
         <div><dt>電話番号</dt><dd><a href="{TEL_HREF}">{TEL}</a></dd></div>
         <div><dt>メールアドレス</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></div>
@@ -1095,7 +1095,7 @@ def page_company():
       <!-- ★要確認：構成案の「最寄り駅・徒歩所要時間」は未確認のため載せていない。確認できたら下の住所の下に足す -->
       <div class="co-access fade">
         <p class="co-access-name">{COMPANY}</p>
-        <p class="co-access-addr">〒{POSTAL}<br>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</p>
+        <p class="co-access-addr">〒{POSTAL}<br>{ADDRESS}</p>
       </div>
       <div class="map-frame fade">
         <iframe src="{q}" title="LFグループ株式会社の地図" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -1200,7 +1200,7 @@ RC_FAQ = [
     ('保険業界が未経験でも応募できますか？',
      '応募資格は学歴・性別・国籍不問です。これまでのご経験については、お問い合わせフォーム・お電話・メールで気軽にご相談ください。'),
     ('営業職の給与はどのように決まりますか？',
-     '固定給20万円に、営業成績に応じた成果報酬を加えた成果連動型です。詳しい仕組みは面接でご説明します。'),
+     '営業成績に応じた成果報酬で、最低保証は400,000円です。年収1,000万円以上も可能です。詳しい仕組みは面接でご説明します。'),
     ('どのような人物を求めていますか？',
      'お客様一人ひとりに誠実に向き合える方、自ら考えて行動し、新しいことに挑戦したい方を歓迎します。'),
 ]
@@ -1214,7 +1214,7 @@ def page_recruitment():
         ('勤務地', '愛知県名古屋市東区'),
         ('勤務時間', '10時～19時'),
         ('休日・休暇', '完全週休2日制（年間休日120日以上）'),
-        ('給与', '成果連動型報酬（営業成績に応じて支給）<br>給与：固定給20万円＋成果報酬<br>年収1,000万円も可能'),
+        ('給与', '成果報酬<br>最低保証400,000円<br>年収1,000万円以上も可能'),
         ('選考方法', '書類面接・面接試験（1～2回）'),
         ('応募方法', 'お問い合わせフォーム・お電話・メールにてご応募ください'),
         ('郵送先・応募先', f'〒{POSTAL} {ADDRESS}'),
