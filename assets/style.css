@@ -1962,6 +1962,9 @@ br.sp { display: none; }
 .co-message-body .co-message-group + p { margin-top: 1.2em; }
 .co-message-company { margin-top: 36px; text-align: right; font-size: 14px; letter-spacing: .1em; color: var(--navy); }
 .co-message-company + .co-message-name { margin-top: 6px; }
+/* 採用情報「働く環境を数字で」は3項目（評価制度を載せないため）：3列。狭い画面では最後の1つを横いっぱいに */
+.al-num-list.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1023px) { .al-num-list.is-three { grid-template-columns: repeat(2, minmax(0, 1fr)); } .al-num-list.is-three li:last-child { grid-column: 1 / -1; } }
 
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
