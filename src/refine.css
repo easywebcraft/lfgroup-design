@@ -1123,3 +1123,10 @@ br.sp { display: none; }
 .ceo-msg-side h2 { margin-top: 12px; text-align: left; font-family: var(--serif); font-weight: 500; font-size: clamp(26px, 2.8vw, 36px); letter-spacing: .1em; color: var(--navy); }
 .ceo-msg-main { text-align: left; }
 @media (max-width: 1023px) { .ceo-msg { grid-template-columns: 1fr; gap: 28px; } }
+/* 代表挨拶（2026-10-09 正式な文章）：続く短い文は行間を詰めてひとまとまりに見せる。会社名と署名は右寄せ */
+.co-message-body .co-message-group { margin-top: 1.2em; }
+.co-message-body .co-message-group p + p { margin-top: .35em; }
+.co-message-body .co-message-group + p { margin-top: 1.2em; }
+.co-message-company { margin-top: 36px; text-align: right; font-size: 14px; letter-spacing: .1em; color: var(--navy); }
+.co-message-company + .co-message-name { margin-top: 6px; }
+

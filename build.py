@@ -991,9 +991,9 @@ def page_partner():
                         button='事業提携について問い合わせる', eyebrow='Become Our Partner'))
 
 
-def ceo_message_block(draft=True):
-    """代表挨拶の本文（「私たちについて」の末尾に置く）。写真と直筆サインは images/ceo-photo.jpg・ceo-sign.png（2026-10-09 お客様から受領）。"""
-    note = '<p class="note-draft">下書き（代表の確認前）</p>\n        ' if draft else ''
+def ceo_message_block():
+    """代表挨拶（「私たちについて」の末尾）。本文はお客様（LFグループ）からいただいた正式な文章（2026-10-09）。
+    写真と直筆サインは images/ceo-photo.jpg・ceo-sign.png（同日受領）。"""
     return f'''
   <section class="section bg-blue" id="message">
     <div class="wrap ceo-msg">
@@ -1003,15 +1003,28 @@ def ceo_message_block(draft=True):
         <figure class="co-message-photo fade"><img loading="lazy" src="/images/ceo-photo.jpg" alt="代表取締役 遠藤 昇平" onerror="this.closest('figure').remove()"></figure>
       </div>
       <div class="ceo-msg-main fade">
-        <!-- ★公開前に必要：代表挨拶は、今のサイトにある言葉（顧客満足度を最優先に・お客様本位の運営方針・迅速な事故対応）
-             だけで作った「下書き」（2026-10-07）。ご本人の言葉ではないので、代表の確認・修正をいただいたら、.note-draft の印を外す -->
-        {note}<p class="co-message-lead">お客様の毎日の暮らしを<br>保険とお金の面から支えます</p>
+        <p class="co-message-lead">人と企業の可能性を、<br>その先へ。</p>
         <div class="co-message-body">
-          <p>LFグループ株式会社は、「顧客満足度を最優先に、人々の生活を向上させます」という理念のもと、保険を中心に、お客様の暮らしに関わるさまざまなご案内をしています。</p>
-          <p>ゆとりある生活の実現のために、お客様一人ひとりの立場になって、誠実・公正にご提案いたします。</p>
-          <p>ご契約のあとも、お客様が安心して過ごせるよう、長く寄り添います。万が一の事故のときは、休日・夜間も、保険金のお支払いまで迅速に対応いたします。</p>
-          <p>これからも、お客様に信頼していただけるよう、社員一同、学び続けてまいります。保険やお金のことで気になることがあれば、どうぞお気軽にご相談ください。</p>
+          <p>私たちLFグループは、「人と企業の可能性を、その先へ。」という想いのもと、お客様一人ひとり、そしてパートナー企業との信頼関係を大切にしながら事業を展開しています。</p>
+          <p>社会や経済環境が目まぐるしく変化する現代において、人々の暮らしや企業経営を取り巻く課題は、ますます多様化しています。</p>
+          <p>私たちは、こうした変化を新たな可能性と捉え、既存の枠組みにとらわれない柔軟な発想と行動力で、お客様にとって本当に価値のあるサービスを追求していきたいと考えています。</p>
+          <div class="co-message-group">
+            <p>保険事業では、人生や企業経営におけるさまざまなリスクに向き合い、将来への安心を支えること。</p>
+            <p>アライアンス事業では、企業同士のつながりを生かし、新たな価値を生み出すこと。</p>
+          </div>
+          <p>事業の形は異なっても、その根底にあるのは「人と企業のより良い未来に貢献したい」という変わらぬ想いです。</p>
+          <p>そして、私たちが大切にしているのは、サービスの質だけではありません。</p>
+          <p>ともに働く仲間が一人ひとりの個性や強みを発揮し、自ら考え、挑戦できる組織であること。社員の成長こそが、企業の成長につながると考えています。</p>
+          <p>これからも、目の前のお客様との信頼を一つひとつ積み重ねながら、変化を恐れず、新たな事業や価値の創造に挑戦し続けてまいります。</p>
+          <div class="co-message-group">
+            <p>お客様にとって、安心して相談できる存在であること。</p>
+            <p>パートナー企業にとって、ともに成長できる存在であること。</p>
+            <p>そして、社会から必要とされ、信頼され続ける企業であること。</p>
+          </div>
+          <p>その実現に向けて、LFグループはこれからも歩み続けます。</p>
+          <p>今後とも、より一層のご支援とご愛顧を賜りますよう、よろしくお願い申し上げます。</p>
         </div>
+        <p class="co-message-company">{COMPANY}</p>
         <p class="co-message-name"><span>代表取締役</span><img class="co-message-sign" loading="lazy" src="/images/ceo-sign.png" alt="遠藤 昇平" onerror="this.replaceWith(document.createTextNode('遠藤 昇平'))"></p>
       </div>
     </div>
