@@ -1939,7 +1939,7 @@ br.sp { display: none; }
 .co-message-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 30%; }
 .co-message-name { display: flex; align-items: center; justify-content: flex-end; gap: 20px; }
 .co-message-name span { font-size: 13px; letter-spacing: .1em; color: var(--sub); }
-.co-message-sign { display: block; height: 64px; width: auto; mix-blend-mode: multiply; }
+.co-message-sign { display: block; height: 64px; width: auto; mix-blend-mode: multiply; filter: brightness(1.12) contrast(1.35); }
 @media (max-width: 1023px) {
   .co-biz-grid { grid-template-columns: 1fr; }
   .co-ceo { grid-template-columns: 1fr; gap: 32px; padding: 32px 24px; }
