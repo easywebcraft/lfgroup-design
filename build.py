@@ -1586,6 +1586,9 @@ def release_files():
     else:
         print('   ※ --site-url がないため sitemap.xml・canonical・og:image は出していません')
     write('robots.txt', robots)
+    # Google Search Console の所有権の確認ファイル（2026-10-09）。消すと確認が外れるので、書き出しのたびに入れる。
+    # 中身は「google-site-verification: ファイル名」の1行（改行なし）
+    (SITE / 'google169aca25f9cbbfb6.html').write_text('google-site-verification: google169aca25f9cbbfb6.html')
     if SITE_URL:
         host = SITE_URL.split('//', 1)[-1]
         write('.htaccess', HTACCESS.replace('{host}', host).replace('{host_re}', host.replace('.', '\\.')))

@@ -282,5 +282,6 @@ GitHub Pages は `easywebcraft.github.io/lfgroup-design/` の下で配信する�
 - `.htaccess` は http→https と www なしへの統一（1回の転送）・404ページの指定・圧縮と画像などの保存期間（Xserver用。`build.py` の `HTACCESS`）
 - アップロード：`dist/` の**中身**（`.htaccess` を含む）を public_html に置く。先に今の public_html の中身を退避する。SSL（無料独自SSL）はサーバーパネルで先に有効にする
 - 公開前に必要な確認（2026-10-09 お客様の回答を反映済み：よくあるご質問の回答は今のまま本採用で、下書きの印を外した／一般事務・営業サポートは今の内容のまま、「確認中」の印を外した／「成長と評価の仕組み」の段はこのまま／最寄り駅は千種駅を載せた。資本金・取引先・提携先は「なし」で載せず、設立年月日は未回答／「写真はイメージです」の表記は外した／保険の掲載内容・各種方針は、保険会社に確認するが**一旦公開でOK**）。**残り**：①住所「葵3-14-5 2F」と登記・適格請求書の一致（未回答）②代表の写真が実在のご本人か③Googleフォームの同意の説明のURLを本番のURLに・通知先・「採用について」の種類④info@・alliance@・recruit@ が Xserver で受信できること⑤Xserver に入れる人（SSLの有効化・アップロード）⑥公開後、保険会社の確認で直しが出たら反映
+- Search Console（2026-10-09）：`https://lfgroup.jp/` を「URLプレフィックス」で登録。所有権の確認は HTMLファイル `google169aca25f9cbbfb6.html`（public_html の直下。**消さない**。`build.py --release` が書き出しに入れる）。今のSTUDIOのサイト（gray345542.studio.site）にも別のプロパティがあり、新旧で題名・説明文が同じなので、新しいサイトの題名・説明文を直し、新しいサイトが検索に出てから、STUDIOを案内ページ（または転送）にする
 - 公開後：全ページ・リンク・フォーム送信・電話・スマホの確認、Search Console に登録して sitemap.xml を送る。試作（github.io）は noindex のまま
 
