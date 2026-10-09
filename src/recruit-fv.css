@@ -650,3 +650,8 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
 
 /* 写真のカメラワークを止める（会社概要。2026-10-09 松本さん「カメラワークを削除して」）：マウス・スクロールで写真だけずれる動きと、1.06倍の拡大。文字側の動きはそのまま */
 .rf-go .rf-v.rf-still .rf-media { translate: none; scale: 1; transition: none; }
+/* 写真1枚目の「寄り」の動き（top-spring-camera：6秒かけて拡大しながら斜めに流れる）も止める（会社概要。2026-10-09 松本さん「カメラワークがのこっている」） */
+.rf-go .rf-top.rf-wipe.rf-still .rf-media img,
+.rf-go .rf-top.rf-wipe.rf-still:not(.is-go) .rf-media img:nth-child(1).is-on,
+.rf-go .rf-top.rf-wipe.rf-still.is-go .rf-media img:nth-child(1):is(.is-on, .is-prev) { animation: none; scale: 1; translate: none; }
+
