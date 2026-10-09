@@ -241,20 +241,7 @@
     update();
   }
 
-  // /top-a2/：ヒーローより下の動き（相談ボタンがマウスに引き寄せられる）
-  if (sec.classList.contains('rf-top')) {
-    var cta = document.querySelector('#final-cta .btn-primary');
-    if (cta && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      var area = document.getElementById('final-cta');  // 段全体でマウスの位置を見て、ボタンから 160px 以内なら引き寄せる
-      area.addEventListener('mousemove', function (e) {
-        var r = cta.getBoundingClientRect(), dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
-        var d = Math.hypot(dx, dy), pull = d < 160 ? (1 - d / 160) : 0;
-        cta.style.setProperty('--bx', (dx * .35 * pull).toFixed(1) + 'px');
-        cta.style.setProperty('--by', (dy * .35 * pull).toFixed(1) + 'px');
-      });
-      area.addEventListener('mouseleave', function () { cta.style.setProperty('--bx', '0px'); cta.style.setProperty('--by', '0px'); });
-    }
-  }
+  // 相談ボタンがマウスに引き寄せられる動きは、ボタンが震えて見えるため外した（2026-10-09 松本さん「カーソルを合わせるとプルプル動くので動かないように」）
   };
   begin();
 })();

@@ -323,7 +323,7 @@ html:has(.rf-top) .lf-loader.is-absorb .ll-logo, html:has(.rf-top) .lf-loader.is
 /* ===== /top-a2/：ヒーローより下の動きを足す（2026-10-07）=====
    ① 入口のタイルの写真が、開いたあともゆっくり動き続ける（1枚ずつ向きを変える。transform で足すので、開くときの scale・奥行きの translate と重ならない）
    ④ 数字が増え終わったら、カードの枠が一周光り、表面を斜めに光が走る（各数字の完了時に .is-shine。main.js）
-   ⑤ 相談の案内：お問い合わせボタンがマウスに少し引き寄せられ（--bx/--by。PCのみ）、背景の色がゆっくり揺らぐ */
+   ⑤ 相談の案内：背景の色がゆっくり揺らぐ（お問い合わせボタンがマウスに引き寄せられる動きは、震えて見えるため2026-10-09に外した） */
 html:has(.rf-top) .entry.is-open img { animation: rf-drift-a 14s ease-in-out 1.6s infinite alternate; }
 html:has(.rf-top) .entry:nth-child(2).is-open img { animation-name: rf-drift-b; animation-duration: 16s; }
 html:has(.rf-top) .entry:nth-child(3).is-open img { animation-name: rf-drift-c; animation-duration: 15s; }
@@ -352,7 +352,7 @@ html:has(.rf-top) .contact-cta::before { content: ""; position: absolute; inset:
   background: radial-gradient(40% 50% at 30% 40%, rgba(180, 205, 230, .55), transparent 70%), radial-gradient(35% 45% at 72% 62%, rgba(242, 214, 160, .35), transparent 70%);
   animation: rf-glow 16s ease-in-out infinite alternate; }
 @keyframes rf-glow { to { transform: translate(6%, -4%) rotate(8deg); } }
-html:has(.rf-top) .contact-cta .btn-primary { translate: var(--bx, 0px) var(--by, 0px); transition: translate .35s cubic-bezier(.2, .8, .2, 1), background-color .3s ease; }
+html:has(.rf-top) .contact-cta .btn-primary { transition: background-color .3s ease; }
 @media (prefers-reduced-motion: reduce) {
   html:has(.rf-top) .entry img, html:has(.rf-top) .contact-cta::before { animation: none !important; }
 }

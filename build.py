@@ -186,6 +186,7 @@ __URL_META__
         <a class="logo" href="/"><img class="logo-mark" src="/images/logo.png" alt="" width="360" height="360">{COMPANY}</a>
         <p>〒{POSTAL} {ADDRESS}</p>
         <p>TEL <a href="{TEL_HREF}">{TEL}</a></p>
+        <p>MAIL <a href="mailto:{MAIL}">{MAIL}</a></p>
       </div>
       <nav class="footer-nav" aria-label="フッターメニュー">
         <ul>
@@ -288,10 +289,10 @@ def policy_lines_html(items, fade=True):
     return '<ol class="policy-lines">' + ''.join(out) + '</ol>'
 
 
-def final_cta(title=None, text=None, button='お問い合わせ', eyebrow='Contact', mail=None):
+def final_cta(title=None, text=None, button='お問い合わせ', eyebrow='Contact', mail=MAIL):
     """ページ最下部のお問い合わせ欄（全ページ共通）。ボタンは1つ、電話は小さく添える。
     title・text を渡すと、そのページ向けの文にできる（アライアンス事業：2026-10-07 お客様の要望）。
-    mail を渡すと、電話の下にメールアドレスも添える（個人・法人のお客様：MAIL、採用情報：RECRUIT_MAIL）。"""
+    電話の下にメールアドレスも添える（標準は MAIL、採用情報だけ RECRUIT_MAIL）。メールの案内が要らないページは mail=None。"""
     mail_line = f'\n      <p class="contact-cta-tel contact-cta-mail fade">メールでのお問い合わせ<a href="mailto:{mail}">{mail}</a></p>' if mail else ''
     title = title or '<span>保険やお金について</span><br><span>気になることから</span><span>ご相談ください</span>'
     text = text or '保険の見直しや家計、これからのお金について、まずはお気軽にお問い合わせください。'
@@ -883,7 +884,7 @@ AL_SERVICES = [
 AL_NUMBERS = [('提携店舗数', '126', '店舗'), ('累計ご案内件数', '6,230', '件'), ('月間ご案内件数', '260', '件'), ('前年比取扱件数', '133', '%')]
 
 AL_FLOW = [
-    ('お問い合わせ', '事業提携に関するご相談を、お電話またはお問い合わせページからお寄せください。'),
+    ('お問い合わせ', '事業提携に関するご相談を、お問い合わせページ・お電話・メールからお寄せください。'),
     ('サービス・提携条件のご説明', 'サービス内容や紹介方法、提携条件などをご説明します。'),
     ('提携契約・運用方法の確認', '契約内容やお客様へのご案内方法、情報連携の流れなどを確認します。'),
     ('サービス提供開始', '提携開始後も、運用上のご相談や改善に向けたサポートを行います。'),
@@ -1042,6 +1043,7 @@ def page_company():
         <div><dt>所在地</dt><dd>〒{POSTAL}<br>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</dd></div>
         <!-- ★要確認：2つの番号の用途（代表／お問い合わせ）が今のサイトに書かれていない。確認できたら「代表」などを添える -->
         <div><dt>電話番号</dt><dd><a href="{TEL_HREF}">{TEL}</a></dd></div>
+        <div><dt>メールアドレス</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></div>
         <div><dt>事業内容</dt><dd>生命保険代理店事業<br>損害保険代理店事業<br>アライアンス事業<br>ライフラインサービスの取次・紹介</dd></div>
         <div><dt>適格請求書発行<br>事業者登録番号</dt><dd>T4180001157727</dd></div>
       </dl>
@@ -1172,7 +1174,7 @@ RC_STEPS = [
 ]
 
 RC_SELECT = [
-    ('お電話・メールでのご応募', f'{RECRUIT_TEL} までお電話、または {RECRUIT_MAIL} までメールをお送りください。'),
+    ('お問い合わせ・ご応募', f'お問い合わせフォーム、お電話（{RECRUIT_TEL}）、メール（{RECRUIT_MAIL}）のいずれかでご連絡ください。'),
     ('書類選考', 'ご経験やご希望の条件を確認します。'),
     ('面接（1〜2回）', '仕事内容や働き方について、お互いに理解を深めます。'),
     ('内定・入社', '条件を確認し、入社の手続きを進めます。'),
@@ -1181,7 +1183,7 @@ RC_SELECT = [
 # ★要確認：質問は構成案のまま。回答は構成案になかったので、今の募集要項の範囲でこちらで書いた下書き
 RC_FAQ = [
     ('保険業界が未経験でも応募できますか？',
-     '応募資格は学歴・性別・国籍不問です。これまでのご経験については、お電話で気軽にご相談ください。'),
+     '応募資格は学歴・性別・国籍不問です。これまでのご経験については、お問い合わせフォーム・お電話・メールで気軽にご相談ください。'),
     ('営業職の給与はどのように決まりますか？',
      '固定給20万円に、営業成績に応じた成果報酬を加えた成果連動型です。詳しい仕組みは面接でご説明します。'),
     ('どのような人物を求めていますか？',
@@ -1200,7 +1202,7 @@ def page_recruitment():
         ('勤務時間', '10時～18時'),
         ('給与', '成果連動型報酬（営業成績に応じて支給）<br>給与：固定給20万円＋成果報酬<br>年収1,000万円も可能'),
         ('選考方法', '書類面接・面接試験（1～2回）'),
-        ('応募方法', 'お電話にてご応募ください'),
+        ('応募方法', 'お問い合わせフォーム・お電話・メールにてご応募ください'),
         ('郵送先・応募先', f'〒{POSTAL} {ADDRESS}'),
     ]
     dl = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)
@@ -1236,7 +1238,7 @@ def page_recruitment():
       <h1 class="rc-fv-title fade"><span>人の人生に向き合いながら</span><span>自分の未来も変えていく</span></h1>
       <p class="rc-fv-lead fade">決められた道を歩むだけではなく<br>自分の可能性を自分の手で広げていく</p>
       <p class="rc-status fade"><span class="dot"></span>Entry Open<b>エントリー受付中</b></p>
-      <p class="rc-links fade"><a class="btn btn-primary" href="#jobs">募集職種を見る{ARROW}</a><a class="link-arrow" href="tel:{RECRUIT_TEL_HREF[4:]}">電話で応募・相談する{ARROW}</a></p>
+      <p class="rc-links fade"><a class="btn btn-primary" href="#jobs">募集職種を見る{ARROW}</a><a class="link-arrow" href="/contact/">応募・お問い合わせ{ARROW}</a></p>
     </div>
   </section>
 
@@ -1321,8 +1323,8 @@ def page_recruitment():
 ''' + ps_faq(RC_FAQ, bg='') + '\n' + final_cta(
         title='<span>あなたの可能性を</span><br><span>LFグループで</span>',
         text='新しい挑戦も、自分らしい働き方も。<br>一人ひとりの可能性を大切にする場所で、<br>次の一歩を踏み出しませんか。',
-        button='電話で応募・相談する', eyebrow='Your Future Starts Here.', mail=RECRUIT_MAIL
-    ).replace('href="/contact/"', f'href="{RECRUIT_TEL_HREF}"', 1).replace(
+        button='応募・お問い合わせ', eyebrow='Your Future Starts Here.', mail=RECRUIT_MAIL
+    ).replace(
         f'お電話でのお問い合わせ<a href="{TEL_HREF}">{TEL}</a>', f'採用に関するお電話<a href="{RECRUIT_TEL_HREF}">{RECRUIT_TEL}</a>', 1).replace(
         'メールでのお問い合わせ<a', '採用に関するメール<a', 1)
 
@@ -1453,6 +1455,7 @@ def policy_privacy():
     <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
     <div><dt>所在地</dt><dd>〒{POSTAL} {ADDRESS}</dd></div>
     <div><dt>電話番号</dt><dd><a href="{TEL_HREF}">{TEL}</a></dd></div>
+    <div><dt>メールアドレス</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></div>
     <div><dt>受付時間</dt><dd>10:00～18:00</dd></div>
   </dl>
 </div>'''
