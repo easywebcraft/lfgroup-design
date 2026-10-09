@@ -24,16 +24,17 @@ SITE_URL = ''  # 本番の公開URL（末尾の / なし）。決まるまでは
 TEXT = BASE / 'text'
 
 # 電話番号の使い分け（今のサイトから分かる範囲）
-#   052-846-2135：お問い合わせ用。ヘッダー・CTA・フッター・会社概要に使う
-#   052-846-8224：採用の応募先（採用情報ページとお問い合わせページ）
+#   052-846-2135：お問い合わせ用。ヘッダー・CTA・フッター・会社概要・採用情報・お問い合わせページのすべてに使う
+#   052-846-8224：採用の応募先として載せていたが、2026-10-09 松本さんの指示で 052-846-2135 に統一した（載せない）
 #   052-990-6159：今は使っていない番号（2026-10-04 クライアント確認）。サイトには載せない
 TEL = '052-846-2135'
 TEL_HREF = 'tel:0528462135'
-RECRUIT_TEL = '052-846-8224'
-RECRUIT_TEL_HREF = 'tel:0528468224'
+RECRUIT_TEL = TEL  # 採用の電話も、お問い合わせと同じ番号に統一
+RECRUIT_TEL_HREF = TEL_HREF
 # メールアドレス（2026-10-09 松本さん）：info は個人・法人のお客様の問い合わせ先、recruit は採用の問い合わせ先
 MAIL = 'info@lfgroup.jp'
 RECRUIT_MAIL = 'recruit@lfgroup.jp'
+ALLIANCE_MAIL = 'alliance@lfgroup.jp'  # アライアンス事業の問い合わせ用（2026-10-09 松本さん）。メールは目的別：info＝個人・法人、alliance＝アライアンス事業、recruit＝採用
 # お問い合わせフォーム（Googleフォーム。info@lfgroup.jp に通知。2026-10-09）
 FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd5O9G8vna7SE2T7kWOxYvuTFFN2HupM-mXSf5bzZB0Vasmaw/viewform'
 ADDRESS = '愛知県名古屋市東区葵3-14-5 2F'  # 2026-10-09 松本さん「リッチコーポは外して 3-14-5 2F に」。元のサイトは「葵3丁目14-5 リッチコーポ2階」
@@ -289,11 +290,11 @@ def policy_lines_html(items, fade=True):
     return '<ol class="policy-lines">' + ''.join(out) + '</ol>'
 
 
-def final_cta(title=None, text=None, button='お問い合わせ', eyebrow='Contact', mail=MAIL):
+def final_cta(title=None, text=None, button='お問い合わせ', eyebrow='Contact', mail=MAIL, mail_label='メールでのお問い合わせ'):
     """ページ最下部のお問い合わせ欄（全ページ共通）。ボタンは1つ、電話は小さく添える。
     title・text を渡すと、そのページ向けの文にできる（アライアンス事業：2026-10-07 お客様の要望）。
-    電話の下にメールアドレスも添える（標準は MAIL、採用情報だけ RECRUIT_MAIL）。メールの案内が要らないページは mail=None。"""
-    mail_line = f'\n      <p class="contact-cta-tel contact-cta-mail fade">メールでのお問い合わせ<a href="mailto:{mail}">{mail}</a></p>' if mail else ''
+    電話の下にメールアドレスも添える（標準は MAIL、採用情報は RECRUIT_MAIL、アライアンス事業は ALLIANCE_MAIL。見出しは mail_label）。メールの案内が要らないページは mail=None。"""
+    mail_line = f'\n      <p class="contact-cta-tel contact-cta-mail fade">{mail_label}<a href="mailto:{mail}">{mail}</a></p>' if mail else ''
     title = title or '<span>保険やお金について</span><br><span>気になることから</span><span>ご相談ください</span>'
     text = text or '保険の見直しや家計、これからのお金について、まずはお気軽にお問い合わせください。'
     return f'''  <section class="contact-cta" id="final-cta">
@@ -988,7 +989,8 @@ def page_partner():
             + ps_flow(AL_FLOW, eyebrow='Partnership Flow', title='提携開始までの流れ') + ps_faq(AL_FAQ) + '\n'
             + final_cta(title='<span>新しい価値を</span><br><span>ともに創る</span>',
                         text='不動産会社の皆様へ<br>ライフラインサービスを通じた新たな価値創出を<br>LFグループとともに始めませんか',
-                        button='事業提携について問い合わせる', eyebrow='Become Our Partner'))
+                        button='事業提携について問い合わせる', eyebrow='Become Our Partner',
+                        mail=ALLIANCE_MAIL, mail_label='アライアンス事業に関するメール'))
 
 
 def ceo_message_block():
@@ -1132,17 +1134,18 @@ def page_contact():
     # 電話のみの受付。受付時間は既存の表示を維持（公開前に要確認）。
     contacts = f'''      <div class="contact-tel contact-first">
         <div class="tel-box tel-main">
-          <h2>保険・固定費のご相談</h2>
+          <h2>お電話でのお問い合わせ</h2>
           <a class="tel-number" href="{TEL_HREF}">{TEL}</a>
           <p class="tel-hours">受付時間 10:00～18:00</p>
-          <p class="tel-mail">メール <a href="mailto:{MAIL}">{MAIL}</a></p>
           <a class="btn btn-primary" href="{TEL_HREF}">電話で相談する{ARROW}</a>
         </div>
-        <div class="tel-box">
-          <h2>採用に関するお問い合わせ</h2>
-          <a class="tel-number" href="{RECRUIT_TEL_HREF}">{RECRUIT_TEL}</a>
-          <p class="tel-mail">メール <a href="mailto:{RECRUIT_MAIL}">{RECRUIT_MAIL}</a></p>
-          <p class="tel-hours"><a class="link-arrow" href="/recruitment/">採用情報を見る{ARROW}</a></p>
+        <div class="tel-box tel-mails">
+          <h2>メールでのお問い合わせ</h2>
+          <dl class="mail-list">
+            <div><dt>個人・法人のお客様</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></div>
+            <div><dt>アライアンス事業</dt><dd><a href="mailto:{ALLIANCE_MAIL}">{ALLIANCE_MAIL}</a></dd></div>
+            <div><dt>採用</dt><dd><a href="mailto:{RECRUIT_MAIL}">{RECRUIT_MAIL}</a><span class="mail-link"><a class="link-arrow" href="/recruitment/">採用情報を見る{ARROW}</a></span></dd></div>
+          </dl>
         </div>
       </div>
       <div class="contact-form fade">
@@ -1336,10 +1339,7 @@ def page_recruitment():
 ''' + ps_faq(RC_FAQ, bg='') + '\n' + final_cta(
         title='<span>あなたの可能性を</span><br><span>LFグループで</span>',
         text='新しい挑戦も、自分らしい働き方も。<br>一人ひとりの可能性を大切にする場所で、<br>次の一歩を踏み出しませんか。',
-        button='応募・お問い合わせ', eyebrow='Your Future Starts Here.', mail=RECRUIT_MAIL
-    ).replace(
-        f'お電話でのお問い合わせ<a href="{TEL_HREF}">{TEL}</a>', f'採用に関するお電話<a href="{RECRUIT_TEL_HREF}">{RECRUIT_TEL}</a>', 1).replace(
-        'メールでのお問い合わせ<a', '採用に関するメール<a', 1)
+        button='応募・お問い合わせ', eyebrow='Your Future Starts Here.', mail=RECRUIT_MAIL, mail_label='採用に関するメール')
 
 
 # ───────────── 方針ページ：保存した本文を見出し・箇条書きに組み直す ─────────────
