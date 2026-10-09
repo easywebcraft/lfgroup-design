@@ -1627,7 +1627,9 @@ PAGES = ['', 'about/', 'personal/', 'corporate/', 'partner/', 'company/', 'conta
 
 def release_files():
     """本番用：画像（顧客からもらったロゴの元データ images/logo/ は除く）・robots.txt・sitemap.xml。"""
-    shutil.copytree(BASE / 'images', SITE / 'images', ignore=lambda d, names: ['logo'] if Path(d) == BASE / 'images' else [])
+    # 顧客からもらったロゴの元データ（images/logo/）と、内部メモ（*.md。画像の生成メモ）は公開しない
+    shutil.copytree(BASE / 'images', SITE / 'images',
+                    ignore=lambda d, names: (['logo'] if Path(d) == BASE / 'images' else []) + [n for n in names if n.endswith('.md')])
     robots = 'User-agent: *\nAllow: /\n'
     if SITE_URL:
         robots += f'\nSitemap: {SITE_URL}/sitemap.xml\n'
