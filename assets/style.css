@@ -1975,6 +1975,28 @@ br.sp { display: none; }
 .al-num-list.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 1023px) { .al-num-list.is-three { grid-template-columns: repeat(2, minmax(0, 1fr)); } .al-num-list.is-three li:last-child { grid-column: 1 / -1; } }
 
+
+/* ===== 各段の上下の余白をさらに詰める（2026-10-09 松本さん「各メニューの上下の余白を違和感ないくらい削ってほしい。スクロール量を減らしたい」）=====
+   前回（2026-10-08）は 48〜72px（1280pxで64px）。今回は 32〜48px（1280pxで約43px）。隣り合う段の中身の間は、約128px → 約87px。
+   段の余白はこの --sec-pad にまとめた。ここの値を変えれば、全ページの段の余白が一斉に変わる。
+   頭の中の間隔（英字→見出し→中身）は変えていない（窮屈にならないように） */
+:root { --sec-pad: clamp(32px, 3.4vw, 48px); }
+.section { padding-block: var(--sec-pad); }
+.contact-cta { padding-block: clamp(40px, 4.4vw, 60px); }
+.numbers { padding-block: clamp(56px, 6vw, 84px); }
+.section.ps-worries-banded { padding-block: 20px var(--sec-pad); }
+.ps-band { padding-top: clamp(28px, 3vw, 40px); }
+.ps-worries-answer { margin-top: 32px; }
+.footer { padding-block: 40px 24px; }
+@media (max-width: 767px) {
+  .contact-cta { padding-block: 44px; }
+  .numbers { padding-block: 56px; }
+}
+/* 段の中の大きめの間隔も少し詰める（行と行の間・カードの行の間）。見出しと中身の間（28px）は変えない */
+.ab-biz-list { gap: 40px; }
+.ps-menu-list { gap: 40px 32px; margin-top: 40px; }
+@media (max-width: 1023px) { .ab-biz-list { gap: 36px; } .ps-menu-list { gap: 36px 24px; } }
+@media (max-width: 767px) { .ps-menu-list { gap: 32px; margin-top: 28px; } }
 /* トップのファーストビューの写真を、春→夏→秋→冬→春…と切り替える（「人生の四季」。写真は build.py の SEASON_PHOTOS）
    写真の位置・最初のズームは .fv-photo img の指定をそのまま使い、ここでは重ね方と切り替えだけを足す */
 
