@@ -647,3 +647,6 @@ html:has(.rf-serif) .header:not(.is-scrolled) .gnav a, html:has(.rf-serif) .head
   color: rgba(255, 233, 176, .55); -webkit-text-stroke: 1.6px #ffe9b0; text-shadow: 0 0 12px rgba(255, 214, 140, 1), 0 0 30px rgba(255, 180, 70, .9);
   animation: ff-char 8s ease-in-out infinite; animation-delay: calc(3.6s + var(--n, 0) * .09s); }
 @media (prefers-reduced-motion: reduce) { .rf-top.rf-serif .rv-big .rb-ch::after { animation: none; opacity: 0; } }
+
+/* 写真のカメラワークを止める（会社概要。2026-10-09 松本さん「カメラワークを削除して」）：マウス・スクロールで写真だけずれる動きと、1.06倍の拡大。文字側の動きはそのまま */
+.rf-go .rf-v.rf-still .rf-media { translate: none; scale: 1; transition: none; }

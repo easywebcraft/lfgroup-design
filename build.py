@@ -563,15 +563,16 @@ PS_FAQ = [
 ]
 
 
-def rf_hero(crumb, eyebrow, title, lead, button, photos, big):
+def rf_hero(crumb, eyebrow, title, lead, button, photos, big, still=False):
     """個人・法人のお客様の冒頭（2026-10-08 松本さん「TOPページのFVの見せ方を取り入れて」）。
     トップと同じ部品（src/recruit-fv.css・recruit-fv.js）：写真が4.5秒ごとに斜めのマスクで切り替わり金の光が走る、
     大きな英字（明朝体系）、1文字ずつ出る白い明朝の見出し、マウスとスクロールで奥行き。
-    トップ専用の指定（ページ全体を紺にする等）は .rf-sub で外す。title・lead は2行（(1行目, 2行目)）"""
+    トップ専用の指定（ページ全体を紺にする等）は .rf-sub で外す。title・lead は2行（(1行目, 2行目)）
+    still=True：写真のカメラワーク（マウス・スクロールで写真だけずれる動きと拡大）を止める（会社概要。2026-10-09 松本さん）"""
     imgs = ''.join('<img class="%s" src="/images/%s" alt="" style="object-position:%s" %s onerror="this.remove()">'
                    % ('is-on' if n == 0 else '', f, pos, 'fetchpriority="high"' if n == 0 else 'data-eager') for n, (f, pos) in enumerate(photos))
     words = ''.join(f'<span>{w}</span>' for w in big)
-    return f'''  <section class="rf rf-a rf-v rf-top rf-wipe rf-serif rf-sub" data-fx="a" data-stay="4500">
+    return f'''  <section class="rf rf-a rf-v rf-top rf-wipe rf-serif rf-sub{' rf-still' if still else ''}" data-fx="a" data-stay="4500">
     <div class="rf-media">{imgs}</div>
     <p class="rv-big" aria-hidden="true">{words}</p>
     {GOLD_WIPE}
@@ -1028,7 +1029,7 @@ def page_company():
     hero = rf_hero('会社概要', 'Company Profile', ('信頼を礎に', '新たな価値を創造する'),
                    ('LFグループ株式会社の', '企業情報をご紹介します'),
                    'お問い合わせ', (('cta-final.jpg', '50% 62%'),),  # 写真の切り替えはなし（2026-10-09 松本さん）。今までの会社概要の写真のまま
-                   ('OUR', 'COMPANY', 'PROFILE.'))
+                   ('OUR', 'COMPANY', 'PROFILE.'), still=True)
     return hero + f'''
   <section class="section" id="profile">
     <div class="wrap">
