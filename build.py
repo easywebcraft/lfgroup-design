@@ -1142,9 +1142,9 @@ def page_contact():
         <div class="tel-box tel-mails">
           <h2>メールでのお問い合わせ</h2>
           <dl class="mail-list">
-            <div><dt>個人・法人のお客様</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></div>
-            <div><dt>アライアンス事業</dt><dd><a href="mailto:{ALLIANCE_MAIL}">{ALLIANCE_MAIL}</a></dd></div>
-            <div><dt>採用</dt><dd><a href="mailto:{RECRUIT_MAIL}">{RECRUIT_MAIL}</a><span class="mail-link"><a class="link-arrow" href="/recruitment/">採用情報を見る{ARROW}</a></span></dd></div>
+            <div><dt>保険・固定費のご相談</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></div>
+            <div><dt>アライアンス事業のご相談</dt><dd><a href="mailto:{ALLIANCE_MAIL}">{ALLIANCE_MAIL}</a></dd></div>
+            <div><dt>採用関連のお問い合わせ</dt><dd><a href="mailto:{RECRUIT_MAIL}">{RECRUIT_MAIL}</a><span class="mail-link"><a class="link-arrow" href="/recruitment/">採用情報を見る{ARROW}</a></span></dd></div>
           </dl>
         </div>
       </div>
