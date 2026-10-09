@@ -34,6 +34,8 @@ RECRUIT_TEL_HREF = 'tel:0528468224'
 # メールアドレス（2026-10-09 松本さん）：info は個人・法人のお客様の問い合わせ先、recruit は採用の問い合わせ先
 MAIL = 'info@lfgroup.jp'
 RECRUIT_MAIL = 'recruit@lfgroup.jp'
+# お問い合わせフォーム（Googleフォーム。info@lfgroup.jp に通知。2026-10-09）
+FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd5O9G8vna7SE2T7kWOxYvuTFFN2HupM-mXSf5bzZB0Vasmaw/viewform'
 ADDRESS = '愛知県名古屋市東区葵3丁目14-5 リッチコーポ2階'
 POSTAL = '461-0004'  # 今のサイトに記載がなく、2026-10-05 にクライアントに確認
 COMPANY = 'LFグループ株式会社'
@@ -1078,6 +1080,12 @@ def page_contact():
           <p class="tel-mail">メール <a href="mailto:{RECRUIT_MAIL}">{RECRUIT_MAIL}</a></p>
           <p class="tel-hours"><a class="link-arrow" href="/recruitment/">採用情報を見る{ARROW}</a></p>
         </div>
+      </div>
+      <div class="contact-form fade">
+        <h2>メールでのお問い合わせ</h2>
+        <p>下のフォームからお送りください。担当者より2営業日以内にご連絡いたします。</p>
+        <iframe src="{FORM_URL}?embedded=true" title="LFグループ お問い合わせフォーム" loading="lazy" width="100%" height="1500" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+        <p class="contact-form-note">フォームが表示されない場合は、<a href="{FORM_URL}" target="_blank" rel="noopener">こちらから開いてください</a>。</p>
       </div>'''
     return page_hero('Contact', 'お問い合わせ', [('お問い合わせ', '/contact/')],
                      lead='保険や固定費の見直しについて、お電話・メールでご相談を承っています。',
