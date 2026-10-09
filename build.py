@@ -1024,11 +1024,14 @@ def page_company():
     # 代表者名・電話番号・住所・適格請求書番号は、今のサイトにある情報。代表挨拶は「私たちについて」の末尾へ移した
     q = 'https://www.google.com/maps/embed?origin=mfe&amp;pb=!1m3!2m1!1z5oSb55-l55yM5ZCN5Y-k5bGL5biC5p2x5Yy66JG1M-S4geebrjE0LTU!6i16'
     links = ''.join(f'<a href="{h}">{l}{ARROW}</a>' for _, l, h in POLICIES)
-    hero = page_hero('Company Profile', '会社概要', [('会社概要', '/company/')],
-                     lead='信頼を礎に、新たな価値を創造する。<br>LFグループ株式会社の企業情報をご紹介します。',
-                     photo='cta-final.jpg', pos='50% 62%', caption='Nagoya, Aichi', compact=True)
+    # 冒頭は個人・法人・私たちについてと同じ rf_hero（トップのFVの見せ方。2026-10-09 松本さん「会社概要のTOPページの見せ方も他のページと同様に」）
+    hero = rf_hero('会社概要', 'Company Profile', ('信頼を礎に', '新たな価値を創造する'),
+                   ('LFグループ株式会社の', '企業情報をご紹介します'),
+                   'お問い合わせ', (('recruit-city-1800.jpg', '60% 50%'), ('cta.jpg', '50% 50%'),
+                                   ('cta-final.jpg', '62% 50%'), ('scene-dining.jpg', '60% 60%')),
+                   ('OUR', 'COMPANY', 'PROFILE.'))
     return hero + f'''
-  <section class="section co-first" id="profile">
+  <section class="section" id="profile">
     <div class="wrap">
       <p class="eyebrow fade">Company Information</p>
       <h2 class="fade">会社情報</h2>
@@ -1843,7 +1846,7 @@ def main():
     write('business/index.html', redirect('../about/'))
     write('service/index.html', redirect('../personal/'))
     write('insurance/index.html', redirect('../personal/'))
-    write('company/index.html', layout('会社概要', page_company(), 'company'))
+    write('company/index.html', with_rf(layout('会社概要', page_company(), 'company')))
     write('contact/index.html', layout('お問い合わせ', page_contact(), 'contact'))
     write('recruitment/index.html', write_recruit_trials())  # 案A2のヒーロー（2026-10-07）。試作 /recruitment-a・a2・b・c は --release では書かない
     renders = {'operation': policy_operation, 'solicitation': policy_solicitation,
