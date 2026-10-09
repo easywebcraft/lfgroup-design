@@ -31,6 +31,9 @@ TEL = '052-846-2135'
 TEL_HREF = 'tel:0528462135'
 RECRUIT_TEL = '052-846-8224'
 RECRUIT_TEL_HREF = 'tel:0528468224'
+# メールアドレス（2026-10-09 松本さん）：info は個人・法人のお客様の問い合わせ先、recruit は採用の問い合わせ先
+MAIL = 'info@lfgroup.jp'
+RECRUIT_MAIL = 'recruit@lfgroup.jp'
 ADDRESS = '愛知県名古屋市東区葵3丁目14-5 リッチコーポ2階'
 POSTAL = '461-0004'  # 今のサイトに記載がなく、2026-10-05 にクライアントに確認
 COMPANY = 'LFグループ株式会社'
@@ -283,9 +286,11 @@ def policy_lines_html(items, fade=True):
     return '<ol class="policy-lines">' + ''.join(out) + '</ol>'
 
 
-def final_cta(title=None, text=None, button='お問い合わせ', eyebrow='Contact'):
+def final_cta(title=None, text=None, button='お問い合わせ', eyebrow='Contact', mail=None):
     """ページ最下部のお問い合わせ欄（全ページ共通）。ボタンは1つ、電話は小さく添える。
-    title・text を渡すと、そのページ向けの文にできる（アライアンス事業：2026-10-07 お客様の要望）。"""
+    title・text を渡すと、そのページ向けの文にできる（アライアンス事業：2026-10-07 お客様の要望）。
+    mail を渡すと、電話の下にメールアドレスも添える（個人・法人のお客様：MAIL、採用情報：RECRUIT_MAIL）。"""
+    mail_line = f'\n      <p class="contact-cta-tel contact-cta-mail fade">メールでのお問い合わせ<a href="mailto:{mail}">{mail}</a></p>' if mail else ''
     title = title or '<span>保険やお金について</span><br><span>気になることから</span><span>ご相談ください</span>'
     text = text or '保険の見直しや家計、これからのお金について、まずはお気軽にお問い合わせください。'
     return f'''  <section class="contact-cta" id="final-cta">
@@ -296,7 +301,7 @@ def final_cta(title=None, text=None, button='お問い合わせ', eyebrow='Conta
       <p class="contact-cta-actions fade">
         <a class="btn btn-primary" href="/contact/">{button}{ARROW}</a>
       </p>
-      <p class="contact-cta-tel fade">お電話でのお問い合わせ<a href="{TEL_HREF}">{TEL}</a></p>
+      <p class="contact-cta-tel fade">お電話でのお問い合わせ<a href="{TEL_HREF}">{TEL}</a></p>{mail_line}
     </div>
   </section>
 '''
@@ -703,7 +708,7 @@ def page_personal():
             + ps_flow(PS_FLOW) + ps_faq(PS_FAQ) + '\n'
             + final_cta(title='<span>お金の不安を</span><br><span>未来の安心へ</span>',
                         text='保険のことも、将来のお金のことも。<br>まずはお気軽にご相談ください。',
-                        button='無料相談を予約する'))
+                        button='無料相談を予約する', mail=MAIL))
 
 
 # ───── 法人のお客様（2026-10-08 お客様の構成案で作り直し） ─────
@@ -839,7 +844,7 @@ def page_corporate():
             + ps_flow(CO_FLOW) + ps_faq(CO_FAQ) + '\n'
             + final_cta(title='<span>企業の未来に</span><br><span>確かな備えを</span>',
                         text='経営者の保障、従業員の福利厚生、<br>事業活動に伴うさまざまなリスクまで。<br>企業の状況に合わせた対策を一緒に考えます。',
-                        button='法人保険の相談を申し込む', eyebrow='Your Business, Our Commitment.'))
+                        button='法人保険の相談を申し込む', eyebrow='Your Business, Our Commitment.', mail=MAIL))
 
 
 # ───── アライアンス事業（2026-10-08 お客様の構成案で作り直し） ─────
@@ -1064,16 +1069,18 @@ def page_contact():
           <h2>保険・固定費のご相談</h2>
           <a class="tel-number" href="{TEL_HREF}">{TEL}</a>
           <p class="tel-hours">受付時間 10:00～18:00</p>
+          <p class="tel-mail">メール <a href="mailto:{MAIL}">{MAIL}</a></p>
           <a class="btn btn-primary" href="{TEL_HREF}">電話で相談する{ARROW}</a>
         </div>
         <div class="tel-box">
           <h2>採用に関するお問い合わせ</h2>
           <a class="tel-number" href="{RECRUIT_TEL_HREF}">{RECRUIT_TEL}</a>
+          <p class="tel-mail">メール <a href="mailto:{RECRUIT_MAIL}">{RECRUIT_MAIL}</a></p>
           <p class="tel-hours"><a class="link-arrow" href="/recruitment/">採用情報を見る{ARROW}</a></p>
         </div>
       </div>'''
     return page_hero('Contact', 'お問い合わせ', [('お問い合わせ', '/contact/')],
-                     lead='保険や固定費の見直しについて、お電話でご相談を承っています。',
+                     lead='保険や固定費の見直しについて、お電話・メールでご相談を承っています。',
                      compact=True, extra=contacts).replace('sub-hero compact', 'sub-hero compact contact-intro', 1)
 
 
@@ -1108,7 +1115,7 @@ RC_STEPS = [
 ]
 
 RC_SELECT = [
-    ('お電話でのご応募', '052-846-8224 までお電話ください。'),
+    ('お電話・メールでのご応募', f'{RECRUIT_TEL} までお電話、または {RECRUIT_MAIL} までメールをお送りください。'),
     ('書類選考', 'ご経験やご希望の条件を確認します。'),
     ('面接（1〜2回）', '仕事内容や働き方について、お互いに理解を深めます。'),
     ('内定・入社', '条件を確認し、入社の手続きを進めます。'),
@@ -1257,9 +1264,10 @@ def page_recruitment():
 ''' + ps_faq(RC_FAQ, bg='') + '\n' + final_cta(
         title='<span>あなたの可能性を</span><br><span>LFグループで</span>',
         text='新しい挑戦も、自分らしい働き方も。<br>一人ひとりの可能性を大切にする場所で、<br>次の一歩を踏み出しませんか。',
-        button='電話で応募・相談する', eyebrow='Your Future Starts Here.'
+        button='電話で応募・相談する', eyebrow='Your Future Starts Here.', mail=RECRUIT_MAIL
     ).replace('href="/contact/"', f'href="{RECRUIT_TEL_HREF}"', 1).replace(
-        f'お電話でのお問い合わせ<a href="{TEL_HREF}">{TEL}</a>', f'採用に関するお電話<a href="{RECRUIT_TEL_HREF}">{RECRUIT_TEL}</a>', 1)
+        f'お電話でのお問い合わせ<a href="{TEL_HREF}">{TEL}</a>', f'採用に関するお電話<a href="{RECRUIT_TEL_HREF}">{RECRUIT_TEL}</a>', 1).replace(
+        'メールでのお問い合わせ<a', '採用に関するメール<a', 1)
 
 
 # ───────────── 方針ページ：保存した本文を見出し・箇条書きに組み直す ─────────────

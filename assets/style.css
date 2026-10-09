@@ -348,6 +348,8 @@
   .contact-tel .tel-box { margin-top: 0; }
   .tel-box.tel-main a { font-size: 36px; }
   .tel-box .tel-hours { margin-top: 8px; }
+  .tel-box .tel-mail { margin-top: 6px; }
+  .tel-box .tel-mail a, .tel-box.tel-main .tel-mail a { margin: 0 0 0 6px; font-family: var(--en); font-size: 17px; font-weight: 500; letter-spacing: .02em; }
   .tel-box .tel-hours a { font-family: inherit; font-size: 14px; font-weight: 500; letter-spacing: 0; }
   .tel-box { padding: 28px; background: var(--bg-blue); border-radius: 12px; margin-top: 32px; }
   .tel-box p { font-size: 13px; color: var(--text-sub); }
@@ -1063,6 +1065,7 @@
   .contact-cta-actions { display: flex; align-items: center; justify-content: center; gap: 16px 36px; flex-wrap: wrap; margin-top: 44px; }
   .contact-cta-actions .link-arrow { margin: 0; }
   .contact-cta-tel { margin-top: 32px; font-size: 12px; letter-spacing: .08em; color: var(--sub); }
+  .contact-cta-mail { margin-top: 10px; }
   .contact-cta-tel a { margin-left: 12px; font-family: var(--en); font-size: 18px; font-weight: 500; letter-spacing: .06em; color: var(--navy); }
   @media (max-width: 767px) {
     .contact-cta { text-align: left; }

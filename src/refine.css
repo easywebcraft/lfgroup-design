@@ -238,6 +238,7 @@
   .contact-cta-actions { display: flex; align-items: center; justify-content: center; gap: 16px 36px; flex-wrap: wrap; margin-top: 44px; }
   .contact-cta-actions .link-arrow { margin: 0; }
   .contact-cta-tel { margin-top: 32px; font-size: 12px; letter-spacing: .08em; color: var(--sub); }
+  .contact-cta-mail { margin-top: 10px; }
   .contact-cta-tel a { margin-left: 12px; font-family: var(--en); font-size: 18px; font-weight: 500; letter-spacing: .06em; color: var(--navy); }
   @media (max-width: 767px) {
     .contact-cta { text-align: left; }
