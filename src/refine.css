@@ -1135,23 +1135,29 @@ br.sp { display: none; }
 
 
 /* ===== 各段の上下の余白をさらに詰める（2026-10-09 松本さん「各メニューの上下の余白を違和感ないくらい削ってほしい。スクロール量を減らしたい」）=====
-   前回（2026-10-08）は 48〜72px（1280pxで64px）。今回は 32〜48px（1280pxで約43px）。隣り合う段の中身の間は、約128px → 約87px。
+   前回（2026-10-08）は 48〜72px（1280pxで64px）。今回（2026-10-09）は、まず 32〜48px、さらに「ぴっちりが好み」とのことで 22〜30px（1280pxで約29px）。隣り合う段の中身の間は、約128px → 約58px。
    段の余白はこの --sec-pad にまとめた。ここの値を変えれば、全ページの段の余白が一斉に変わる。
    頭の中の間隔（英字→見出し→中身）は変えていない（窮屈にならないように） */
-:root { --sec-pad: clamp(32px, 3.4vw, 48px); }
+:root { --sec-pad: clamp(22px, 2.3vw, 30px); }
 .section { padding-block: var(--sec-pad); }
-.contact-cta { padding-block: clamp(40px, 4.4vw, 60px); }
-.numbers { padding-block: clamp(56px, 6vw, 84px); }
-.section.ps-worries-banded { padding-block: 20px var(--sec-pad); }
-.ps-band { padding-top: clamp(28px, 3vw, 40px); }
-.ps-worries-answer { margin-top: 32px; }
-.footer { padding-block: 40px 24px; }
+.contact-cta { padding-block: clamp(32px, 3.4vw, 44px); }
+.numbers { padding-block: clamp(40px, 4.6vw, 62px); }
+.section.ps-worries-banded { padding-block: 16px var(--sec-pad); }
+.ps-band { padding-top: clamp(22px, 2.4vw, 30px); }
+.ps-worries-answer { margin-top: 24px; }
+.footer { padding-block: 32px 20px; }
 @media (max-width: 767px) {
-  .contact-cta { padding-block: 44px; }
-  .numbers { padding-block: 56px; }
+  .contact-cta { padding-block: 32px; }
+  .numbers { padding-block: 40px; }
 }
 /* 段の中の大きめの間隔も少し詰める（行と行の間・カードの行の間）。見出しと中身の間（28px）は変えない */
-.ab-biz-list { gap: 40px; }
-.ps-menu-list { gap: 40px 32px; margin-top: 40px; }
-@media (max-width: 1023px) { .ab-biz-list { gap: 36px; } .ps-menu-list { gap: 36px 24px; } }
-@media (max-width: 767px) { .ps-menu-list { gap: 32px; margin-top: 28px; } }
+.ab-biz-list { gap: 28px; }
+.ps-menu-list { gap: 28px 24px; margin-top: 24px; }
+@media (max-width: 1023px) { .ab-biz-list { gap: 28px; } .ps-menu-list { gap: 28px 20px; } }
+@media (max-width: 767px) { .ps-menu-list { gap: 24px; margin-top: 20px; } }
+/* 見出しと中身の間・段の中の大きな空き（ぴっちり） */
+.sec-c > .wrap > h2 + * { margin-top: 20px !important; }
+.sec-c > .wrap > h2 { margin-top: 8px; }
+.co-svc-group { margin-top: 28px; padding-top: 24px; }
+.co-svc-group:first-of-type { margin-top: 0; }
+@media (max-width: 767px) { .sec-c > .wrap > h2 + * { margin-top: 16px !important; } }
