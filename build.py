@@ -472,7 +472,7 @@ def page_about():
     </div>
   </section>
 
-''' + final_cta()
+''' + ceo_message_block() + final_cta()
 
 
 # ───── 個人のお客様（2026-10-08 お客様の構成案に合わせて作り直し） ─────
@@ -989,64 +989,96 @@ def page_partner():
                         button='事業提携について問い合わせる', eyebrow='Become Our Partner'))
 
 
-def page_company():
-    # 「愛知県名古屋市東区葵3丁目14-5」を Google マップの埋め込み形式にしたもの
-    q = 'https://www.google.com/maps/embed?origin=mfe&amp;pb=!1m3!2m1!1z5oSb55-l55yM5ZCN5Y-k5bGL5biC5p2x5Yy66JG1M-S4geebrjE0LTU!6i16'
-    links = ''.join(f'<a href="{h}">{l}{ARROW}</a>' for _, l, h in POLICIES)
-    # 冒頭は会社名・所在地・事業内容（どれも今の会社概要にある情報）。写真は所在地の名古屋の街並みとして見せる
-    return page_hero('Company', '会社概要', [('会社概要', '/company/')],
-                     photo='cta-final.jpg', pos='50% 62%', caption='Nagoya, Aichi',
-                     extra=(f'        <div class="co-hero fade">\n'
-                            f'          <p class="co-name">{COMPANY}</p>\n'
-                            f'          <p class="co-addr">〒{POSTAL}<br>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</p>\n'
-                            f'          <p class="co-biz">金融コンサル・保険代理店業務を行っています。</p>\n'
-                            f'        </div>')) + f'''
-  <section class="section co-philosophy" id="philosophy">
-    <div class="wrap">
-      <p class="eyebrow fade">Philosophy</p>
-      <h2 class="fade">企業理念</h2>
-      <p class="co-philosophy-main no-punct fade"><span>顧客満足度を最優先に</span><span>人々の生活を向上させます</span></p>
-      <div class="co-philosophy-sub fade">
-        <p class="co-philosophy-head">お客様の暮らしにゆとりを</p>
-        <p class="text">LFグループ株式会社は、お客様に寄り添い、ゆとりある生活の実現をお手伝いします。</p>
-        <p class="text">お金のゆとりは、暮らしの安心や人生の豊かさにつながります。</p>
-      </div>
-    </div>
-  </section>
-
+def ceo_message_block(draft=True):
+    """代表挨拶の本文（「私たちについて」の末尾に置く）。写真と直筆サインは images/ceo-photo.jpg・ceo-sign.png（2026-10-09 お客様から受領）。"""
+    note = '<p class="note-draft">下書き（代表の確認前）</p>\n        ' if draft else ''
+    return f'''
   <section class="section bg-blue" id="message">
-    <div class="wrap co-message">
-      <div>
+    <div class="wrap ceo-msg">
+      <div class="ceo-msg-side">
         <p class="eyebrow fade">Message</p>
         <h2 class="fade">代表挨拶</h2>
+        <figure class="co-message-photo fade"><img loading="lazy" src="/images/ceo-photo.jpg" alt="代表取締役 遠藤 昇平" onerror="this.closest('figure').remove()"></figure>
       </div>
-      <div class="fade">
+      <div class="ceo-msg-main fade">
         <!-- ★公開前に必要：代表挨拶は、今のサイトにある言葉（顧客満足度を最優先に・お客様本位の運営方針・迅速な事故対応）
-             だけで作った「下書き」（2026-10-07）。ご本人の言葉ではないので、代表の確認・修正をいただいたら、.note-draft の印を外す。お写真もいただいたら差し替える -->
-        <p class="note-draft">下書き（代表の確認前）</p>
-        <p class="co-message-lead">お客様の毎日の暮らしを<br>保険とお金の面から支えます</p>
+             だけで作った「下書き」（2026-10-07）。ご本人の言葉ではないので、代表の確認・修正をいただいたら、.note-draft の印を外す -->
+        {note}<p class="co-message-lead">お客様の毎日の暮らしを<br>保険とお金の面から支えます</p>
         <div class="co-message-body">
           <p>LFグループ株式会社は、「顧客満足度を最優先に、人々の生活を向上させます」という理念のもと、保険を中心に、お客様の暮らしに関わるさまざまなご案内をしています。</p>
           <p>ゆとりある生活の実現のために、お客様一人ひとりの立場になって、誠実・公正にご提案いたします。</p>
           <p>ご契約のあとも、お客様が安心して過ごせるよう、長く寄り添います。万が一の事故のときは、休日・夜間も、保険金のお支払いまで迅速に対応いたします。</p>
           <p>これからも、お客様に信頼していただけるよう、社員一同、学び続けてまいります。保険やお金のことで気になることがあれば、どうぞお気軽にご相談ください。</p>
         </div>
-        <p class="co-message-name">代表 遠藤 昇平</p>
+        <p class="co-message-name"><span>代表取締役</span><img class="co-message-sign" loading="lazy" src="/images/ceo-sign.png" alt="遠藤 昇平" onerror="this.replaceWith(document.createTextNode('遠藤 昇平'))"></p>
       </div>
     </div>
   </section>
+'''
 
-  <section class="section co-first">
+
+def page_company():
+    # 2026-10-09 お客様の構成案（ChatGPTの共有）で作り直し：①メインビジュアル ②会社情報 ③事業紹介 ④アクセス ⑤代表メッセージへの導線。
+    # 「私たちについて」は理念・価値観、「会社概要」は基本情報で信頼を確かめてもらうページ、と役割を分ける。
+    # 構成案の［代表者氏名］［設立年月日］［資本金］［代表電話番号］［取引先・提携先］［最寄り駅］は未入力のため、確認できるまで載せない。
+    # 代表者名・電話番号・住所・適格請求書番号は、今のサイトにある情報。代表挨拶は「私たちについて」の末尾へ移した
+    q = 'https://www.google.com/maps/embed?origin=mfe&amp;pb=!1m3!2m1!1z5oSb55-l55yM5ZCN5Y-k5bGL5biC5p2x5Yy66JG1M-S4geebrjE0LTU!6i16'
+    links = ''.join(f'<a href="{h}">{l}{ARROW}</a>' for _, l, h in POLICIES)
+    hero = page_hero('Company Profile', '会社概要', [('会社概要', '/company/')],
+                     lead='信頼を礎に、新たな価値を創造する。<br>LFグループ株式会社の企業情報をご紹介します。',
+                     photo='cta-final.jpg', pos='50% 62%', caption='Nagoya, Aichi', compact=True)
+    return hero + f'''
+  <section class="section co-first" id="profile">
     <div class="wrap">
-      <dl class="company-list full">
+      <p class="eyebrow fade">Company Information</p>
+      <h2 class="fade">会社情報</h2>
+      <!-- ★要確認：構成案にある 設立・資本金・取引先／提携先 は、今のサイトに記載がないため載せていない。確認できたら下の表に足す -->
+      <dl class="company-list full fade" style="margin-top:40px">
         <div><dt>会社名</dt><dd>{COMPANY}</dd></div>
         <div><dt>代表者</dt><dd>遠藤 昇平</dd></div>
         <div><dt>所在地</dt><dd>〒{POSTAL}<br>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</dd></div>
         <!-- ★要確認：2つの番号の用途（代表／お問い合わせ）が今のサイトに書かれていない。確認できたら「代表」などを添える -->
         <div><dt>電話番号</dt><dd><a href="{TEL_HREF}">{TEL}</a></dd></div>
-        <div><dt>事業内容</dt><dd>金融コンサル・保険代理店業務</dd></div>
+        <div><dt>事業内容</dt><dd>生命保険代理店事業<br>損害保険代理店事業<br>アライアンス事業<br>ライフラインサービスの取次・紹介</dd></div>
         <div><dt>適格請求書発行<br>事業者登録番号</dt><dd>T4180001157727</dd></div>
       </dl>
+    </div>
+  </section>
+
+  <section class="section bg-blue" id="business">
+    <div class="wrap">
+      <p class="eyebrow fade">Our Business</p>
+      <h2 class="fade">事業紹介</h2>
+      <div class="co-biz-grid">
+        <article class="co-biz-card fade">
+          <div class="co-biz-photo"><img loading="lazy" src="/images/service-insurance.jpg" alt="" style="object-position:50% 60%" onerror="this.remove()"></div>
+          <p class="co-biz-en">Insurance Business</p>
+          <h3>保険代理店事業</h3>
+          <p>個人・法人のお客様を対象に、生命保険・損害保険のご提案を行っています。</p>
+          <p>医療保障や死亡保障、資産形成に向けた保険の活用、企業のリスク対策や福利厚生など、幅広いご相談に対応します。</p>
+          <p class="co-biz-links"><a class="link-arrow" href="/personal/">個人のお客様{ARROW}</a><a class="link-arrow" href="/corporate/">法人のお客様{ARROW}</a></p>
+        </article>
+        <article class="co-biz-card fade">
+          <div class="co-biz-photo"><img loading="lazy" src="/images/scene-home.jpg" alt="" onerror="this.remove()"></div>
+          <p class="co-biz-en">Alliance Business</p>
+          <h3>アライアンス事業</h3>
+          <p>不動産会社をはじめとする提携企業との連携を通じて、新生活に必要なライフラインサービスをご案内しています。</p>
+          <p>お客様の利便性向上と、パートナー企業の業務効率化・新たな価値創出を支援します。</p>
+          <p class="co-biz-links"><a class="link-arrow" href="/partner/">アライアンス事業{ARROW}</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="access">
+    <div class="wrap">
+      <p class="eyebrow fade">Access</p>
+      <h2 class="fade">アクセス</h2>
+      <!-- ★要確認：構成案の「最寄り駅・徒歩所要時間」は未確認のため載せていない。確認できたら下の住所の下に足す -->
+      <div class="co-access fade">
+        <p class="co-access-name">{COMPANY}</p>
+        <p class="co-access-addr">〒{POSTAL}<br>愛知県名古屋市東区葵3丁目14-5<br>リッチコーポ2階</p>
+      </div>
       <div class="map-frame fade">
         <iframe src="{q}" title="LFグループ株式会社の地図" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
@@ -1058,6 +1090,20 @@ def page_company():
       <p class="eyebrow fade">Policy</p>
       <h2 class="fade">各種方針</h2>
       <div class="link-list fade" style="margin-top:40px">{links}</div>
+    </div>
+  </section>
+
+  <section class="section" id="ceo">
+    <div class="wrap">
+      <div class="co-ceo fade">
+        <figure class="co-ceo-photo"><img loading="lazy" src="/images/ceo-photo.jpg" alt="" onerror="this.closest('figure').remove()"></figure>
+        <div class="co-ceo-copy">
+          <p class="eyebrow">Message from the Representative</p>
+          <h2><span>信頼を積み重ね、</span><span>新しい可能性へ。</span></h2>
+          <p class="text">LFグループが大切にしている想いや、これから目指す未来について。<br>代表からのメッセージをご紹介します。</p>
+          <p class="co-ceo-link"><a class="btn btn-primary" href="/about/#message">代表挨拶を見る{ARROW}</a></p>
+        </div>
+      </div>
     </div>
   </section>
 
