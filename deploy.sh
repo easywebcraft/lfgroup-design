@@ -37,7 +37,9 @@ GIT_SHA="$(git rev-parse --short HEAD)"
 GIT_MSG="$(git log -1 --format=%s)"
 if [ "${1:-}" = "--go" ]; then
   git fetch -q origin
-  if [ -n "$(git status --porcelain)" ]; then echo "未コミットの変更があるので止めます（先にコミットして push してください）"; git status --short | head; exit 1; fi
+  # git に入っていない images/ の中のファイルは本番に写さない（build.py）ので、ここでは止めない（2026-10-27）
+  DIRTY="$(git status --porcelain | grep -v '^?? images/' || true)"
+  if [ -n "${DIRTY}" ]; then echo "未コミットの変更があるので止めます（先にコミットして push してください）"; echo "${DIRTY}" | head; exit 1; fi
   if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then echo "今のコミット（${GIT_SHA}）が origin/main と違うので止めます（push または pull してください）"; exit 1; fi
 fi
 
