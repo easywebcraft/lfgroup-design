@@ -1628,8 +1628,20 @@ PAGES = ['', 'about/', 'personal/', 'corporate/', 'partner/', 'company/', 'conta
 def release_files():
     """本番用：画像（顧客からもらったロゴの元データ images/logo/ は除く）・robots.txt・sitemap.xml。"""
     # 顧客からもらったロゴの元データ（images/logo/）と、内部メモ（*.md。画像の生成メモ）は公開しない
-    shutil.copytree(BASE / 'images', SITE / 'images',
-                    ignore=lambda d, names: (['logo'] if Path(d) == BASE / 'images' else []) + [n for n in names if n.endswith('.md')])
+    # git に入っている画像だけを写す（2026-10-27）。手元にだけある使っていない画像や .DS_Store が本番に上がるのを防ぐ
+    import subprocess
+    tracked = set(subprocess.run(['git', '-C', str(BASE), 'ls-files', 'images'], capture_output=True, text=True, check=True).stdout.splitlines())
+
+    def ignore(d, names):
+        rel = Path(d).relative_to(BASE)
+        out = ['logo'] if Path(d) == BASE / 'images' else []
+        for n in names:
+            if n.endswith('.md'):
+                out.append(n)
+            elif (Path(d) / n).is_file() and str(rel / n) not in tracked:
+                out.append(n)
+        return out
+    shutil.copytree(BASE / 'images', SITE / 'images', ignore=ignore)
     robots = 'User-agent: *\nAllow: /\n'
     if SITE_URL:
         robots += f'\nSitemap: {SITE_URL}/sitemap.xml\n'
